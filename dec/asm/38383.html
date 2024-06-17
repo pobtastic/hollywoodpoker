@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 38383</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38331.html">38331</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38383">Map</a></td>
+<td class="next">
+Next: <a href="38412.html">38412</a>
+</td>
+</tr>
+</table>
+<div class="description">38383: Routine at 95EF</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="38168.html">38168</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38383"></span>38383</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38385"></span>38385</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38386"></span>38386</td>
+<td class="instruction">LD B,4</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=4.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38388"></span>38388</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38389"></span>38389</td>
+<td class="instruction">AND %11110000</td>
+<td class="comment-1" rowspan="1">Keep only bits 4-7.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38391"></span>38391</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1"><span class="register">H</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38392"></span>38392</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38393"></span>38393</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38394"></span>38394</td>
+<td class="instruction">AND %11110000</td>
+<td class="comment-1" rowspan="1">Keep only bits 4-7.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38396"></span>38396</td>
+<td class="instruction">CP H</td>
+<td class="comment-1" rowspan="2">Jump to <a href="38383.html#38409">38409</a> if <span class="register">A</span> is not equal to <span class="register">H</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38397"></span>38397</td>
+<td class="instruction">JR NZ,<a href="38383.html#38409">38409</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38399"></span>38399</td>
+<td class="instruction">DJNZ <a href="38383.html#38392">38392</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38383.html#38392">38392</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38401"></span>38401</td>
+<td class="instruction">LD A,1</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=1.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38403"></span>38403</td>
+<td class="instruction">LD (38221),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38208.html#38221">38221</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38406"></span>38406</td>
+<td class="instruction">JP <a href="37687.html">37687</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37687.html">37687</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38409"></span>38409</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38410"></span>38410</td>
+<td class="instruction">JR <a href="38383.html#38403">38403</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38383.html#38403">38403</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38331.html">38331</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38383">Map</a></td>
+<td class="next">
+Next: <a href="38412.html">38412</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/95EF.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

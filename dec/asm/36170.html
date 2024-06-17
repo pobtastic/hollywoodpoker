@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 36170</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36169.html">36169</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36170">Map</a></td>
+<td class="next">
+Next: <a href="36420.html">36420</a>
+</td>
+</tr>
+</table>
+<div class="description">36170: Play Game</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="36080.html">InitialiseNewGame</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36170"></span>
+<div class="comments">
+<div class="paragraph">
+Reset both the player and girls hands. Note that 255 is used to signify "draw a new card".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PlayGame</td>
+<td class="address-2"><span id="36170"></span>36170</td>
+<td class="instruction">LD HL,38599</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38599.html">PlayersHand?</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36173"></span>36173</td>
+<td class="instruction">LD B,10</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=10 (i.e. two hands at 5 cards each).</td>
+</tr>
+<tr>
+<td class="asm-label">ResetHand_Loop</td>
+<td class="address-2"><span id="36175"></span>36175</td>
+<td class="instruction">LD (HL),255</td>
+<td class="comment-1" rowspan="1">Write 255 to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36177"></span>36177</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36178"></span>36178</td>
+<td class="instruction">DJNZ <a href="36170.html#36175">ResetHand_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card counter by one and loop back to <a href="36170.html#36175">ResetHand_Loop</a> until both hands have been reset.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36180"></span>
+<div class="comments">
+<div class="paragraph">
+Prep the attributes for the final parts of printing the UI.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36180"></span>36180</td>
+<td class="instruction">LD A,32</td>
+<td class="comment-1" rowspan="2">Write INK:
+BLACK,
+PAPER:
+GREEN
+
+ to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36182"></span>36182</td>
+<td class="instruction">LD (23693),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36185"></span>36185</td>
+<td class="instruction">LD B,6</td>
+<td class="comment-1" rowspan="2">Clear the bottom 6 lines using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0E44.html">CL_LINE</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36187"></span>36187</td>
+<td class="instruction">CALL 3652</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36190"></span>36190</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Write 0 to; <ul class="">
+<li>*<a href="38580.html">PotValue</a></li>
+<li>*<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C6B.html">DF_SZ</a></li>
+</ul></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36191"></span>36191</td>
+<td class="instruction">LD (38580),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36194"></span>36194</td>
+<td class="instruction">LD (23659),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36197"></span>36197</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">Write 1 to *<a href="38584.html">CurrentRound</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36198"></span>36198</td>
+<td class="instruction">LD (38584),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36201"></span>36201</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">Write 2 to *<a href="36420.html#36441">36441</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36202"></span>36202</td>
+<td class="instruction">LD (36441),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36205"></span>
+<div class="comments">
+<div class="paragraph">
+Print "DROP", "HOLD" and "RAISE".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36205"></span>36205</td>
+<td class="instruction">LD HL,37652</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="37574.html#37652">Messaging_Drop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36208"></span>36208</td>
+<td class="instruction">CALL 6269</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36211"></span>36211</td>
+<td class="instruction">LD A,2</td>
+<td class="comment-1" rowspan="2">Write 2 to *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C6B.html">DF_SZ</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36213"></span>36213</td>
+<td class="instruction">LD (23659),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36216"></span>36216</td>
+<td class="instruction">LD BC,1824</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=1824.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36219"></span>36219</td>
+<td class="instruction">CALL 3554</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">3554</a> (CL_SET).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36222"></span>36222</td>
+<td class="instruction">CALL <a href="36442.html">DrawUserInterface</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36442.html">DrawUserInterface</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36225"></span>
+<div class="comments">
+<div class="paragraph">
+Print "CURSOR" five times in a row to where it would display under each card in the players hand.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36225"></span>36225</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCursorLoop</td>
+<td class="address-2"><span id="36227"></span>36227</td>
+<td class="instruction">LD HL,37645</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="37574.html#37645">Messaging_Cursor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36230"></span>36230</td>
+<td class="instruction">CALL 6269</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36233"></span>36233</td>
+<td class="instruction">DJNZ <a href="36170.html#36227">PrintCursorLoop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36170.html#36227">PrintCursorLoop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36235"></span>
+<div class="comments">
+<div class="paragraph">
+Blank out 7 lines of the display.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36235"></span>36235</td>
+<td class="instruction">LD HL,22880</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=22880 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36238"></span>36238</td>
+<td class="instruction">LD B,224</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=224.</td>
+</tr>
+<tr>
+<td class="asm-label">Blank_Loop</td>
+<td class="address-2"><span id="36240"></span>36240</td>
+<td class="instruction">LD (HL),0</td>
+<td class="comment-1" rowspan="1">Write INK:
+BLACK,
+PAPER:
+BLACK
+
+ to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36242"></span>36242</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36243"></span>36243</td>
+<td class="instruction">DJNZ <a href="36170.html#36240">Blank_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36170.html#36240">Blank_Loop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36245"></span>
+<div class="comments">
+<div class="paragraph">
+Make the girl buy in.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36245"></span>36245</td>
+<td class="instruction">LD A,10</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=10.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36247"></span>36247</td>
+<td class="instruction">CALL <a href="38561.html">GirlAddToPot</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38561.html">GirlAddToPot</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36250"></span>36250</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">Write <span class="register">B</span> to *<a href="38583.html">CurrentRaiseValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36251"></span>36251</td>
+<td class="instruction">LD (38583),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36254"></span>36254</td>
+<td class="instruction">CALL <a href="37445.html">PlayerAddToPot</a></td>
+<td class="comment-1" rowspan="1">Call <a href="37445.html">PlayerAddToPot</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36257"></span>36257</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="38583.html">CurrentRaiseValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36258"></span>36258</td>
+<td class="instruction">LD (38583),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36261"></span>36261</td>
+<td class="instruction">CALL <a href="38299.html">ResetDeck</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38299.html">ResetDeck</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36264"></span>36264</td>
+<td class="instruction">LD IX,38604</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="38604.html">GirlsHand?</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36268"></span>36268</td>
+<td class="instruction">CALL <a href="38222.html">DrawCards</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38222.html">DrawCards</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36271"></span>36271</td>
+<td class="instruction">CALL <a href="38168.html">38168</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38168.html">38168</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36274"></span>36274</td>
+<td class="instruction">LD A,(39140)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="39140.html">CurrentGirl</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36277"></span>36277</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36278"></span>36278</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label">PlayGame_0</td>
+<td class="address-2"><span id="36279"></span>36279</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">BC</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36280"></span>36280</td>
+<td class="instruction">CALL <a href="38609.html">38609</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38609.html">38609</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36283"></span>36283</td>
+<td class="instruction">CALL <a href="38222.html">DrawCards</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38222.html">DrawCards</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36286"></span>36286</td>
+<td class="instruction">CALL <a href="38168.html">38168</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38168.html">38168</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36289"></span>36289</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36290"></span>36290</td>
+<td class="instruction">DJNZ <a href="36170.html#36279">PlayGame_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36170.html#36279">PlayGame_0</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36292"></span>36292</td>
+<td class="instruction">LD BC,7</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0007.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36295"></span>36295</td>
+<td class="instruction">LD HL,38043</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38043.html">38043</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36298"></span>36298</td>
+<td class="instruction">LD DE,38592</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38585.html#38592">38592</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36301"></span>36301</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">LDIR.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36303"></span>36303</td>
+<td class="instruction">CALL <a href="36734.html">PrintStats</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36734.html">PrintStats</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36306"></span>36306</td>
+<td class="instruction">LD IX,38599</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="38599.html">PlayersHand?</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36310"></span>36310</td>
+<td class="instruction">CALL <a href="38222.html">DrawCards</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38222.html">DrawCards</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36313"></span>36313</td>
+<td class="instruction">CALL <a href="58131.html">58131</a></td>
+<td class="comment-1" rowspan="1">Call <a href="58131.html">58131</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36316"></span>36316</td>
+<td class="instruction">CALL <a href="36867.html">MarkCards</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36867.html">MarkCards</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36319"></span>36319</td>
+<td class="instruction">CALL <a href="38222.html">DrawCards</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38222.html">DrawCards</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36322"></span>36322</td>
+<td class="instruction">CALL <a href="58131.html">58131</a></td>
+<td class="comment-1" rowspan="1">Call <a href="58131.html">58131</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36325"></span>36325</td>
+<td class="instruction">CALL <a href="38168.html">38168</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38168.html">38168</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36328"></span>36328</td>
+<td class="instruction">LD BC,7</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0007.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36331"></span>36331</td>
+<td class="instruction">LD HL,38043</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38043.html">38043</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36334"></span>36334</td>
+<td class="instruction">LD DE,38585</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38585.html">38585</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36337"></span>36337</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">LDIR.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36339"></span>36339</td>
+<td class="instruction">CALL <a href="36734.html">PrintStats</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36734.html">PrintStats</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36342"></span>36342</td>
+<td class="instruction">LD A,1</td>
+<td class="comment-1" rowspan="2">Write 1 to *<a href="36170.html#36419">36419</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36344"></span>36344</td>
+<td class="instruction">LD (36419),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36347"></span>36347</td>
+<td class="instruction">LD A,(36418)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36170.html#36418">36418</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36350"></span>36350</td>
+<td class="instruction">XOR %00000001</td>
+<td class="comment-1" rowspan="1">Flip bit 0.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36352"></span>36352</td>
+<td class="instruction">LD (36418),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="36170.html#36418">36418</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36355"></span>36355</td>
+<td class="instruction">JR Z,<a href="36170.html#36386">PlayGame_2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36170.html#36386">PlayGame_2</a> if <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36357"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="message-13" src="../../images/scr/message-13.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PlayGame_1</td>
+<td class="address-2"><span id="36357"></span>36357</td>
+<td class="instruction">LD A,13</td>
+<td class="comment-1" rowspan="2">Call <a href="32151.html">Messaging_Girl</a> using message block 13.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36359"></span>36359</td>
+<td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36362"></span>36362</td>
+<td class="instruction">CALL <a href="38412.html">38412</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38412.html">38412</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36365"></span>36365</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36366"></span>36366</td>
+<td class="instruction">CALL <a href="36734.html">PrintStats</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36734.html">PrintStats</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36369"></span>36369</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36370"></span>36370</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="36640.html">WonRound</a> if <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36371"></span>36371</td>
+<td class="instruction">JP Z,<a href="36640.html">WonRound</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36374"></span>36374</td>
+<td class="instruction">CP 3</td>
+<td class="comment-1" rowspan="2">Call <a href="36578.html">Handler_Showdown</a> if <span class="register">A</span> is equal to 3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36376"></span>36376</td>
+<td class="instruction">CALL Z,<a href="36578.html">Handler_Showdown</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36379"></span>36379</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="36170.html#36419">36419</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36380"></span>36380</td>
+<td class="instruction">LD (36419),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36383"></span>36383</td>
+<td class="instruction">CALL <a href="36420.html">36420</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36420.html">36420</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36386"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="message-12" src="../../images/scr/message-12.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PlayGame_2</td>
+<td class="address-2"><span id="36386"></span>36386</td>
+<td class="instruction">LD A,12</td>
+<td class="comment-1" rowspan="2">Call <a href="32151.html">Messaging_Girl</a> using message block 12.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36388"></span>36388</td>
+<td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36391"></span>36391</td>
+<td class="instruction">CALL <a href="36734.html">PrintStats</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36734.html">PrintStats</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36394"></span>36394</td>
+<td class="instruction">CALL <a href="37233.html">37233</a></td>
+<td class="comment-1" rowspan="1">Call <a href="37233.html">37233</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36397"></span>36397</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="36614.html">GirlWonRound</a> if <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36398"></span>36398</td>
+<td class="instruction">JP Z,<a href="36614.html">GirlWonRound</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36401"></span>36401</td>
+<td class="instruction">CP 3</td>
+<td class="comment-1" rowspan="2">Call <a href="36578.html">Handler_Showdown</a> if <span class="register">A</span> is equal to 3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36403"></span>36403</td>
+<td class="instruction">CALL Z,<a href="36578.html">Handler_Showdown</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36406"></span>36406</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="36170.html#36419">36419</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36407"></span>36407</td>
+<td class="instruction">LD (36419),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36410"></span>36410</td>
+<td class="instruction">CALL <a href="36420.html">36420</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36420.html">36420</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36413"></span>36413</td>
+<td class="instruction">CALL <a href="36734.html">PrintStats</a></td>
+<td class="comment-1" rowspan="1">Call <a href="36734.html">PrintStats</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36416"></span>36416</td>
+<td class="instruction">JR <a href="36170.html#36357">PlayGame_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36170.html#36357">PlayGame_1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36418"></span>36418</td>
+<td class="instruction">DEFB 1</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36419"></span>36419</td>
+<td class="instruction">DEFB 0</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36169.html">36169</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36170">Map</a></td>
+<td class="next">
+Next: <a href="36420.html">36420</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/8D4A.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

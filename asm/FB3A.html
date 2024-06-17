@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at FB3A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F83A.html">F83A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#fb3a">Map</a></td>
+<td class="next">
+Next: <a href="FB52.html">FB52</a>
+</td>
+</tr>
+</table>
+<div class="description">FB3A: Routine at FB3A</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="6E9D.html">TitleScreen</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="fb3a"></span>FB3A</td>
+<td class="instruction">LD HL,$FD09</td>
+<td class="comment-1" rowspan="2">Write <a href="FD09.html">FD09</a> to *<a href="FB55.html">FB55</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="fb3d"></span>FB3D</td>
+<td class="instruction">LD ($FB55),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="fb40"></span>FB40</td>
+<td class="instruction">LD HL,$FE30</td>
+<td class="comment-1" rowspan="2">Write <a href="FE30.html">FE30</a> to *<a href="FB57.html#fb59">FB59</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="fb43"></span>FB43</td>
+<td class="instruction">LD ($FB59),HL</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="fb46"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="6E9D.html">TitleScreen</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="fb46"></span>FB46</td>
+<td class="instruction">DI</td>
+<td class="comment-1" rowspan="1">Disable interrupts.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="fb47"></span>FB47</td>
+<td class="instruction">CALL <a href="FB81.html">$FB81</a></td>
+<td class="comment-1" rowspan="1">Call <a href="FB81.html">FB81</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="fb4a"></span>FB4A</td>
+<td class="instruction">CALL $028E</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="fb4d"></span>FB4D</td>
+<td class="instruction">INC E</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">E</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="fb4e"></span>FB4E</td>
+<td class="instruction">JR Z,<a href="FB3A.html#fb47">$FB47</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="FB3A.html#fb47">FB47</a> until <span class="register">E</span> is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="fb50"></span>FB50</td>
+<td class="instruction">EI</td>
+<td class="comment-1" rowspan="1">Enable interrupts.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="fb51"></span>FB51</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F83A.html">F83A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#fb3a">Map</a></td>
+<td class="next">
+Next: <a href="FB52.html">FB52</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/64314.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

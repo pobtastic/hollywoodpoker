@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 36640</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36614.html">36614</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36640">Map</a></td>
+<td class="next">
+Next: <a href="36667.html">36667</a>
+</td>
+</tr>
+</table>
+<div class="description">36640: Won Round</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="36170.html">PlayGame</a> and <a href="36578.html">Handler_Showdown</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">WonRound</td>
+<td class="address-2"><span id="36640"></span>36640</td>
+<td class="instruction">LD A,(38580)</td>
+<td class="comment-1" rowspan="5">Update *<a href="38581.html">PlayerCash</a> as the player has won this round. So, add *<a href="38580.html">PotValue</a> to *<a href="38581.html">PlayerCash</a> and write the result back to *<a href="38581.html">PlayerCash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36643"></span>36643</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36644"></span>36644</td>
+<td class="instruction">LD A,(38581)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36647"></span>36647</td>
+<td class="instruction">ADD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36648"></span>36648</td>
+<td class="instruction">LD (38581),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36651"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="message-04" src="../../images/scr/message-04.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36651"></span>36651</td>
+<td class="instruction">LD A,4</td>
+<td class="comment-1" rowspan="2">Call <a href="32151.html">Messaging_Girl</a> using message block 4.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36653"></span>36653</td>
+<td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36656"></span>
+<div class="comments">
+<div class="paragraph">
+Check if this is round over or game over for the girl.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36656"></span>36656</td>
+<td class="instruction">LD A,(38582)</td>
+<td class="comment-1" rowspan="4">Call <a href="36698.html">36698</a> if *<a href="38582.html">GirlCash</a> is lower than 10.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36659"></span>36659</td>
+<td class="instruction">CP 10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36661"></span>36661</td>
+<td class="instruction">LD A,0</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36663"></span>36663</td>
+<td class="instruction">CALL C,<a href="36698.html">36698</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36666"></span>36666</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return with <span class="register">A</span> being 0.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36614.html">36614</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36640">Map</a></td>
+<td class="next">
+Next: <a href="36667.html">36667</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/8F20.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 28746</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28570.html">28570</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28746">Map</a></td>
+<td class="next">
+Next: <a href="28787.html">28787</a>
+</td>
+</tr>
+</table>
+<div class="description">28746: Display Winners List Page</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+<table class="default">
+<tr>
+<td class="centre" colspan="1" rowspan="1"><img alt="winners-list" src="../../images/scr/winners-list.png" /></td>
+</tr>
+</table>  Used by the routines at <a href="28317.html#28364">TitleScreenRouting</a> and <a href="29338.html">Debounce_Loop</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DisplayWinnersListPage</td>
+<td class="address-2"><span id="28746"></span>28746</td>
+<td class="instruction">LD A,7</td>
+<td class="comment-1" rowspan="2">Write 
+
+
+WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28748"></span>28748</td>
+<td class="instruction">LD (23693),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28751"></span>28751</td>
+<td class="instruction">CALL 3503</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28754"></span>28754</td>
+<td class="instruction">LD HL,0</td>
+<td class="comment-1" rowspan="4">Copy 6912 bytes of data from the Spectrum ROM (literally from 0000 to the screen.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28757"></span>28757</td>
+<td class="instruction">LD DE,16384</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28760"></span>28760</td>
+<td class="instruction">LD BC,6912</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28763"></span>28763</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28765"></span>28765</td>
+<td class="instruction">LD DE,28787</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="28787.html">Messaging_WinnersList</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28768"></span>28768</td>
+<td class="instruction">LD BC,551</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28771"></span>28771</td>
+<td class="instruction">CALL 8252</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28774"></span>28774</td>
+<td class="instruction">RES 5,(IY+1)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28778"></span>28778</td>
+<td class="instruction">LD BC,0</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0000.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28781"></span>28781</td>
+<td class="instruction">CALL 7997</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28784"></span>28784</td>
+<td class="instruction">JP <a href="28317.html">TitleScreen</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28317.html">TitleScreen</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28570.html">28570</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28746">Map</a></td>
+<td class="next">
+Next: <a href="28787.html">28787</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/704A.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

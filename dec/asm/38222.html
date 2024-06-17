@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 38222</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38208.html">38208</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38222">Map</a></td>
+<td class="next">
+Next: <a href="38265.html">38265</a>
+</td>
+</tr>
+</table>
+<div class="description">38222: Draw Cards</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="36170.html">PlayGame</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Pointer to either the player or girls hand</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38222"></span>
+<div class="comments">
+<div class="paragraph">
+If a card value in the players hand is 255 this indicates that a card needs to be drawn.
+</div>
+<div class="paragraph">
+If a card value in <a href="38331.html">CardDeck</a> is 255 this indicates that the card has already been chosen.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DrawCards</td>
+<td class="address-2"><span id="38222"></span>38222</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38224"></span>38224</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=<span class="register">IX</span> (using the stack).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38226"></span>38226</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38227"></span>38227</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="1">A hand consists of 5 cards.</td>
+</tr>
+<tr>
+<td class="asm-label">DrawCards_Loop</td>
+<td class="address-2"><span id="38229"></span>38229</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the card count on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label">DrawCards_RePick</td>
+<td class="address-2"><span id="38230"></span>38230</td>
+<td class="instruction">LD HL,38331</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38331.html">CardDeck</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38233"></span>
+<div class="comments">
+<div class="paragraph">
+Only draw a card if the current position in the hand is marked as needing to be picked.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38233"></span>38233</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="38222.html#38258">DrawCards_Next</a> if the hand pointer is not equal to 255.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38234"></span>38234</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38236"></span>38236</td>
+<td class="instruction">JR NZ,<a href="38222.html#38258">DrawCards_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38238"></span>38238</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="2">Stash the hand and deck pointers on the stack temporarily.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38239"></span>38239</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38240"></span>38240</td>
+<td class="instruction">CALL <a href="38265.html">GetRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38265.html">GetRandomNumber</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38243"></span>38243</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Restore the deck and hand pointers from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38244"></span>38244</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38245"></span>38245</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="2">Create an offset in <span class="register">BC</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38246"></span>38246</td>
+<td class="instruction">LD B,0</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38248"></span>38248</td>
+<td class="instruction">DEC BC</td>
+<td class="comment-1" rowspan="1">Decrease the card count by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38249"></span>38249</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">BC</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38250"></span>38250</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="38222.html#38230">DrawCards_RePick</a> if this card has already been picked (if the chosen card "value" is equal to 255).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38251"></span>38251</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38253"></span>38253</td>
+<td class="instruction">JR Z,<a href="38222.html#38230">DrawCards_RePick</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38255"></span>
+<div class="comments">
+<div class="paragraph">
+The picked card is valid and able to be drawn into the hand.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38255"></span>38255</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-1" rowspan="1">Write the drawn card to the current hand position.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38256"></span>38256</td>
+<td class="instruction">LD (HL),255</td>
+<td class="comment-1" rowspan="1">Now mark the card in the deck as being unavailable so it can't be chosen again.</td>
+</tr>
+<tr>
+<td class="asm-label">DrawCards_Next</td>
+<td class="address-2"><span id="38258"></span>38258</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the card count from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38259"></span>38259</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1">Increment the hand pointer by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38260"></span>38260</td>
+<td class="instruction">DJNZ <a href="38222.html#38229">DrawCards_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card count by one and loop back to <a href="38222.html#38229">DrawCards_Loop</a> until the deck is filled.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38262"></span>38262</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">IX</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38264"></span>38264</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38208.html">38208</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38222">Map</a></td>
+<td class="next">
+Next: <a href="38265.html">38265</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/954E.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

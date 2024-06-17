@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 36667</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36640.html">36640</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36667">Map</a></td>
+<td class="next">
+Next: <a href="36698.html">36698</a>
+</td>
+</tr>
+</table>
+<div class="description">36667: Lost Round</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="36614.html">GirlWonRound</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">LostRound</td>
+<td class="address-2"><span id="36667"></span>36667</td>
+<td class="instruction">LD A,(36732)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="36667.html#36690">LostRound_GameOver</a> if *<a href="36732.html">PlayerLives</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36670"></span>36670</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36671"></span>36671</td>
+<td class="instruction">JR Z,<a href="36667.html#36690">LostRound_GameOver</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36673"></span>
+<div class="comments">
+<div class="paragraph">
+The player lost, so lose a life...
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36673"></span>36673</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="2">Decrease *<a href="36732.html">PlayerLives</a> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36674"></span>36674</td>
+<td class="instruction">LD (36732),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36677"></span>
+<div class="comments">
+<div class="paragraph">
+Replenish the player and girls cash reserves.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36677"></span>36677</td>
+<td class="instruction">LD HL,25700</td>
+<td class="comment-1" rowspan="2">Write 25700 to <a href="38581.html">PlayerCash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36680"></span>36680</td>
+<td class="instruction">LD (38581),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36683"></span>36683</td>
+<td class="instruction">LD A,8</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=8 (does nothing, this is immediately overwritten).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36685"></span>36685</td>
+<td class="instruction">CALL <a href="30623.html">LifeLost</a></td>
+<td class="comment-1" rowspan="1">Call <a href="30623.html">LifeLost</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36688"></span>36688</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span> being 0.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36689"></span>36689</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36690"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="message-14" src="../../images/scr/message-14.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">LostRound_GameOver</td>
+<td class="address-2"><span id="36690"></span>36690</td>
+<td class="instruction">LD A,14</td>
+<td class="comment-1" rowspan="2">Call <a href="32151.html">Messaging_Girl</a> using message block <a href="35153.html">14</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36692"></span>36692</td>
+<td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36695"></span>36695</td>
+<td class="instruction">LD A,1</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span> being 1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36697"></span>36697</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36640.html">36640</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36667">Map</a></td>
+<td class="next">
+Next: <a href="36698.html">36698</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/8F3B.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

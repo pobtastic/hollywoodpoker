@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 29630</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29593.html">29593</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29630">Map</a></td>
+<td class="next">
+Next: <a href="29690.html">29690</a>
+</td>
+</tr>
+</table>
+<div class="description">29630: Display Information Pages</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+<table class="default">
+<tr>
+<td class="centre" colspan="1" rowspan="1"><img alt="information-screen-1" src="../../images/scr/information-screen-1.png" /></td>
+<td class="" colspan="1" rowspan="1"><img alt="information-screen-2" src="../../images/scr/information-screen-2.png" /></td>
+</tr>
+</table>  Used by the routine at <a href="28317.html#28364">TitleScreenRouting</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DisplayInformationPages</td>
+<td class="address-2"><span id="29630"></span>29630</td>
+<td class="instruction">LD A,7</td>
+<td class="comment-1" rowspan="3">Write 
+
+
+WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C48.html">BORDCR</a> and *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29632"></span>29632</td>
+<td class="instruction">LD (23624),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29635"></span>29635</td>
+<td class="instruction">LD (23693),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29638"></span>29638</td>
+<td class="instruction">LD A,0</td>
+<td class="comment-1" rowspan="2">Set the border to 
+
+
+BLACK using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/2294.html#229b">BORDER</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29640"></span>29640</td>
+<td class="instruction">CALL 8859</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29643"></span>29643</td>
+<td class="instruction">CALL 3503</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29646"></span>29646</td>
+<td class="instruction">LD DE,29690</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="29690.html">Messaging_InformationPage1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29649"></span>29649</td>
+<td class="instruction">LD BC,643</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=643.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29652"></span>29652</td>
+<td class="instruction">CALL 8252</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29655"></span>29655</td>
+<td class="instruction">RES 5,(IY+1)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29659"></span>29659</td>
+<td class="instruction">LD BC,0</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0000.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29662"></span>29662</td>
+<td class="instruction">CALL 7997</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29665"></span>29665</td>
+<td class="instruction">CALL 3503</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29668"></span>29668</td>
+<td class="instruction">LD DE,30333</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="30333.html">Messaging_InformationPage2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29671"></span>29671</td>
+<td class="instruction">LD BC,290</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=290.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29674"></span>29674</td>
+<td class="instruction">CALL 8252</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29677"></span>29677</td>
+<td class="instruction">RES 5,(IY+1)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29681"></span>29681</td>
+<td class="instruction">LD BC,0</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0000.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29684"></span>29684</td>
+<td class="instruction">CALL 7997</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29687"></span>29687</td>
+<td class="instruction">JP <a href="28317.html">TitleScreen</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28317.html">TitleScreen</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29593.html">29593</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29630">Map</a></td>
+<td class="next">
+Next: <a href="29690.html">29690</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/73BE.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

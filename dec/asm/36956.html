@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 36956</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36948.html">36948</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36956">Map</a></td>
+<td class="next">
+Next: <a href="37080.html">37080</a>
+</td>
+</tr>
+</table>
+<div class="description">36956: Routine at 905C</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="36867.html">MarkCards</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36956"></span>36956</td>
+<td class="instruction">LD A,(36948)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36948.html">36948</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36959"></span>36959</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36960"></span>36960</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36961"></span>36961</td>
+<td class="instruction">JR NZ,<a href="36956.html#36965">36965</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36956.html#36965">36965</a> if <span class="register">A</span> is not zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36963"></span>36963</td>
+<td class="instruction">LD A,5</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=5.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36965"></span>36965</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36966"></span>36966</td>
+<td class="instruction">JR <a href="36956.html#36979">36979</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36956.html#36979">36979</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36968"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="36867.html">MarkCards</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36968"></span>36968</td>
+<td class="instruction">LD A,(36948)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36948.html">36948</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36971"></span>36971</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36972"></span>36972</td>
+<td class="instruction">CP 4</td>
+<td class="comment-1" rowspan="2">Jump to <a href="36956.html#36978">36978</a> if <span class="register">A</span> is not equal to 4.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36974"></span>36974</td>
+<td class="instruction">JR NZ,<a href="36956.html#36978">36978</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36976"></span>36976</td>
+<td class="instruction">LD A,255</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=255.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36978"></span>36978</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36979"></span>36979</td>
+<td class="instruction">LD (36948),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="36948.html">36948</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36982"></span>36982</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36983"></span>36983</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36984"></span>36984</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36985"></span>36985</td>
+<td class="instruction">LD HL,36948</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36948.html">36948</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36988"></span>36988</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36989"></span>36989</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36990"></span>36990</td>
+<td class="instruction">JR NZ,<a href="36956.html#36988">36988</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36956.html#36988">36988</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36992"></span>36992</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36993"></span>36993</td>
+<td class="instruction">LD HL,23067</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=23067 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36996"></span>36996</td>
+<td class="instruction">LD DE,6</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=0006.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36999"></span>36999</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37000"></span>37000</td>
+<td class="instruction">DJNZ <a href="36956.html#36999">36999</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36956.html#36999">36999</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37002"></span>37002</td>
+<td class="instruction">LD B,6</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=6.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37004"></span>37004</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37005"></span>37005</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37006"></span>37006</td>
+<td class="instruction">DJNZ <a href="36956.html#37004">37004</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36956.html#37004">37004</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37008"></span>37008</td>
+<td class="instruction">JP <a href="36867.html#36882">MarkCards_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36867.html#36882">MarkCards_1</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37011"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="36867.html">MarkCards</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37011"></span>37011</td>
+<td class="instruction">LD HL,36949</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36948.html#36949">36949</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37014"></span>37014</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37016"></span>37016</td>
+<td class="instruction">LD C,0</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=0.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37018"></span>37018</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37019"></span>37019</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37020"></span>37020</td>
+<td class="instruction">JR Z,<a href="36956.html#37023">37023</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36956.html#37023">37023</a> if <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37022"></span>37022</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">C</span> by one.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37023"></span>37023</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37024"></span>37024</td>
+<td class="instruction">DJNZ <a href="36956.html#37018">37018</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36956.html#37018">37018</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37026"></span>37026</td>
+<td class="instruction">LD A,(36948)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36948.html">36948</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37029"></span>37029</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37030"></span>37030</td>
+<td class="instruction">LD HL,36948</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36948.html">36948</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37033"></span>37033</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37034"></span>37034</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37035"></span>37035</td>
+<td class="instruction">JR NZ,<a href="36956.html#37033">37033</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36956.html#37033">37033</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37037"></span>37037</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="3">Jump to <a href="36956.html#37045">37045</a> if <span class="register">C</span> is lower than 3.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37038"></span>37038</td>
+<td class="instruction">CP 3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37040"></span>37040</td>
+<td class="instruction">JR C,<a href="36956.html#37045">37045</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37042"></span>37042</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37043"></span>37043</td>
+<td class="instruction">JR <a href="36956.html#37048">37048</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36956.html#37048">37048</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37045"></span>37045</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37046"></span>37046</td>
+<td class="instruction">XOR %00111111</td>
+<td class="comment-1" rowspan="1">Flip bits 0-5.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37048"></span>37048</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37049"></span>37049</td>
+<td class="instruction">JR <a href="36956.html#37008">37008</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36956.html#37008">37008</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37051"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="36867.html">MarkCards</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37051"></span>37051</td>
+<td class="instruction">LD DE,36949</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="36948.html#36949">36949</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37054"></span>37054</td>
+<td class="instruction">LD HL,38599</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38599.html">PlayersHand?</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37057"></span>37057</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37059"></span>37059</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37060"></span>37060</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37061"></span>37061</td>
+<td class="instruction">JR Z,<a href="36956.html#37065">37065</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36956.html#37065">37065</a> if <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37063"></span>37063</td>
+<td class="instruction">LD (HL),255</td>
+<td class="comment-1" rowspan="1">Write 255 to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37065"></span>37065</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37066"></span>37066</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37067"></span>37067</td>
+<td class="instruction">DJNZ <a href="36956.html#37059">37059</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36956.html#37059">37059</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37069"></span>37069</td>
+<td class="instruction">LD HL,23073</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=23073 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37072"></span>37072</td>
+<td class="instruction">LD B,30</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=30.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37074"></span>37074</td>
+<td class="instruction">LD (HL),0</td>
+<td class="comment-1" rowspan="1">Write 0 to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37076"></span>37076</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37077"></span>37077</td>
+<td class="instruction">DJNZ <a href="36956.html#37074">37074</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36956.html#37074">37074</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37079"></span>37079</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36948.html">36948</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36956">Map</a></td>
+<td class="next">
+Next: <a href="37080.html">37080</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/905C.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 38946</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38694.html">38694</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38946">Map</a></td>
+<td class="next">
+Next: <a href="38968.html">38968</a>
+</td>
+</tr>
+</table>
+<div class="description">38946: Jump To InPlay Girl Routine</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="36080.html">InitialiseNewGame</a> and <a href="36698.html">36698</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">JumpToInPlayGirlRoutine</td>
+<td class="address-2"><span id="38946"></span>38946</td>
+<td class="instruction">LD A,(39139)</td>
+<td class="comment-1" rowspan="3">Return if *<a href="39139.html">CurrentStage</a> is equal to 17.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38949"></span>38949</td>
+<td class="instruction">CP 17</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38951"></span>38951</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38952"></span>38952</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">Increment *<a href="39139.html">CurrentStage</a> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38953"></span>38953</td>
+<td class="instruction">LD (39139),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38956"></span>38956</td>
+<td class="instruction">LD HL,39136</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="39141.html">39136</a> (i.e. <a href="39141.html">JumpTable_StageData</a>).</td>
+</tr>
+<tr>
+<td class="asm-label">FindCurrentGirlJumpRoutine</td>
+<td class="address-2"><span id="38959"></span>38959</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="5">Increment <span class="register">HL</span> by five.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38960"></span>38960</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38961"></span>38961</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38962"></span>38962</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38963"></span>38963</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38964"></span>38964</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="2">Decrease <span class="register">A</span> by one and jump back to <a href="38946.html#38959">FindCurrentGirlJumpRoutine</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38965"></span>38965</td>
+<td class="instruction">JR NZ,<a href="38946.html#38959">FindCurrentGirlJumpRoutine</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38967"></span>38967</td>
+<td class="instruction">JP (HL)</td>
+<td class="comment-1" rowspan="1">Jump to the address held by <span class="register">HL</span>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38694.html">38694</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38946">Map</a></td>
+<td class="next">
+Next: <a href="38968.html">38968</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/9822.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

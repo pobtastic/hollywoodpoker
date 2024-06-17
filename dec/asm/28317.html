@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 28317</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="23952.html">23952</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28317">Map</a></td>
+<td class="next">
+Next: <a href="28418.html">28418</a>
+</td>
+</tr>
+</table>
+<div class="description">28317: Title Screen</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="23867.html">GameEntryPoint</a>, <a href="28746.html">DisplayWinnersListPage</a>, <a href="29338.html">Debounce_Loop</a> and <a href="29630.html">DisplayInformationPages</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">TitleScreen</td>
+<td class="address-2"><span id="28317"></span>28317</td>
+<td class="instruction">LD HL,28317</td>
+<td class="comment-1" rowspan="2">Write <a href="28317.html">TitleScreen</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3D.html">ERR_SP</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28320"></span>28320</td>
+<td class="instruction">LD (23613),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28323"></span>28323</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28324"></span>28324</td>
+<td class="instruction">LD SP,HL</td>
+<td class="comment-1" rowspan="1">Set the stack pointer to the address held by <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28325"></span>28325</td>
+<td class="instruction">CALL <a href="30795.html">DisplayTitleScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="30795.html">DisplayTitleScreen</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28328"></span>28328</td>
+<td class="instruction">LD A,(28418)</td>
+<td class="comment-1" rowspan="2">Highlight the currently selected menu item in <a href="28418.html">ControlMethod</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28331"></span>28331</td>
+<td class="instruction">CALL <a href="28539.html">HighlightMenuLine</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28334"></span>28334</td>
+<td class="instruction">CALL <a href="64314.html">64314</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64314.html">64314</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">TitleScreen_Loop</td>
+<td class="address-2"><span id="28337"></span>28337</td>
+<td class="instruction">CALL 654</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28340"></span>28340</td>
+<td class="instruction">LD A,%00001111</td>
+<td class="comment-1" rowspan="2">Mask off bits 4-7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28342"></span>28342</td>
+<td class="instruction">AND E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28343"></span>28343</td>
+<td class="instruction">CP 4</td>
+<td class="comment-1" rowspan="8">Jump to <a href="28317.html#28364">TitleScreenRouting</a> if there is any input.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28345"></span>28345</td>
+<td class="instruction">JR Z,<a href="28317.html#28364">TitleScreenRouting</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28347"></span>28347</td>
+<td class="instruction">CP 12</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28349"></span>28349</td>
+<td class="instruction">JR Z,<a href="28317.html#28364">TitleScreenRouting</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28351"></span>28351</td>
+<td class="instruction">CP 3</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28353"></span>28353</td>
+<td class="instruction">JR Z,<a href="28317.html#28364">TitleScreenRouting</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28355"></span>28355</td>
+<td class="instruction">CP 11</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28357"></span>28357</td>
+<td class="instruction">JR Z,<a href="28317.html#28364">TitleScreenRouting</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28359"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="28432.html">TitleScreen_KempstonSelected</a>, <a href="28447.html">TitleScreen_CursorSelected</a>, <a href="28463.html">TitleScreen_SinclairIF2Selected</a> and <a href="28479.html">TitleScreen_KeyboardSelected</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">TitleScreenNoInput</td>
+<td class="address-2"><span id="28359"></span>28359</td>
+<td class="instruction">CALL <a href="64314.html#64326">64326</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64314.html#64326">64326</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28362"></span>28362</td>
+<td class="instruction">JR <a href="28317.html#28337">TitleScreen_Loop</a></td>
+<td class="comment-1" rowspan="1">Loop back around to <a href="28317.html#28337">TitleScreen_Loop</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28364"></span>
+<div class="comments">
+<div class="paragraph">
+Handler directing the keypress to the appropriate routines.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">TitleScreenRouting</td>
+<td class="address-2"><span id="28364"></span>28364</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="1">Fetch the user input.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28365"></span>28365</td>
+<td class="instruction">CP 35</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28317.html#28359">TitleScreenNoInput</a> if <span class="register">E</span> is 35.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28367"></span>28367</td>
+<td class="instruction">JR Z,<a href="28317.html#28359">TitleScreenNoInput</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28369"></span>28369</td>
+<td class="instruction">CP 36</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28419.html">TitleScreen_DefineKeysSelected</a> if "DEFINE KEYBOARD" was selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28371"></span>28371</td>
+<td class="instruction">JR Z,<a href="28419.html">TitleScreen_DefineKeysSelected</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28373"></span>28373</td>
+<td class="instruction">CP 28</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28432.html">TitleScreen_KempstonSelected</a> if "KEMPSTON" was selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28375"></span>28375</td>
+<td class="instruction">JR Z,<a href="28432.html">TitleScreen_KempstonSelected</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28377"></span>28377</td>
+<td class="instruction">CP 20</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28447.html">TitleScreen_CursorSelected</a> if "CURSOR" was selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28379"></span>28379</td>
+<td class="instruction">JR Z,<a href="28447.html">TitleScreen_CursorSelected</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28381"></span>28381</td>
+<td class="instruction">CP 12</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28463.html">TitleScreen_SinclairIF2Selected</a> if "SINCLAIR IF2" was selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28383"></span>28383</td>
+<td class="instruction">JR Z,<a href="28463.html">TitleScreen_SinclairIF2Selected</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28385"></span>28385</td>
+<td class="instruction">CP 4</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28479.html">TitleScreen_KeyboardSelected</a> if "KEYBOARD" was selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28387"></span>28387</td>
+<td class="instruction">JR Z,<a href="28479.html">TitleScreen_KeyboardSelected</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28389"></span>28389</td>
+<td class="instruction">CP 3</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28564.html">StartGame</a> if "START GAME" was selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28391"></span>28391</td>
+<td class="instruction">JP Z,<a href="28564.html">StartGame</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28394"></span>28394</td>
+<td class="instruction">CP 11</td>
+<td class="comment-1" rowspan="2">Jump to <a href="29630.html">DisplayInformationPages</a> if "INFORMATION" was selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28396"></span>28396</td>
+<td class="instruction">JP Z,<a href="29630.html">DisplayInformationPages</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28399"></span>28399</td>
+<td class="instruction">CP 19</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28746.html">DisplayWinnersListPage</a> if "WINNERS LIST" was selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28401"></span>28401</td>
+<td class="instruction">JP Z,<a href="28746.html">DisplayWinnersListPage</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28404"></span>
+<div class="comments">
+<div class="paragraph">
+Else "9" was pressed which is "RETURN TO BASIC".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28404"></span>28404</td>
+<td class="instruction">LD HL,28419</td>
+<td class="comment-1" rowspan="5">Delete the game code and jump to <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0066.html">RESET</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28407"></span>28407</td>
+<td class="instruction">LD DE,28420</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28410"></span>28410</td>
+<td class="instruction">LD BC,37116</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28413"></span>28413</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28415"></span>28415</td>
+<td class="instruction">JP 100</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="23952.html">23952</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28317">Map</a></td>
+<td class="next">
+Next: <a href="28418.html">28418</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/6E9D.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

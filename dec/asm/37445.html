@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 37445</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37233.html">37233</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37445">Map</a></td>
+<td class="next">
+Next: <a href="37464.html">37464</a>
+</td>
+</tr>
+</table>
+<div class="description">37445: Player Add To Pot</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="36170.html">PlayGame</a> and <a href="37233.html">37233</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PlayerAddToPot</td>
+<td class="address-2"><span id="37445"></span>37445</td>
+<td class="instruction">LD A,(38583)</td>
+<td class="comment-1" rowspan="5">Subtract *<a href="38583.html">CurrentRaiseValue</a> from *<a href="38581.html">PlayerCash</a> and write it back to *<a href="38581.html">PlayerCash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37448"></span>37448</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37449"></span>37449</td>
+<td class="instruction">LD A,(38581)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37452"></span>37452</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37453"></span>37453</td>
+<td class="instruction">LD (38581),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37456"></span>37456</td>
+<td class="instruction">LD A,(38580)</td>
+<td class="comment-1" rowspan="3">Add *<a href="38583.html">CurrentRaiseValue</a> to *<a href="38580.html">PotValue</a> and write this back to *<a href="38580.html">PotValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37459"></span>37459</td>
+<td class="instruction">ADD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37460"></span>37460</td>
+<td class="instruction">LD (38580),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37463"></span>37463</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37233.html">37233</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37445">Map</a></td>
+<td class="next">
+Next: <a href="37464.html">37464</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/9245.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

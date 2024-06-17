@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 32363</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32151.html">32151</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32363">Map</a></td>
+<td class="next">
+Next: <a href="32399.html">32399</a>
+</td>
+</tr>
+</table>
+<div class="description">32363: Remove Speech Bubble</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="couch" src="../../images/scr/couch.png" /></td>
+</tr>
+</table>  Used by the routine at <a href="32151.html">Messaging_Girl</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">RemoveSpeechBubble</td>
+<td class="address-2"><span id="32363"></span>32363</td>
+<td class="instruction">LD DE,38694</td>
+<td class="comment-1" rowspan="1">Set the source address as <a href="38694.html">Graphics_Couch</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32366"></span>32366</td>
+<td class="instruction">LD HL,16397</td>
+<td class="comment-1" rowspan="1">Set the destination address in the screen buffer to 16397.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32369"></span>32369</td>
+<td class="instruction">LD B,7</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=7 (width).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32371"></span>32371</td>
+<td class="instruction">LD C,32</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=32 (height).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32373"></span>32373</td>
+<td class="instruction">CALL <a href="39226.html">PrintGraphic</a></td>
+<td class="comment-1" rowspan="1">Call <a href="39226.html">PrintGraphic</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32376"></span>
+<div class="comments">
+<div class="paragraph">
+Recolour the background.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32376"></span>32376</td>
+<td class="instruction">LD HL,22541</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=22541 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32379"></span>32379</td>
+<td class="instruction">LD C,4</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=4 (height in character blocks).</td>
+</tr>
+<tr>
+<td class="asm-label">RemoveSpeechBubble_RowLoop</td>
+<td class="address-2"><span id="32381"></span>32381</td>
+<td class="instruction">LD B,7</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=7 (width).</td>
+</tr>
+<tr>
+<td class="asm-label">RemoveSpeechBubble_Loop</td>
+<td class="address-2"><span id="32383"></span>32383</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="2">Copy one byte of attribute data to the attribute buffer.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32384"></span>32384</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32385"></span>32385</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1">Increment the source attribute data pointer by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32386"></span>32386</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment the attribute buffer pointer by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32387"></span>32387</td>
+<td class="instruction">DJNZ <a href="32363.html#32383">RemoveSpeechBubble_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the counter by one and loop back to <a href="32363.html#32383">RemoveSpeechBubble_Loop</a> until the counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32389"></span>32389</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Briefly stash <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32390"></span>32390</td>
+<td class="instruction">LD DE,25</td>
+<td class="comment-1" rowspan="2">Add 0025 to <span class="register">HL</span> to move onto the next row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32393"></span>32393</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32394"></span>32394</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32395"></span>32395</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="2">Decrease the counter by one and jump back to <a href="32363.html#32381">RemoveSpeechBubble_RowLoop</a> until the counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32396"></span>32396</td>
+<td class="instruction">JR NZ,<a href="32363.html#32381">RemoveSpeechBubble_RowLoop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="32398"></span>32398</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32151.html">32151</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32363">Map</a></td>
+<td class="next">
+Next: <a href="32399.html">32399</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/7E6B.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

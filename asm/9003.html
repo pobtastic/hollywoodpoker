@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 9003</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="8F7E.html">8F7E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9003">Map</a></td>
+<td class="next">
+Next: <a href="9054.html">9054</a>
+</td>
+</tr>
+</table>
+<div class="description">9003: Mark Cards</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="8D4A.html">PlayGame</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9003"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="message-15" src="../images/scr/message-15.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">MarkCards</td>
+<td class="address-2"><span id="9003"></span>9003</td>
+<td class="instruction">LD A,$0F</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 0F.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9005"></span>9005</td>
+<td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9008"></span>9008</td>
+<td class="instruction">LD HL,$9054</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9054.html">9054</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="900b"></span>900B</td>
+<td class="instruction">LD B,$06</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=06.</td>
+</tr>
+<tr>
+<td class="asm-label">MarkCards_0</td>
+<td class="address-2"><span id="900d"></span>900D</td>
+<td class="instruction">LD (HL),$00</td>
+<td class="comment-1" rowspan="1">Write 00 to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="900f"></span>900F</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9010"></span>9010</td>
+<td class="instruction">DJNZ <a href="9003.html#900d">MarkCards_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9003.html#900d">MarkCards_0</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9012"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="905C.html">905C</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">MarkCards_1</td>
+<td class="address-2"><span id="9012"></span>9012</td>
+<td class="instruction">LD HL,$5A1B</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=5A1B (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9015"></span>9015</td>
+<td class="instruction">LD A,($9054)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="9054.html">9054</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9018"></span>9018</td>
+<td class="instruction">LD DE,$0006</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=0006.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="901b"></span>901B</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label">MarkCards_2</td>
+<td class="address-2"><span id="901c"></span>901C</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="901d"></span>901D</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="901e"></span>901E</td>
+<td class="instruction">JR NZ,<a href="9003.html#901c">MarkCards_2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9003.html#901c">MarkCards_2</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9020"></span>9020</td>
+<td class="instruction">LD ($905A),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="9054.html#905a">905A</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">MarkCards_3</td>
+<td class="address-2"><span id="9023"></span>9023</td>
+<td class="instruction">LD C,$00</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label">MarkCards_4</td>
+<td class="address-2"><span id="9025"></span>9025</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9026"></span>9026</td>
+<td class="instruction">SLA A</td>
+<td class="comment-1" rowspan="3">Shift <span class="register">A</span> left three positions (with carry).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9028"></span>9028</td>
+<td class="instruction">SLA A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="902a"></span>902A</td>
+<td class="instruction">SLA A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="902c"></span>902C</td>
+<td class="instruction">OR %01000000</td>
+<td class="comment-1" rowspan="1">Set bit 6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="902e"></span>902E</td>
+<td class="instruction">LD HL,($905A)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="9054.html#905a">905A</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9031"></span>9031</td>
+<td class="instruction">LD B,$06</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=06.</td>
+</tr>
+<tr>
+<td class="asm-label">MarkCards_5</td>
+<td class="address-2"><span id="9033"></span>9033</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9034"></span>9034</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9035"></span>9035</td>
+<td class="instruction">DJNZ <a href="9003.html#9033">MarkCards_5</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9003.html#9033">MarkCards_5</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9037"></span>9037</td>
+<td class="instruction">LD D,$19</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=19.</td>
+</tr>
+<tr>
+<td class="asm-label">MarkCards_6</td>
+<td class="address-2"><span id="9039"></span>9039</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">D</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="903a"></span>903A</td>
+<td class="instruction">JR NZ,<a href="9003.html#9039">MarkCards_6</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9003.html#9039">MarkCards_6</a> until <span class="register">D</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="903c"></span>903C</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">C</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="903d"></span>903D</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="3">Jump to <a href="9003.html#9025">MarkCards_4</a> if <span class="register">C</span> is not equal to 08.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="903e"></span>903E</td>
+<td class="instruction">CP $08</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9040"></span>9040</td>
+<td class="instruction">JR NZ,<a href="9003.html#9025">MarkCards_4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9042"></span>9042</td>
+<td class="instruction">CALL <a href="90D8.html">Controls</a></td>
+<td class="comment-1" rowspan="1">Call <a href="90D8.html">Controls</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9045"></span>9045</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9046"></span>9046</td>
+<td class="instruction">JR Z,<a href="905C.html#9093">$9093</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="905C.html#9093">9093</a> if <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9048"></span>9048</td>
+<td class="instruction">CP $03</td>
+<td class="comment-1" rowspan="2">Jump to <a href="905C.html">905C</a> if <span class="register">A</span> is equal to 03.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="904a"></span>904A</td>
+<td class="instruction">JR Z,<a href="905C.html">$905C</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="904c"></span>904C</td>
+<td class="instruction">CP $04</td>
+<td class="comment-1" rowspan="2">Jump to <a href="905C.html#9068">9068</a> if <span class="register">A</span> is equal to 04.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="904e"></span>904E</td>
+<td class="instruction">JR Z,<a href="905C.html#9068">$9068</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9050"></span>9050</td>
+<td class="instruction">JR C,<a href="905C.html#90bb">$90BB</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="905C.html#90bb">90BB</a> if <span class="register">A</span> is lower than 04.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9052"></span>9052</td>
+<td class="instruction">JR <a href="9003.html#9023">MarkCards_3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9003.html#9023">MarkCards_3</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="8F7E.html">8F7E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9003">Map</a></td>
+<td class="next">
+Next: <a href="9054.html">9054</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/36867.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

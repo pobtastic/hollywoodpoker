@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 784B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="77DB.html">77DB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#784b">Map</a></td>
+<td class="next">
+Next: <a href="7917.html">7917</a>
+</td>
+</tr>
+</table>
+<div class="description">784B: Display Title Screen</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="6E9D.html">TitleScreen</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="784b"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="title-screen" src="../images/scr/title-screen.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DisplayTitleScreen</td>
+<td class="address-2"><span id="784b"></span>784B</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=02.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="784d"></span>784D</td>
+<td class="instruction">CALL $1601</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1601.html">CHAN_OPEN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7850"></span>7850</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-1" rowspan="2">Set the border to 
+
+
+GREEN using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/2294.html#229b">BORDER</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7852"></span>7852</td>
+<td class="instruction">CALL $229B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7855"></span>7855</td>
+<td class="instruction">SET 3,(IY+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7859"></span>7859</td>
+<td class="instruction">SET 3,(IY+$30)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="785d"></span>
+<div class="comments">
+<div class="paragraph">
+Set the UDG graphics pointer.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="785d"></span>785D</td>
+<td class="instruction">LD HL,$F3C9</td>
+<td class="comment-1" rowspan="2">Write <a href="F4C9.html">F3C9</a> (<a href="F4C9.html">CustomFont</a>) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7860"></span>7860</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7863"></span>7863</td>
+<td class="instruction">LD A,$27</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=INK:
+WHITE,
+PAPER:
+GREEN
+
+.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7865"></span>7865</td>
+<td class="instruction">LD ($5C8D),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7868"></span>7868</td>
+<td class="instruction">LD A,$20</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=INK:
+BLACK,
+PAPER:
+GREEN
+
+.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="786a"></span>786A</td>
+<td class="instruction">LD ($5C48),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C48.html">BORDCR</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="786d"></span>786D</td>
+<td class="instruction">CALL $0DAF</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7870"></span>
+<div class="comments">
+<div class="paragraph">
+Draw three sections which are white on the left, and black on the right:
+</div>
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="empty-sections" src="../images/scr/empty-sections.png" /></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+Set the point in the attribute buffer where the black sections will begin.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7870"></span>7870</td>
+<td class="instruction">LD HL,$5821</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=5821 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7873"></span>7873</td>
+<td class="instruction">LD B,$03</td>
+<td class="comment-1" rowspan="1">Set a counter for the three sections to paint.</td>
+</tr>
+<tr>
+<td class="asm-label">TitleScreen_SectionLoop</td>
+<td class="address-2"><span id="7875"></span>7875</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the section counter on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7876"></span>7876</td>
+<td class="instruction">LD C,$06</td>
+<td class="comment-1" rowspan="1">In each section there are six rows, so set another counter for this.</td>
+</tr>
+<tr>
+<td class="asm-label">TitleScreen_RowLoop</td>
+<td class="address-2"><span id="7878"></span>7878</td>
+<td class="instruction">LD B,$1E</td>
+<td class="comment-1" rowspan="1">The entire length of each row is 1E character blocks.</td>
+</tr>
+<tr>
+<td class="asm-label">TitleScreen_Row</td>
+<td class="address-2"><span id="787a"></span>787A</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">Is the current position 17 ... This is the split for white/ black.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="787b"></span>787B</td>
+<td class="instruction">CP $17</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="787d"></span>787D</td>
+<td class="instruction">LD A,$78</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=INK:
+BLACK,
+PAPER:
+WHITE
+(BRIGHT)
+.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="787f"></span>787F</td>
+<td class="instruction">JR NC,<a href="784B.html#7883">TitleScreen_Paint</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="784B.html#7883">TitleScreen_Paint</a> if the current position was 17 on line <a href="784B.html#787a">TitleScreen_Row</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7881"></span>7881</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=INK:
+WHITE,
+PAPER:
+BLACK
+
+.</td>
+</tr>
+<tr>
+<td class="asm-label">TitleScreen_Paint</td>
+<td class="address-2"><span id="7883"></span>7883</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write the attribute byte to the pointer held in <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7884"></span>7884</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment the attribute buffer pointer by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7885"></span>7885</td>
+<td class="instruction">DJNZ <a href="784B.html#787a">TitleScreen_Row</a></td>
+<td class="comment-1" rowspan="1">Decrease the length counter by one and loop back to <a href="784B.html#787a">TitleScreen_Row</a> until the counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7887"></span>7887</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Increment the attribute buffer pointer by two, this moves to the start of the next row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7888"></span>7888</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7889"></span>7889</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="2">Decrease the row counter by one and jump back to <a href="784B.html#7878">TitleScreen_RowLoop</a> until all rows have been painted.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="788a"></span>788A</td>
+<td class="instruction">JR NZ,<a href="784B.html#7878">TitleScreen_RowLoop</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="788c"></span>
+<div class="comments">
+<div class="paragraph">
+This section is now completely painted so move onto the next one.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="788c"></span>788C</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment-1" rowspan="2">Move to the next section.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="788f"></span>788F</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7890"></span>7890</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the section counter from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7891"></span>7891</td>
+<td class="instruction">DJNZ <a href="784B.html#7875">TitleScreen_SectionLoop</a></td>
+<td class="comment-1" rowspan="1">Decrease the section counter by one and loop back to <a href="784B.html#7875">TitleScreen_SectionLoop</a> until all three sections have been painted.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7893"></span>
+<div class="comments">
+<div class="paragraph">
+Now print the icons in each box:
+</div>
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="options" src="../images/scr/options.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7893"></span>7893</td>
+<td class="instruction">LD DE,$7A4D</td>
+<td class="comment-1" rowspan="1">Set a pointer in <span class="register">DE</span> where the icon graphics begin: <a href="7A4D.html">Graphics_KeyboardIcon</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7896"></span>
+<div class="comments">
+<div class="paragraph">
+Set up printing the keyboard icon.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7896"></span>7896</td>
+<td class="instruction">LD HL,$4021</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=4021 (screen buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7899"></span>7899</td>
+<td class="instruction">LD BC,$0830</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0830 (width/ length).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="789c"></span>789C</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the width/ length on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="789d"></span>789D</td>
+<td class="instruction">CALL <a href="993A.html">PrintGraphic</a></td>
+<td class="comment-1" rowspan="1">Call <a href="993A.html">PrintGraphic</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78a0"></span>78A0</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the width/ length from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78a1"></span>78A1</td>
+<td class="instruction">LD HL,$5821</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=5821 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78a4"></span>78A4</td>
+<td class="instruction">CALL <a href="7917.html">WriteAttributeData</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7917.html">WriteAttributeData</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="78a7"></span>
+<div class="comments">
+<div class="paragraph">
+Set up printing the joystick icon.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78a7"></span>78A7</td>
+<td class="instruction">LD HL,$4801</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=4801 (screen buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78aa"></span>78AA</td>
+<td class="instruction">LD BC,$0828</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0828 (width/ length).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78ad"></span>78AD</td>
+<td class="instruction">CALL <a href="993A.html">PrintGraphic</a></td>
+<td class="comment-1" rowspan="1">Call <a href="993A.html">PrintGraphic</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="78b0"></span>
+<div class="comments">
+<div class="paragraph">
+Set up printing the information icon.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78b0"></span>78B0</td>
+<td class="instruction">LD HL,$48E4</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=48E4 (screen buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78b3"></span>78B3</td>
+<td class="instruction">LD BC,$0228</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0228 (width/ length).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78b6"></span>78B6</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the width/ length on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78b7"></span>78B7</td>
+<td class="instruction">CALL <a href="993A.html">PrintGraphic</a></td>
+<td class="comment-1" rowspan="1">Call <a href="993A.html">PrintGraphic</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78ba"></span>78BA</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the width/ length from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78bb"></span>78BB</td>
+<td class="instruction">LD HL,$59E4</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=59E4 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78be"></span>78BE</td>
+<td class="instruction">CALL <a href="7917.html">WriteAttributeData</a></td>
+<td class="comment-1" rowspan="1">Call <a href="7917.html">WriteAttributeData</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="78c1"></span>
+<div class="comments">
+<div class="paragraph">
+Now handle printing the text.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78c1"></span>78C1</td>
+<td class="instruction">LD DE,$7931</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="7931.html">Messaging_TitleScreen</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78c4"></span>78C4</td>
+<td class="instruction">LD BC,$00C7</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=00C7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78c7"></span>78C7</td>
+<td class="instruction">CALL $203C</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78ca"></span>78CA</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=01.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78cc"></span>78CC</td>
+<td class="instruction">CALL $1601</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1601.html">CHAN_OPEN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78cf"></span>78CF</td>
+<td class="instruction">LD HL,$79F8</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="79F8.html">Messaging_FooterCopyright</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78d2"></span>78D2</td>
+<td class="instruction">CALL $187D</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78d5"></span>78D5</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=02.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78d7"></span>78D7</td>
+<td class="instruction">CALL $1601</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1601.html">CHAN_OPEN</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="78da"></span>
+<div class="comments">
+<div class="paragraph">
+Lastly, print the current user-defined keys.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78da"></span>78DA</td>
+<td class="instruction">LD HL,$6F6D</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="6F6D.html">KeyboardKeymap</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78dd"></span>78DD</td>
+<td class="instruction">LD BC,$170B</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=170B.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintKeys_Loop</td>
+<td class="address-2"><span id="78e0"></span>78E0</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">BC</span> and <span class="register">HL</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78e1"></span>78E1</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78e2"></span>78E2</td>
+<td class="instruction">CALL $0DE2</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">0DE2</a> (CL_SET).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78e5"></span>78E5</td>
+<td class="instruction">LD A,$10</td>
+<td class="comment-1" rowspan="4">Set INK: 
+
+
+WHITE.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78e7"></span>78E7</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78e8"></span>78E8</td>
+<td class="instruction">LD A,$07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78ea"></span>78EA</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78eb"></span>78EB</td>
+<td class="instruction">LD A,$11</td>
+<td class="comment-1" rowspan="4">Set PAPER: 
+
+
+BLACK.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78ed"></span>78ED</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78ee"></span>78EE</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78ef"></span>78EF</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78f0"></span>78F0</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78f1"></span>78F1</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78f2"></span>78F2</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78f3"></span>78F3</td>
+<td class="instruction">CP $0D</td>
+<td class="comment-1" rowspan="2">Jump to <a href="784B.html#7907">PrintEnter</a> if the key is "enter".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78f5"></span>78F5</td>
+<td class="instruction">JR Z,<a href="784B.html#7907">PrintEnter</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78f7"></span>78F7</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="2">Jump to <a href="784B.html#790f">PrintSpace</a> if the key is an ASCII "space".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78f9"></span>78F9</td>
+<td class="instruction">JR Z,<a href="784B.html#790f">PrintSpace</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78fb"></span>78FB</td>
+<td class="instruction">RST $10</td>
+<td class="comment-1" rowspan="1">Print the key to the screen.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintKeys_Next</td>
+<td class="address-2"><span id="78fc"></span>78FC</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78fd"></span>78FD</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Increment <span class="register">HL</span> by two.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78fe"></span>78FE</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="78ff"></span>78FF</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7900"></span>7900</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7901"></span>7901</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="3">Jump back to <a href="784B.html#78e0">PrintKeys_Loop</a> until <span class="register">B</span> is equal to 12.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7902"></span>7902</td>
+<td class="instruction">CP $12</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7904"></span>7904</td>
+<td class="instruction">JR NZ,<a href="784B.html#78e0">PrintKeys_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7906"></span>7906</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="7907"></span>
+<div class="comments">
+<div class="paragraph">
+Prints the word "ENTER".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintEnter</td>
+<td class="address-2"><span id="7907"></span>7907</td>
+<td class="instruction">LD HL,$7A47</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="7A47.html">Messaging_Enter</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="790a"></span>790A</td>
+<td class="instruction">CALL $187D</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="790d"></span>790D</td>
+<td class="instruction">JR <a href="784B.html#78fc">PrintKeys_Next</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="784B.html#78fc">PrintKeys_Next</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="790f"></span>
+<div class="comments">
+<div class="paragraph">
+Prints the word "SPACE".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintSpace</td>
+<td class="address-2"><span id="790f"></span>790F</td>
+<td class="instruction">LD HL,$7A41</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="7A41.html">Messaging_Space</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7912"></span>7912</td>
+<td class="instruction">CALL $187D</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="7915"></span>7915</td>
+<td class="instruction">JR <a href="784B.html#78fc">PrintKeys_Next</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="784B.html#78fc">PrintKeys_Next</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="77DB.html">77DB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#784b">Map</a></td>
+<td class="next">
+Next: <a href="7917.html">7917</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/30795.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

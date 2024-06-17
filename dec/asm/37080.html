@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 37080</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36956.html">36956</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37080">Map</a></td>
+<td class="next">
+Next: <a href="37182.html">37182</a>
+</td>
+</tr>
+</table>
+<div class="description">37080: Controls: Get Input</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="36867.html">MarkCards</a>, <a href="37233.html">37233</a> and <a href="37464.html">37464</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls</td>
+<td class="address-2"><span id="37080"></span>37080</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37081"></span>37081</td>
+<td class="instruction">LD (23560),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37084"></span>37084</td>
+<td class="instruction">LD A,(37182)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="37080.html#37100">Controls_ReadKeyboard</a> if *<a href="37182.html">UserDefinedKeys</a> is not equal to 6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37087"></span>37087</td>
+<td class="instruction">CP 6</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37089"></span>37089</td>
+<td class="instruction">JR NZ,<a href="37080.html#37100">Controls_ReadKeyboard</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37091"></span>37091</td>
+<td class="instruction">CALL <a href="37192.html">Controls_ReadKempston</a></td>
+<td class="comment-1" rowspan="1">Call <a href="37192.html">Controls_ReadKempston</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37094"></span>37094</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=Player input.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37095"></span>37095</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="2">Jump to <a href="37080.html#37123">Controls_NoInput</a> if no input was detected (255 for "no input was made").</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37096"></span>37096</td>
+<td class="instruction">JR Z,<a href="37080.html#37123">Controls_NoInput</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37098"></span>37098</td>
+<td class="instruction">JR <a href="37080.html#37128">Controls_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37080.html#37128">Controls_0</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_ReadKeyboard</td>
+<td class="address-2"><span id="37100"></span>37100</td>
+<td class="instruction">CALL 703</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkit.ca/disassemblies/rom/hex/asm/02BF.html">KEYBOARD</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37103"></span>37103</td>
+<td class="instruction">LD HL,37182</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="37182.html">UserDefinedKeys</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37106"></span>37106</td>
+<td class="instruction">LD A,(23560)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37109"></span>37109</td>
+<td class="instruction">CP 14</td>
+<td class="comment-1" rowspan="2">Jump to <a href="38609.html#38690">38690</a> if <span class="register">A</span> is equal to 14.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37111"></span>37111</td>
+<td class="instruction">JP Z,<a href="38609.html#38690">38690</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37114"></span>
+<div class="comments">
+<div class="paragraph">
+Detect the keyboard input.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37114"></span>37114</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="1">Set a counter of 5 for the number of controls to be read.</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_ReadKeyboard_Loop</td>
+<td class="address-2"><span id="37116"></span>37116</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="37080.html#37126">Controls_HandleKeyPress</a> if the currently pressed key is equal to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37117"></span>37117</td>
+<td class="instruction">JR Z,<a href="37080.html#37126">Controls_HandleKeyPress</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37119"></span>37119</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Increment <span class="register">HL</span> by two.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37120"></span>37120</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37121"></span>37121</td>
+<td class="instruction">DJNZ <a href="37080.html#37116">Controls_ReadKeyboard_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37080.html#37116">Controls_ReadKeyboard_Loop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37123"></span>
+<div class="comments">
+<div class="paragraph">
+No input was detected so return with 255.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_NoInput</td>
+<td class="address-2"><span id="37123"></span>37123</td>
+<td class="instruction">LD A,255</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=255.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37125"></span>37125</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37126"></span>
+<div class="comments">
+<div class="paragraph">
+A valid key press was detected, handle it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_HandleKeyPress</td>
+<td class="address-2"><span id="37126"></span>37126</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37127"></span>37127</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_0</td>
+<td class="address-2"><span id="37128"></span>37128</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37129"></span>37129</td>
+<td class="instruction">LD A,(37573)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="37080.html#37156">PlaySelectWaveSound</a> if *<a href="37464.html#37573">37573</a> is not zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37132"></span>37132</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37133"></span>37133</td>
+<td class="instruction">JR NZ,<a href="37080.html#37156">PlaySelectWaveSound</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37135"></span>37135</td>
+<td class="instruction">LD A,(37182)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="37080.html#37150">DebounceLoop</a> if *<a href="37182.html">UserDefinedKeys</a> is not equal to 6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37138"></span>37138</td>
+<td class="instruction">CP 6</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37140"></span>37140</td>
+<td class="instruction">JR NZ,<a href="37080.html#37150">DebounceLoop</a></td>
+</tr>
+<tr>
+<td class="asm-label">Controls_1</td>
+<td class="address-2"><span id="37142"></span>37142</td>
+<td class="instruction">CALL <a href="37192.html">Controls_ReadKempston</a></td>
+<td class="comment-1" rowspan="1">Call <a href="37192.html">Controls_ReadKempston</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37145"></span>37145</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">C</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37146"></span>37146</td>
+<td class="instruction">JR NZ,<a href="37080.html#37142">Controls_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37080.html#37142">Controls_1</a> if <span class="register">C</span> is not zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37148"></span>37148</td>
+<td class="instruction">JR <a href="37080.html#37156">PlaySelectWaveSound</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37080.html#37156">PlaySelectWaveSound</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37150"></span>
+<div class="comments">
+<div class="paragraph">
+Debounce the key press.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DebounceLoop</td>
+<td class="address-2"><span id="37150"></span>37150</td>
+<td class="instruction">CALL 654</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37153"></span>
+<div class="comments">
+<div class="paragraph">
+Handle if no keys are being pressed, for reference:
+</div>
+<div class="paragraph">
+<blockquote>In all instances the <span class="register">E</span> register is returned with a value in the range of +0 to +39 the value being different for each of the forty keys of the keyboard, or the value +255 for no-key.</blockquote>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37153"></span>37153</td>
+<td class="instruction">INC E</td>
+<td class="comment-1" rowspan="1">Set the zero flag if no keys have been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37154"></span>37154</td>
+<td class="instruction">JR NZ,<a href="37080.html#37150">DebounceLoop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37080.html#37150">DebounceLoop</a> unless no keys are being pressed.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37156"></span>
+<div class="comments">
+<div class="paragraph">
+Play the "select" key wave sound.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PlaySelectWaveSound</td>
+<td class="address-2"><span id="37156"></span>37156</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="37464.html#37573">37573</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37157"></span>37157</td>
+<td class="instruction">LD (37573),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37160"></span>37160</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37161"></span>37161</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="2">Return if <span class="register">A</span> is not zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37162"></span>37162</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37163"></span>37163</td>
+<td class="instruction">DI</td>
+<td class="comment-1" rowspan="1">Disable interrupts.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37164"></span>37164</td>
+<td class="instruction">LD B,201</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=201.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37166"></span>37166</td>
+<td class="instruction">LD A,252</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=252.</td>
+</tr>
+<tr>
+<td class="asm-label">SelectSoundLoop</td>
+<td class="address-2"><span id="37168"></span>37168</td>
+<td class="instruction">LD C,50</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=50.</td>
+</tr>
+<tr>
+<td class="asm-label">SelectSoundDurationLoop</td>
+<td class="address-2"><span id="37170"></span>37170</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">C</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37171"></span>37171</td>
+<td class="instruction">JR NZ,<a href="37080.html#37170">SelectSoundDurationLoop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37080.html#37170">SelectSoundDurationLoop</a> until <span class="register">C</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37173"></span>37173</td>
+<td class="instruction">OUT (254),A</td>
+<td class="comment-1" rowspan="2">Flip the speaker bit (bit 4), and send the result to the speaker.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37175"></span>37175</td>
+<td class="instruction">XOR %00010000</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37177"></span>37177</td>
+<td class="instruction">DJNZ <a href="37080.html#37168">SelectSoundLoop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37080.html#37168">SelectSoundLoop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37179"></span>37179</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37180"></span>37180</td>
+<td class="instruction">EI</td>
+<td class="comment-1" rowspan="1">Enable interrupts.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37181"></span>37181</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36956.html">36956</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37080">Map</a></td>
+<td class="next">
+Next: <a href="37182.html">37182</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/90D8.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

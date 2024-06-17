@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at E313</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E217.html">E217</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e313">Map</a></td>
+<td class="next">
+Next: <a href="E33A.html">E33A</a>
+</td>
+</tr>
+</table>
+<div class="description">E313: Routine at E313</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="8D4A.html">PlayGame</a> and <a href="8EE2.html">Handler_Showdown</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="e313"></span>E313</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e315"></span>E315</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=<span class="register">IX</span> (using the stack).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e317"></span>E317</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e318"></span>E318</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Write 01 to *<a href="E81F.html">E81F</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e31a"></span>E31A</td>
+<td class="instruction">LD ($E81F),A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="e31d"></span>E31D</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e31e"></span>E31E</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e31f"></span>E31F</td>
+<td class="instruction">CALL <a href="E33A.html">$E33A</a></td>
+<td class="comment-1" rowspan="1">Call <a href="E33A.html">E33A</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e322"></span>E322</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e323"></span>E323</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e324"></span>E324</td>
+<td class="instruction">LD A,($E81F)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="E81F.html">E81F</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e327"></span>E327</td>
+<td class="instruction">CP $05</td>
+<td class="comment-1" rowspan="2">Jump to <a href="E313.html#e331">E331</a> if <span class="register">A</span> is equal to 05.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e329"></span>E329</td>
+<td class="instruction">JR Z,<a href="E313.html#e331">$E331</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="e32b"></span>E32B</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e32c"></span>E32C</td>
+<td class="instruction">LD ($E81F),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="E81F.html">E81F</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e32f"></span>E32F</td>
+<td class="instruction">JR <a href="E313.html#e31d">$E31D</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E313.html#e31d">E31D</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="e331"></span>E331</td>
+<td class="instruction">LD HL,$F3C9</td>
+<td class="comment-1" rowspan="2">Write <a href="F4C9.html">F3C9</a> (<a href="F4C9.html">CustomFont</a>) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e334"></span>E334</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e337"></span>E337</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">IX</span> from the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="e339"></span>E339</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E217.html">E217</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e313">Map</a></td>
+<td class="next">
+Next: <a href="E33A.html">E33A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/58131.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

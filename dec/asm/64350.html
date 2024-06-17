@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 64350</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="64343.html">64343</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#64350">Map</a></td>
+<td class="next">
+Next: <a href="64363.html">64363</a>
+</td>
+</tr>
+</table>
+<div class="description">64350: Routine at FB5E</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="64385.html">64385</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="64350"></span>64350</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="3">Load the next address into <span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="64351"></span>64351</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="64352"></span>64352</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="64353"></span>64353</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="64354"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="64363.html">64363</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="64354"></span>64354</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="64355"></span>64355</td>
+<td class="instruction">CP 64</td>
+<td class="comment-1" rowspan="2">Jump to <a href="64363.html#64377">64377</a> if <span class="register">A</span> is equal to 64.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="64357"></span>64357</td>
+<td class="instruction">JR Z,<a href="64363.html#64377">64377</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="64359"></span>64359</td>
+<td class="instruction">LD (HL),D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="64360"></span>64360</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="64361"></span>64361</td>
+<td class="instruction">LD (HL),E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="64362"></span>64362</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="64343.html">64343</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#64350">Map</a></td>
+<td class="next">
+Next: <a href="64363.html">64363</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/FB5E.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

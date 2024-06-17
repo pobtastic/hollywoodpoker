@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 8F7E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="8F7D.html">8F7D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#8f7e">Map</a></td>
+<td class="next">
+Next: <a href="9003.html">9003</a>
+</td>
+</tr>
+</table>
+<div class="description">8F7E: Print Stats</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="8D4A.html">PlayGame</a>, <a href="9171.html">9171</a> and <a href="9258.html">9258</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintStats</td>
+<td class="address-2"><span id="8f7e"></span>8F7E</td>
+<td class="instruction">LD HL,$8FE2</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="8F7E.html#8fe2">8FE2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f81"></span>8F81</td>
+<td class="instruction">CALL $187D</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8f84"></span>
+<div class="comments">
+<div class="paragraph">
+Print "POT" value.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f84"></span>8F84</td>
+<td class="instruction">LD HL,$92C6</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="92C6.html">Messaging_InGame</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f87"></span>8F87</td>
+<td class="instruction">LD A,($96B4)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B4.html">PotValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f8a"></span>8F8A</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f8c"></span>8F8C</td>
+<td class="instruction">CALL <a href="8F7E.html#8fe9">PrintStatToScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8F7E.html#8fe9">PrintStatToScreen</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8f8f"></span>
+<div class="comments">
+<div class="paragraph">
+Print current round.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f8f"></span>8F8F</td>
+<td class="instruction">LD HL,$932D</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="92C6.html#932d">Messaging_Round</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f92"></span>8F92</td>
+<td class="instruction">LD A,($96B8)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B8.html">CurrentRound</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f95"></span>8F95</td>
+<td class="instruction">LD D,$FF</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=FF.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f97"></span>8F97</td>
+<td class="instruction">CALL <a href="8F7E.html#8fe9">PrintStatToScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8F7E.html#8fe9">PrintStatToScreen</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8f9a"></span>
+<div class="comments">
+<div class="paragraph">
+Print "YOU" and the players cash reserves.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f9a"></span>8F9A</td>
+<td class="instruction">LD HL,$92CE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="92C6.html#92ce">Messaging_You</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8f9d"></span>8F9D</td>
+<td class="instruction">LD A,($96B5)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B5.html">PlayerCash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fa0"></span>8FA0</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fa2"></span>8FA2</td>
+<td class="instruction">CALL <a href="8F7E.html#8fe9">PrintStatToScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8F7E.html#8fe9">PrintStatToScreen</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8fa5"></span>
+<div class="comments">
+<div class="paragraph">
+Print the girls name and their cash reserve.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fa5"></span>8FA5</td>
+<td class="instruction">LD A,($98E4)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="98E4.html">CurrentGirl</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fa8"></span>8FA8</td>
+<td class="instruction">LD DE,$000B</td>
+<td class="comment-1" rowspan="1">The length of each girls name is 000B, so store this in <span class="register">DE</span> for the calculation.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fab"></span>8FAB</td>
+<td class="instruction">LD HL,$92CB</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="92C6.html#92d6">92CB</a> (e.g. <a href="92C6.html#92d6">Messaging_Sheila</a> less 000B).</td>
+</tr>
+<tr>
+<td class="asm-label">FindGirlsName_Loop</td>
+<td class="address-2"><span id="8fae"></span>8FAE</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">Keep adding 000B to <span class="register">HL</span> while <span class="register">A</span> is non-zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8faf"></span>8FAF</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fb0"></span>8FB0</td>
+<td class="instruction">JR NZ,<a href="8F7E.html#8fae">FindGirlsName_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="8F7E.html#8fae">FindGirlsName_Loop</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fb2"></span>8FB2</td>
+<td class="instruction">LD A,($96B6)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B6.html">GirlCash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fb5"></span>8FB5</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fb7"></span>8FB7</td>
+<td class="instruction">CALL <a href="8F7E.html#8fe9">PrintStatToScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8F7E.html#8fe9">PrintStatToScreen</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8fba"></span>
+<div class="comments">
+<div class="paragraph">
+Print "Raise" and current value.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fba"></span>8FBA</td>
+<td class="instruction">LD HL,$92F7</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="92C6.html#92f7">Messaging_Raise</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fbd"></span>8FBD</td>
+<td class="instruction">LD A,($96B7)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B7.html">CurrentRaiseValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fc0"></span>8FC0</td>
+<td class="instruction">LD D,$FE</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=FE.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fc2"></span>8FC2</td>
+<td class="instruction">CP $0A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="8F7E.html#8fc8">PrintStats_0</a> if <span class="register">A</span> is higher than 0A.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fc4"></span>8FC4</td>
+<td class="instruction">JR NC,<a href="8F7E.html#8fc8">PrintStats_0</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fc6"></span>8FC6</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintStats_0</td>
+<td class="address-2"><span id="8fc8"></span>8FC8</td>
+<td class="instruction">CALL <a href="8F7E.html#8fe9">PrintStatToScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8F7E.html#8fe9">PrintStatToScreen</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8fcb"></span>
+<div class="comments">
+<div class="paragraph">
+Prints the players lives.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fcb"></span>8FCB</td>
+<td class="instruction">LD HL,$9301</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="92C6.html#9301">Messaging_PlayerLivesHash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fce"></span>8FCE</td>
+<td class="instruction">LD A,($8F7C)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="8F7C.html">PlayerLives</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fd1"></span>8FD1</td>
+<td class="instruction">LD D,$FF</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=FF.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fd3"></span>8FD3</td>
+<td class="instruction">CALL <a href="8F7E.html#8fe9">PrintStatToScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8F7E.html#8fe9">PrintStatToScreen</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fd6"></span>8FD6</td>
+<td class="instruction">LD HL,$9306</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="92C6.html#9306">Messaging_GirlLivesHash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fd9"></span>8FD9</td>
+<td class="instruction">LD A,($8F7D)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="8F7D.html">GirlLives</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fdc"></span>8FDC</td>
+<td class="instruction">LD D,$FF</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=FF.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fde"></span>8FDE</td>
+<td class="instruction">CALL <a href="8F7E.html#8fe9">PrintStatToScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8F7E.html#8fe9">PrintStatToScreen</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fe1"></span>8FE1</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fe2"></span>8FE2</td>
+<td class="instruction">DEFB $13,$01</td>
+<td class="comment-1" rowspan="1">BRIGHT: ON.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fe4"></span>8FE4</td>
+<td class="instruction">DEFB $10,$00</td>
+<td class="comment-1" rowspan="1">Set INK: 
+
+
+BLACK.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fe6"></span>8FE6</td>
+<td class="instruction">DEFB $11,$07</td>
+<td class="comment-1" rowspan="1">Set PAPER: 
+
+
+WHITE.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fe8"></span>8FE8</td>
+<td class="instruction">DEFB $0D</td>
+<td class="comment-1" rowspan="1">"ENTER".</td>
+</tr>
+<tr>
+<td class="asm-label">PrintStatToScreen</td>
+<td class="address-2"><span id="8fe9"></span>8FE9</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">DE</span> and <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fea"></span>8FEA</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8feb"></span>8FEB</td>
+<td class="instruction">CALL $187D</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fee"></span>8FEE</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fef"></span>8FEF</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ff1"></span>8FF1</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ff2"></span>8FF2</td>
+<td class="instruction">CALL $1A1B</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1A1B.html">OUT_NUM_1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ff5"></span>8FF5</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ff6"></span>8FF6</td>
+<td class="instruction">INC D</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">D</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ff7"></span>8FF7</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Return if <span class="register">D</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ff8"></span>8FF8</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ff9"></span>8FF9</td>
+<td class="instruction">LD A,$24</td>
+<td class="comment-1" rowspan="2">Print "&#36;".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ffb"></span>8FFB</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ffc"></span>8FFC</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ffd"></span>8FFD</td>
+<td class="instruction">INC D</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">D</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8ffe"></span>8FFE</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Return if <span class="register">D</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="8fff"></span>8FFF</td>
+<td class="instruction">LD A,$20</td>
+<td class="comment-1" rowspan="2">Print "SPACE".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9001"></span>9001</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9002"></span>9002</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="8F7D.html">8F7D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#8f7e">Map</a></td>
+<td class="next">
+Next: <a href="9003.html">9003</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/36734.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

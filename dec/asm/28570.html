@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 28570</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28564.html">28564</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28570">Map</a></td>
+<td class="next">
+Next: <a href="28746.html">28746</a>
+</td>
+</tr>
+</table>
+<div class="description">28570: Collect User-Defined Keys</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys</td>
+<td class="address-2"><span id="28570"></span>28570</td>
+<td class="instruction">LD A,1</td>
+<td class="comment-1" rowspan="2">Write 1 to *<a href="28570.html#28745">28745</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28572"></span>28572</td>
+<td class="instruction">LD (28745),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28575"></span>28575</td>
+<td class="instruction">LD HL,28525</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="28525.html">KeyboardKeymap</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28578"></span>28578</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_0</td>
+<td class="address-2"><span id="28580"></span>28580</td>
+<td class="instruction">LD (HL),0</td>
+<td class="comment-1" rowspan="1">Write 0 to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28582"></span>28582</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Increment <span class="register">HL</span> by two.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28583"></span>28583</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28584"></span>28584</td>
+<td class="instruction">DJNZ <a href="28570.html#28580">CollectUserDefinedKeys_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28580">CollectUserDefinedKeys_0</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_1</td>
+<td class="address-2"><span id="28586"></span>28586</td>
+<td class="instruction">CALL 654</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28589"></span>28589</td>
+<td class="instruction">INC E</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">E</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28590"></span>28590</td>
+<td class="instruction">JR NZ,<a href="28570.html#28586">CollectUserDefinedKeys_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28586">CollectUserDefinedKeys_1</a> until <span class="register">E</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28592"></span>28592</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to <a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28593"></span>28593</td>
+<td class="instruction">LD (23560),A</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_2</td>
+<td class="address-2"><span id="28596"></span>28596</td>
+<td class="instruction">LD C,5</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=5.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28598"></span>28598</td>
+<td class="instruction">CALL <a href="28570.html#28725">CollectUserDefinedKeys_11</a></td>
+<td class="comment-1" rowspan="1">Call <a href="28570.html#28725">CollectUserDefinedKeys_11</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_3</td>
+<td class="address-2"><span id="28601"></span>28601</td>
+<td class="instruction">CALL 703</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkit.ca/disassemblies/rom/hex/asm/02BF.html">KEYBOARD</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28604"></span>28604</td>
+<td class="instruction">BIT 5,(IY+1)</td>
+<td class="comment-1" rowspan="1">Test bit 5 of *<span class="register">IX</span>+1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28608"></span>28608</td>
+<td class="instruction">JR Z,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if {} is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28610"></span>28610</td>
+<td class="instruction">LD A,(23560)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28613"></span>28613</td>
+<td class="instruction">CP 13</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28637">CollectUserDefinedKeys_4</a> if <span class="register">A</span> is equal to 13.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28615"></span>28615</td>
+<td class="instruction">JR Z,<a href="28570.html#28637">CollectUserDefinedKeys_4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28617"></span>28617</td>
+<td class="instruction">CP 32</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28637">CollectUserDefinedKeys_4</a> if <span class="register">A</span> is equal to 32.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28619"></span>28619</td>
+<td class="instruction">JR Z,<a href="28570.html#28637">CollectUserDefinedKeys_4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28621"></span>28621</td>
+<td class="instruction">CP 48</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if <span class="register">A</span> is lower than 48.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28623"></span>28623</td>
+<td class="instruction">JR C,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28625"></span>28625</td>
+<td class="instruction">CP 91</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if <span class="register">A</span> is higher than 91.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28627"></span>28627</td>
+<td class="instruction">JR NC,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28629"></span>28629</td>
+<td class="instruction">CP 65</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28637">CollectUserDefinedKeys_4</a> if <span class="register">A</span> is higher than 65.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28631"></span>28631</td>
+<td class="instruction">JR NC,<a href="28570.html#28637">CollectUserDefinedKeys_4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28633"></span>28633</td>
+<td class="instruction">CP 58</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if <span class="register">A</span> is higher than 58.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28635"></span>28635</td>
+<td class="instruction">JR NC,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_4</td>
+<td class="address-2"><span id="28637"></span>28637</td>
+<td class="instruction">LD HL,28525</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="28525.html">KeyboardKeymap</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28640"></span>28640</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28641"></span>28641</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_5</td>
+<td class="address-2"><span id="28643"></span>28643</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if *<span class="register">HL</span> is equal to <span class="register">D</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28644"></span>28644</td>
+<td class="instruction">CP D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28645"></span>28645</td>
+<td class="instruction">JR Z,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28647"></span>28647</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Increment <span class="register">HL</span> by two.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28648"></span>28648</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28649"></span>28649</td>
+<td class="instruction">DJNZ <a href="28570.html#28643">CollectUserDefinedKeys_5</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28643">CollectUserDefinedKeys_5</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28651"></span>28651</td>
+<td class="instruction">LD A,(28745)</td>
+<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="28570.html#28745">28745</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28654"></span>28654</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28655"></span>28655</td>
+<td class="instruction">LD HL,28523</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="28515.html#28523">28523</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_6</td>
+<td class="address-2"><span id="28658"></span>28658</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Increment <span class="register">HL</span> by two.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28659"></span>28659</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28660"></span>28660</td>
+<td class="instruction">DJNZ <a href="28570.html#28658">CollectUserDefinedKeys_6</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28658">CollectUserDefinedKeys_6</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28662"></span>28662</td>
+<td class="instruction">LD (HL),D</td>
+<td class="comment-1" rowspan="1">Write <span class="register">D</span> to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28663"></span>28663</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28664"></span>28664</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28665"></span>28665</td>
+<td class="instruction">LD A,24</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=24.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28667"></span>28667</td>
+<td class="instruction">SUB B</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28668"></span>28668</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28669"></span>28669</td>
+<td class="instruction">LD C,11</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=11.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28671"></span>28671</td>
+<td class="instruction">CALL 3554</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">3554</a> (CL_SET).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28674"></span>28674</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28675"></span>28675</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">D</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28676"></span>28676</td>
+<td class="instruction">CP 13</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28717">CollectUserDefinedKeys_10</a> if <span class="register">A</span> is equal to 13.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28678"></span>28678</td>
+<td class="instruction">JR Z,<a href="28570.html#28717">CollectUserDefinedKeys_10</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28680"></span>28680</td>
+<td class="instruction">CP 32</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28709">CollectUserDefinedKeys_9</a> if <span class="register">A</span> is equal to 32.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28682"></span>28682</td>
+<td class="instruction">JR Z,<a href="28570.html#28709">CollectUserDefinedKeys_9</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28684"></span>28684</td>
+<td class="instruction">RST 16</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_7</td>
+<td class="address-2"><span id="28685"></span>28685</td>
+<td class="instruction">LD B,4</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=4.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_8</td>
+<td class="address-2"><span id="28687"></span>28687</td>
+<td class="instruction">LD A,32</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=32.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28689"></span>28689</td>
+<td class="instruction">RST 16</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28690"></span>28690</td>
+<td class="instruction">DJNZ <a href="28570.html#28687">CollectUserDefinedKeys_8</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28687">CollectUserDefinedKeys_8</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28692"></span>28692</td>
+<td class="instruction">LD C,7</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28694"></span>28694</td>
+<td class="instruction">CALL <a href="28570.html#28725">CollectUserDefinedKeys_11</a></td>
+<td class="comment-1" rowspan="1">Call <a href="28570.html#28725">CollectUserDefinedKeys_11</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28697"></span>28697</td>
+<td class="instruction">LD A,(28745)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="28570.html#28745">28745</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28700"></span>28700</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28701"></span>28701</td>
+<td class="instruction">LD (28745),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="28570.html#28745">28745</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28704"></span>28704</td>
+<td class="instruction">CP 6</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28596">CollectUserDefinedKeys_2</a> if <span class="register">A</span> is not equal to 6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28706"></span>28706</td>
+<td class="instruction">JR NZ,<a href="28570.html#28596">CollectUserDefinedKeys_2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28708"></span>28708</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_9</td>
+<td class="address-2"><span id="28709"></span>28709</td>
+<td class="instruction">LD HL,31297</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="31297.html">Messaging_Space</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28712"></span>28712</td>
+<td class="instruction">CALL 6269</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28715"></span>28715</td>
+<td class="instruction">JR <a href="28570.html#28685">CollectUserDefinedKeys_7</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28685">CollectUserDefinedKeys_7</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_10</td>
+<td class="address-2"><span id="28717"></span>28717</td>
+<td class="instruction">LD HL,31303</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="31303.html">Messaging_Enter</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28720"></span>28720</td>
+<td class="instruction">CALL 6269</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28723"></span>28723</td>
+<td class="instruction">JR <a href="28570.html#28685">CollectUserDefinedKeys_7</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28685">CollectUserDefinedKeys_7</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_11</td>
+<td class="address-2"><span id="28725"></span>28725</td>
+<td class="instruction">LD HL,22539</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=22539 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28728"></span>28728</td>
+<td class="instruction">LD DE,32</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=0032.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28731"></span>28731</td>
+<td class="instruction">LD A,(28745)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="28570.html#28745">28745</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_12</td>
+<td class="address-2"><span id="28734"></span>28734</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28735"></span>28735</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28736"></span>28736</td>
+<td class="instruction">JR NZ,<a href="28570.html#28734">CollectUserDefinedKeys_12</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28734">CollectUserDefinedKeys_12</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28738"></span>28738</td>
+<td class="instruction">LD B,20</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=20.</td>
+</tr>
+<tr>
+<td class="asm-label">CollectUserDefinedKeys_13</td>
+<td class="address-2"><span id="28740"></span>28740</td>
+<td class="instruction">LD (HL),C</td>
+<td class="comment-1" rowspan="1">Write <span class="register">C</span> to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28741"></span>28741</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28742"></span>28742</td>
+<td class="instruction">DJNZ <a href="28570.html#28740">CollectUserDefinedKeys_13</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28740">CollectUserDefinedKeys_13</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28744"></span>28744</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="28745"></span>28745</td>
+<td class="instruction">DEFB 0</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28564.html">28564</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28570">Map</a></td>
+<td class="next">
+Next: <a href="28746.html">28746</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/6F9A.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

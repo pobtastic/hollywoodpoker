@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 73BE</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7399.html">7399</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#73be">Map</a></td>
+<td class="next">
+Next: <a href="73FA.html">73FA</a>
+</td>
+</tr>
+</table>
+<div class="description">73BE: Display Information Pages</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+<table class="default">
+<tr>
+<td class="centre" colspan="1" rowspan="1"><img alt="information-screen-1" src="../images/scr/information-screen-1.png" /></td>
+<td class="" colspan="1" rowspan="1"><img alt="information-screen-2" src="../images/scr/information-screen-2.png" /></td>
+</tr>
+</table>  Used by the routine at <a href="6E9D.html#6ecc">TitleScreenRouting</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DisplayInformationPages</td>
+<td class="address-2"><span id="73be"></span>73BE</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="3">Write 
+
+
+WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C48.html">BORDCR</a> and *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73c0"></span>73C0</td>
+<td class="instruction">LD ($5C48),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73c3"></span>73C3</td>
+<td class="instruction">LD ($5C8D),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73c6"></span>73C6</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="2">Set the border to 
+
+
+BLACK using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/2294.html#229b">BORDER</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73c8"></span>73C8</td>
+<td class="instruction">CALL $229B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73cb"></span>73CB</td>
+<td class="instruction">CALL $0DAF</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73ce"></span>73CE</td>
+<td class="instruction">LD DE,$73FA</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="73FA.html">Messaging_InformationPage1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73d1"></span>73D1</td>
+<td class="instruction">LD BC,$0283</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0283.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73d4"></span>73D4</td>
+<td class="instruction">CALL $203C</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73d7"></span>73D7</td>
+<td class="instruction">RES 5,(IY+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73db"></span>73DB</td>
+<td class="instruction">LD BC,$0000</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0000.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73de"></span>73DE</td>
+<td class="instruction">CALL $1F3D</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73e1"></span>73E1</td>
+<td class="instruction">CALL $0DAF</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73e4"></span>73E4</td>
+<td class="instruction">LD DE,$767D</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="767D.html">Messaging_InformationPage2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73e7"></span>73E7</td>
+<td class="instruction">LD BC,$0122</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0122.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73ea"></span>73EA</td>
+<td class="instruction">CALL $203C</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73ed"></span>73ED</td>
+<td class="instruction">RES 5,(IY+$01)</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73f1"></span>73F1</td>
+<td class="instruction">LD BC,$0000</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0000.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73f4"></span>73F4</td>
+<td class="instruction">CALL $1F3D</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="73f7"></span>73F7</td>
+<td class="instruction">JP <a href="6E9D.html">TitleScreen</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="6E9D.html">TitleScreen</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="7399.html">7399</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#73be">Map</a></td>
+<td class="next">
+Next: <a href="73FA.html">73FA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/29630.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

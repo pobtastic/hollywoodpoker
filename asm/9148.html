@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 9148</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="913E.html">913E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9148">Map</a></td>
+<td class="next">
+Next: <a href="9171.html">9171</a>
+</td>
+</tr>
+</table>
+<div class="description">9148: Read Kempston Joystick</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="90D8.html">Controls</a>.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Key press input</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9148"></span>
+<div class="comments">
+<div class="paragraph">
+The response will be: <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">00</td>
+<td class="centre" colspan="1" rowspan="1">Select (fire)</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">01</td>
+<td class="centre" colspan="1" rowspan="1">Up</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">02</td>
+<td class="centre" colspan="1" rowspan="1">Down</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">03</td>
+<td class="centre" colspan="1" rowspan="1">Left</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">04</td>
+<td class="centre" colspan="1" rowspan="1">Right</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">FF</td>
+<td class="centre" colspan="1" rowspan="1">No input</td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_ReadKempston</td>
+<td class="address-2"><span id="9148"></span>9148</td>
+<td class="instruction">LD B,$3A</td>
+<td class="comment-1" rowspan="1">Set a read counter of 3A.</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_ReadKempston_Loop</td>
+<td class="address-2"><span id="914a"></span>914A</td>
+<td class="instruction">IN A,($1F)</td>
+<td class="comment-1" rowspan="1">Read Kempston Joystick input.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="914c"></span>914C</td>
+<td class="instruction">DJNZ <a href="9148.html#914a">Controls_ReadKempston_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the read counter by one and loop back to <a href="9148.html">Controls_ReadKempston</a> until the counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="914e"></span>914E</td>
+<td class="instruction">LD C,$00</td>
+<td class="comment-1" rowspan="3">Return with <span class="register">C</span> being 00 if "fire" has been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9150"></span>9150</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9152"></span>9152</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9153"></span>9153</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="3">Return with <span class="register">C</span> being 01 if "up" has been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9154"></span>9154</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9156"></span>9156</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9157"></span>9157</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="3">Return with <span class="register">C</span> being 02 if "down" has been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9158"></span>9158</td>
+<td class="instruction">CP $08</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="915a"></span>915A</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="915b"></span>915B</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="3">Return with <span class="register">C</span> being 03 if "left" has been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="915c"></span>915C</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="915e"></span>915E</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="915f"></span>915F</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="3">Return with <span class="register">C</span> being 04 if "right" has been pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9160"></span>9160</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9162"></span>9162</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9163"></span>9163</td>
+<td class="instruction">CALL $02BF</td>
+<td class="comment-1" rowspan="1">Call <a href="https://skoolkit.ca/disassemblies/rom/hex/asm/02BF.html">KEYBOARD</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9166"></span>9166</td>
+<td class="instruction">LD A,($5C08)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="96D1.html#9722">9722</a> if <a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is 0E.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9169"></span>9169</td>
+<td class="instruction">CP $0E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="916b"></span>916B</td>
+<td class="instruction">JP Z,<a href="96D1.html#9722">$9722</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="916e"></span>916E</td>
+<td class="instruction">LD C,$FF</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=FF.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9170"></span>9170</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="913E.html">913E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#9148">Map</a></td>
+<td class="next">
+Next: <a href="9171.html">9171</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/37192.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

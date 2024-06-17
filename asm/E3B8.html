@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at E3B8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E39A.html">E39A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e3b8">Map</a></td>
+<td class="next">
+Next: <a href="E436.html">E436</a>
+</td>
+</tr>
+</table>
+<div class="description">E3B8: Print Cards</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="E33A.html">E33A</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCards</td>
+<td class="address-2"><span id="e3b8"></span>E3B8</td>
+<td class="instruction">SUB $03</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>-=03.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3ba"></span>E3BA</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="3">Decrease <span class="register">B</span> by three.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3bb"></span>E3BB</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3bc"></span>E3BC</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e3bd"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="E33A.html">E33A</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCards_0</td>
+<td class="address-2"><span id="e3bd"></span>E3BD</td>
+<td class="instruction">LD C,B</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3be"></span>E3BE</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3bf"></span>E3BF</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c0"></span>E3C0</td>
+<td class="instruction">LD DE,$001E</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=001E.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c3"></span>E3C3</td>
+<td class="instruction">LD HL,$E436</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E436.html">Graphics_CardTwo</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c6"></span>E3C6</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c7"></span>E3C7</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCards_1</td>
+<td class="address-2"><span id="e3c9"></span>E3C9</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3ca"></span>E3CA</td>
+<td class="instruction">DJNZ <a href="E3B8.html#e3c9">PrintCards_1</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e3c9">PrintCards_1</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3cc"></span>E3CC</td>
+<td class="instruction">LD ($E563),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="E563.html">E563</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3cf"></span>E3CF</td>
+<td class="instruction">LD B,$04</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCards_2</td>
+<td class="address-2"><span id="e3d1"></span>E3D1</td>
+<td class="instruction">SRL C</td>
+<td class="comment-1" rowspan="1">Shift <span class="register">C</span> right.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d3"></span>E3D3</td>
+<td class="instruction">DJNZ <a href="E3B8.html#e3d1">PrintCards_2</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e3d1">PrintCards_2</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d5"></span>E3D5</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="2">Write <span class="register">C</span> to *<a href="E562.html">E562</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d6"></span>E3D6</td>
+<td class="instruction">LD ($E562),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d9"></span>E3D9</td>
+<td class="instruction">LD B,C</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3da"></span>E3DA</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3db"></span>E3DB</td>
+<td class="instruction">LD DE,$0058</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=0058.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3de"></span>E3DE</td>
+<td class="instruction">LD HL,$E6BF</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E6BF.html">Graphics_CardSuitsData</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3e1"></span>E3E1</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3e2"></span>E3E2</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCards_3</td>
+<td class="address-2"><span id="e3e4"></span>E3E4</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3e5"></span>E3E5</td>
+<td class="instruction">DJNZ <a href="E3B8.html#e3e4">PrintCards_3</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e3e4">PrintCards_3</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3e7"></span>E3E7</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3e8"></span>E3E8</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3e9"></span>E3E9</td>
+<td class="instruction">LD DE,$E667</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="E667.html">Buffer_CardData</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3ec"></span>E3EC</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">LDIR.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3ee"></span>E3EE</td>
+<td class="instruction">LD HL,$E35F</td>
+<td class="comment-1" rowspan="2">Write E35F to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3f1"></span>E3F1</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3f4"></span>E3F4</td>
+<td class="instruction">LD A,$13</td>
+<td class="comment-1" rowspan="4">BRIGHT: ON.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3f6"></span>E3F6</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3f7"></span>E3F7</td>
+<td class="instruction">LD A,$01</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3f9"></span>E3F9</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3fa"></span>E3FA</td>
+<td class="instruction">LD A,$10</td>
+<td class="comment-1" rowspan="4">Set INK: 
+
+
+BLACK.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3fc"></span>E3FC</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3fd"></span>E3FD</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3ff"></span>E3FF</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e400"></span>E400</td>
+<td class="instruction">LD A,($E562)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e40d">PrintCards_4</a> if *<a href="E562.html">E562</a> is higher than 02.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e403"></span>E403</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e405"></span>E405</td>
+<td class="instruction">JR NC,<a href="E3B8.html#e40d">PrintCards_4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e407"></span>E407</td>
+<td class="instruction">LD A,$10</td>
+<td class="comment-1" rowspan="4">Set INK: 
+
+
+RED.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e409"></span>E409</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e40a"></span>E40A</td>
+<td class="instruction">LD A,$02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e40c"></span>E40C</td>
+<td class="instruction">RST $10</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e40d"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="E33A.html">E33A</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCards_4</td>
+<td class="address-2"><span id="e40d"></span>E40D</td>
+<td class="instruction">LD A,($E81F)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="E81F.html">E81F</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e410"></span>E410</td>
+<td class="instruction">LD C,$06</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=06.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e412"></span>E412</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e413"></span>E413</td>
+<td class="instruction">LD A,$26</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=26.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCards_5</td>
+<td class="address-2"><span id="e415"></span>E415</td>
+<td class="instruction">SUB C</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e416"></span>E416</td>
+<td class="instruction">DJNZ <a href="E3B8.html#e415">PrintCards_5</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e415">PrintCards_5</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e418"></span>E418</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e419"></span>E419</td>
+<td class="instruction">LD B,$0C</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=0C.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e41b"></span>E41B</td>
+<td class="instruction">LD DE,($E563)</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="E563.html">E563</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCards_6</td>
+<td class="address-2"><span id="e41f"></span>E41F</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e420"></span>E420</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e434">PrintCards_7</a> if <span class="register">B</span> is equal to 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e421"></span>E421</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e423"></span>E423</td>
+<td class="instruction">JR Z,<a href="E3B8.html#e434">PrintCards_7</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e425"></span>E425</td>
+<td class="instruction">CALL $0DE2</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">0DE2</a> (CL_SET).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e428"></span>E428</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e429"></span>E429</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">BC</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e42a"></span>E42A</td>
+<td class="instruction">LD BC,$0006</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0006.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e42d"></span>E42D</td>
+<td class="instruction">CALL $203C</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e430"></span>E430</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e431"></span>E431</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e432"></span>E432</td>
+<td class="instruction">JR <a href="E3B8.html#e41f">PrintCards_6</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E3B8.html#e41f">PrintCards_6</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">PrintCards_7</td>
+<td class="address-2"><span id="e434"></span>E434</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e435"></span>E435</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E39A.html">E39A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e3b8">Map</a></td>
+<td class="next">
+Next: <a href="E436.html">E436</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/58296.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>
