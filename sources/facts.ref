@@ -1,0 +1,77 @@
+; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
+
+[Fact:Girls]
+To save on space, the girls are created with one initial image, and then the
+other "frames" are single sections which are overlaid on top of them.
+
+This means that often, an image is an amalgamation of several images all
+printed on top of each other.
+
+<table>
+  <caption>Girl 1: Shelia</caption>
+  <tbody>
+    <tr>
+      <td><img alt="girl-1-frame-1" src="../images/udgs/girl-1-frame-1.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-1-frame-2" src="../images/udgs/girl-1-frame-2.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-1-frame-3" src="../images/udgs/girl-1-frame-3.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-1-frame-4" src="../images/udgs/girl-1-frame-4.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-1-frame-5" src="../images/udgs/girl-1-frame-5.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-1-frame-6" src="../images/udgs/girl-1-frame-6.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-1-frame-7" src="../images/udgs/girl-1-frame-7.png"></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <caption>Girl 2: Ireen</caption>
+  <tbody>
+    <tr>
+      <td><img alt="girl-2-frame-1" src="../images/udgs/girl-2-frame-1.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-2-frame-2" src="../images/udgs/girl-2-frame-2.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-2-frame-3" src="../images/udgs/girl-2-frame-3.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-2-frame-4" src="../images/udgs/girl-2-frame-4.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-2-frame-5" src="../images/udgs/girl-2-frame-5.png"></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <caption>Girl 3: Diane</caption>
+  <tbody>
+    <tr>
+      <td><img alt="girl-3-frame-1" src="../images/udgs/girl-3-frame-1.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-3-frame-2" src="../images/udgs/girl-3-frame-2.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-3-frame-3" src="../images/udgs/girl-3-frame-3.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-3-frame-4" src="../images/udgs/girl-3-frame-4.png"></td>
+    </tr>
+    <tr>
+      <td><img alt="girl-3-frame-5" src="../images/udgs/girl-3-frame-5.png"></td>
+    </tr>
+  </tbody>
+</table>

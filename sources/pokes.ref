@@ -1,0 +1,166 @@
+; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
+
+[Poke:Dunno]
+<code>
+  <div>POKE #R$96A5,#N$AF</div>
+</code>
+
+Alters the following code:
+
+<table>
+  <tbody>
+    <tr>
+      <td class="address-1">#R$96A1</td>
+      <td class="instruction">LD #REGb,#REGa</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$96A2</td>
+      <td class="instruction">LD #REGa,(#R$96B6(#N$96B6))</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$96A5</td>
+      <td class="instruction">SUB #REGb</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$96A6</td>
+      <td class="instruction">LD (#R$96B6(#N$96B6)),#REGa</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$96A9</td>
+      <td class="instruction">LD #REGa,(#R$96B4(#N$96B4))</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$96AC</td>
+      <td class="instruction">ADD #REGa,#REGb</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$96AD</td>
+      <td class="instruction">LD (#R$96B4(#N$96B4)),#REGa</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$96B0</td>
+      <td class="instruction">RET</td>
+    </tr>
+  </tbody>
+</table>
+
+To:
+<table>
+  <tbody>
+    <tr>
+      <td class="address-1">#R$96A5</td>
+      <td class="instruction">XOR #REGa</td>
+    </tr>
+  </tbody>
+</table>
+
+[Poke:Lives]
+<code>
+  <div>POKE #R$8CF0(#N$8CF1),<em>nn</em></div>
+</code>
+
+Sets the "lives" value when a new game is started:
+<table>
+  <tbody>
+    <tr>
+      <td class="address-1">#R$8CF0(#N$8CF0)</td>
+      <td class="instruction">LD #REGhl,#N$0606</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$8CF3(#N$8CF3)</td>
+      <td class="instruction">LD (#R$8F7C($8F7C)),#REGhl</td>
+    </tr>
+  </tbody>
+</table>
+
+[Poke:£245 Cash]
+<code>
+  <div>POKE #R$8D03(#N$8D04),#N$FF</div>
+  <div>POKE #R$8F45(#N$8F46),#N$FF</div>
+  <div>POKE #R$8F5A(#N$8F5B),#N$FF</div>
+</code>
+
+Sets the "cash" value when a new game is started:
+<table>
+  <tbody>
+    <tr>
+      <td class="address-1">#R$8D03</td>
+      <td class="instruction">LD #REGhl,#N$6464</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$8D06</td>
+      <td class="instruction">LD (#R$96B5(#N$96B5)),#REGhl</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td class="address-1">#R$8F45</td>
+      <td class="instruction">LD #REGhl,#N$6464</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$8F48</td>
+      <td class="instruction">LD (#R$96B5(#N$96B5)),#REGhl</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td class="address-1">#R$8F5A</td>
+      <td class="instruction">LD #REGhl,$6464</td>
+    <tr>
+      <td class="address-1">#R$8F5D</td>
+      <td class="instruction">LD (#R$96B5(#N$96B5)),#REGhl</td>
+    </tr>
+  </tbody>
+</table>
+
+[Poke:Girl Has No Cash]
+<code>
+  <div>POKE #R$8D03(#N$8D05),#N$0A</div>
+  <div>POKE #R$8F45(#N$8F47),#N$0A</div>
+  <div>POKE #R$8F5A(#N$8F5C),#N$0A</div>
+</code>
+
+Sets the "cash" value when a new game is started:
+<table>
+  <tbody>
+    <tr>
+      <td class="address-1">#R$8D03</td>
+      <td class="instruction">LD #REGhl,#N$6464</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$8D06</td>
+      <td class="instruction">LD (#R$96B5(#N$96B5)),#REGhl</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td class="address-1">#R$8F45</td>
+      <td class="instruction">LD #REGhl,#N$6464</td>
+    </tr>
+    <tr>
+      <td class="address-1">#R$8F48</td>
+      <td class="instruction">LD (#R$96B5(#N$96B5)),#REGhl</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td class="address-1">#R$8F5A</td>
+      <td class="instruction">LD #REGhl,$6464</td>
+    <tr>
+      <td class="address-1">#R$8F5D</td>
+      <td class="instruction">LD (#R$96B5(#N$96B5)),#REGhl</td>
+    </tr>
+  </tbody>
+</table>

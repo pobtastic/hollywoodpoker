@@ -1,0 +1,33 @@
+; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
+
+[Girl:Sheila]
+
+#PUSHS #SIM(start=$8CF0,stop=$985D) #UDGTABLE(default,centre)
+  { #POKES$98E3,$00 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-1-1) }
+  { #POKES$98E3,$01 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-1-2) }
+  { #POKES$98E3,$02 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-1-3) }
+  { #POKES$98E3,$03 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-1-4) }
+  { #POKES$98E3,$04 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-1-5) }
+  { #POKES$98E3,$05 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-1-6) }
+  { #POKES$98E3,$06 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-1-7) }
+UDGTABLE# #POPS
+
+[Girl:Ireen]
+
+#PUSHS #SIM(start=$8CF0,stop=$985D) #UDGTABLE(default,centre)
+  { #POKES$98E3,$07 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-2-1) }
+  { #POKES$98E3,$08 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-2-2) }
+  { #POKES$98E3,$09 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-2-3) }
+  { #POKES$98E3,$0A #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-2-4) }
+  { #POKES$98E3,$0B #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-2-5) }
+UDGTABLE# #POPS
+
+[Girl:Diane]
+
+#PUSHS #SIM(start=$8CF0,stop=$985D) #UDGTABLE(default,centre)
+  { #POKES$98E3,$0C #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-3-1) }
+  { #POKES$98E3,$0D #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-3-2) }
+  { #POKES$98E3,$0E #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-3-3) }
+  { #POKES$98E3,$0F #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-3-4) }
+  { #POKES$98E3,$10 #SIM(start=$8D10,stop=$985D)#SCR$02{$00,$00,$200,$B0}(girl-3-5) }
+UDGTABLE# #POPS
