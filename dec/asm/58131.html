@@ -33,7 +33,7 @@ Next: <a href="58170.html">58170</a>
 </td>
 </tr>
 </table>
-<div class="description">58131: Evaluate Hand?</div>
+<div class="description">58131: Print Hand</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -54,7 +54,7 @@ Used by the routines at <a href="36170.html">PlayGame</a> and <a href="36578.htm
 </td>
 </tr>
 <tr>
-<td class="asm-label">EvaluateHand?</td>
+<td class="asm-label">PrintHand</td>
 <td class="address-2"><span id="58131"></span>58131</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
@@ -92,7 +92,17 @@ Starting from the first card.
 <td class="instruction">LD (59423),A</td>
 </tr>
 <tr>
-<td class="asm-label">EvaluateHand_Loop</td>
+<td class="routine-comment" colspan="5">
+<span id="58141"></span>
+<div class="comments">
+<div class="paragraph">
+Loop round each card in turn and print it to the screen.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PrintHand_Loop</td>
 <td class="address-2"><span id="58141"></span>58141</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1">Stash the hand pointer on the stack.</td>
@@ -106,8 +116,8 @@ Starting from the first card.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58143"></span>58143</td>
-<td class="instruction">CALL <a href="58170.html">58170</a></td>
-<td class="comment-1" rowspan="1">Call <a href="58170.html">58170</a>.</td>
+<td class="instruction">CALL <a href="58170.html">CheckCardType</a></td>
+<td class="comment-1" rowspan="1">Call <a href="58170.html">CheckCardType</a> (which will print the card in position to the screen).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -120,6 +130,16 @@ Starting from the first card.
 <td class="address-1"><span id="58147"></span>58147</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment the hand pointer by one to point to the next card.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58148"></span>
+<div class="comments">
+<div class="paragraph">
+Have all cards been printed yet? There are 5 in a hand.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -151,15 +171,15 @@ Starting from the first card.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58159"></span>58159</td>
-<td class="instruction">JR <a href="58131.html#58141">EvaluateHand_Loop</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="58131.html#58141">EvaluateHand_Loop</a>.</td>
+<td class="instruction">JR <a href="58131.html#58141">PrintHand_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="58131.html#58141">PrintHand_Loop</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="58161"></span>
 <div class="comments">
 <div class="paragraph">
-Housekeeping; restore the CHARS value and the hand pointer to return.
+Housekeeping; restore the <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a> value and the hand pointer to return.
 </div>
 </div>
 </td>

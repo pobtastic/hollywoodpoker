@@ -39,7 +39,7 @@ Next: <a href="E436.html">E436</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="E33A.html">E33A</a>.
+Used by the routine at <a href="E33A.html">CheckCardType</a>.
 </div>
 </div>
 </td>
@@ -71,7 +71,7 @@ Used by the routine at <a href="E33A.html">E33A</a>.
 <span id="e3bd"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="E33A.html">E33A</a>.
+This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>.
 </div>
 </div>
 </td>
@@ -134,7 +134,7 @@ This entry point is used by the routine at <a href="E33A.html">E33A</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e3cc"></span>E3CC</td>
 <td class="instruction">LD ($E563),HL</td>
-<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="E563.html">E563</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="E563.html">PictureCardUDGData</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -297,7 +297,7 @@ BLACK.</td>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e400"></span>E400</td>
 <td class="instruction">LD A,($E562)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e40d">PrintCards_4</a> if *<a href="E562.html">E562</a> is higher than 02.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e40d">PrintCard</a> if *<a href="E562.html">E562</a> is higher than 02.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -307,7 +307,7 @@ BLACK.</td>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e405"></span>E405</td>
-<td class="instruction">JR NC,<a href="E3B8.html#e40d">PrintCards_4</a></td>
+<td class="instruction">JR NC,<a href="E3B8.html#e40d">PrintCard</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -338,28 +338,38 @@ RED.</td>
 <span id="e40d"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="E33A.html">E33A</a>.
+This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards_4</td>
+<td class="asm-label">PrintCard</td>
 <td class="address-2"><span id="e40d"></span>E40D</td>
 <td class="instruction">LD A,($E81F)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="E81F.html">CardPosition</a>.</td>
+<td class="comment-1" rowspan="1">Fetch the current *<a href="E81F.html">CardPosition</a> and store this in <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e410"></span>E410</td>
 <td class="instruction">LD C,$06</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=06.</td>
+<td class="comment-1" rowspan="1">Each card is 06 character blocks in width, store this count in <span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e412"></span>E412</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the card position we're processing.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e413"></span>
+<div class="comments">
+<div class="paragraph">
+Subtract 06 from 26 the number of times for the current card position. For example; position 01 is - 26 - (01 * 06) = 20.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -368,7 +378,7 @@ This entry point is used by the routine at <a href="E33A.html">E33A</a>.
 <td class="comment-1" rowspan="1"><span class="register">A</span>=26.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards_5</td>
+<td class="asm-label">FindCardPosition_Loop</td>
 <td class="address-2"><span id="e415"></span>E415</td>
 <td class="instruction">SUB C</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">C</span>.</td>
@@ -376,8 +386,8 @@ This entry point is used by the routine at <a href="E33A.html">E33A</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e416"></span>E416</td>
-<td class="instruction">DJNZ <a href="E3B8.html#e415">PrintCards_5</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e415">PrintCards_5</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="E3B8.html#e415">FindCardPosition_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease card position counter by one and loop back to <a href="E3B8.html#e415">FindCardPosition_Loop</a> until the counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -395,10 +405,10 @@ This entry point is used by the routine at <a href="E33A.html">E33A</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e41b"></span>E41B</td>
 <td class="instruction">LD DE,($E563)</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="E563.html">E563</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="E563.html">PictureCardUDGData</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards_6</td>
+<td class="asm-label">PrintCards_4</td>
 <td class="address-2"><span id="e41f"></span>E41F</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
@@ -407,7 +417,7 @@ This entry point is used by the routine at <a href="E33A.html">E33A</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e420"></span>E420</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e434">PrintCards_7</a> if <span class="register">B</span> is equal to 07.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e434">PrintCard_Housekeeping</a> if <span class="register">B</span> is equal to 07.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -417,7 +427,7 @@ This entry point is used by the routine at <a href="E33A.html">E33A</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e423"></span>E423</td>
-<td class="instruction">JR Z,<a href="E3B8.html#e434">PrintCards_7</a></td>
+<td class="instruction">JR Z,<a href="E3B8.html#e434">PrintCard_Housekeeping</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -464,11 +474,11 @@ This entry point is used by the routine at <a href="E33A.html">E33A</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e432"></span>E432</td>
-<td class="instruction">JR <a href="E3B8.html#e41f">PrintCards_6</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="E3B8.html#e41f">PrintCards_6</a>.</td>
+<td class="instruction">JR <a href="E3B8.html#e41f">PrintCards_4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E3B8.html#e41f">PrintCards_4</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards_7</td>
+<td class="asm-label">PrintCard_Housekeeping</td>
 <td class="address-2"><span id="e434"></span>E434</td>
 <td class="instruction">POP DE</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
