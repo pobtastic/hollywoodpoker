@@ -3,3 +3,7 @@
 [Audio:select:Select]
 
 #AUDIO(select.wav)(#INCLUDE(Select))
+
+[Audio:tune:Tune]
+
+#AUDIO(tune.wav)(#INCLUDE(Tune))

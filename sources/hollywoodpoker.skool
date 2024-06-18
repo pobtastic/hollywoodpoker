@@ -4842,12 +4842,12 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
  $965A CALL $7D97    ; }
  $965D LD A,($96B7)  ; #REGa=*#R$96B7.
  $9660 LD D,A        ; #REGd=#REGa.
- $9661 XOR A         ; Flip the bits according to #REGa.
- $9662 LD ($96B7),A  ; Write #REGa to *#R$96B7.
- $9665 LD A,D        ; #REGa=#REGd.
- $9666 OR A          ; Set the bits from #REGa.
- $9667 LD A,$02      ; #REGa=#N$02.
- $9669 RET NZ        ; Return if {} is not zero.
+ $9661 XOR A         ; {Write #N$00 to *#R$96B7.
+ $9662 LD ($96B7),A  ; }
+ $9665 LD A,D        ; {Return with #REGa=#N$02 if #REGd is not zero.
+ $9666 OR A          ;
+ $9667 LD A,$02      ;
+ $9669 RET NZ        ; }
  $966A INC A         ; Increment #REGa by one.
  $966B RET           ; Return.
 *$966C LD A,($96B5)  ; {Jump to #R$967D if *#R$96B5 is higher than #REGb.
@@ -4855,11 +4855,11 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
  $9670 JR NC,$967D   ; }
  $9672 LD A,($96B5)  ; {Write *#R$96B5 to *#R$96B7.
  $9675 LD ($96B7),A  ; }
- $9678 OR A          ; Set the bits from #REGa.
- $9679 JR Z,$9658    ; Jump to #R$9658 if {} is zero.
+ $9678 OR A          ; {Jump to #R$9658 if #REGa is zero.
+ $9679 JR Z,$9658    ; }
  $967B JR $9681      ; Jump to #R$9681.
-*$967D LD A,B        ; #REGa=#REGb.
- $967E LD ($96B7),A  ; Write #REGa to *#R$96B7.
+*$967D LD A,B        ; {Write #REGb to *#R$96B7.
+ $967E LD ($96B7),A  ; }
 *$9681 CALL $96A1    ; Call #R$96A1.
 ; #UDGTABLE
 ; { #MESSAGE$02(message-02) }
@@ -6637,30 +6637,38 @@ b$E217 DEFB $AA,$AA,$AA,$AA ; {Pixels.
  $E30B DEFB $38,$38,$38,$38 ;
  $E30F DEFB $38,$38,$38,$38 ; }
 
-; Routine at E313
+; Evaluate Hand?
 ;
 ; Used by the routines at #R$8D4A and #R$8EE2.
+;
+; IX Pointer to either the players hand or the girls hand
+@label=EvaluateHand?
 c$E313 PUSH IX       ; Stash #REGix on the stack.
- $E315 PUSH IX       ; {#REGhl=#REGix (using the stack).
+ $E315 PUSH IX       ; {Copy the hand pointer to #REGhl using the stack.
  $E317 POP HL        ; }
+; Starting from the first card.
  $E318 LD A,$01      ; {Write #N$01 to *#R$E81F.
  $E31A LD ($E81F),A  ; }
-*$E31D PUSH HL       ; Stash #REGhl on the stack.
- $E31E LD A,(HL)     ; #REGa=*#REGhl.
+@label=EvaluateHand_Loop
+*$E31D PUSH HL       ; Stash the hand pointer on the stack.
+ $E31E LD A,(HL)     ; Fetch the card "value" and store it in #REGa.
  $E31F CALL $E33A    ; Call #R$E33A.
- $E322 POP HL        ; Restore #REGhl from the stack.
- $E323 INC HL        ; Increment #REGhl by one.
- $E324 LD A,($E81F)  ; #REGa=*#R$E81F.
- $E327 CP $05        ; {Jump to #R$E331 if #REGa is equal to #N$05.
+ $E322 POP HL        ; Restore the hand pointer from the stack.
+ $E323 INC HL        ; Increment the hand pointer by one to point to the next
+                     ; card.
+ $E324 LD A,($E81F)  ; {Jump to #R$E331 if *#R$E81F is equal to #N$05.
+ $E327 CP $05        ;
  $E329 JR Z,$E331    ; }
- $E32B INC A         ; Increment #REGa by one.
- $E32C LD ($E81F),A  ; Write #REGa to *#R$E81F.
+ $E32B INC A         ; {Increment the card position and update *#R$E81F count,
+ $E32C LD ($E81F),A  ; as on the loop, we'll be looking at the next card.}
  $E32F JR $E31D      ; Jump to #R$E31D.
+; Housekeeping; restore the CHARS value and the hand pointer to return.
+@label=EvaluateHand_Finish
 *$E331 LD HL,$F3C9   ; {#HTML(Write #R$F4C9(#N$F3C9) (#R$F4C9) to *<a
  $E334 LD ($5C36),HL ; rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
                      ; }
- $E337 POP IX        ; Restore #REGix from the stack.
+ $E337 POP IX        ; Restore the original value of #REGix from the stack.
  $E339 RET           ; Return.
 
 ; Routine at E33A
@@ -7098,8 +7106,12 @@ b$E6BF DEFB $00,$00,$00,$00,$01,$01,$02,$0C ; #UDGTABLE { #N((#PC-$E35F)/$08) |
  $E817 DEFB $38,$28,$D6,$BE,$D6,$10,$10,$38 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
                                             ; #UDG(#PC) } UDGTABLE#
 
-; Data block at E81F
-b$E81F DEFB $00
+; Card Position
+;
+; Will be a value of; #N$01-#N$05 to indicate the currently "in-focus"
+; card being processed/ evaluated.
+@label=CardPosition
+g$E81F DEFB $00
 
 ; Girl Buffer?
 b$E820 DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0
@@ -7845,7 +7857,9 @@ c$FB3A LD HL,$FD09   ; {Write #R$FD09 to *#R$FB55.
  $FB51 RET           ; Return.
 
 ; Data block at FB52
-b$FB52 DEFB $15,$FD,$04
+b$FB52 DEFB $15
+ $FB53 DEFB $FD
+ $FB54 DEFB $04
 
 ; Data block at FB55
 w$FB55 DEFW $FD61
@@ -7853,7 +7867,8 @@ w$FB55 DEFW $FD61
 ; Data block at FB57
 w$FB57 DEFW $FD0A
  $FB59 DEFW $FE88
- $FB5B DEFB $31,$FE,$E6
+ $FB5B DEFB $31,$FE
+ $FB5D DEFB $E6
 
 ; Routine at FB5E
 ;
@@ -7862,7 +7877,7 @@ c$FB5E LD E,(HL)     ; {Load the next address into #REGde.
  $FB5F INC HL        ;
  $FB60 LD D,(HL)     ; }
  $FB61 INC DE        ; Increment #REGde by one.
-; This entry point is used by the routine at #R$FB6B.
+; This entry point is used by the routine at #R$FB79.
 *$FB62 LD A,(DE)     ;
  $FB63 CP $40        ; {Jump to #R$FB79 if #REGa is equal to #N$40.
  $FB65 JR Z,$FB79    ; }
@@ -7874,53 +7889,57 @@ c$FB5E LD E,(HL)     ; {Load the next address into #REGde.
 ; Routine at FB6B
 ;
 ; Used by the routine at #R$FB81.
-c$FB6B LD A,(HL)     ;
- $FB6C ADD A,$0C     ;
- $FB6E LD E,A        ;
- $FB6F LD D,$00      ;
- $FB71 LD HL,$FC0E   ;
- $FB74 ADD HL,DE     ;
- $FB75 LD H,(HL)     ;
- $FB76 LD L,$01      ;
- $FB78 RET           ;
-; This entry point is used by the routine at #R$FB5E.
-*$FB79 INC HL        ;
- $FB7A LD E,(HL)     ;
- $FB7B INC HL        ;
- $FB7C LD D,(HL)     ;
- $FB7D DEC HL        ;
- $FB7E DEC HL        ;
- $FB7F JR $FB62      ;
+c$FB6B LD A,(HL)     ; #REGa=*#REGhl.
+ $FB6C ADD A,$0C     ; #REGa+=#N$0C.
+ $FB6E LD E,A        ; #REGe=#REGa.
+ $FB6F LD D,$00      ; #REGd=#N$00.
+ $FB71 LD HL,$FC0E   ; #REGhl=#R$FC0E.
+ $FB74 ADD HL,DE     ; #REGhl+=#REGde.
+ $FB75 LD H,(HL)     ; #REGh=*#REGhl.
+ $FB76 LD L,$01      ; #REGl=#N$01.
+ $FB78 RET           ; Return.
+
+; Routine at FB79
+;
+; Used by the routine at #R$FB5E.
+c$FB79 INC HL        ; Increment #REGhl by one.
+ $FB7A LD E,(HL)     ; #REGe=*#REGhl.
+ $FB7B INC HL        ; Increment #REGhl by one.
+ $FB7C LD D,(HL)     ; #REGd=*#REGhl.
+ $FB7D DEC HL        ; {Decrease #REGhl by two.
+ $FB7E DEC HL        ; }
+ $FB7F JR $FB62      ; Jump to #R$FB62.
 
 ; Routine at FB81
 ;
 ; Used by the routine at #R$FB3A.
 c$FB81 LD HL,$FB55   ; #REGhl=#R$FB55.
  $FB84 CALL $FB5E    ; Call #R$FB5E.
- $FB87 LD ($FB52),A  ;
- $FB8A LD HL,$FB59   ;
- $FB8D CALL $FB5E    ;
- $FB90 LD ($FB53),A  ;
- $FB93 LD HL,$FB52   ;
- $FB96 CALL $FB6B    ;
- $FB99 RL E          ;
- $FB9B JP C,$FC44    ;
- $FB9E PUSH HL       ;
- $FB9F LD HL,$FB53   ;
- $FBA2 CALL $FB6B    ;
- $FBA5 POP DE        ;
- $FBA6 LD A,H        ;
- $FBA7 DEC A         ;
- $FBA8 JR NZ,$FBAE   ;
- $FBAA LD A,D        ;
- $FBAB DEC A         ;
- $FBAC JR Z,$FBF0    ;
-*$FBAE LD A,($FB5D)  ;
- $FBB1 LD C,A        ;
- $FBB2 LD B,$00      ;
- $FBB4 LD A,($FB54)  ;
- $FBB7 EX AF,AF'     ;
- $FBB8 LD A,($FB54)  ;
+ $FB87 LD ($FB52),A  ; Write #REGa to *#R$FB52.
+ $FB8A LD HL,$FB59   ; #REGhl=#R$FB59.
+ $FB8D CALL $FB5E    ; Call #R$FB5E.
+ $FB90 LD ($FB53),A  ; Write #REGa to *#R$FB53.
+ $FB93 LD HL,$FB52   ; #REGhl=#R$FB52.
+ $FB96 CALL $FB6B    ; Call #R$FB6B.
+ $FB99 RL E          ; Rotate #REGe left.
+ $FB9B JP C,$FC44    ; Jump to #R$FC44 if {} is lower.
+ $FB9E PUSH HL       ; Stash #REGhl on the stack.
+ $FB9F LD HL,$FB53   ; #REGhl=#R$FB53.
+ $FBA2 CALL $FB6B    ; Call #R$FB6B.
+ $FBA5 POP DE        ; Restore #REGde from the stack.
+ $FBA6 LD A,H        ; #REGa=#REGh.
+ $FBA7 DEC A         ; Decrease #REGa by one.
+ $FBA8 JR NZ,$FBAE   ; Jump to #R$FBAE if #REGa is not zero.
+ $FBAA LD A,D        ; #REGa=#REGd.
+ $FBAB DEC A         ; Decrease #REGa by one.
+ $FBAC JR Z,$FBF0    ; Jump to #R$FBF0 if #REGa is zero.
+*$FBAE LD A,($FB5D)  ; #REGa=*#R$FB5D.
+ $FBB1 LD C,A        ; #REGc=#REGa.
+ $FBB2 LD B,$00      ; #REGb=#N$00.
+ $FBB4 LD A,($FB54)  ; #REGa=*#R$FB54.
+ $FBB7 EX AF,AF'     ; Exchange the #REGaf register with the shadow #REGaf
+                     ; register.
+ $FBB8 LD A,($FB54)  ; #REGa=*#R$FB54.
  $FBBB LD IXh,D      ;
  $FBBD LD D,$10      ;
 *$FBBF NOP           ;
@@ -7956,71 +7975,42 @@ c$FB81 LD HL,$FB55   ; #REGhl=#R$FB55.
  $FBEB INC C         ;
  $FBEC JP NZ,$FBC1   ;
  $FBEF RET           ;
-*$FBF0 LD A,($FB5D)  ;
- $FBF3 CPL           ;
- $FBF4 LD C,A        ;
-*$FBF5 PUSH BC       ;
- $FBF6 PUSH AF       ;
- $FBF7 LD B,$00      ;
-*$FBF9 PUSH HL       ;
- $FBFA LD HL,$0000   ;
- $FBFD SRA (HL)      ;
+*$FBF0 LD A,($FB5D)  ; #REGa=*#R$FB5D.
+ $FBF3 CPL           ; Invert the bits in #REGa.
+ $FBF4 LD C,A        ; #REGc=#REGa.
+; This entry point is used by the routine at #R$FC44.
+*$FBF5 PUSH BC       ; {Stash #REGbc and #REGaf on the stack.
+ $FBF6 PUSH AF       ; }
+ $FBF7 LD B,$00      ; #REGb=#N$00.
+*$FBF9 PUSH HL       ; Stash #REGhl on the stack.
+ $FBFA LD HL,$0000   ; #REGhl=#N($0000,$04,$04).
+ $FBFD SRA (HL)      ; {Shift *#REGhl right three positions (with carry).
  $FBFF SRA (HL)      ;
- $FC01 SRA (HL)      ;
- $FC03 NOP           ;
- $FC04 POP HL        ;
- $FC05 DJNZ $FBF9    ;
- $FC07 DEC C         ;
- $FC08 JP NZ,$FBF9   ;
- $FC0B POP AF        ;
- $FC0C POP BC        ;
- $FC0D RET           ;
- $FC0E RST $38       ;
- $FC0F RET P         ;
- $FC10 EX (SP),HL    ;
- $FC11 RST $10       ;
- $FC12 SET 0,B       ;
- $FC14 OR H          ;
- $FC15 XOR E         ;
- $FC16 AND C         ;
- $FC17 SUB A         ;
- $FC18 SUB B         ;
- $FC19 ADC A,B       ;
- $FC1A ADD A,B       ;
- $FC1B LD A,C        ;
- $FC1C LD (HL),D     ;
- $FC1D LD L,H        ;
- $FC1E LD H,(HL)     ;
- $FC1F LD H,B        ;
- $FC20 LD E,E        ;
- $FC21 LD D,(HL)     ;
- $FC22 LD D,C        ;
- $FC23 LD C,H        ;
- $FC24 LD C,B        ;
- $FC25 LD B,H        ;
- $FC26 LD B,B        ;
- $FC27 DEC A         ;
- $FC28 ADD HL,SP     ;
- $FC29 LD (HL),$33   ;
- $FC2B JR NC,$FC5A   ;
- $FC2D DEC HL        ;
- $FC2E JR Z,$FC56    ;
- $FC30 INC H         ;
- $FC31 LD ($1E20),HL ;
- $FC34 INC E         ;
- $FC35 DEC DE        ;
- $FC36 ADD HL,DE     ;
- $FC37 JR $FC50      ;
- $FC39 DEC D         ;
- $FC3A INC D         ;
- $FC3B INC DE        ;
- $FC3C LD (DE),A     ;
- $FC3D LD DE,$0F10   ;
- $FC40 LD C,$0D      ;
- $FC42 INC C         ;
- $FC43 LD BC,$3AF5   ;
- $FC46 LD D,E        ;
- $FC47 EI            ;
+ $FC01 SRA (HL)      ; }
+ $FC03 NOP           ; No operation.
+ $FC04 POP HL        ; Restore #REGhl from the stack.
+ $FC05 DJNZ $FBF9    ; Decrease counter by one and loop back to #R$FBF9 until
+                     ; counter is zero.
+ $FC07 DEC C         ; Decrease #REGc by one.
+ $FC08 JP NZ,$FBF9   ; Jump to #R$FBF9 until #REGc is zero.
+ $FC0B POP AF        ; {Restore #REGaf and #REGbc from the stack.
+ $FC0C POP BC        ; }
+ $FC0D RET           ; Return.
+
+; Data block at FC0E
+b$FC0E DEFB $FF,$F0,$E3,$D7,$CB,$C0,$B4,$AB
+ $FC16 DEFB $A1,$97,$90,$88,$80,$79,$72,$6C
+ $FC1E DEFB $66,$60,$5B,$56,$51,$4C,$48,$44
+ $FC26 DEFB $40,$3D,$39,$36,$33,$30,$2D,$2B
+ $FC2E DEFB $28,$26,$24,$22,$20,$1E,$1C,$1B
+ $FC36 DEFB $19,$18,$17,$15,$14,$13,$12,$11
+ $FC3E DEFB $10,$0F,$0E,$0D,$0C,$01
+
+; Routine at FC44
+;
+; Used by the routine at #R$FB81.
+c$FC44 PUSH AF       ;
+ $FC45 LD A,($FB53)  ;
  $FC48 LD D,A        ;
  $FC49 POP AF        ;
  $FC4A CALL $FC67    ;
@@ -8028,10 +8018,10 @@ c$FB81 LD HL,$FB55   ; #REGhl=#R$FB55.
  $FC4F JR Z,$FC7C    ;
  $FC51 CP $C0        ;
  $FC53 JP Z,$FCB9    ;
-*$FC56 LD B,$04      ;
+ $FC56 LD B,$04      ;
  $FC58 LD C,E        ;
  $FC59 RLA           ;
-*$FC5A RLA           ;
+ $FC5A RLA           ;
  $FC5B RLA           ;
  $FC5C RLA           ;
 *$FC5D RLA           ;
@@ -8116,25 +8106,11 @@ c$FB81 LD HL,$FB55   ; #REGhl=#R$FB55.
  $FCEC CALL $03D4    ;
  $FCEF DI            ;
  $FCF0 RET           ;
- $FCF1 INC C         ;
- $FCF2 INC C         ;
- $FCF3 DEC C         ;
- $FCF4 DEC C         ;
- $FCF5 LD C,$0E      ;
- $FCF7 LD C,$0F      ;
- $FCF9 RRCA          ;
- $FCFA RRCA          ;
- $FCFB DJNZ $FD0D    ;
- $FCFD LD DE,$1211   ;
- $FD00 LD (DE),A     ;
- $FD01 INC DE        ;
- $FD02 INC DE        ;
- $FD03 INC D         ;
- $FD04 INC D         ;
- $FD05 DEC D         ;
- $FD06 DEC D         ;
- $FD07 DEC D         ;
- $FD08 LD D,$16      ;
+
+; Data block at FCF1
+b$FCF1 DEFB $0C,$0C,$0D,$0D,$0E,$0E,$0E,$0F
+ $FCF9 DEFB $0F,$0F,$10,$10,$11,$11,$12,$12
+ $FD01 DEFB $13,$13,$14,$14,$15,$15,$15,$16
 
 ; Data block at FD09
 b$FD09 DEFB $16,$24,$23,$24,$1F,$1F,$1C,$18

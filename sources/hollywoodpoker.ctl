@@ -1967,22 +1967,16 @@ N $9658 #UDGTABLE { #MESSAGE$03(message-03) } UDGTABLE#
   $9658,$05 Call #R$7D97 using message block #N$03.
   $965D,$03 #REGa=*#R$96B7.
   $9660,$01 #REGd=#REGa.
-  $9661,$01 Flip the bits according to #REGa.
-  $9662,$03 Write #REGa to *#R$96B7.
-  $9665,$01 #REGa=#REGd.
-  $9666,$01 Set the bits from #REGa.
-  $9667,$02 #REGa=#N$02.
-  $9669,$01 Return if {} is not zero.
+  $9661,$04 Write #N$00 to *#R$96B7.
+  $9665,$05 Return with #REGa=#N$02 if #REGd is not zero.
   $966A,$01 Increment #REGa by one.
   $966B,$01 Return.
 N $966C
   $966C,$06 Jump to #R$967D if *#R$96B5 is higher than #REGb.
   $9672,$06 Write *#R$96B5 to *#R$96B7.
-  $9678,$01 Set the bits from #REGa.
-  $9679,$02 Jump to #R$9658 if {} is zero.
+  $9678,$03 Jump to #R$9658 if #REGa is zero.
   $967B,$02 Jump to #R$9681.
-  $967D,$01 #REGa=#REGb.
-  $967E,$03 Write #REGa to *#R$96B7.
+  $967D,$04 Write #REGb to *#R$96B7.
   $9681,$03 Call #R$96A1.
 N $9684 #UDGTABLE { #MESSAGE$02(message-02) } UDGTABLE#
   $9684,$05 Call #R$7D97 using message block #N$02.
@@ -2345,23 +2339,26 @@ D $E217 #PUSHS #UDGTABLE { #UDGARRAY$04,scale=$04,step=$04($E217-$E2F3-$01-$20)@
   $E217,$00E0,$04 Pixels.
   $E2F7,$001C,$04 Attributes.
 
-c $E313
+c $E313 Evaluate Hand?
+@ $E313 label=EvaluateHand?
+R $E313 IX Pointer to either the players hand or the girls hand
   $E313,$02 Stash #REGix on the stack.
-  $E315,$03 #REGhl=#REGix (using the stack).
+  $E315,$03 Copy the hand pointer to #REGhl using the stack.
+N $E318 Starting from the first card.
   $E318,$05 Write #N$01 to *#R$E81F.
-  $E31D,$01 Stash #REGhl on the stack.
-  $E31E,$01 #REGa=*#REGhl.
+@ $E31D label=EvaluateHand_Loop
+  $E31D,$01 Stash the hand pointer on the stack.
+  $E31E,$01 Fetch the card "value" and store it in #REGa.
   $E31F,$03 Call #R$E33A.
-  $E322,$01 Restore #REGhl from the stack.
-  $E323,$01 Increment #REGhl by one.
-  $E324,$03 #REGa=*#R$E81F.
-  $E327,$04 Jump to #R$E331 if #REGa is equal to #N$05.
-  $E32B,$01 Increment #REGa by one.
-  $E32C,$03 Write #REGa to *#R$E81F.
+  $E322,$01 Restore the hand pointer from the stack.
+  $E323,$01 Increment the hand pointer by one to point to the next card.
+  $E324,$07 Jump to #R$E331 if *#R$E81F is equal to #N$05.
+  $E32B,$04 Increment the card position and update *#R$E81F count, as on the loop, we'll be looking at the next card.
   $E32F,$02 Jump to #R$E31D.
-
+N $E331 Housekeeping; restore the CHARS value and the hand pointer to return.
+@ $E331 label=EvaluateHand_Finish
   $E331,$06 #HTML(Write #R$F4C9(#N$F3C9) (#R$F4C9) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
-  $E337,$02 Restore #REGix from the stack.
+  $E337,$02 Restore the original value of #REGix from the stack.
   $E339,$01 Return.
 
 c $E33A
@@ -2589,7 +2586,11 @@ b $E6BF Graphics: Card Suits Data
   $E6BF,$08 #UDGTABLE { #N((#PC-$E35F)/$08) | #UDG(#PC) } UDGTABLE#
 L $E6BF,$08,$2C
 
-b $E81F
+g $E81F Card Position
+@ $E81F label=CardPosition
+D $E81F Will be a value of; #N$01-#N$05 to indicate the currently "in-focus"
+. card being processed/ evaluated.
+B $E81F,$01
 
 b $E820 Girl Buffer?
 
@@ -2712,11 +2713,15 @@ c $FB3A
   $FB51,$01 Return.
 
 b $FB52
+  $FB52,$01
+  $FB53,$01
+  $FB54,$01
 
 w $FB55
 
 w $FB57
 B $FB5B
+B $FB5D
 
 c $FB5E
   $FB5E,$03 Load the next address into #REGde.
@@ -2727,10 +2732,73 @@ c $FB5E
   $FB6A,$01 Return.
 
 c $FB6B
+  $FB6B,$01 #REGa=*#REGhl.
+  $FB6C,$02 #REGa+=#N$0C.
+  $FB6E,$01 #REGe=#REGa.
+  $FB6F,$02 #REGd=#N$00.
+  $FB71,$03 #REGhl=#R$FC0E.
+  $FB74,$01 #REGhl+=#REGde.
+  $FB75,$01 #REGh=*#REGhl.
+  $FB76,$02 #REGl=#N$01.
+  $FB78,$01 Return.
+
+c $FB79
+  $FB79,$01 Increment #REGhl by one.
+  $FB7A,$01 #REGe=*#REGhl.
+  $FB7B,$01 Increment #REGhl by one.
+  $FB7C,$01 #REGd=*#REGhl.
+  $FB7D,$02 Decrease #REGhl by two.
+  $FB7F,$02 Jump to #R$FB62.
 
 c $FB81
   $FB81,$03 #REGhl=#R$FB55.
   $FB84,$03 Call #R$FB5E.
+  $FB87,$03 Write #REGa to *#R$FB52.
+  $FB8A,$03 #REGhl=#R$FB59.
+  $FB8D,$03 Call #R$FB5E.
+  $FB90,$03 Write #REGa to *#R$FB53.
+  $FB93,$03 #REGhl=#R$FB52.
+  $FB96,$03 Call #R$FB6B.
+  $FB99,$02 Rotate #REGe left.
+  $FB9B,$03 Jump to #R$FC44 if {} is lower.
+  $FB9E,$01 Stash #REGhl on the stack.
+  $FB9F,$03 #REGhl=#R$FB53.
+  $FBA2,$03 Call #R$FB6B.
+  $FBA5,$01 Restore #REGde from the stack.
+  $FBA6,$01 #REGa=#REGh.
+  $FBA7,$01 Decrease #REGa by one.
+  $FBA8,$02 Jump to #R$FBAE if #REGa is not zero.
+  $FBAA,$01 #REGa=#REGd.
+  $FBAB,$01 Decrease #REGa by one.
+  $FBAC,$02 Jump to #R$FBF0 if #REGa is zero.
+  $FBAE,$03 #REGa=*#R$FB5D.
+  $FBB1,$01 #REGc=#REGa.
+  $FBB2,$02 #REGb=#N$00.
+  $FBB4,$03 #REGa=*#R$FB54.
+  $FBB7,$01 Exchange the #REGaf register with the shadow #REGaf register.
+  $FBB8,$03 #REGa=*#R$FB54.
+
+  $FBF0,$03 #REGa=*#R$FB5D.
+  $FBF3,$01 Invert the bits in #REGa.
+  $FBF4,$01 #REGc=#REGa.
+  $FBF5,$02 Stash #REGbc and #REGaf on the stack.
+  $FBF7,$02 #REGb=#N$00.
+  $FBF9,$01 Stash #REGhl on the stack.
+  $FBFA,$03 #REGhl=#N($0000,$04,$04).
+  $FBFD,$06 Shift *#REGhl right three positions (with carry).
+  $FC03,$01 No operation.
+  $FC04,$01 Restore #REGhl from the stack.
+  $FC05,$02 Decrease counter by one and loop back to #R$FBF9 until counter is zero.
+  $FC07,$01 Decrease #REGc by one.
+  $FC08,$03 Jump to #R$FBF9 until #REGc is zero.
+  $FC0B,$02 Restore #REGaf and #REGbc from the stack.
+  $FC0D,$01 Return.
+
+b $FC0E
+
+c $FC44
+
+b $FCF1
 
 b $FD09
 
