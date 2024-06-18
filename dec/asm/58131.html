@@ -33,7 +33,7 @@ Next: <a href="58170.html">58170</a>
 </td>
 </tr>
 </table>
-<div class="description">58131: Routine at E313</div>
+<div class="description">58131: Evaluate Hand?</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,100 +42,147 @@ Next: <a href="58170.html">58170</a>
 Used by the routines at <a href="36170.html">PlayGame</a> and <a href="36578.html">Handler_Showdown</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Pointer to either the players hand or the girls hand</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
+<td class="asm-label">EvaluateHand?</td>
 <td class="address-2"><span id="58131"></span>58131</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58133"></span>58133</td>
 <td class="instruction">PUSH IX</td>
-<td class="comment-1" rowspan="2"><span class="register">HL</span>=<span class="register">IX</span> (using the stack).</td>
+<td class="comment-1" rowspan="2">Copy the hand pointer to <span class="register">HL</span> using the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58135"></span>58135</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
-<td class="address-1"><span id="58136"></span>58136</td>
-<td class="instruction">LD A,1</td>
-<td class="comment-1" rowspan="2">Write 1 to *<a href="59423.html">59423</a>.</td>
+<td class="routine-comment" colspan="5">
+<span id="58136"></span>
+<div class="comments">
+<div class="paragraph">
+Starting from the first card.
+</div>
+</div>
+</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58136"></span>58136</td>
+<td class="instruction">LD A,1</td>
+<td class="comment-1" rowspan="2">Write 1 to *<a href="59423.html">CardPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58138"></span>58138</td>
 <td class="instruction">LD (59423),A</td>
 </tr>
 <tr>
+<td class="asm-label">EvaluateHand_Loop</td>
 <td class="address-2"><span id="58141"></span>58141</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the hand pointer on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58142"></span>58142</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Fetch the card "value" and store it in <span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58143"></span>58143</td>
 <td class="instruction">CALL <a href="58170.html">58170</a></td>
 <td class="comment-1" rowspan="1">Call <a href="58170.html">58170</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58146"></span>58146</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the hand pointer from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58147"></span>58147</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the hand pointer by one to point to the next card.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58148"></span>58148</td>
 <td class="instruction">LD A,(59423)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="59423.html">59423</a>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="58131.html#58161">EvaluateHand_Finish</a> if *<a href="59423.html">CardPosition</a> is equal to 5.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58151"></span>58151</td>
 <td class="instruction">CP 5</td>
-<td class="comment-1" rowspan="2">Jump to <a href="58131.html#58161">58161</a> if <span class="register">A</span> is equal to 5.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58153"></span>58153</td>
-<td class="instruction">JR Z,<a href="58131.html#58161">58161</a></td>
+<td class="instruction">JR Z,<a href="58131.html#58161">EvaluateHand_Finish</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58155"></span>58155</td>
 <td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+<td class="comment-1" rowspan="2">Increment the card position and update *<a href="59423.html">CardPosition</a> count, as on the loop, we'll be looking at the next card.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58156"></span>58156</td>
 <td class="instruction">LD (59423),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="59423.html">59423</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58159"></span>58159</td>
-<td class="instruction">JR <a href="58131.html#58141">58141</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="58131.html#58141">58141</a>.</td>
+<td class="instruction">JR <a href="58131.html#58141">EvaluateHand_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="58131.html#58141">EvaluateHand_Loop</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="58161"></span>
+<div class="comments">
+<div class="paragraph">
+Housekeeping; restore the CHARS value and the hand pointer to return.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">EvaluateHand_Finish</td>
 <td class="address-2"><span id="58161"></span>58161</td>
 <td class="instruction">LD HL,62409</td>
 <td class="comment-1" rowspan="2">Write <a href="62665.html">62409</a> (<a href="62665.html">CustomFont</a>) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58164"></span>58164</td>
 <td class="instruction">LD (23606),HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58167"></span>58167</td>
 <td class="instruction">POP IX</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">IX</span> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the original value of <span class="register">IX</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="58169"></span>58169</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
