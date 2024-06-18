@@ -2339,29 +2339,35 @@ D $E217 #PUSHS #UDGTABLE { #UDGARRAY$04,scale=$04,step=$04($E217-$E2F3-$01-$20)@
   $E217,$00E0,$04 Pixels.
   $E2F7,$001C,$04 Attributes.
 
-c $E313 Evaluate Hand?
-@ $E313 label=EvaluateHand?
+c $E313 Print Hand
+@ $E313 label=PrintHand
 R $E313 IX Pointer to either the players hand or the girls hand
   $E313,$02 Stash #REGix on the stack.
   $E315,$03 Copy the hand pointer to #REGhl using the stack.
 N $E318 Starting from the first card.
   $E318,$05 Write #N$01 to *#R$E81F.
-@ $E31D label=EvaluateHand_Loop
+N $E31D Loop round each card in turn and print it to the screen.
+@ $E31D label=PrintHand_Loop
   $E31D,$01 Stash the hand pointer on the stack.
   $E31E,$01 Fetch the card "value" and store it in #REGa.
-  $E31F,$03 Call #R$E33A.
+  $E31F,$03 Call #R$E33A (which will print the card in position to the screen).
   $E322,$01 Restore the hand pointer from the stack.
   $E323,$01 Increment the hand pointer by one to point to the next card.
+N $E324 Have all cards been printed yet? There are #N$05 in a hand.
   $E324,$07 Jump to #R$E331 if *#R$E81F is equal to #N$05.
   $E32B,$04 Increment the card position and update *#R$E81F count, as on the loop, we'll be looking at the next card.
   $E32F,$02 Jump to #R$E31D.
-N $E331 Housekeeping; restore the CHARS value and the hand pointer to return.
+N $E331 #HTML(Housekeeping; restore the
+. <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>
+. value and the hand pointer to return.)
 @ $E331 label=EvaluateHand_Finish
   $E331,$06 #HTML(Write #R$F4C9(#N$F3C9) (#R$F4C9) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
   $E337,$02 Restore the original value of #REGix from the stack.
   $E339,$01 Return.
 
-c $E33A
+c $E33A Check Card Type
+@ $E33A label=CheckCardType
+R $E33A A Card value
   $E33A,$01 #REGb=#REGa.
   $E33B,$02,b$01 Keep only bits 0-3.
   $E33D,$04 Jump to #R$E3BD if #REGa is lower than #N$09.
@@ -2388,32 +2394,40 @@ c $E33A
   $E36B,$01 Stash #REGhl on the stack.
   $E36C,$06 Write #R$E39A to *#R$E563.
   $E372,$03 Call #R$E40D.
+N $E375 Calculate the attribute buffer position for the card position currently
+. being printed.
   $E375,$03 #REGa=*#R$E81F.
   $E378,$03 #REGhl=#N($0006,$04,$04).
   $E37B,$03 #REGde=#N$597B (attribute buffer location).
   $E37E,$01 Exchange the #REGde and #REGhl registers.
+@ $E37F label=FindCardAttributePosition_Loop
   $E37F,$01 #REGhl+=#REGde.
   $E380,$01 Decrease #REGa by one.
   $E381,$02 Jump to #R$E37F until #REGa is zero.
   $E383,$01 Exchange the #REGde and #REGhl registers.
-  $E384,$01 Restore #REGhl from the stack.
-  $E385,$02 #REGc=#N$05.
-  $E387,$02 #REGb=#N$06.
-  $E389,$01 #REGa=*#REGhl.
-  $E38A,$01 Write #REGa to *#REGde.
-  $E38B,$01 Increment #REGhl by one.
-  $E38C,$01 Increment #REGde by one.
-  $E38D,$02 Decrease counter by one and loop back to #R$E389 until counter is zero.
+  $E384,$01 Restore the attributes pointer from the stack.
+  $E385,$02 Set the card height (#N$05) to #REGc.
+@ $E387 label=CopyCardAttributes_RowLoop
+  $E387,$02 Set the card width (#N$06) to #REGb.
+@ $E389 label=CopyCardAttributes_Loop
+  $E389,$02 Copy an attribute byte from *#REGhl to *#REGde.
+  $E38B,$02 Increment both #REGhl and #REGde by one.
+  $E38D,$02 Decrease the width counter by one and loop back to #R$E389 until
+. all the attributes in the row have been copied.
   $E38F,$01 Stash #REGhl on the stack.
-  $E390,$03 #REGhl=#N($001A,$04,$04).
-  $E393,$01 #REGhl+=#REGde.
-  $E394,$01 Exchange the #REGde and #REGhl registers.
+N $E390 Move down one line, and to where the next row will start (#N$06 less
+. than one row ~ #N$20).
+  $E390,$05 #REGde+=#N($001A,$04,$04).
   $E395,$01 Restore #REGhl from the stack.
   $E396,$01 Decrease #REGc by one.
   $E397,$02 Jump to #R$E387 until #REGc is zero.
   $E399,$01 Return.
 
-b $E39A
+b $E39A Graphics: Picture Card
+@ $E39A label=Graphics_PictureCard
+D $E39A This is UDG data which corresponds to the picture card UDGs.
+.
+. Used by the routines at #R$E33A and #R$E40D.
   $E39A,$1E,$06 #UDGTABLE {
 .   #UDGS$06,$05(card-buffer)(
 .     #LET(a=$E35F+(#PEEK(#PC+$06*$y+$x)*$08))
@@ -2457,12 +2471,16 @@ c $E3B8 Print Cards
   $E3FA,$06 Set INK: #INK$00.
   $E400,$07 Jump to #R$E40D if *#R$E562 is higher than #N$02.
   $E407,$06 Set INK: #INK$02.
-  $E40D,$03 #REGa=*#R$E81F.
-  $E410,$02 #REGc=#N$06.
-  $E412,$01 #REGb=#REGa.
+@ $E40D label=PrintCard
+  $E40D,$03 Fetch the current *#R$E81F and store this in #REGa.
+  $E410,$02 Each card is #N$06 character blocks in width, store this count in #REGc.
+  $E412,$01 Set a counter in #REGb of the card position we're processing.
+N $E413 Subtract #N$06 from #N$26 the number of times for the current card
+. position. For example; position #N$01 is - #N$26 - (#N$01 * #N$06) = #N$20.
   $E413,$02 #REGa=#N$26.
+@ $E415 label=FindCardPosition_Loop
   $E415,$01 #REGa-=#REGc.
-  $E416,$02 Decrease counter by one and loop back to #R$E415 until counter is zero.
+  $E416,$02 Decrease card position counter by one and loop back to #R$E415 until the counter is zero.
   $E418,$01 #REGc=#REGa.
   $E419,$02 #REGb=#N$0C.
   $E41B,$04 #REGde=*#R$E563.
@@ -2476,6 +2494,7 @@ c $E3B8 Print Cards
   $E430,$01 Restore #REGbc from the stack.
   $E431,$01 Decrease #REGb by one.
   $E432,$02 Jump to #R$E41F.
+@ $E434 label=PrintCard_Housekeeping
   $E434,$01 Restore #REGde from the stack.
   $E435,$01 Return.
 
@@ -2565,8 +2584,14 @@ D $E436 This is UDG data which corresponds to the UDGs defined at #R$E567.
 . } UDGTABLE#
 
 b $E562
-w $E563
-  $E563,$02
+
+g $E563 Picture Card UDG Data
+@ $E563 label=PictureCardUDGData
+D $E563 Pointer to the picture card UDG data.
+W $E563,$02
+
+i $E565
+W $E565,$02
 
 b $E567 Graphics: Card Data
 @ $E567 label=Graphics_CardData
