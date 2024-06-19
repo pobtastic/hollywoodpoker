@@ -33,7 +33,7 @@ Next: <a href="77DB.html">77DB</a>
 </td>
 </tr>
 </table>
-<div class="description">77D1: Routine at 77D1</div>
+<div class="description">77D1: Turn Off Theme Tune</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -55,27 +55,32 @@ Self-modifying code.
 </td>
 </tr>
 <tr>
+<td class="asm-label">TurnOffThemeTune</td>
 <td class="address-2"><span id="77d1"></span>77D1</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="77d2"></span>77D2</td>
 <td class="instruction">LD A,$C9</td>
 <td class="comment-1" rowspan="3">Write <code>RET</code> (C9) to; <ul class="">
-<li><a href="FB3A.html">FB3A</a></li>
-<li><a href="FB3A.html#fb46">FB46</a></li>
+<li><a href="FB3A.html">ResetThemeTune</a></li>
+<li><a href="FB3A.html#fb46">HandlerThemeTune</a></li>
 </ul></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="77d4"></span>77D4</td>
 <td class="instruction">LD ($FB3A),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="77d7"></span>77D7</td>
 <td class="instruction">LD ($FB46),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="77da"></span>77DA</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

@@ -47,22 +47,20 @@ Used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38050"></span>38050</td>
 <td class="instruction">LD A,(38221)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Return if *<a href="38208.html#38221">38221</a> is not equal to 1.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38053"></span>38053</td>
 <td class="instruction">CP 1</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38055"></span>38055</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38056"></span>38056</td>
 <td class="instruction">JR <a href="38050.html#38087">38087</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38050.html#38087">38087</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -77,47 +75,45 @@ This entry point is used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38058"></span>38058</td>
 <td class="instruction">LD HL,38208</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">38208</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38061"></span>38061</td>
 <td class="instruction">LD B,13</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=13.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="38063"></span>38063</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Return if  *<span class="register">HL</span> is equal to 4.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38064"></span>38064</td>
 <td class="instruction">CP 4</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38066"></span>38066</td>
 <td class="instruction">RET Z</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38067"></span>38067</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38068"></span>38068</td>
 <td class="instruction">DJNZ <a href="38050.html#38063">38063</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38050.html#38063">38063</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38070"></span>38070</td>
 <td class="instruction">INC B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38071"></span>38071</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -132,22 +128,22 @@ This entry point is used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38072"></span>38072</td>
 <td class="instruction">CALL <a href="38050.html#38106">38106</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="38050.html#38106">38106</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38075"></span>38075</td>
 <td class="instruction">LD (38166),HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="38166.html">38166</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38078"></span>38078</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return if <span class="register">A</span> is not zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38079"></span>38079</td>
 <td class="instruction">JR <a href="38050.html#38150">38150</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38050.html#38150">38150</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -162,17 +158,16 @@ This entry point is used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38081"></span>38081</td>
 <td class="instruction">LD A,(38221)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Compare *<a href="38208.html#38221">38221</a> with 1.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38084"></span>38084</td>
 <td class="instruction">CP 1</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38086"></span>38086</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -187,62 +182,58 @@ This entry point is used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38087"></span>38087</td>
 <td class="instruction">LD HL,38207</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">38207</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="38090"></span>38090</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38091"></span>38091</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Jump to <a href="38050.html#38090">38090</a> if *<span class="register">HL</span> is not equal to 1.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38092"></span>38092</td>
 <td class="instruction">CP 1</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38094"></span>38094</td>
 <td class="instruction">JR NZ,<a href="38050.html#38090">38090</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38096"></span>38096</td>
 <td class="instruction">LD B,5</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="38098"></span>38098</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is not equal to 1.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38099"></span>38099</td>
 <td class="instruction">CP 1</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38101"></span>38101</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38102"></span>38102</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38103"></span>38103</td>
 <td class="instruction">DJNZ <a href="38050.html#38098">38098</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38050.html#38098">38098</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38105"></span>38105</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -257,47 +248,45 @@ This entry point is used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38106"></span>38106</td>
 <td class="instruction">LD HL,38208</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">38208</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38109"></span>38109</td>
 <td class="instruction">LD B,13</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=13.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="38111"></span>38111</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is equal to 3.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38112"></span>38112</td>
 <td class="instruction">CP 3</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38114"></span>38114</td>
 <td class="instruction">RET Z</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38115"></span>38115</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38116"></span>38116</td>
 <td class="instruction">DJNZ <a href="38050.html#38111">38111</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38050.html#38111">38111</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38118"></span>38118</td>
 <td class="instruction">INC B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38119"></span>38119</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -312,92 +301,88 @@ This entry point is used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38120"></span>38120</td>
 <td class="instruction">LD HL,38208</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">38208</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38123"></span>38123</td>
 <td class="instruction">LD B,13</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=13.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="38125"></span>38125</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Jump to <a href="38050.html#38135">38135</a> if *<span class="register">HL</span> is equal to 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38126"></span>38126</td>
 <td class="instruction">CP 2</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38128"></span>38128</td>
 <td class="instruction">JR Z,<a href="38050.html#38135">38135</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38130"></span>38130</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38131"></span>38131</td>
 <td class="instruction">DJNZ <a href="38050.html#38125">38125</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38050.html#38125">38125</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="38133"></span>38133</td>
 <td class="instruction">INC B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38134"></span>38134</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="38135"></span>38135</td>
 <td class="instruction">DEC B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">B</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38136"></span>38136</td>
 <td class="instruction">LD (38166),HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="38166.html">38166</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38139"></span>38139</td>
 <td class="instruction">JR Z,<a href="38050.html#38133">38133</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38050.html#38133">38133</a> if <span class="register">B</span> is zero.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="38141"></span>38141</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38142"></span>38142</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is equal to 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38143"></span>38143</td>
 <td class="instruction">CP 2</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38145"></span>38145</td>
 <td class="instruction">RET Z</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38146"></span>38146</td>
 <td class="instruction">DJNZ <a href="38050.html#38141">38141</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38050.html#38141">38141</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38148"></span>38148</td>
 <td class="instruction">JR <a href="38050.html#38133">38133</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38050.html#38133">38133</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -412,17 +397,17 @@ This entry point is used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38150"></span>38150</td>
 <td class="instruction">LD B,13</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=13.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38152"></span>38152</td>
 <td class="instruction">LD HL,38207</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">38207</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38155"></span>38155</td>
 <td class="instruction">JR <a href="38050.html#38141">38141</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38050.html#38141">38141</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -437,7 +422,7 @@ This entry point is used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38157"></span>38157</td>
 <td class="instruction">LD HL,38220</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html#38220">38220</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -452,27 +437,26 @@ This entry point is used by the routine at <a href="37687.html">37687</a>.
 <tr>
 <td class="address-2"><span id="38160"></span>38160</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38161"></span>38161</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38162"></span>38162</td>
 <td class="instruction">OR A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="38050.html#38160">38160</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="38163"></span>38163</td>
 <td class="instruction">JR Z,<a href="38050.html#38160">38160</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="38165"></span>38165</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

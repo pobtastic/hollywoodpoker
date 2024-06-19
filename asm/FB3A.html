@@ -33,7 +33,7 @@ Next: <a href="FB52.html">FB52</a>
 </td>
 </tr>
 </table>
-<div class="description">FB3A: Routine at FB3A</div>
+<div class="description">FB3A: Reset Theme Tune</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,20 +45,24 @@ Used by the routine at <a href="6E9D.html">TitleScreen</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">ResetThemeTune</td>
 <td class="address-2"><span id="fb3a"></span>FB3A</td>
 <td class="instruction">LD HL,$FD09</td>
 <td class="comment-1" rowspan="2">Write <a href="FD09.html">FD09</a> to *<a href="FB55.html">FB55</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fb3d"></span>FB3D</td>
 <td class="instruction">LD ($FB55),HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fb40"></span>FB40</td>
 <td class="instruction">LD HL,$FE30</td>
 <td class="comment-1" rowspan="2">Write <a href="FE30.html">FE30</a> to *<a href="FB57.html#fb59">FB59</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fb43"></span>FB43</td>
 <td class="instruction">LD ($FB59),HL</td>
 </tr>
@@ -73,36 +77,43 @@ This entry point is used by the routine at <a href="6E9D.html">TitleScreen</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">HandlerThemeTune</td>
 <td class="address-2"><span id="fb46"></span>FB46</td>
 <td class="instruction">DI</td>
 <td class="comment-1" rowspan="1">Disable interrupts.</td>
 </tr>
 <tr>
+<td class="asm-label">HandlerThemeTune_Loop</td>
 <td class="address-2"><span id="fb47"></span>FB47</td>
-<td class="instruction">CALL <a href="FB81.html">$FB81</a></td>
-<td class="comment-1" rowspan="1">Call <a href="FB81.html">FB81</a>.</td>
+<td class="instruction">CALL <a href="FB81.html">PlayThemeTune</a></td>
+<td class="comment-1" rowspan="1">Call <a href="FB81.html">PlayThemeTune</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fb4a"></span>FB4A</td>
 <td class="instruction">CALL $028E</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fb4d"></span>FB4D</td>
 <td class="instruction">INC E</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">E</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fb4e"></span>FB4E</td>
-<td class="instruction">JR Z,<a href="FB3A.html#fb47">$FB47</a></td>
-<td class="comment-1" rowspan="1">Jump back to <a href="FB3A.html#fb47">FB47</a> until <span class="register">E</span> is zero.</td>
+<td class="instruction">JR Z,<a href="FB3A.html#fb47">HandlerThemeTune_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="FB3A.html#fb47">HandlerThemeTune_Loop</a> until <span class="register">E</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fb50"></span>FB50</td>
 <td class="instruction">EI</td>
 <td class="comment-1" rowspan="1">Enable interrupts.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fb51"></span>FB51</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

@@ -56,11 +56,11 @@ Used by the routine at <a href="30795.html">DisplayTitleScreen</a>.
 </tr>
 <tr>
 <td class="register">B</td>
-<td class="register-desc"></td>
+<td class="register-desc">Width</td>
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="register-desc"></td>
+<td class="register-desc">Length</td>
 </tr>
 </table>
 </td>
@@ -84,7 +84,7 @@ Used by the routine at <a href="30795.html">DisplayTitleScreen</a>.
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">WriteAttributeData_0</td>
+<td class="asm-label">WriteAttributeData_Loop</td>
 <td class="address-2"><span id="31005"></span>31005</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">BC</span> on the stack.</td>
@@ -95,34 +95,32 @@ Used by the routine at <a href="30795.html">DisplayTitleScreen</a>.
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
-<td class="asm-label">WriteAttributeData_1</td>
+<td class="asm-label">WriteAttributeData_CopyLoop</td>
 <td class="address-2"><span id="31007"></span>31007</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Copy a byte from the source address to the destination address in the attribute buffer.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="31008"></span>31008</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="31009"></span>31009</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Increment both the source and destination addresses.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="31010"></span>31010</td>
 <td class="instruction">INC DE</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="31011"></span>31011</td>
-<td class="instruction">DJNZ <a href="30999.html#31007">WriteAttributeData_1</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">DJNZ <a href="30999.html#31007">WriteAttributeData_CopyLoop</a></td>
+<td class="comment-1" rowspan="1">Decrease the width counter by one and loop back to <a href="30999.html#31007">WriteAttributeData_CopyLoop</a> until the counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -162,13 +160,12 @@ Used by the routine at <a href="30795.html">DisplayTitleScreen</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="31021"></span>31021</td>
 <td class="instruction">DEC C</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Decrease the height counter by one and jump back to <a href="30999.html#31005">WriteAttributeData_Loop</a> until the counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="31022"></span>31022</td>
-<td class="instruction">JR NZ,<a href="30999.html#31005">WriteAttributeData_0</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="30999.html#31005">WriteAttributeData_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

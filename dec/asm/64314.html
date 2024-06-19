@@ -33,7 +33,7 @@ Next: <a href="64338.html">64338</a>
 </td>
 </tr>
 </table>
-<div class="description">64314: Routine at FB3A</div>
+<div class="description">64314: Reset Theme Tune</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,20 +45,24 @@ Used by the routine at <a href="28317.html">TitleScreen</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">ResetThemeTune</td>
 <td class="address-2"><span id="64314"></span>64314</td>
 <td class="instruction">LD HL,64777</td>
 <td class="comment-1" rowspan="2">Write <a href="64777.html">64777</a> to *<a href="64341.html">64341</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64317"></span>64317</td>
 <td class="instruction">LD (64341),HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64320"></span>64320</td>
 <td class="instruction">LD HL,65072</td>
 <td class="comment-1" rowspan="2">Write <a href="65072.html">65072</a> to *<a href="64343.html#64345">64345</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64323"></span>64323</td>
 <td class="instruction">LD (64345),HL</td>
 </tr>
@@ -73,36 +77,43 @@ This entry point is used by the routine at <a href="28317.html">TitleScreen</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">HandlerThemeTune</td>
 <td class="address-2"><span id="64326"></span>64326</td>
 <td class="instruction">DI</td>
 <td class="comment-1" rowspan="1">Disable interrupts.</td>
 </tr>
 <tr>
+<td class="asm-label">HandlerThemeTune_Loop</td>
 <td class="address-2"><span id="64327"></span>64327</td>
-<td class="instruction">CALL <a href="64385.html">64385</a></td>
-<td class="comment-1" rowspan="1">Call <a href="64385.html">64385</a>.</td>
+<td class="instruction">CALL <a href="64385.html">PlayThemeTune</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64385.html">PlayThemeTune</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64330"></span>64330</td>
 <td class="instruction">CALL 654</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64333"></span>64333</td>
 <td class="instruction">INC E</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">E</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64334"></span>64334</td>
-<td class="instruction">JR Z,<a href="64314.html#64327">64327</a></td>
-<td class="comment-1" rowspan="1">Jump back to <a href="64314.html#64327">64327</a> until <span class="register">E</span> is zero.</td>
+<td class="instruction">JR Z,<a href="64314.html#64327">HandlerThemeTune_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="64314.html#64327">HandlerThemeTune_Loop</a> until <span class="register">E</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64336"></span>64336</td>
 <td class="instruction">EI</td>
 <td class="comment-1" rowspan="1">Enable interrupts.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64337"></span>64337</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

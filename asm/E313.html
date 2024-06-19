@@ -145,7 +145,7 @@ Have all cards been printed yet? There are 05 in a hand.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e324"></span>E324</td>
 <td class="instruction">LD A,($E81F)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="E313.html#e331">EvaluateHand_Finish</a> if *<a href="E81F.html">CardPosition</a> is equal to 05.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E313.html#e331">PrintHand_Finish</a> if *<a href="E81F.html">CardPosition</a> is equal to 05.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -155,7 +155,7 @@ Have all cards been printed yet? There are 05 in a hand.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e329"></span>E329</td>
-<td class="instruction">JR Z,<a href="E313.html#e331">EvaluateHand_Finish</a></td>
+<td class="instruction">JR Z,<a href="E313.html#e331">PrintHand_Finish</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -185,7 +185,7 @@ Housekeeping; restore the <a rel="noopener nofollow" href="https://skoolkit.ca/d
 </td>
 </tr>
 <tr>
-<td class="asm-label">EvaluateHand_Finish</td>
+<td class="asm-label">PrintHand_Finish</td>
 <td class="address-2"><span id="e331"></span>E331</td>
 <td class="instruction">LD HL,$F3C9</td>
 <td class="comment-1" rowspan="2">Write <a href="F4C9.html">F3C9</a> (<a href="F4C9.html">CustomFont</a>) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
