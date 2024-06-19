@@ -134,7 +134,7 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e3cc"></span>E3CC</td>
 <td class="instruction">LD ($E563),HL</td>
-<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="E563.html">PictureCardUDGData</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="E563.html">PointerCardUDGData</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -187,7 +187,7 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e3de"></span>E3DE</td>
 <td class="instruction">LD HL,$E6BF</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E6BF.html">Graphics_CardSuitsData</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E6BF.html">Graphics_DiamondsSuitData</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -297,7 +297,7 @@ BLACK.</td>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e400"></span>E400</td>
 <td class="instruction">LD A,($E562)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e40d">PrintCard</a> if *<a href="E562.html">CurrentCardColour</a> is higher than 02.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e40d">PrintCard</a> if *<a href="E562.html">CurrentCardColour</a> is 02 or higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -366,7 +366,7 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 <span id="e413"></span>
 <div class="comments">
 <div class="paragraph">
-Subtract 06 from 26 the number of times for the current card position. For example; position 01 is - 26 - (01 * 06) = 20.
+Subtract 06 from 26 the number of times for the current card position. For example; position 01 is: 26 - (01 * 06) = 20.
 </div>
 </div>
 </td>
@@ -405,10 +405,10 @@ Subtract 06 from 26 the number of times for the current card position. For examp
 <td class="asm-label"></td>
 <td class="address-1"><span id="e41b"></span>E41B</td>
 <td class="instruction">LD DE,($E563)</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="E563.html">PictureCardUDGData</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="E563.html">PointerCardUDGData</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintAceCard_3</td>
+<td class="asm-label">PrintCard_Loop</td>
 <td class="address-2"><span id="e41f"></span>E41F</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
@@ -417,7 +417,7 @@ Subtract 06 from 26 the number of times for the current card position. For examp
 <td class="asm-label"></td>
 <td class="address-1"><span id="e420"></span>E420</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e434">PrintCard_Housekeeping</a> if <span class="register">B</span> is equal to 07.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e434">PrintCard_Finish</a> if <span class="register">B</span> is equal to 07.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -427,7 +427,7 @@ Subtract 06 from 26 the number of times for the current card position. For examp
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e423"></span>E423</td>
-<td class="instruction">JR Z,<a href="E3B8.html#e434">PrintCard_Housekeeping</a></td>
+<td class="instruction">JR Z,<a href="E3B8.html#e434">PrintCard_Finish</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -474,11 +474,11 @@ Subtract 06 from 26 the number of times for the current card position. For examp
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e432"></span>E432</td>
-<td class="instruction">JR <a href="E3B8.html#e41f">PrintAceCard_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="E3B8.html#e41f">PrintAceCard_3</a>.</td>
+<td class="instruction">JR <a href="E3B8.html#e41f">PrintCard_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E3B8.html#e41f">PrintCard_Loop</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintCard_Housekeeping</td>
+<td class="asm-label">PrintCard_Finish</td>
 <td class="address-2"><span id="e434"></span>E434</td>
 <td class="instruction">POP DE</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
