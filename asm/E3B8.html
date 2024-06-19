@@ -45,7 +45,7 @@ Used by the routine at <a href="E33A.html">CheckCardType</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards</td>
+<td class="asm-label">PrintAceCard</td>
 <td class="address-2"><span id="e3b8"></span>E3B8</td>
 <td class="instruction">SUB $03</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>-=03.</td>
@@ -77,7 +77,7 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 </td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards_0</td>
+<td class="asm-label">PrintNumberCard</td>
 <td class="address-2"><span id="e3bd"></span>E3BD</td>
 <td class="instruction">LD C,B</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">B</span>.</td>
@@ -119,7 +119,7 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards_1</td>
+<td class="asm-label">PrintAceCard_0</td>
 <td class="address-2"><span id="e3c9"></span>E3C9</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
@@ -127,8 +127,8 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e3ca"></span>E3CA</td>
-<td class="instruction">DJNZ <a href="E3B8.html#e3c9">PrintCards_1</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e3c9">PrintCards_1</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="E3B8.html#e3c9">PrintAceCard_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e3c9">PrintAceCard_0</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -143,7 +143,7 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards_2</td>
+<td class="asm-label">PrintAceCard_1</td>
 <td class="address-2"><span id="e3d1"></span>E3D1</td>
 <td class="instruction">SRL C</td>
 <td class="comment-1" rowspan="1">Shift <span class="register">C</span> right.</td>
@@ -151,14 +151,14 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e3d3"></span>E3D3</td>
-<td class="instruction">DJNZ <a href="E3B8.html#e3d1">PrintCards_2</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e3d1">PrintCards_2</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="E3B8.html#e3d1">PrintAceCard_1</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e3d1">PrintAceCard_1</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e3d5"></span>E3D5</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="2">Write <span class="register">C</span> to *<a href="E562.html">E562</a>.</td>
+<td class="comment-1" rowspan="2">Write <span class="register">C</span> to *<a href="E562.html">CurrentCardColour</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -202,7 +202,7 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards_3</td>
+<td class="asm-label">PrintAceCard_2</td>
 <td class="address-2"><span id="e3e4"></span>E3E4</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
@@ -210,8 +210,8 @@ This entry point is used by the routine at <a href="E33A.html">CheckCardType</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e3e5"></span>E3E5</td>
-<td class="instruction">DJNZ <a href="E3B8.html#e3e4">PrintCards_3</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e3e4">PrintCards_3</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="E3B8.html#e3e4">PrintAceCard_2</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E3B8.html#e3e4">PrintAceCard_2</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -297,7 +297,7 @@ BLACK.</td>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e400"></span>E400</td>
 <td class="instruction">LD A,($E562)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e40d">PrintCard</a> if *<a href="E562.html">E562</a> is higher than 02.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E3B8.html#e40d">PrintCard</a> if *<a href="E562.html">CurrentCardColour</a> is higher than 02.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -408,7 +408,7 @@ Subtract 06 from 26 the number of times for the current card position. For examp
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="E563.html">PictureCardUDGData</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintCards_4</td>
+<td class="asm-label">PrintAceCard_3</td>
 <td class="address-2"><span id="e41f"></span>E41F</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
@@ -474,8 +474,8 @@ Subtract 06 from 26 the number of times for the current card position. For examp
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e432"></span>E432</td>
-<td class="instruction">JR <a href="E3B8.html#e41f">PrintCards_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="E3B8.html#e41f">PrintCards_4</a>.</td>
+<td class="instruction">JR <a href="E3B8.html#e41f">PrintAceCard_3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E3B8.html#e41f">PrintAceCard_3</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">PrintCard_Housekeeping</td>

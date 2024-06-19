@@ -69,23 +69,33 @@ Used by the routine at <a href="E313.html">PrintHand</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e33d"></span>E33D</td>
 <td class="instruction">CP $09</td>
-<td class="comment-1" rowspan="2">Jump to <a href="E3B8.html#e3bd">PrintCards_0</a> if <span class="register">A</span> is lower than 09.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="E3B8.html#e3bd">PrintNumberCard</a> if <span class="register">A</span> is lower than 09.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e33f"></span>E33F</td>
-<td class="instruction">JR C,<a href="E3B8.html#e3bd">PrintCards_0</a></td>
+<td class="instruction">JR C,<a href="E3B8.html#e3bd">PrintNumberCard</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e341"></span>E341</td>
 <td class="instruction">CP $0C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="E3B8.html">PrintCards</a> if <span class="register">A</span> is equal to 0C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="E3B8.html">PrintAceCard</a> if <span class="register">A</span> is equal to 0C.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e343"></span>E343</td>
-<td class="instruction">JR Z,<a href="E3B8.html">PrintCards</a></td>
+<td class="instruction">JR Z,<a href="E3B8.html">PrintAceCard</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e345"></span>
+<div class="comments">
+<div class="paragraph">
+Anything else is a picture card, so work out what we're printing.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -375,13 +385,13 @@ Move down one line, and to where the next row will start (06 less than one row ~
 <td class="asm-label"></td>
 <td class="address-1"><span id="e396"></span>E396</td>
 <td class="instruction">DEC C</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">C</span> by one.</td>
+<td class="comment-1" rowspan="1">Decrease the height counter by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e397"></span>E397</td>
 <td class="instruction">JR NZ,<a href="E33A.html#e387">CopyCardAttributes_RowLoop</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="E33A.html#e387">CopyCardAttributes_RowLoop</a> until <span class="register">C</span> is zero.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="E33A.html#e387">CopyCardAttributes_RowLoop</a> until the entire card has been printed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
