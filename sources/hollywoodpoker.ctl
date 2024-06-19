@@ -502,7 +502,8 @@ N $77B9 #UDGTABLE { #MESSAGE$08(message-08) } UDGTABLE#
   $77CE,$01 Restore #REGhl from the stack.
   $77CF,$02 Jump to #R$77C6.
 
-c $77D1
+c $77D1 Turn Off Theme Tune
+@ $77D1 label=TurnOffThemeTune
 N $77D1 Self-modifying code.
   $77D1,$01 Restore #REGhl from the stack.
   $77D2,$08 #HTML(Write <code>RET</code> (#N$C9) to; #LIST { #R$FB3A } { #R$FB46 } LIST#)
@@ -621,14 +622,21 @@ c $7917 Write Attribute Data
 @ $7917 label=WriteAttributeData
 R $7917 DE Attribute data
 R $7917 HL Attribute buffer location
-R $7917 B
-R $7917 C
+R $7917 B Width
+R $7917 C Length
   $7917,$06
+@ $791D label=WriteAttributeData_Loop
   $791D,$02 Stash #REGhl and #REGbc on the stack.
+@ $791F label=WriteAttributeData_CopyLoop
+  $791F,$02 Copy a byte from the source address to the destination address in
+. the attribute buffer.
+  $7921,$02 Increment both the source and destination addresses.
+  $7923,$02 Decrease the width counter by one and loop back to #R$791F until the counter is zero.
   $7925,$02 Restore #REGbc and #REGhl from the stack.
   $7927,$01 Stash #REGde on the stack.
   $7928,$04 #REGhl+=#N($0020,$04,$04).
   $792C,$01 Restore #REGde from the stack.
+  $792D,$03 Decrease the height counter by one and jump back to #R$791D until the counter is zero.
   $7930,$01 Return.
 
 t $7931 Messaging: Title Screen
@@ -1823,6 +1831,64 @@ b $949B
   $949E,$01
 
 c $94A2
+  $94A2,$06 Return if *#R$954D is not equal to #N$01.
+  $94A8,$02 Jump to #R$94C7.
+
+  $94AA,$03 #REGhl=#R$9540.
+  $94AD,$02 #REGb=#N$0D.
+  $94AF,$04 Return if  *#REGhl is equal to #N$04.
+  $94B3,$01 Increment #REGhl by one.
+  $94B4,$02 Decrease counter by one and loop back to #R$94AF until counter is zero.
+  $94B6,$01 Increment #REGb by one.
+  $94B7,$01 Return.
+
+  $94B8,$03 Call #R$94DA.
+  $94BB,$03 Write #REGhl to *#R$9516.
+  $94BE,$01 Return if #REGa is not zero.
+  $94BF,$02 Jump to #R$9506.
+  $94C1,$05 Compare *#R$954D with #N$01.
+  $94C6,$01 Return.
+
+  $94C7,$03 #REGhl=#R$9540(#N$953F).
+  $94CA,$01 Increment #REGhl by one.
+  $94CB,$05 Jump to #R$94CA if *#REGhl is not equal to #N$01.
+  $94D0,$02 #REGb=#N$05.
+  $94D2,$04 Return if *#REGhl is not equal to #N$01.
+  $94D6,$01 Increment #REGhl by one.
+  $94D7,$02 Decrease counter by one and loop back to #R$94D2 until counter is zero.
+  $94D9,$01 Return.
+
+  $94DA,$03 #REGhl=#R$9540.
+  $94DD,$02 #REGb=#N$0D.
+  $94DF,$04 Return if *#REGhl is equal to #N$03.
+  $94E3,$01 Increment #REGhl by one.
+  $94E4,$02 Decrease counter by one and loop back to #R$94DF until counter is zero.
+  $94E6,$01 Increment #REGb by one.
+  $94E7,$01 Return.
+
+  $94E8,$03 #REGhl=#R$9540.
+  $94EB,$02 #REGb=#N$0D.
+  $94ED,$05 Jump to #R$94F7 if *#REGhl is equal to #N$02.
+  $94F2,$01 Increment #REGhl by one.
+  $94F3,$02 Decrease counter by one and loop back to #R$94ED until counter is zero.
+  $94F5,$01 Increment #REGb by one.
+  $94F6,$01 Return.
+  $94F7,$01 Decrease #REGb by one.
+  $94F8,$03 Write #REGhl to *#R$9516.
+  $94FB,$02 Jump to #R$94F5 if #REGb is zero.
+  $94FD,$01 Increment #REGhl by one.
+  $94FE,$04 Return if *#REGhl is equal to #N$02.
+  $9502,$02 Decrease counter by one and loop back to #R$94FD until counter is zero.
+  $9504,$02 Jump to #R$94F5.
+  $9506,$02 #REGb=#N$0D.
+  $9508,$03 #REGhl=#R$9540(#N$953F).
+  $950B,$02 Jump to #R$94FD.
+
+  $950D,$03 #REGhl=#R$954C.
+  $9510,$01 #REGa=*#REGhl.
+  $9511,$01 Decrease #REGhl by one.
+  $9512,$03 Jump to #R$9510 if #REGa is zero.
+  $9515,$01 Return.
 
 g $9516
 W $9516,$02
@@ -2061,7 +2127,7 @@ c $96D1
   $9702,$02 Decrease counter by one and loop back to #R$96F7 until counter is zero.
   $9704,$01 Return.
 
-  $9705,$03 #REGhl=#R$953D(#N$953F).
+  $9705,$03 #REGhl=#R$9540(#N$953F).
   $9708,$01 Increment #REGhl by one.
   $9709,$01 #REGa=*#REGhl.
   $970A,$01 Decrease #REGa by one.
@@ -2212,6 +2278,7 @@ D $98CD Used by the routine at #R$E217.
   $98D1,$03 #REGde=#N$4084 (screen buffer location).
   $98D4,$04 #REGix=#N$5884 (attribute buffer location).
 
+@ $98D8 label=Graphics_PrepToPrintGirl
   $98D8,$03 #HTML(Increment #REGhl by three to move the pointer past the <code>JP</code> command.)
   $98DB,$01 Stash the screen buffer pointer on the stack.
   $98DC,$03 Store a pointer to the stage data in #REGde.
@@ -2236,7 +2303,37 @@ L $98E5,$05,$11
 c $993A Print Graphic
 @ $993A label=PrintGraphic
   $993A,$02 #REGa=#N$08.
+  $993C,$03 Stash #REGhl, #REGbc and #REGaf on the stack.
+  $993F,$01 #REGa=*#REGde.
+  $9940,$01 Write #REGa to *#REGhl.
+  $9941,$01 Increment #REGhl by one.
+  $9942,$01 Increment #REGde by one.
+  $9943,$02 Decrease counter by one and loop back to #R$993F until counter is zero.
+  $9945,$03 Restore #REGaf, #REGbc and #REGhl from the stack.
+  $9948,$01 Stash #REGaf on the stack.
+  $9949,$01 #REGa=#REGh.
+  $994A,$02 Reset bit 3 of #REGa.
+  $994C,$04 Jump to #R$9960 if #REGa is not equal to #N$47.
+  $9950,$05 Jump to #R$9960 if #REGl is lower than #N$E0.
+  $9955,$01 Stash #REGde on the stack.
+  $9956,$03 #REGde=#N($0020,$04,$04).
+  $9959,$01 #REGhl+=#REGde.
+  $995A,$02 Restore #REGde and #REGaf from the stack.
+  $995C,$02 #REGa=#N$08.
+  $995E,$02 Jump to #R$9966.
+  $9960,$01 Restore #REGaf from the stack.
+  $9961,$01 Decrease #REGa by one.
+  $9962,$03 Call #R$996A if #REGa is zero.
+  $9965,$01 Increment #REGh by one.
+  $9966,$01 Decrease #REGc by one.
+  $9967,$02 Jump to #R$993C until #REGc is zero.
   $9969,$01 Return.
+  $996A,$01 Stash #REGde on the stack.
+  $996B,$03 #REGde=#N($07E0,$04,$04).
+  $996E,$01 Reset the flags.
+  $996F,$02 #REGhl-=#REGde (with carry).
+  $9971,$01 Restore #REGde from the stack.
+  $9972,$02 #REGa=#N$08.
   $9974,$01 Return.
 
 b $9975 Girl 1 Frame 1
@@ -2362,7 +2459,7 @@ N $E324 Have all cards been printed yet? There are #N$05 in a hand.
 N $E331 #HTML(Housekeeping; restore the
 . <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>
 . value and the hand pointer to return.)
-@ $E331 label=EvaluateHand_Finish
+@ $E331 label=PrintHand_Finish
   $E331,$06 #HTML(Write #R$F4C9(#N$F3C9) (#R$F4C9) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
   $E337,$02 Restore the original value of #REGix from the stack.
   $E339,$01 Return.
@@ -2890,10 +2987,13 @@ N $F83A This is ASCII "SPACE" (#N$20), and everything below leads on from here (
   $F832,$08 #UDG(#PC)
 L $F832,$08,$61,$02
 
-c $FB3A
+c $FB3A Reset Theme Tune
+@ $FB3A label=ResetThemeTune
   $FB3A,$06 Write #R$FD09 to *#R$FB55.
   $FB40,$06 Write #R$FE30 to *#R$FB59.
+@ $FB46 label=HandlerThemeTune
   $FB46,$01 Disable interrupts.
+@ $FB47 label=HandlerThemeTune_Loop
   $FB47,$03 Call #R$FB81.
   $FB4A,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
   $FB4D,$01 Increment #REGe by one.
@@ -2939,7 +3039,8 @@ c $FB79
   $FB7D,$02 Decrease #REGhl by two.
   $FB7F,$02 Jump to #R$FB62.
 
-c $FB81
+c $FB81 Play Theme Tune
+@ $FB81 label=PlayThemeTune
   $FB81,$03 #REGhl=#R$FB55.
   $FB84,$03 Call #R$FB5E.
   $FB87,$03 Write #REGa to *#R$FB52.

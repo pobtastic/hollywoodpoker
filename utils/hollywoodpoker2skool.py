@@ -82,8 +82,8 @@ class HollywoodPoker:
         return '\n'.join(lines)
 
     def get_disassembly(self):
-        pc = 0xFBF0
-        end = 0xFC0D
+        pc = 0x993C
+        end = 0x9974
         lines = Disassemble(get_snapshot(HOLLYWOODPOKER_Z80), pc, end)
         return lines.run()
 

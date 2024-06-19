@@ -2056,13 +2056,14 @@ c$779F DI            ; Disable interrupts.
  $77CE POP HL        ; Restore #REGhl from the stack.
  $77CF JR $77C6      ; Jump to #R$77C6.
 
-; Routine at 77D1
+; Turn Off Theme Tune
 ;
 ; Used by the routine at #R$779F.
 ;
 ; .
 ;
 ; Self-modifying code.
+@label=TurnOffThemeTune
 c$77D1 POP HL        ; Restore #REGhl from the stack.
  $77D2 LD A,$C9      ; {#HTML(Write <code>RET</code> (#N$C9) to; #LIST {
  $77D4 LD ($FB3A),A  ; #R$FB3A } { #R$FB46 } LIST#)
@@ -2294,27 +2295,30 @@ c$784B LD A,$02       ; #REGa=#N$02.
 ;
 ; DE Attribute data
 ; HL Attribute buffer location
-; B
-; C
+; B Width
+; C Length
 @label=WriteAttributeData
 c$7917 SRA C         ;
  $7919 SRA C         ;
  $791B SRA C         ;
+@label=WriteAttributeData_Loop
 *$791D PUSH HL       ; {Stash #REGhl and #REGbc on the stack.
  $791E PUSH BC       ; }
-*$791F LD A,(DE)     ;
- $7920 LD (HL),A     ;
- $7921 INC HL        ;
- $7922 INC DE        ;
- $7923 DJNZ $791F    ;
+@label=WriteAttributeData_CopyLoop
+*$791F LD A,(DE)     ; {Copy a byte from the source address to the destination address in
+ $7920 LD (HL),A     ; the attribute buffer.}
+ $7921 INC HL        ; {Increment both the source and destination addresses.
+ $7922 INC DE        ; }
+ $7923 DJNZ $791F    ; Decrease the width counter by one and loop back to
+                     ; #R$791F until the counter is zero.
  $7925 POP BC        ; {Restore #REGbc and #REGhl from the stack.
  $7926 POP HL        ; }
  $7927 PUSH DE       ; Stash #REGde on the stack.
  $7928 LD DE,$0020   ; {#REGhl+=#N($0020,$04,$04).
  $792B ADD HL,DE     ; }
  $792C POP DE        ; Restore #REGde from the stack.
- $792D DEC C         ;
- $792E JR NZ,$791D   ;
+ $792D DEC C         ; {Decrease the height counter by one and jump back to
+ $792E JR NZ,$791D   ; #R$791D until the counter is zero.}
  $7930 RET           ; Return.
 
 ; Messaging: Title Screen
@@ -4543,83 +4547,88 @@ b$949B DEFB $00
 ; Routine at 94A2
 ;
 ; Used by the routine at #R$9337.
-c$94A2 LD A,($954D)  ;
+c$94A2 LD A,($954D)  ; {Return if *#R$954D is not equal to #N$01.
  $94A5 CP $01        ;
- $94A7 RET NZ        ;
- $94A8 JR $94C7      ;
+ $94A7 RET NZ        ; }
+ $94A8 JR $94C7      ; Jump to #R$94C7.
 ; This entry point is used by the routine at #R$9337.
-*$94AA LD HL,$9540   ;
- $94AD LD B,$0D      ;
-*$94AF LD A,(HL)     ;
+*$94AA LD HL,$9540   ; #REGhl=#R$9540.
+ $94AD LD B,$0D      ; #REGb=#N$0D.
+*$94AF LD A,(HL)     ; {Return if  *#REGhl is equal to #N$04.
  $94B0 CP $04        ;
- $94B2 RET Z         ;
- $94B3 INC HL        ;
- $94B4 DJNZ $94AF    ;
- $94B6 INC B         ;
- $94B7 RET           ;
+ $94B2 RET Z         ; }
+ $94B3 INC HL        ; Increment #REGhl by one.
+ $94B4 DJNZ $94AF    ; Decrease counter by one and loop back to #R$94AF until
+                     ; counter is zero.
+ $94B6 INC B         ; Increment #REGb by one.
+ $94B7 RET           ; Return.
 ; This entry point is used by the routine at #R$9337.
-*$94B8 CALL $94DA    ;
- $94BB LD ($9516),HL ;
- $94BE RET NZ        ;
- $94BF JR $9506      ;
+*$94B8 CALL $94DA    ; Call #R$94DA.
+ $94BB LD ($9516),HL ; Write #REGhl to *#R$9516.
+ $94BE RET NZ        ; Return if #REGa is not zero.
+ $94BF JR $9506      ; Jump to #R$9506.
 ; This entry point is used by the routine at #R$9337.
-*$94C1 LD A,($954D)  ;
- $94C4 CP $01        ;
- $94C6 RET           ;
+*$94C1 LD A,($954D)  ; {Compare *#R$954D with #N$01.
+ $94C4 CP $01        ; }
+ $94C6 RET           ; Return.
 ; This entry point is used by the routine at #R$9337.
-*$94C7 LD HL,$953F   ;
-*$94CA INC HL        ;
- $94CB LD A,(HL)     ;
+*$94C7 LD HL,$953F   ; #REGhl=#R$9540(#N$953F).
+*$94CA INC HL        ; Increment #REGhl by one.
+ $94CB LD A,(HL)     ; {Jump to #R$94CA if *#REGhl is not equal to #N$01.
  $94CC CP $01        ;
- $94CE JR NZ,$94CA   ;
- $94D0 LD B,$05      ;
-*$94D2 LD A,(HL)     ;
+ $94CE JR NZ,$94CA   ; }
+ $94D0 LD B,$05      ; #REGb=#N$05.
+*$94D2 LD A,(HL)     ; {Return if *#REGhl is not equal to #N$01.
  $94D3 CP $01        ;
- $94D5 RET NZ        ;
- $94D6 INC HL        ;
- $94D7 DJNZ $94D2    ;
- $94D9 RET           ;
+ $94D5 RET NZ        ; }
+ $94D6 INC HL        ; Increment #REGhl by one.
+ $94D7 DJNZ $94D2    ; Decrease counter by one and loop back to #R$94D2 until
+                     ; counter is zero.
+ $94D9 RET           ; Return.
 ; This entry point is used by the routine at #R$9337.
-*$94DA LD HL,$9540   ;
- $94DD LD B,$0D      ;
-*$94DF LD A,(HL)     ;
+*$94DA LD HL,$9540   ; #REGhl=#R$9540.
+ $94DD LD B,$0D      ; #REGb=#N$0D.
+*$94DF LD A,(HL)     ; {Return if *#REGhl is equal to #N$03.
  $94E0 CP $03        ;
- $94E2 RET Z         ;
- $94E3 INC HL        ;
- $94E4 DJNZ $94DF    ;
- $94E6 INC B         ;
- $94E7 RET           ;
+ $94E2 RET Z         ; }
+ $94E3 INC HL        ; Increment #REGhl by one.
+ $94E4 DJNZ $94DF    ; Decrease counter by one and loop back to #R$94DF until
+                     ; counter is zero.
+ $94E6 INC B         ; Increment #REGb by one.
+ $94E7 RET           ; Return.
 ; This entry point is used by the routine at #R$9337.
-*$94E8 LD HL,$9540   ;
- $94EB LD B,$0D      ;
-*$94ED LD A,(HL)     ;
+*$94E8 LD HL,$9540   ; #REGhl=#R$9540.
+ $94EB LD B,$0D      ; #REGb=#N$0D.
+*$94ED LD A,(HL)     ; {Jump to #R$94F7 if *#REGhl is equal to #N$02.
  $94EE CP $02        ;
- $94F0 JR Z,$94F7    ;
- $94F2 INC HL        ;
- $94F3 DJNZ $94ED    ;
-*$94F5 INC B         ;
- $94F6 RET           ;
-*$94F7 DEC B         ;
- $94F8 LD ($9516),HL ;
- $94FB JR Z,$94F5    ;
-*$94FD INC HL        ;
- $94FE LD A,(HL)     ;
+ $94F0 JR Z,$94F7    ; }
+ $94F2 INC HL        ; Increment #REGhl by one.
+ $94F3 DJNZ $94ED    ; Decrease counter by one and loop back to #R$94ED until
+                     ; counter is zero.
+*$94F5 INC B         ; Increment #REGb by one.
+ $94F6 RET           ; Return.
+*$94F7 DEC B         ; Decrease #REGb by one.
+ $94F8 LD ($9516),HL ; Write #REGhl to *#R$9516.
+ $94FB JR Z,$94F5    ; Jump to #R$94F5 if #REGb is zero.
+*$94FD INC HL        ; Increment #REGhl by one.
+ $94FE LD A,(HL)     ; {Return if *#REGhl is equal to #N$02.
  $94FF CP $02        ;
- $9501 RET Z         ;
- $9502 DJNZ $94FD    ;
- $9504 JR $94F5      ;
+ $9501 RET Z         ; }
+ $9502 DJNZ $94FD    ; Decrease counter by one and loop back to #R$94FD until
+                     ; counter is zero.
+ $9504 JR $94F5      ; Jump to #R$94F5.
 ; This entry point is used by the routine at #R$9337.
-*$9506 LD B,$0D      ;
- $9508 LD HL,$953F   ;
- $950B JR $94FD      ;
+*$9506 LD B,$0D      ; #REGb=#N$0D.
+ $9508 LD HL,$953F   ; #REGhl=#R$9540(#N$953F).
+ $950B JR $94FD      ; Jump to #R$94FD.
 ; This entry point is used by the routine at #R$9337.
-*$950D LD HL,$954C   ;
+*$950D LD HL,$954C   ; #REGhl=#R$954C.
 ; This entry point is used by the routine at #R$9337.
-*$9510 LD A,(HL)     ;
- $9511 DEC HL        ;
- $9512 OR A          ;
- $9513 JR Z,$9510    ;
- $9515 RET           ;
+*$9510 LD A,(HL)     ; #REGa=*#REGhl.
+ $9511 DEC HL        ; Decrease #REGhl by one.
+ $9512 OR A          ; {Jump to #R$9510 if #REGa is zero.
+ $9513 JR Z,$9510    ; }
+ $9515 RET           ; Return.
 
 ; Game status buffer entry at 9516
 g$9516 DEFW $0000
@@ -4970,7 +4979,7 @@ c$96D1 LD A,($949B)  ; #REGa=*#R$949B.
  $9702 DJNZ $96F7    ; Decrease counter by one and loop back to #R$96F7 until
                      ; counter is zero.
  $9704 RET           ; Return.
-*$9705 LD HL,$953F   ; #REGhl=#R$953D(#N$953F).
+*$9705 LD HL,$953F   ; #REGhl=#R$9540(#N$953F).
 *$9708 INC HL        ; Increment #REGhl by one.
  $9709 LD A,(HL)     ; #REGa=*#REGhl.
  $970A DEC A         ; Decrease #REGa by one.
@@ -5204,6 +5213,7 @@ c$98CD LD C,$38      ; #REGc=#N$38 (height).
  $98D4 LD IX,$5884   ; #REGix=#N$5884 (attribute buffer location).
 ; This entry point is used by the routines at #R$985E, #R$9872, #R$987F,
 ; #R$988C, #R$9899, #R$98A6, #R$98B3 and #R$98C0.
+@label=Graphics_PrepToPrintGirl
 *$98D8 INC HL        ; {#HTML(Increment #REGhl by three to move the pointer
  $98D9 INC HL        ; past the <code>JP</code> command.)
  $98DA INC HL        ; }
@@ -5286,45 +5296,46 @@ w$98E5 JP $985E      ; Jump command to stage #N($01+((#PC-$98E5)/$05)).
 ; Used by the routines at #R$784B, #R$7E6B and #R$9838.
 @label=PrintGraphic
 c$993A LD A,$08      ; #REGa=#N$08.
-*$993C PUSH HL       ;
+*$993C PUSH HL       ; {Stash #REGhl, #REGbc and #REGaf on the stack.
  $993D PUSH BC       ;
- $993E PUSH AF       ;
-*$993F LD A,(DE)     ;
- $9940 LD (HL),A     ;
- $9941 INC HL        ;
- $9942 INC DE        ;
- $9943 DJNZ $993F    ;
- $9945 POP AF        ;
+ $993E PUSH AF       ; }
+*$993F LD A,(DE)     ; #REGa=*#REGde.
+ $9940 LD (HL),A     ; Write #REGa to *#REGhl.
+ $9941 INC HL        ; Increment #REGhl by one.
+ $9942 INC DE        ; Increment #REGde by one.
+ $9943 DJNZ $993F    ; Decrease counter by one and loop back to #R$993F until
+                     ; counter is zero.
+ $9945 POP AF        ; {Restore #REGaf, #REGbc and #REGhl from the stack.
  $9946 POP BC        ;
- $9947 POP HL        ;
- $9948 PUSH AF       ;
- $9949 LD A,H        ;
- $994A RES 3,A       ;
- $994C CP $47        ;
- $994E JR NZ,$9960   ;
- $9950 LD A,L        ;
+ $9947 POP HL        ; }
+ $9948 PUSH AF       ; Stash #REGaf on the stack.
+ $9949 LD A,H        ; #REGa=#REGh.
+ $994A RES 3,A       ; Reset bit 3 of #REGa.
+ $994C CP $47        ; {Jump to #R$9960 if #REGa is not equal to #N$47.
+ $994E JR NZ,$9960   ; }
+ $9950 LD A,L        ; {Jump to #R$9960 if #REGl is lower than #N$E0.
  $9951 CP $E0        ;
- $9953 JR C,$9960    ;
- $9955 PUSH DE       ;
- $9956 LD DE,$0020   ;
- $9959 ADD HL,DE     ;
- $995A POP DE        ;
- $995B POP AF        ;
- $995C LD A,$08      ;
- $995E JR $9966      ;
-*$9960 POP AF        ;
- $9961 DEC A         ;
- $9962 CALL Z,$996A  ;
- $9965 INC H         ;
-*$9966 DEC C         ;
- $9967 JR NZ,$993C   ;
+ $9953 JR C,$9960    ; }
+ $9955 PUSH DE       ; Stash #REGde on the stack.
+ $9956 LD DE,$0020   ; #REGde=#N($0020,$04,$04).
+ $9959 ADD HL,DE     ; #REGhl+=#REGde.
+ $995A POP DE        ; {Restore #REGde and #REGaf from the stack.
+ $995B POP AF        ; }
+ $995C LD A,$08      ; #REGa=#N$08.
+ $995E JR $9966      ; Jump to #R$9966.
+*$9960 POP AF        ; Restore #REGaf from the stack.
+ $9961 DEC A         ; Decrease #REGa by one.
+ $9962 CALL Z,$996A  ; Call #R$996A if #REGa is zero.
+ $9965 INC H         ; Increment #REGh by one.
+*$9966 DEC C         ; Decrease #REGc by one.
+ $9967 JR NZ,$993C   ; Jump to #R$993C until #REGc is zero.
  $9969 RET           ; Return.
-*$996A PUSH DE       ;
- $996B LD DE,$07E0   ;
- $996E XOR A         ;
- $996F SBC HL,DE     ;
- $9971 POP DE        ;
- $9972 LD A,$08      ;
+*$996A PUSH DE       ; Stash #REGde on the stack.
+ $996B LD DE,$07E0   ; #REGde=#N($07E0,$04,$04).
+ $996E XOR A         ; Reset the flags.
+ $996F SBC HL,DE     ; #REGhl-=#REGde (with carry).
+ $9971 POP DE        ; Restore #REGde from the stack.
+ $9972 LD A,$08      ; #REGa=#N$08.
  $9974 RET           ; Return.
 
 ; Girl 1 Frame 1
@@ -6670,7 +6681,7 @@ c$E313 PUSH IX       ; Stash #REGix on the stack.
 ; #HTML(Housekeeping; restore the
 ; <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>
 ; value and the hand pointer to return.)
-@label=EvaluateHand_Finish
+@label=PrintHand_Finish
 *$E331 LD HL,$F3C9   ; {#HTML(Write #R$F4C9(#N$F3C9) (#R$F4C9) to *<a
  $E334 LD ($5C36),HL ; rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
@@ -8323,15 +8334,18 @@ b$F83A DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; #UDG(#PC)
  $FB2A DEFB $00,$00,$50,$A0,$00,$00,$00,$00 ; #UDG(#PC)
  $FB32 DEFB $00,$00,$60,$90,$B0,$90,$60,$00 ; #UDG(#PC)
 
-; Routine at FB3A
+; Reset Theme Tune
 ;
 ; Used by the routine at #R$6E9D.
+@label=ResetThemeTune
 c$FB3A LD HL,$FD09   ; {Write #R$FD09 to *#R$FB55.
  $FB3D LD ($FB55),HL ; }
  $FB40 LD HL,$FE30   ; {Write #R$FE30 to *#R$FB59.
  $FB43 LD ($FB59),HL ; }
 ; This entry point is used by the routine at #R$6E9D.
+@label=HandlerThemeTune
 *$FB46 DI            ; Disable interrupts.
+@label=HandlerThemeTune_Loop
 *$FB47 CALL $FB81    ; Call #R$FB81.
  $FB4A CALL $028E    ; #HTML(Call <a rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
@@ -8394,9 +8408,10 @@ c$FB79 INC HL        ; Increment #REGhl by one.
  $FB7E DEC HL        ; }
  $FB7F JR $FB62      ; Jump to #R$FB62.
 
-; Routine at FB81
+; Play Theme Tune
 ;
 ; Used by the routine at #R$FB3A.
+@label=PlayThemeTune
 c$FB81 LD HL,$FB55   ; #REGhl=#R$FB55.
  $FB84 CALL $FB5E    ; Call #R$FB5E.
  $FB87 LD ($FB52),A  ; Write #REGa to *#R$FB52.

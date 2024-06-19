@@ -1,7 +1,358 @@
 ; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
 
+[Card:Two]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-two-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E436+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-two-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E436+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-two-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E436+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-two-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E436+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+} UDGTABLE#
+
+[Card:Three]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-three-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E454+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-three-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E454+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-three-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E454+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-three-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E454+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+} UDGTABLE#
+
+[Card:Four]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-four-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E472+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-four-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E472+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-four-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E472+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-four-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E472+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+} UDGTABLE#
+
+[Card:Five]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-five-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E490+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-five-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E490+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-five-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E490+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-five-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E490+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+} UDGTABLE#
+
+[Card:Six]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-six-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E4AE+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-six-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E4AE+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-six-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E4AE+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-six-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E4AE+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+} UDGTABLE#
+
+[Card:Seven]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-seven-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E4CC+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-seven-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E4CC+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-seven-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E4CC+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-seven-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E4CC+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+} UDGTABLE#
+
+[Card:Eight]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-eight-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E4EA+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-eight-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E4EA+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-eight-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E4EA+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-eight-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E4EA+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+} UDGTABLE#
+
+[Card:Nine]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-nine-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E508+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-nine-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E508+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-nine-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E508+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-nine-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E508+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+} UDGTABLE#
+
+[Card:Ten]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-ten-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E526+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-ten-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E526+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-ten-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E526+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-ten-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E526+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+} UDGTABLE#
+
 [Card:Jack]
-#UDGTABLE {
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
   #UDGS$06,$05(card-jack-diamonds-colour)(
     #LET(a=$E618+(#PEEK($E39A+$06*$y+$x)*$08))
     #UDG({a},attr=#PEEK($E910+$06*$y+$x))(*udg)
@@ -28,7 +379,7 @@
 } UDGTABLE#
 
 [Card:Queen]
-#UDGTABLE {
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
   #UDGS$06,$05(card-queen-diamonds-colour)(
     #LET(a=$EA50+(#PEEK($E39A+$06*$y+$x)*$08))
     #UDG({a},attr=#PEEK($ED48+$06*$y+$x))(*udg)
@@ -55,7 +406,7 @@
 } UDGTABLE#
 
 [Card:King]
-#UDGTABLE {
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
   #UDGS$06,$05(card-king-diamonds-colour)(
     #LET(a=$EE88+(#PEEK($E39A+$06*$y+$x)*$08))
     #UDG({a},attr=#PEEK($F180+$06*$y+$x))(*udg)
@@ -79,4 +430,43 @@
     #UDG({a},attr=#PEEK($F4AA+$06*$y+$x))(*udg)
     udg
   )
+} UDGTABLE#
+
+[Card:Ace]
+#UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E6BF)
+  #UDGS$06,$05(card-ace-diamonds-colour)(
+    #LET(a=$E35F+(#PEEK($E544+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E717)
+  #UDGS$06,$05(card-ace-hearts-colour)(
+    #LET(a=$E35F+(#PEEK($E544+$06*$y+$x)*$08))
+    #UDG({a},attr=$7A)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+  #UDGS$06,$05(card-ace-spades-colour)(
+    #LET(a=$E35F+(#PEEK($E544+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
+  |
+  #PUSHS
+  #SIM(start=$E3E9,stop=$E3EE,hl=$E7C7)
+  #UDGS$06,$05(card-ace-clubs-colour)(
+    #LET(a=$E35F+(#PEEK($E544+$06*$y+$x)*$08))
+    #UDG({a},attr=$78)(*udg)
+    udg
+  )
+  #POPS
 } UDGTABLE#
