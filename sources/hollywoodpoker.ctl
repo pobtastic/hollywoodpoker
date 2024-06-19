@@ -2545,14 +2545,14 @@ c $E3B8 Print Cards
   $E3EE,$06 #HTML(Write #N$E35F to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
   $E3F4,$06 BRIGHT: ON.
   $E3FA,$06 Set INK: #INK$00.
-  $E400,$07 Jump to #R$E40D if *#R$E562 is higher than #N$02.
+  $E400,$07 Jump to #R$E40D if *#R$E562 is #N$02 or higher.
   $E407,$06 Set INK: #INK$02.
 @ $E40D label=PrintCard
   $E40D,$03 Fetch the current *#R$E81F and store this in #REGa.
   $E410,$02 Each card is #N$06 character blocks in width, store this count in #REGc.
   $E412,$01 Set a counter in #REGb of the card position we're processing.
 N $E413 Subtract #N$06 from #N$26 the number of times for the current card
-. position. For example; position #N$01 is - #N$26 - (#N$01 * #N$06) = #N$20.
+. position. For example; position #N$01 is: #N$26 - (#N$01 * #N$06) = #N$20.
   $E413,$02 #REGa=#N$26.
 @ $E415 label=FindCardPosition_Loop
   $E415,$01 #REGa-=#REGc.
@@ -2560,6 +2560,7 @@ N $E413 Subtract #N$06 from #N$26 the number of times for the current card
   $E418,$01 #REGc=#REGa.
   $E419,$02 #REGb=#N$0C.
   $E41B,$04 #REGde=*#R$E563.
+@ $E41F label=PrintCard_Loop
   $E41F,$01 Stash #REGde on the stack.
   $E420,$05 Jump to #R$E434 if #REGb is equal to #N$07.
   $E425,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">#N$0DE2</a> (CL_SET).)
@@ -2570,7 +2571,7 @@ N $E413 Subtract #N$06 from #N$26 the number of times for the current card
   $E430,$01 Restore #REGbc from the stack.
   $E431,$01 Decrease #REGb by one.
   $E432,$02 Jump to #R$E41F.
-@ $E434 label=PrintCard_Housekeeping
+@ $E434 label=PrintCard_Finish
   $E434,$01 Restore #REGde from the stack.
   $E435,$01 Return.
 
@@ -2663,9 +2664,9 @@ g $E562 Current Card Colour
 @ $E562 label=CurrentCardColour
 B $E562,$01
 
-g $E563 Picture Card UDG Data
-@ $E563 label=PictureCardUDGData
-D $E563 Pointer to the picture card UDG data.
+g $E563 Pointer Card UDG Data
+@ $E563 label=PointerCardUDGData
+D $E563 Pointer to the currently processed card UDG data.
 W $E563,$02
 
 i $E565
@@ -2681,13 +2682,25 @@ L $E567,$08,$20
 
 b $E667 Buffer: Card Data
 @ $E667 label=Buffer_CardData
+D $E667 Populated from one of:
+. #TABLE(default)
+. { #R$E6BF }
+. { #R$E717 }
+. { #R$E76F }
+. { #R$E7C7 }
+. TABLE#
   $E667,$08 #UDGTABLE { #N((#PC-$E35F)/$08) | #UDG(#PC) } UDGTABLE#
 L $E667,$08,$0B
 
 b $E6BF Graphics: Card Suits Data
-@ $E6BF label=Graphics_CardSuitsData
-  $E6BF,$08 #UDGTABLE { #N((#PC-$E35F)/$08) | #UDG(#PC) } UDGTABLE#
-L $E6BF,$08,$2C
+@ $E6BF label=Graphics_DiamondsSuitData
+@ $E717 label=Graphics_HeartsSuitData
+@ $E76F label=Graphics_SpadesSuitData
+@ $E7C7 label=Graphics_ClubsSuitData
+D $E6BF The appropriate suit data is copied into #R$E667, it's not used from
+. here directly.
+  $E6BF,$58 #UDGTABLE #FOR$00,$0A,,$04(x,{ #N($61+x) | #UDG(#PC+x*$08) },) UDGTABLE#
+L $E6BF,$58,$04
 
 g $E81F Card Position
 @ $E81F label=CardPosition

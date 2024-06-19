@@ -6891,7 +6891,7 @@ c$E3B8 SUB $03       ; #REGa-=#N$03.
  $E3FC RST $10       ;
  $E3FD LD A,$00      ;
  $E3FF RST $10       ; }
- $E400 LD A,($E562)  ; {Jump to #R$E40D if *#R$E562 is higher than #N$02.
+ $E400 LD A,($E562)  ; {Jump to #R$E40D if *#R$E562 is #N$02 or higher.
  $E403 CP $02        ;
  $E405 JR NC,$E40D   ; }
  $E407 LD A,$10      ; {Set INK: #INK$02.
@@ -6906,7 +6906,7 @@ c$E3B8 SUB $03       ; #REGa-=#N$03.
  $E412 LD B,A        ; Set a counter in #REGb of the card position we're
                      ; processing.
 ; Subtract #N$06 from #N$26 the number of times for the current card
-; position. For example; position #N$01 is - #N$26 - (#N$01 * #N$06) = #N$20.
+; position. For example; position #N$01 is: #N$26 - (#N$01 * #N$06) = #N$20.
  $E413 LD A,$26      ; #REGa=#N$26.
 @label=FindCardPosition_Loop
 *$E415 SUB C         ; #REGa-=#REGc.
@@ -6915,6 +6915,7 @@ c$E3B8 SUB $03       ; #REGa-=#N$03.
  $E418 LD C,A        ; #REGc=#REGa.
  $E419 LD B,$0C      ; #REGb=#N$0C.
  $E41B LD DE,($E563) ; #REGde=*#R$E563.
+@label=PrintCard_Loop
 *$E41F PUSH DE       ; Stash #REGde on the stack.
  $E420 LD A,B        ; {Jump to #R$E434 if #REGb is equal to #N$07.
  $E421 CP $07        ;
@@ -6930,7 +6931,7 @@ c$E3B8 SUB $03       ; #REGa-=#N$03.
  $E430 POP BC        ; Restore #REGbc from the stack.
  $E431 DEC B         ; Decrease #REGb by one.
  $E432 JR $E41F      ; Jump to #R$E41F.
-@label=PrintCard_Housekeeping
+@label=PrintCard_Finish
 *$E434 POP DE        ; Restore #REGde from the stack.
  $E435 RET           ; Return.
 
@@ -7024,10 +7025,10 @@ b$E436 DEFB $42,$43,$43,$43,$43,$44 ; {#UDGTABLE {
 @label=CurrentCardColour
 g$E562 DEFB $00
 
-; Picture Card UDG Data
+; Pointer Card UDG Data
 ;
-; Pointer to the picture card UDG data.
-@label=PictureCardUDGData
+; Pointer to the currently processed card UDG data.
+@label=PointerCardUDGData
 g$E563 DEFW $0000
 
 i$E565 DEFW $0000
@@ -7103,6 +7104,14 @@ b$E567 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
                                             ; #UDG(#PC) } UDGTABLE#
 
 ; Buffer: Card Data
+;
+; Populated from one of:
+; #TABLE(default)
+; { #R$E6BF }
+; { #R$E717 }
+; { #R$E76F }
+; { #R$E7C7 }
+; TABLE#
 @label=Buffer_CardData
 b$E667 DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
                                             ; #UDG(#PC) } UDGTABLE#
@@ -7128,95 +7137,57 @@ b$E667 DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
                                             ; #UDG(#PC) } UDGTABLE#
 
 ; Graphics: Card Suits Data
-@label=Graphics_CardSuitsData
-b$E6BF DEFB $00,$00,$00,$00,$01,$01,$02,$0C ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E6C7 DEFB $00,$00,$00,$00,$80,$80,$C0,$F0 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E6CF DEFB $0F,$03,$01,$01,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E6D7 DEFB $F0,$C0,$80,$80,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E6DF DEFB $00,$00,$00,$00,$18,$18,$2C,$CF ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E6E7 DEFB $FF,$3C,$18,$18,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E6EF DEFB $01,$01,$02,$0C,$0F,$03,$01,$01 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E6F7 DEFB $80,$80,$C0,$F0,$F0,$C0,$80,$80 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E6FF DEFB $80,$80,$88,$9C,$BE,$9C,$88,$80 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E707 DEFB $01,$01,$11,$39,$7D,$39,$11,$01 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E70F DEFB $18,$18,$2C,$CF,$FF,$3C,$18,$18 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E717 DEFB $00,$00,$00,$00,$00,$06,$0D,$09 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E71F DEFB $00,$00,$00,$00,$00,$60,$F0,$F0 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E727 DEFB $0D,$06,$03,$01,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E72F DEFB $F0,$E0,$C0,$80,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E737 DEFB $00,$00,$00,$00,$00,$66,$DF,$9F ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E73F DEFB $DF,$6E,$3C,$18,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E747 DEFB $06,$0D,$09,$0D,$06,$03,$01,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E74F DEFB $60,$F0,$F0,$F0,$E0,$C0,$80,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E757 DEFB $80,$80,$94,$BE,$BE,$9C,$88,$80 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E75F DEFB $01,$01,$29,$7D,$7D,$39,$11,$01 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E767 DEFB $66,$DF,$9F,$DF,$6E,$3C,$18,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E76F DEFB $00,$00,$00,$00,$01,$02,$05,$0B ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E777 DEFB $00,$00,$00,$00,$80,$C0,$E0,$F0 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E77F DEFB $0D,$01,$01,$03,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E787 DEFB $B0,$80,$80,$C0,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E78F DEFB $00,$00,$00,$00,$18,$2C,$5E,$BF ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E797 DEFB $DB,$18,$18,$3C,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E79F DEFB $01,$02,$05,$0B,$0D,$01,$01,$03 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7A7 DEFB $80,$C0,$E0,$F0,$B0,$80,$80,$C0 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7AF DEFB $80,$88,$9C,$BE,$BE,$88,$9C,$80 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7B7 DEFB $01,$11,$39,$7D,$7D,$11,$39,$01 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7BF DEFB $18,$2C,$5E,$BF,$DB,$18,$18,$3C ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7C7 DEFB $00,$00,$00,$00,$03,$02,$0D,$0B ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7CF DEFB $00,$00,$00,$00,$80,$80,$60,$E0 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7D7 DEFB $0D,$01,$01,$03,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7DF DEFB $60,$00,$00,$80,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7E7 DEFB $00,$00,$00,$00,$38,$28,$D6,$BE ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7EF DEFB $D6,$10,$10,$38,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7F7 DEFB $03,$02,$0D,$0B,$0D,$01,$01,$03 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E7FF DEFB $80,$80,$60,$E0,$60,$00,$00,$80 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E807 DEFB $80,$9C,$AA,$BE,$AA,$88,$9C,$80 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E80F DEFB $01,$39,$55,$7D,$55,$11,$39,$01 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
- $E817 DEFB $38,$28,$D6,$BE,$D6,$10,$10,$38 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
-                                            ; #UDG(#PC) } UDGTABLE#
+;
+; The appropriate suit data is copied into #R$E667, it's not used from
+; here directly.
+@label=Graphics_DiamondsSuitData
+b$E6BF DEFB $00,$00,$00,$00,$01,$01,$02,$0C ; {#UDGTABLE #FOR$00,$0A,,$04(x,{
+ $E6C7 DEFB $00,$00,$00,$00,$80,$80,$C0,$F0 ; #N($61+x) | #UDG(#PC+x*$08) },)
+ $E6CF DEFB $0F,$03,$01,$01,$00,$00,$00,$00 ; UDGTABLE#
+ $E6D7 DEFB $F0,$C0,$80,$80,$00,$00,$00,$00 ;
+ $E6DF DEFB $00,$00,$00,$00,$18,$18,$2C,$CF ;
+ $E6E7 DEFB $FF,$3C,$18,$18,$00,$00,$00,$00 ;
+ $E6EF DEFB $01,$01,$02,$0C,$0F,$03,$01,$01 ;
+ $E6F7 DEFB $80,$80,$C0,$F0,$F0,$C0,$80,$80 ;
+ $E6FF DEFB $80,$80,$88,$9C,$BE,$9C,$88,$80 ;
+ $E707 DEFB $01,$01,$11,$39,$7D,$39,$11,$01 ;
+ $E70F DEFB $18,$18,$2C,$CF,$FF,$3C,$18,$18 ; }
+@label=Graphics_HeartsSuitData
+ $E717 DEFB $00,$00,$00,$00,$00,$06,$0D,$09 ; {#UDGTABLE #FOR$00,$0A,,$04(x,{
+ $E71F DEFB $00,$00,$00,$00,$00,$60,$F0,$F0 ; #N($61+x) | #UDG(#PC+x*$08) },)
+ $E727 DEFB $0D,$06,$03,$01,$00,$00,$00,$00 ; UDGTABLE#
+ $E72F DEFB $F0,$E0,$C0,$80,$00,$00,$00,$00 ;
+ $E737 DEFB $00,$00,$00,$00,$00,$66,$DF,$9F ;
+ $E73F DEFB $DF,$6E,$3C,$18,$00,$00,$00,$00 ;
+ $E747 DEFB $06,$0D,$09,$0D,$06,$03,$01,$00 ;
+ $E74F DEFB $60,$F0,$F0,$F0,$E0,$C0,$80,$00 ;
+ $E757 DEFB $80,$80,$94,$BE,$BE,$9C,$88,$80 ;
+ $E75F DEFB $01,$01,$29,$7D,$7D,$39,$11,$01 ;
+ $E767 DEFB $66,$DF,$9F,$DF,$6E,$3C,$18,$00 ; }
+@label=Graphics_SpadesSuitData
+ $E76F DEFB $00,$00,$00,$00,$01,$02,$05,$0B ; {#UDGTABLE #FOR$00,$0A,,$04(x,{
+ $E777 DEFB $00,$00,$00,$00,$80,$C0,$E0,$F0 ; #N($61+x) | #UDG(#PC+x*$08) },)
+ $E77F DEFB $0D,$01,$01,$03,$00,$00,$00,$00 ; UDGTABLE#
+ $E787 DEFB $B0,$80,$80,$C0,$00,$00,$00,$00 ;
+ $E78F DEFB $00,$00,$00,$00,$18,$2C,$5E,$BF ;
+ $E797 DEFB $DB,$18,$18,$3C,$00,$00,$00,$00 ;
+ $E79F DEFB $01,$02,$05,$0B,$0D,$01,$01,$03 ;
+ $E7A7 DEFB $80,$C0,$E0,$F0,$B0,$80,$80,$C0 ;
+ $E7AF DEFB $80,$88,$9C,$BE,$BE,$88,$9C,$80 ;
+ $E7B7 DEFB $01,$11,$39,$7D,$7D,$11,$39,$01 ;
+ $E7BF DEFB $18,$2C,$5E,$BF,$DB,$18,$18,$3C ; }
+@label=Graphics_ClubsSuitData
+ $E7C7 DEFB $00,$00,$00,$00,$03,$02,$0D,$0B ; {#UDGTABLE #FOR$00,$0A,,$04(x,{
+ $E7CF DEFB $00,$00,$00,$00,$80,$80,$60,$E0 ; #N($61+x) | #UDG(#PC+x*$08) },)
+ $E7D7 DEFB $0D,$01,$01,$03,$00,$00,$00,$00 ; UDGTABLE#
+ $E7DF DEFB $60,$00,$00,$80,$00,$00,$00,$00 ;
+ $E7E7 DEFB $00,$00,$00,$00,$38,$28,$D6,$BE ;
+ $E7EF DEFB $D6,$10,$10,$38,$00,$00,$00,$00 ;
+ $E7F7 DEFB $03,$02,$0D,$0B,$0D,$01,$01,$03 ;
+ $E7FF DEFB $80,$80,$60,$E0,$60,$00,$00,$80 ;
+ $E807 DEFB $80,$9C,$AA,$BE,$AA,$88,$9C,$80 ;
+ $E80F DEFB $01,$39,$55,$7D,$55,$11,$39,$01 ;
+ $E817 DEFB $38,$28,$D6,$BE,$D6,$10,$10,$38 ; }
 
 ; Card Position
 ;
