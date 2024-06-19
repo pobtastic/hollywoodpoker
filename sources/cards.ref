@@ -1,0 +1,82 @@
+; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
+
+[Card:Jack]
+#UDGTABLE {
+  #UDGS$06,$05(card-jack-diamonds-colour)(
+    #LET(a=$E618+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($E910+$06*$y+$x))(*udg)
+    udg
+  )
+  |
+  #UDGS$06,$05(card-jack-hearts-colour)(
+    #LET(a=$E726+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($EA1E+$06*$y+$x))(*udg)
+    udg
+  )
+  |
+  #UDGS$06,$05(card-jack-spades-colour)(
+    #LET(a=$E834+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($EB2C+$06*$y+$x))(*udg)
+    udg
+  )
+  |
+  #UDGS$06,$05(card-jack-clubs-colour)(
+    #LET(a=$E942+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($EC3A+$06*$y+$x))(*udg)
+    udg
+  )
+} UDGTABLE#
+
+[Card:Queen]
+#UDGTABLE {
+  #UDGS$06,$05(card-queen-diamonds-colour)(
+    #LET(a=$EA50+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($ED48+$06*$y+$x))(*udg)
+    udg
+  )
+  |
+  #UDGS$06,$05(card-queen-hearts-colour)(
+    #LET(a=$EB5E+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($EE56+$06*$y+$x))(*udg)
+    udg
+  )
+  |
+  #UDGS$06,$05(card-queen-spades-colour)(
+    #LET(a=$EC6C+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($EF64+$06*$y+$x))(*udg)
+    udg
+  )
+  |
+  #UDGS$06,$05(card-queen-clubs-colour)(
+    #LET(a=$ED7A+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($F072+$06*$y+$x))(*udg)
+    udg
+  )
+} UDGTABLE#
+
+[Card:King]
+#UDGTABLE {
+  #UDGS$06,$05(card-king-diamonds-colour)(
+    #LET(a=$EE88+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($F180+$06*$y+$x))(*udg)
+    udg
+  )
+  |
+  #UDGS$06,$05(card-king-hearts-colour)(
+    #LET(a=$EF96+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($F28E+$06*$y+$x))(*udg)
+    udg
+  )
+  |
+  #UDGS$06,$05(card-king-spades-colour)(
+    #LET(a=$F0A4+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($F39C+$06*$y+$x))(*udg)
+    udg
+  )
+  |
+  #UDGS$06,$05(card-king-clubs-colour)(
+    #LET(a=$F1B2+(#PEEK($E39A+$06*$y+$x)*$08))
+    #UDG({a},attr=#PEEK($F4AA+$06*$y+$x))(*udg)
+    udg
+  )
+} UDGTABLE#

@@ -10,6 +10,8 @@ D $4000 #UDGTABLE { =h Hollywood Poker Loading Screen. } { #SCR$02(loading) } UD
   $4000,$1800,$20 Pixels.
   $5800,$0300,$20 Attributes.
 
+b $5B00 Stack
+
 c $5D3B Game Entry Point
 @ $5D3B label=GameEntryPoint
   $5D3B,$03 Jump to #R$6E9D.

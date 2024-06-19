@@ -8,7 +8,7 @@
 
 [Config]
 Expand=#INCLUDE(Expand)
-RefFiles=bases.ref;analytics.ref;changelog.ref;data.ref;facts.ref;girls.ref;pokes.ref;sound.ref
+RefFiles=bases.ref;analytics.ref;cards.ref;changelog.ref;data.ref;facts.ref;girls.ref;pokes.ref;sound.ref
 GameDir=hollywoodpoker
 
 [Game]
@@ -27,12 +27,17 @@ GameStatusBuffer=Game Status Buffer
 UnusedMap=Unused Addresses
 
 [Index:Graphics:Graphics And Sound]
+Cards
 Girls
 Sound
 
 [Paths]
+Cards=graphics/cards.html
 Girls=graphics/girls.html
 Sound=sound/sound.html
+
+[Page:Cards]
+SectionPrefix=Card
 
 [Page:Girls]
 SectionPrefix=Girl
