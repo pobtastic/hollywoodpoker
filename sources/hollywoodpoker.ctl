@@ -2372,6 +2372,7 @@ R $E33A A Card value
   $E33B,$02,b$01 Keep only bits 0-3.
   $E33D,$04 Jump to #R$E3BD if #REGa is lower than #N$09.
   $E341,$04 Jump to #R$E3B8 if #REGa is equal to #N$0C.
+N $E345 Anything else is a picture card, so work out what we're printing.
   $E345,$03 #REGhl=#R$E618.
   $E348,$03 #REGde=#N($0438,$04,$04).
   $E34B,$02 #REGa-=#N$08.
@@ -2419,27 +2420,100 @@ N $E390 Move down one line, and to where the next row will start (#N$06 less
 . than one row ~ #N$20).
   $E390,$05 #REGde+=#N($001A,$04,$04).
   $E395,$01 Restore #REGhl from the stack.
-  $E396,$01 Decrease #REGc by one.
-  $E397,$02 Jump to #R$E387 until #REGc is zero.
+  $E396,$01 Decrease the height counter by one.
+  $E397,$02 Jump to #R$E387 until the entire card has been printed.
   $E399,$01 Return.
 
 b $E39A Graphics: Picture Card
 @ $E39A label=Graphics_PictureCard
 D $E39A This is UDG data which corresponds to the picture card UDGs.
 .
-. Used by the routines at #R$E33A and #R$E40D.
-  $E39A,$1E,$06 #UDGTABLE {
-.   #UDGS$06,$05(card-buffer)(
-.     #LET(a=$E35F+(#PEEK(#PC+$06*$y+$x)*$08))
+. For the graphic data itself, see #R$E820.
+.
+.  #UDGTABLE {
+.   #UDGS$06,$05(card-jack-diamonds)(
+.     #LET(a=$E618+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+.   |
+.   #UDGS$06,$05(card-jack-hearts)(
+.     #LET(a=$E726+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+.   |
+.   #UDGS$06,$05(card-jack-spades)(
+.     #LET(a=$E834+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+.   |
+.   #UDGS$06,$05(card-jack-clubs)(
+.     #LET(a=$E942+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+. }
+. {
+.   #UDGS$06,$05(card-queen-diamonds)(
+.     #LET(a=$EA50+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+.   |
+.   #UDGS$06,$05(card-queen-hearts)(
+.     #LET(a=$EB5E+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+.   |
+.   #UDGS$06,$05(card-queen-spades)(
+.     #LET(a=$EC6C+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+.   |
+.   #UDGS$06,$05(card-queen-clubs)(
+.     #LET(a=$ED7A+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+. }
+. {
+.   #UDGS$06,$05(card-king-diamonds)(
+.     #LET(a=$EE88+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+.   |
+.   #UDGS$06,$05(card-king-hearts)(
+.     #LET(a=$EF96+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+.   |
+.   #UDGS$06,$05(card-king-spades)(
+.     #LET(a=$F0A4+(#PEEK(#PC+$06*$y+$x)*$08))
+.     #UDG({a})(*udg)
+.     udg
+.   )
+.   |
+.   #UDGS$06,$05(card-king-clubs)(
+.     #LET(a=$F1B2+(#PEEK(#PC+$06*$y+$x)*$08))
 .     #UDG({a})(*udg)
 .     udg
 .   )
 . } UDGTABLE#
+.
+. Used by the routines at #R$E33A and #R$E40D.
+  $E39A,$1E,$06
 
 c $E3B8 Print Cards
-@ $E3B8 label=PrintCards
+@ $E3B8 label=PrintAceCard
   $E3B8,$02 #REGa-=#N$03.
   $E3BA,$03 Decrease #REGb by three.
+@ $E3BD label=PrintNumberCard
   $E3BD,$01 #REGc=#REGb.
   $E3BE,$01 #REGb=#REGa.
   $E3BF,$01 Increment #REGb by one.
@@ -2583,7 +2657,9 @@ D $E436 This is UDG data which corresponds to the UDGs defined at #R$E567.
 .   )
 . } UDGTABLE#
 
-b $E562
+g $E562 Current Card Colour
+@ $E562 label=CurrentCardColour
+B $E562,$01
 
 g $E563 Picture Card UDG Data
 @ $E563 label=PictureCardUDGData
@@ -2617,7 +2693,80 @@ D $E81F Will be a value of; #N$01-#N$05 to indicate the currently "in-focus"
 . card being processed/ evaluated.
 B $E81F,$01
 
-b $E820 Girl Buffer?
+b $E820 Graphics: Picture Cards
+@ $E820 label=Graphics_CardJackDiamondsData
+  $E820,$08 #UDGTABLE { #N((#PC-$E618)/$08) | #UDG(#PC) } UDGTABLE#
+L $E820,$08,$1E
+@ $E910 label=Graphics_CardJackDiamondsAttributeData
+  $E910,$1E,$06 Attributes.
+
+@ $E92E label=Graphics_CardJackHeartsData
+  $E92E,$08 #UDGTABLE { #N((#PC-$E726)/$08) | #UDG(#PC) } UDGTABLE#
+L $E92E,$08,$1E
+@ $EA1E label=Graphics_CardJackHeartsAttributeData
+  $EA1E,$1E,$06 Attributes.
+
+@ $EA3C label=Graphics_CardJackSpadesData
+  $EA3C,$08 #UDGTABLE { #N((#PC-$E834)/$08) | #UDG(#PC) } UDGTABLE#
+L $EA3C,$08,$1E
+@ $EB2C label=Graphics_CardJackSpadesAttributeData
+  $EB2C,$1E,$06 Attributes.
+
+@ $EB4A label=Graphics_CardJackClubsData
+  $EB4A,$08 #UDGTABLE { #N((#PC-$E942)/$08) | #UDG(#PC) } UDGTABLE#
+L $EB4A,$08,$1E
+@ $EC3A label=Graphics_CardJackClubsAttributeData
+  $EC3A,$1E,$06 Attributes.
+
+@ $EC58 label=Graphics_CardQueenDiamondsData
+  $EC58,$08 #UDGTABLE { #N((#PC-$EA50)/$08) | #UDG(#PC) } UDGTABLE#
+L $EC58,$08,$1E
+@ $ED48 label=Graphics_CardQueenDiamondsAttributeData
+  $ED48,$1E,$06 Attributes.
+
+@ $ED66 label=Graphics_CardQueenHeartsData
+  $ED66,$08 #UDGTABLE { #N((#PC-$EB5E)/$08) | #UDG(#PC) } UDGTABLE#
+L $ED66,$08,$1E
+@ $EE56 label=Graphics_CardQueenHeartsAttributeData
+  $EE56,$1E,$06 Attributes.
+
+@ $EE74 label=Graphics_CardQueenSpadesData
+  $EE74,$08 #UDGTABLE { #N((#PC-$EC6C)/$08) | #UDG(#PC) } UDGTABLE#
+L $EE74,$08,$1E
+@ $EF64 label=Graphics_CardQueenSpadesAttributeData
+  $EF64,$1E,$06 Attributes.
+
+@ $EF82 label=Graphics_CardQueenClubsData
+  $EF82,$08 #UDGTABLE { #N((#PC-$ED7A)/$08) | #UDG(#PC) } UDGTABLE#
+L $EF82,$08,$1E
+@ $F072 label=Graphics_CardQueenClubsAttributeData
+  $F072,$1E,$06 Attributes.
+
+@ $F090 label=Graphics_CardKingDiamondsData
+  $F090,$08 #UDGTABLE { #N((#PC-$EE88)/$08) | #UDG(#PC) } UDGTABLE#
+L $F090,$08,$1E
+@ $F180 label=Graphics_CardKingDiamondsAttributeData
+  $F180,$1E,$06 Attributes.
+
+@ $F19E label=Graphics_CardKingHeartsData
+  $F19E,$08 #UDGTABLE { #N((#PC-$EF96)/$08) | #UDG(#PC) } UDGTABLE#
+L $F19E,$08,$1E
+@ $F28E label=Graphics_CardKingHeartsAttributeData
+  $F28E,$1E,$06 Attributes.
+
+@ $F2AC label=Graphics_CardKingSpadesData
+  $F2AC,$08 #UDGTABLE { #N((#PC-$F0A4)/$08) | #UDG(#PC) } UDGTABLE#
+L $F2AC,$08,$1E
+@ $F39C label=Graphics_CardKingSpadesAttributeData
+  $F39C,$1E,$06 Attributes.
+
+@ $F3BA label=Graphics_CardKingClubsData
+  $F3BA,$08 #UDGTABLE { #N((#PC-$F1B2)/$08) | #UDG(#PC) } UDGTABLE#
+L $F3BA,$08,$1E
+@ $F4AA label=Graphics_CardKingClubsAttributeData
+  $F4AA,$1E,$06 Attributes.
+
+b $F4C8
 
 b $F4C9 Custom Font
 @ $F4C9 label=CustomFont

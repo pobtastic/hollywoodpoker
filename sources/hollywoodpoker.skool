@@ -6688,6 +6688,7 @@ c$E33A LD B,A        ; #REGb=#REGa.
  $E33F JR C,$E3BD    ; }
  $E341 CP $0C        ; {Jump to #R$E3B8 if #REGa is equal to #N$0C.
  $E343 JR Z,$E3B8    ; }
+; Anything else is a picture card, so work out what we're printing.
  $E345 LD HL,$E618   ; #REGhl=#R$E618.
  $E348 LD DE,$0438   ; #REGde=#N($0438,$04,$04).
  $E34B SUB $08       ; #REGa-=#N$08.
@@ -6743,33 +6744,110 @@ c$E33A LD B,A        ; #REGb=#REGa.
  $E393 ADD HL,DE     ;
  $E394 EX DE,HL      ; }
  $E395 POP HL        ; Restore #REGhl from the stack.
- $E396 DEC C         ; Decrease #REGc by one.
- $E397 JR NZ,$E387   ; Jump to #R$E387 until #REGc is zero.
+ $E396 DEC C         ; Decrease the height counter by one.
+ $E397 JR NZ,$E387   ; Jump to #R$E387 until the entire card has been printed.
  $E399 RET           ; Return.
 
 ; Graphics: Picture Card
 ;
 ; This is UDG data which corresponds to the picture card UDGs.
 ; .
+; For the graphic data itself, see #R$E820.
+; .
+;  #UDGTABLE {
+;   #UDGS$06,$05(card-jack-diamonds)(
+;     #LET(a=$E618+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+;   |
+;   #UDGS$06,$05(card-jack-hearts)(
+;     #LET(a=$E726+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+;   |
+;   #UDGS$06,$05(card-jack-spades)(
+;     #LET(a=$E834+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+;   |
+;   #UDGS$06,$05(card-jack-clubs)(
+;     #LET(a=$E942+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+; }
+; {
+;   #UDGS$06,$05(card-queen-diamonds)(
+;     #LET(a=$EA50+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+;   |
+;   #UDGS$06,$05(card-queen-hearts)(
+;     #LET(a=$EB5E+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+;   |
+;   #UDGS$06,$05(card-queen-spades)(
+;     #LET(a=$EC6C+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+;   |
+;   #UDGS$06,$05(card-queen-clubs)(
+;     #LET(a=$ED7A+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+; }
+; {
+;   #UDGS$06,$05(card-king-diamonds)(
+;     #LET(a=$EE88+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+;   |
+;   #UDGS$06,$05(card-king-hearts)(
+;     #LET(a=$EF96+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+;   |
+;   #UDGS$06,$05(card-king-spades)(
+;     #LET(a=$F0A4+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+;   |
+;   #UDGS$06,$05(card-king-clubs)(
+;     #LET(a=$F1B2+(#PEEK(#PC+$06*$y+$x)*$08))
+;     #UDG({a})(*udg)
+;     udg
+;   )
+; } UDGTABLE#
+; .
 ; Used by the routines at #R$E33A and #R$E40D.
 @label=Graphics_PictureCard
-b$E39A DEFB $41,$42,$43,$44,$45,$46 ; {#UDGTABLE {
- $E3A0 DEFB $47,$48,$49,$4A,$4B,$4C ;   #UDGS$06,$05(card-buffer)(
- $E3A6 DEFB $4D,$4E,$4F,$50,$51,$52 ;     #LET(a=$E35F+(#PEEK(#PC+$06*$y+$x)*$08))
- $E3AC DEFB $53,$54,$55,$56,$57,$58 ;     #UDG({a})(*udg)
- $E3B2 DEFB $59,$5A,$5B,$5C,$5D,$5E ;     udg
-                                    ;   )
-                                    ; } UDGTABLE#}
+b$E39A DEFB $41,$42,$43,$44,$45,$46
+ $E3A0 DEFB $47,$48,$49,$4A,$4B,$4C
+ $E3A6 DEFB $4D,$4E,$4F,$50,$51,$52
+ $E3AC DEFB $53,$54,$55,$56,$57,$58
+ $E3B2 DEFB $59,$5A,$5B,$5C,$5D,$5E
 
 ; Print Cards
 ;
 ; Used by the routine at #R$E33A.
-@label=PrintCards
+@label=PrintAceCard
 c$E3B8 SUB $03       ; #REGa-=#N$03.
  $E3BA DEC B         ; {Decrease #REGb by three.
  $E3BB DEC B         ;
  $E3BC DEC B         ; }
 ; This entry point is used by the routine at #R$E33A.
+@label=PrintNumberCard
 *$E3BD LD C,B        ; #REGc=#REGb.
  $E3BE LD B,A        ; #REGb=#REGa.
  $E3BF INC B         ; Increment #REGb by one.
@@ -6940,8 +7018,9 @@ b$E436 DEFB $42,$43,$43,$43,$43,$44 ; {#UDGTABLE {
                                     ;   )
                                     ; } UDGTABLE#}
 
-; Data block at E562
-b$E562 DEFB $00
+; Current Card Colour
+@label=CurrentCardColour
+g$E562 DEFB $00
 
 ; Picture Card UDG Data
 ;
@@ -7144,413 +7223,814 @@ b$E6BF DEFB $00,$00,$00,$00,$01,$01,$02,$0C ; #UDGTABLE { #N((#PC-$E35F)/$08) |
 @label=CardPosition
 g$E81F DEFB $00
 
-; Girl Buffer?
-b$E820 DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0
- $E828 DEFB $FF,$00,$FF,$00,$01,$01,$00,$00
- $E830 DEFB $FF,$0A,$35,$EA,$55,$BF,$E0,$E6
- $E838 DEFB $FF,$A8,$54,$AE,$F4,$38,$70,$F0
- $E840 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00
- $E848 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05
- $E850 DEFB $80,$8E,$84,$84,$84,$84,$A4,$98
- $E858 DEFB $01,$01,$02,$05,$06,$05,$0A,$0F
- $E860 DEFB $6C,$E0,$E2,$F3,$FE,$6F,$E3,$41
- $E868 DEFB $B0,$60,$20,$E0,$40,$C0,$80,$60
- $E870 DEFB $18,$18,$2C,$CF,$FF,$3C,$18,$18
- $E878 DEFB $01,$1D,$09,$09,$09,$09,$49,$31
- $E880 DEFB $80,$80,$88,$9C,$BE,$9C,$88,$81
- $E888 DEFB $0B,$3F,$7F,$7F,$D7,$AD,$AB,$5A
- $E890 DEFB $FF,$87,$C7,$41,$81,$81,$0D,$17
- $E898 DEFB $F8,$FC,$FE,$FA,$BD,$B5,$BA,$DB
- $E8A0 DEFB $00,$00,$00,$00,$00,$00,$80,$80
- $E8A8 DEFB $01,$01,$11,$39,$7D,$39,$11,$01
- $E8B0 DEFB $A1,$A1,$A1,$A1,$A1,$A1,$A1,$A1
- $E8B8 DEFB $FB,$FB,$FB,$F7,$F7,$F7,$F7,$F7
- $E8C0 DEFB $6B,$F5,$EA,$F5,$F7,$EC,$FB,$31
- $E8C8 DEFB $DD,$DF,$FF,$3F,$7F,$FE,$E6,$16
- $E8D0 DEFB $80,$80,$80,$80,$00,$00,$00,$00
- $E8D8 DEFB $05,$05,$05,$05,$05,$05,$05,$05
- $E8E0 DEFB $A1,$A0,$A0,$A0,$A0,$A0,$A0,$A0
- $E8E8 DEFB $F7,$F7,$F7,$77,$77,$77,$47,$43
- $E8F0 DEFB $88,$C1,$FF,$F7,$EB,$F7,$F7,$EB
- $E8F8 DEFB $F4,$FA,$FD,$FE,$F9,$F8,$F8,$F8
- $E900 DEFB $00,$00,$00,$80,$40,$A0,$50,$28
- $E908 DEFB $05,$05,$05,$05,$05,$05,$05,$05
- $E910 DEFB $78,$78,$78,$78,$78,$78,$7A,$7B
- $E918 DEFB $78,$78,$7A,$7A,$7A,$79,$39,$79
- $E920 DEFB $78,$7A,$78,$79,$79,$79,$78,$78
- $E928 DEFB $78,$79,$79,$79,$78,$78,$0F,$30
- $E930 DEFB $4F,$50,$A0,$A0,$A0,$A0,$FF,$00
- $E938 DEFB $FF,$00,$00,$00,$00,$00,$FF,$00
- $E940 DEFB $87,$0A,$15,$6A,$DF,$B0,$FF,$00
- $E948 DEFB $71,$A8,$DE,$AB,$FD,$0E,$FF,$00
- $E950 DEFB $FF,$00,$00,$00,$00,$00,$F0,$0C
- $E958 DEFB $F2,$0A,$05,$05,$05,$05,$80,$8E
- $E960 DEFB $84,$84,$84,$84,$A4,$98,$01,$02
- $E968 DEFB $05,$02,$05,$0A,$05,$02,$F6,$72
- $E970 DEFB $70,$70,$3B,$39,$1C,$33,$CC,$6C
- $E978 DEFB $8C,$0C,$CC,$9E,$3F,$CF,$66,$DF
- $E980 DEFB $9F,$DF,$6E,$3C,$18,$00,$01,$1D
- $E988 DEFB $09,$09,$09,$09,$49,$31,$80,$80
- $E990 DEFB $94,$BE,$BE,$9C,$88,$80,$FF,$FE
- $E998 DEFB $FC,$F8,$F0,$E0,$E0,$C0,$D1,$3A
- $E9A0 DEFB $1D,$0E,$07,$03,$21,$40,$18,$B8
- $E9A8 DEFB $70,$E0,$C0,$80,$00,$00,$7F,$3F
- $E9B0 DEFB $1F,$0F,$0F,$07,$07,$03,$01,$01
- $E9B8 DEFB $15,$3F,$3F,$1D,$09,$01,$A0,$A0
- $E9C0 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$C0,$C0
- $E9C8 DEFB $C0,$C0,$C0,$C0,$C0,$C0,$40,$80
- $E9D0 DEFB $80,$80,$80,$80,$80,$80,$1E,$5F
- $E9D8 DEFB $AF,$57,$6B,$74,$3A,$04,$03,$03
- $E9E0 DEFB $01,$01,$01,$03,$03,$0F,$05,$05
- $E9E8 DEFB $05,$05,$05,$05,$05,$05,$A0,$A0
- $E9F0 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$C0,$E0
- $E9F8 DEFB $E0,$E0,$E0,$E0,$E0,$EE,$80,$80
- $EA00 DEFB $80,$80,$80,$80,$80,$80,$1C,$27
- $EA08 DEFB $1F,$0E,$00,$00,$00,$00,$B0,$60
- $EA10 DEFB $D0,$28,$14,$0A,$05,$02,$05,$05
- $EA18 DEFB $05,$05,$05,$05,$05,$85,$78,$78
- $EA20 DEFB $7A,$7A,$78,$78,$7A,$7C,$78,$78
- $EA28 DEFB $7A,$7A,$7A,$57,$56,$56,$57,$7A
- $EA30 DEFB $78,$57,$50,$17,$57,$78,$78,$57
- $EA38 DEFB $50,$57,$78,$78,$0F,$30,$4F,$50
- $EA40 DEFB $A0,$A0,$A0,$A0,$FF,$00,$FF,$00
- $EA48 DEFB $00,$00,$00,$00,$FF,$3F,$7F,$FF
- $EA50 DEFB $FF,$AA,$55,$A0,$FF,$E0,$F8,$FE
- $EA58 DEFB $FF,$AA,$55,$0E,$FF,$00,$FF,$00
- $EA60 DEFB $00,$00,$00,$18,$F0,$0C,$F2,$0A
- $EA68 DEFB $05,$05,$05,$05,$80,$8E,$84,$84
- $EA70 DEFB $84,$84,$A4,$98,$03,$05,$0A,$04
- $EA78 DEFB $0A,$05,$0A,$04,$3E,$34,$31,$1A
- $EA80 DEFB $1F,$1E,$0F,$07,$7C,$2C,$0C,$18
- $EA88 DEFB $F8,$78,$F0,$E0,$2C,$5E,$BF,$FF
- $EA90 DEFB $DB,$18,$18,$3C,$01,$1D,$09,$09
- $EA98 DEFB $09,$09,$49,$31,$80,$88,$9C,$BE
- $EAA0 DEFB $BE,$88,$9C,$80,$FF,$FE,$F8,$F0
- $EAA8 DEFB $D0,$A0,$A0,$20,$83,$09,$05,$05
- $EAB0 DEFB $02,$01,$00,$40,$E1,$C8,$D0,$D0
- $EAB8 DEFB $A0,$40,$C0,$00,$FF,$7F,$1F,$0F
- $EAC0 DEFB $07,$05,$05,$02,$01,$11,$39,$7D
- $EAC8 DEFB $7D,$11,$39,$01,$A0,$A0,$A0,$A0
- $EAD0 DEFB $A0,$A0,$A0,$A0,$40,$41,$41,$41
- $EAD8 DEFB $41,$40,$20,$20,$80,$00,$00,$00
- $EAE0 DEFB $00,$80,$80,$41,$17,$05,$0B,$97
- $EAE8 DEFB $29,$D3,$37,$7F,$02,$02,$82,$82
- $EAF0 DEFB $82,$82,$82,$82,$05,$05,$05,$05
- $EAF8 DEFB $05,$05,$05,$05,$A0,$A0,$A0,$A0
- $EB00 DEFB $A0,$A0,$A0,$A0,$20,$10,$10,$08
- $EB08 DEFB $09,$05,$02,$01,$43,$26,$2C,$D8
- $EB10 DEFB $78,$F8,$F0,$D0,$41,$C1,$C1,$C1
- $EB18 DEFB $C1,$C1,$C1,$C1,$02,$04,$04,$04
- $EB20 DEFB $04,$04,$FC,$74,$05,$05,$05,$05
- $EB28 DEFB $05,$05,$05,$05,$78,$78,$7A,$7A
- $EB30 DEFB $78,$78,$78,$79,$78,$78,$78,$78
- $EB38 DEFB $78,$5F,$67,$67,$5F,$78,$78,$5F
- $EB40 DEFB $67,$7C,$5F,$78,$78,$5F,$67,$67
- $EB48 DEFB $5F,$78,$0F,$30,$4F,$50,$A0,$A0
- $EB50 DEFB $A0,$A0,$FF,$00,$FF,$00,$00,$00
- $EB58 DEFB $00,$00,$FF,$00,$8F,$3F,$7F,$FF
- $EB60 DEFB $7F,$B0,$FF,$00,$E3,$F8,$FC,$FE
- $EB68 DEFB $FF,$0E,$FF,$00,$FF,$00,$00,$00
- $EB70 DEFB $00,$00,$F0,$0C,$F2,$0A,$05,$05
- $EB78 DEFB $05,$05,$80,$8E,$84,$84,$84,$84
- $EB80 DEFB $A4,$98,$01,$02,$01,$02,$05,$02
- $EB88 DEFB $00,$00,$2C,$BA,$20,$B0,$18,$1F
- $EB90 DEFB $0E,$F3,$68,$D8,$88,$48,$10,$F0
- $EB98 DEFB $30,$FE,$00,$1C,$14,$6B,$5F,$6B
- $EBA0 DEFB $08,$1C,$01,$1D,$09,$09,$09,$09
- $EBA8 DEFB $49,$31,$80,$9C,$AA,$BE,$AA,$88
- $EBB0 DEFB $9C,$80,$03,$0F,$1F,$3F,$3F,$3F
- $EBB8 DEFB $3F,$6F,$EC,$EC,$F4,$F6,$FA,$F8
- $EBC0 DEFB $BF,$7F,$37,$37,$2F,$6F,$5F,$1F
- $EBC8 DEFB $F7,$FB,$80,$C0,$E0,$E0,$A0,$E0
- $EBD0 DEFB $50,$F0,$01,$39,$55,$7D,$55,$11
- $EBD8 DEFB $39,$01,$A0,$A0,$A0,$A0,$A0,$A0
- $EBE0 DEFB $A0,$A0,$7E,$56,$7E,$56,$7E,$56
- $EBE8 DEFB $7E,$6E,$E0,$20,$80,$D0,$C8,$87
- $EBF0 DEFB $99,$FC,$FB,$FD,$FD,$FD,$FD,$FB
- $EBF8 DEFB $E7,$DF,$A0,$F0,$A8,$F8,$D8,$F0
- $EC00 DEFB $F0,$F0,$05,$05,$05,$05,$05,$05
- $EC08 DEFB $05,$05,$A0,$A0,$A0,$A0,$A0,$A0
- $EC10 DEFB $A0,$A0,$7F,$7F,$7F,$7F,$7E,$3E
- $EC18 DEFB $3F,$21,$7E,$7F,$7F,$7F,$FF,$FE
- $EC20 DEFB $FF,$FE,$4F,$06,$41,$97,$87,$F3
- $EC28 DEFB $F9,$FC,$E0,$40,$C0,$C0,$E0,$E0
- $EC30 DEFB $E0,$E0,$05,$05,$05,$05,$05,$05
- $EC38 DEFB $05,$05,$78,$78,$7D,$7D,$78,$78
- $EC40 DEFB $78,$78,$78,$78,$78,$78,$78,$7B
- $EC48 DEFB $3B,$39,$79,$78,$78,$7B,$3B,$39
- $EC50 DEFB $79,$78,$78,$7B,$3B,$39,$79,$78
- $EC58 DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0
- $EC60 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00
- $EC68 DEFB $FF,$00,$1F,$10,$68,$54,$8B,$90
- $EC70 DEFB $FF,$00,$C7,$30,$08,$08,$C4,$24
- $EC78 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00
- $EC80 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05
- $EC88 DEFB $80,$98,$A4,$A4,$A4,$A4,$A8,$94
- $EC90 DEFB $00,$01,$01,$01,$02,$02,$02,$02
- $EC98 DEFB $96,$2E,$25,$21,$20,$37,$13,$18
- $ECA0 DEFB $D4,$F4,$54,$12,$22,$A2,$22,$44
- $ECA8 DEFB $0C,$0C,$16,$67,$7F,$1E,$0C,$0C
- $ECB0 DEFB $01,$19,$25,$A5,$A5,$25,$29,$15
- $ECB8 DEFB $80,$80,$88,$9C,$BE,$9C,$88,$80
- $ECC0 DEFB $FB,$FB,$F8,$F0,$E1,$C0,$80,$80
- $ECC8 DEFB $EB,$9C,$3F,$9F,$66,$99,$66,$19
- $ECD0 DEFB $3B,$27,$C7,$A1,$50,$A0,$40,$80
- $ECD8 DEFB $00,$00,$00,$00,$00,$80,$80,$C0
- $ECE0 DEFB $01,$01,$11,$39,$7D,$39,$11,$01
- $ECE8 DEFB $A0,$A0,$A0,$A1,$A1,$A1,$A1,$A1
- $ECF0 DEFB $1A,$0E,$15,$0E,$1A,$00,$00,$00
- $ECF8 DEFB $F9,$FF,$7F,$98,$E0,$E1,$D3,$EF
- $ED00 DEFB $00,$00,$68,$9C,$86,$80,$80,$60
- $ED08 DEFB $3F,$3F,$1F,$1F,$0F,$0F,$0F,$0F
- $ED10 DEFB $05,$05,$05,$05,$05,$05,$05,$05
- $ED18 DEFB $A1,$A1,$A0,$A0,$A0,$A0,$A0,$A0
- $ED20 DEFB $F7,$F7,$F7,$FB,$FB,$7D,$7D,$BE
- $ED28 DEFB $FD,$FF,$FF,$FF,$FF,$FF,$FF,$FF
- $ED30 DEFB $00,$06,$07,$07,$07,$03,$03,$01
- $ED38 DEFB $1F,$3F,$FF,$FF,$FF,$FF,$FF,$FF
- $ED40 DEFB $05,$05,$05,$05,$05,$05,$05,$05
- $ED48 DEFB $78,$78,$78,$78,$78,$78,$7A,$78
- $ED50 DEFB $78,$78,$7A,$7A,$7A,$4F,$4F,$4F
- $ED58 DEFB $79,$7A,$78,$4E,$79,$48,$4F,$78
- $ED60 DEFB $78,$41,$41,$4F,$4F,$78,$0F,$30
- $ED68 DEFB $4F,$50,$A0,$A0,$A0,$A0,$FF,$00
- $ED70 DEFB $FF,$00,$00,$00,$00,$00,$FF,$0B
- $ED78 DEFB $9D,$36,$6B,$D0,$B0,$FD,$FF,$80
- $ED80 DEFB $67,$B0,$58,$E8,$34,$EC,$FF,$00
- $ED88 DEFB $FF,$00,$00,$00,$00,$00,$F0,$0C
- $ED90 DEFB $F2,$0A,$05,$05,$05,$05,$80,$98
- $ED98 DEFB $A4,$A4,$A4,$A4,$A8,$94,$00,$01
- $EDA0 DEFB $01,$01,$01,$00,$00,$00,$BB,$62
- $EDA8 DEFB $A4,$60,$AF,$E6,$B0,$5D,$B4,$2C
- $EDB0 DEFB $54,$6C,$34,$6C,$B8,$28,$66,$DF
- $EDB8 DEFB $9F,$DF,$6E,$3C,$18,$00,$01,$19
- $EDC0 DEFB $25,$25,$25,$25,$29,$15,$80,$80
- $EDC8 DEFB $94,$BE,$BE,$9C,$88,$80,$00,$00
- $EDD0 DEFB $03,$07,$0E,$1E,$3E,$3E,$31,$E0
- $EDD8 DEFB $C0,$40,$B1,$DB,$AE,$D5,$D8,$78
- $EDE0 DEFB $3C,$5E,$B7,$57,$B7,$6F,$00,$00
- $EDE8 DEFB $00,$00,$00,$80,$80,$C0,$01,$01
- $EDF0 DEFB $29,$7D,$7D,$39,$11,$01,$A0,$A0
- $EDF8 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$7E,$7F
- $EE00 DEFB $7F,$7F,$7F,$FF,$FF,$FF,$AA,$55
- $EE08 DEFB $6A,$B5,$AA,$D5,$DB,$EE,$AF,$5F
- $EE10 DEFB $DF,$BF,$BF,$7F,$7F,$FF,$C0,$E0
- $EE18 DEFB $E0,$E0,$E0,$F0,$F0,$F0,$05,$05
- $EE20 DEFB $05,$05,$05,$05,$05,$05,$A0,$A0
- $EE28 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$FD,$FB
- $EE30 DEFB $FD,$FD,$FD,$FB,$FD,$FD,$EA,$F5
- $EE38 DEFB $F1,$FB,$FB,$F5,$F5,$F5,$FB,$FD
- $EE40 DEFB $FB,$FD,$FD,$FD,$FB,$FD,$F0,$F0
- $EE48 DEFB $F0,$F0,$F0,$F0,$F0,$F0,$05,$05
- $EE50 DEFB $05,$05,$05,$05,$05,$05,$78,$78
- $EE58 DEFB $78,$78,$78,$78,$7A,$78,$78,$78
- $EE60 DEFB $7A,$7A,$7A,$79,$78,$79,$79,$7A
- $EE68 DEFB $78,$79,$79,$39,$79,$78,$78,$41
- $EE70 DEFB $39,$01,$79,$78,$0F,$30,$4F,$50
- $EE78 DEFB $A0,$A0,$A1,$A3,$FF,$00,$FF,$00
- $EE80 DEFB $60,$F0,$B8,$7C,$FF,$00,$CE,$3F
- $EE88 DEFB $7E,$7C,$F8,$F6,$FF,$00,$DF,$E0
- $EE90 DEFB $F0,$78,$38,$DC,$FF,$00,$FF,$00
- $EE98 DEFB $00,$00,$15,$0E,$F0,$0C,$F2,$0A
- $EEA0 DEFB $05,$05,$05,$05,$82,$9B,$A4,$A4
- $EEA8 DEFB $A4,$A4,$A8,$94,$FC,$6D,$61,$61
- $EEB0 DEFB $F1,$03,$03,$1F,$FB,$F1,$F0,$F3
- $EEB8 DEFB $E9,$F8,$F7,$E0,$7C,$1C,$1E,$DE
- $EEC0 DEFB $9E,$3E,$FC,$7C,$1B,$0C,$30,$50
- $EEC8 DEFB $88,$48,$44,$78,$01,$19,$25,$25
- $EED0 DEFB $25,$25,$29,$15,$80,$90,$B9,$FD
- $EED8 DEFB $FF,$93,$BF,$87,$7F,$FE,$F2,$E5
- $EEE0 DEFB $C5,$82,$82,$85,$30,$1D,$07,$00
- $EEE8 DEFB $00,$80,$80,$40,$C7,$87,$07,$0B
- $EEF0 DEFB $0B,$17,$17,$2B,$78,$F8,$F8,$F8
- $EEF8 DEFB $F8,$F8,$F0,$F0,$01,$11,$39,$7D
- $EF00 DEFB $7D,$11,$39,$01,$A7,$A7,$A7,$A7
- $EF08 DEFB $A7,$A3,$A3,$A3,$86,$85,$C4,$C4
- $EF10 DEFB $C4,$C4,$E8,$E9,$BF,$40,$B0,$49
- $EF18 DEFB $29,$52,$52,$A5,$D7,$2D,$D5,$29
- $EF20 DEFB $4B,$87,$87,$07,$F0,$F0,$E0,$E0
- $EF28 DEFB $E0,$C0,$C0,$C0,$05,$05,$05,$05
- $EF30 DEFB $05,$05,$05,$05,$A3,$A3,$A3,$A3
- $EF38 DEFB $A3,$A1,$A1,$A1,$FE,$F9,$FE,$FC
- $EF40 DEFB $FF,$FC,$FF,$FE,$4A,$94,$28,$D0
- $EF48 DEFB $20,$C0,$00,$00,$07,$0F,$0F,$0F
- $EF50 DEFB $07,$07,$07,$07,$C0,$C0,$C0,$C0
- $EF58 DEFB $C0,$C0,$C0,$C0,$05,$05,$05,$05
- $EF60 DEFB $05,$05,$05,$05,$78,$78,$78,$78
- $EF68 DEFB $78,$78,$78,$78,$78,$78,$78,$78
- $EF70 DEFB $78,$50,$10,$10,$78,$78,$78,$50
- $EF78 DEFB $50,$50,$78,$78,$78,$50,$50,$50
- $EF80 DEFB $78,$78,$0F,$30,$4F,$50,$A0,$A0
- $EF88 DEFB $A0,$A1,$FF,$00,$FF,$00,$00,$70
- $EF90 DEFB $50,$AC,$FF,$00,$E7,$1F,$3F,$3E
- $EF98 DEFB $78,$74,$FF,$00,$6F,$F0,$F8,$FC
- $EFA0 DEFB $74,$6A,$FF,$00,$FF,$00,$00,$00
- $EFA8 DEFB $00,$00,$F0,$0C,$F2,$0A,$05,$05
- $EFB0 DEFB $05,$05,$81,$99,$A4,$A4,$A4,$A4
- $EFB8 DEFB $A8,$94,$7C,$AC,$20,$70,$00,$01
- $EFC0 DEFB $01,$07,$7E,$F4,$F2,$F0,$F7,$F3
- $EFC8 DEFB $E8,$E7,$F6,$5E,$1F,$1F,$BF,$37
- $EFD0 DEFB $6E,$9F,$00,$00,$00,$00,$00,$00
- $EFD8 DEFB $00,$80,$01,$19,$25,$25,$25,$25
- $EFE0 DEFB $29,$15,$80,$9C,$AA,$BE,$AA,$88
- $EFE8 DEFB $9C,$80,$0E,$1F,$1F,$1E,$3E,$3F
- $EFF0 DEFB $3F,$7E,$98,$1E,$2B,$82,$80,$40
- $EFF8 DEFB $40,$A0,$62,$E1,$93,$83,$05,$08
- $F000 DEFB $09,$16,$60,$70,$70,$30,$B8,$F8
- $F008 DEFB $F8,$3C,$01,$39,$55,$7D,$55,$11
- $F010 DEFB $39,$01,$80,$A0,$A0,$A0,$A0,$A0
- $F018 DEFB $A0,$A0,$7F,$7E,$7C,$7D,$7D,$7C
- $F020 DEFB $7C,$7E,$50,$A8,$14,$0B,$0C,$8B
- $F028 DEFB $8B,$8C,$51,$21,$C2,$02,$82,$04
- $F030 DEFB $04,$84,$B8,$F8,$78,$F8,$B8,$38
- $F038 DEFB $78,$78,$05,$05,$05,$05,$05,$05
- $F040 DEFB $05,$05,$A0,$A0,$A0,$A0,$A0,$A0
- $F048 DEFB $A0,$A0,$7D,$7E,$7E,$7C,$3C,$3E
- $F050 DEFB $3E,$3C,$14,$1B,$1B,$14,$19,$16
- $F058 DEFB $16,$19,$84,$82,$82,$82,$81,$81
- $F060 DEFB $81,$81,$B8,$B0,$70,$70,$B0,$F0
- $F068 DEFB $30,$90,$05,$05,$05,$05,$05,$05
- $F070 DEFB $05,$05,$78,$78,$78,$78,$78,$78
- $F078 DEFB $78,$78,$78,$78,$78,$78,$78,$7A
- $F080 DEFB $20,$20,$7A,$78,$78,$7A,$20,$20
- $F088 DEFB $7A,$78,$78,$7A,$20,$20,$7A,$78
- $F090 DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0
- $F098 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00
- $F0A0 DEFB $FF,$32,$E6,$66,$CC,$E6,$7F,$1F
- $F0A8 DEFB $FF,$4C,$67,$66,$33,$67,$FE,$F8
- $F0B0 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00
- $F0B8 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05
- $F0C0 DEFB $80,$F7,$A2,$A4,$B8,$A4,$A2,$F7
- $F0C8 DEFB $18,$18,$2C,$CF,$FF,$3C,$18,$18
- $F0D0 DEFB $18,$32,$37,$30,$30,$3B,$7E,$7F
- $F0D8 DEFB $18,$4C,$6C,$8C,$8C,$DC,$7E,$FE
- $F0E0 DEFB $00,$00,$08,$1C,$3E,$1C,$08,$00
- $F0E8 DEFB $01,$77,$23,$25,$39,$25,$23,$77
- $F0F0 DEFB $80,$80,$88,$9C,$BE,$9C,$88,$80
- $F0F8 DEFB $00,$03,$1F,$3D,$51,$85,$D1,$FF
- $F100 DEFB $7B,$D5,$AA,$1D,$06,$03,$03,$00
- $F108 DEFB $EB,$57,$AD,$79,$E1,$C1,$81,$05
- $F110 DEFB $C0,$F8,$3C,$2E,$0F,$27,$17,$FF
- $F118 DEFB $05,$05,$05,$05,$05,$05,$05,$05
- $F120 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0
- $F128 DEFB $84,$84,$84,$84,$84,$84,$82,$C3
- $F130 DEFB $0F,$1A,$1F,$1A,$1F,$1A,$1F,$9A
- $F138 DEFB $E4,$BE,$D4,$B4,$D4,$BE,$DF,$BF
- $F140 DEFB $87,$87,$87,$87,$87,$87,$87,$87
- $F148 DEFB $05,$05,$05,$05,$05,$05,$05,$05
- $F150 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0
- $F158 DEFB $C0,$E0,$F0,$F8,$F6,$F1,$F0,$F0
- $F160 DEFB $7F,$00,$00,$00,$00,$FF,$1F,$1A
- $F168 DEFB $BF,$7F,$5F,$5F,$60,$BF,$D8,$B8
- $F170 DEFB $87,$87,$87,$47,$87,$07,$87,$87
- $F178 DEFB $05,$05,$05,$05,$05,$05,$05,$05
- $F180 DEFB $78,$78,$78,$78,$78,$78,$7A,$7A
- $F188 DEFB $78,$78,$7A,$7A,$7A,$78,$20,$20
- $F190 DEFB $78,$78,$78,$60,$20,$20,$60,$78
- $F198 DEFB $78,$60,$60,$60,$60,$78,$0F,$30
- $F1A0 DEFB $4F,$50,$A0,$A0,$A0,$A0,$FF,$00
- $F1A8 DEFB $FF,$00,$00,$00,$00,$00,$FF,$1B
- $F1B0 DEFB $F6,$66,$66,$6F,$35,$1F,$FF,$D8
- $F1B8 DEFB $6F,$66,$66,$F6,$AC,$F8,$FF,$00
- $F1C0 DEFB $FF,$00,$00,$00,$00,$00,$F0,$0C
- $F1C8 DEFB $F2,$0A,$05,$05,$05,$05,$80,$F7
- $F1D0 DEFB $A2,$A4,$B8,$A4,$A2,$F7,$66,$DF
- $F1D8 DEFB $9F,$DF,$6E,$3C,$18,$00,$18,$32
- $F1E0 DEFB $37,$31,$31,$7A,$78,$7E,$18,$4C
- $F1E8 DEFB $6C,$1C,$1C,$DE,$1E,$7E,$00,$00
- $F1F0 DEFB $14,$3E,$3E,$1C,$08,$40,$01,$77
- $F1F8 DEFB $23,$25,$39,$25,$23,$77,$80,$80
- $F200 DEFB $94,$BE,$BE,$9C,$88,$81,$FF,$FF
- $F208 DEFB $FE,$F8,$E0,$80,$C0,$60,$F2,$99
- $F210 DEFB $0C,$06,$03,$A1,$40,$15,$9B,$31
- $F218 DEFB $60,$C0,$8A,$04,$80,$C0,$BF,$BF
- $F220 DEFB $BF,$BF,$A7,$A1,$A9,$B3,$05,$05
- $F228 DEFB $05,$05,$05,$05,$85,$85,$A1,$A1
- $F230 DEFB $A1,$A1,$A1,$A1,$A0,$A0,$35,$12
- $F238 DEFB $10,$10,$10,$08,$04,$03,$08,$00
- $F240 DEFB $A1,$43,$07,$07,$7F,$93,$80,$94
- $F248 DEFB $C8,$E0,$F2,$F1,$F0,$AB,$A6,$A4
- $F250 DEFB $A8,$A8,$B0,$B0,$A0,$F8,$85,$85
- $F258 DEFB $85,$85,$85,$85,$05,$05,$A0,$A0
- $F260 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$00,$80
- $F268 DEFB $80,$E0,$FF,$FC,$FC,$FE,$18,$17
- $F270 DEFB $30,$C1,$94,$88,$40,$40,$56,$E3
- $F278 DEFB $01,$41,$80,$29,$12,$02,$0C,$B9
- $F280 DEFB $31,$13,$F7,$3F,$7F,$7F,$05,$05
- $F288 DEFB $05,$05,$05,$05,$05,$05,$78,$78
- $F290 DEFB $78,$78,$78,$78,$7A,$7A,$78,$78
- $F298 DEFB $7A,$7A,$7A,$5F,$5F,$5F,$5F,$78
- $F2A0 DEFB $78,$5F,$5F,$5F,$5F,$78,$78,$5F
- $F2A8 DEFB $5F,$5F,$5F,$78,$0F,$30,$4F,$50
- $F2B0 DEFB $A0,$A0,$A0,$A0,$FF,$00,$FF,$00
- $F2B8 DEFB $00,$00,$00,$18,$FF,$79,$C9,$66
- $F2C0 DEFB $32,$1A,$36,$7F,$FF,$9E,$93,$66
- $F2C8 DEFB $4C,$58,$6C,$FE,$FF,$00,$FF,$00
- $F2D0 DEFB $00,$00,$00,$00,$F0,$0C,$F2,$0A
- $F2D8 DEFB $05,$05,$05,$05,$80,$F7,$A2,$A4
- $F2E0 DEFB $B8,$A4,$A2,$F7,$3C,$6E,$DF,$BF
- $F2E8 DEFB $DB,$18,$18,$3C,$30,$64,$6D,$62
- $F2F0 DEFB $74,$FF,$F9,$FF,$78,$BC,$BC,$3C
- $F2F8 DEFB $7C,$FC,$FC,$FE,$00,$00,$08,$1C
- $F300 DEFB $3E,$08,$1C,$00,$01,$77,$23,$25
- $F308 DEFB $39,$25,$23,$77,$80,$88,$9C,$BE
- $F310 DEFB $BE,$88,$9C,$80,$00,$00,$01,$07
- $F318 DEFB $1F,$7F,$FF,$FF,$FF,$E6,$80,$F0
- $F320 DEFB $7C,$AF,$57,$AA,$8F,$07,$03,$1E
- $F328 DEFB $7C,$EA,$D4,$AA,$00,$00,$80,$E0
- $F330 DEFB $F8,$FE,$FF,$FF,$05,$05,$05,$05
- $F338 DEFB $05,$05,$05,$05,$A1,$A1,$A1,$A1
- $F340 DEFB $A1,$A1,$A1,$A1,$41,$72,$4F,$44
- $F348 DEFB $AA,$AA,$AA,$AA,$55,$AA,$01,$FE
- $F350 DEFB $00,$00,$18,$24,$54,$AA,$40,$3F
- $F358 DEFB $00,$00,$00,$40,$02,$8C,$F0,$02
- $F360 DEFB $2A,$2A,$2A,$2A,$85,$85,$85,$85
- $F368 DEFB $85,$85,$85,$85,$A1,$A1,$A1,$A1
- $F370 DEFB $A1,$A1,$A1,$A1,$AA,$AA,$54,$6C
- $F378 DEFB $54,$6C,$54,$6C,$24,$1B,$05,$06
- $F380 DEFB $0D,$38,$10,$00,$E0,$80,$00,$80
- $F388 DEFB $40,$A1,$52,$2D,$2A,$2A,$55,$AB
- $F390 DEFB $55,$A9,$51,$A1,$85,$85,$05,$05
- $F398 DEFB $05,$05,$05,$05,$78,$78,$78,$78
- $F3A0 DEFB $78,$78,$78,$78,$78,$78,$78,$78
- $F3A8 DEFB $78,$7C,$60,$60,$7C,$78,$78,$60
- $F3B0 DEFB $07,$07,$60,$78,$78,$60,$07,$07
- $F3B8 DEFB $60,$78,$0F,$30,$4F,$50,$A0,$A0
- $F3C0 DEFB $A0,$A0,$FF,$00,$FF,$00,$00,$00
- $F3C8 DEFB $00,$00,$FF,$1A,$F2,$E6,$CC,$E6
- $F3D0 DEFB $72,$1F,$FF,$58,$4F,$67,$33,$67
- $F3D8 DEFB $4E,$F8,$FF,$00,$FF,$00,$00,$00
- $F3E0 DEFB $00,$00,$F0,$0C,$F2,$0A,$05,$05
- $F3E8 DEFB $05,$05,$80,$F7,$A2,$A4,$B8,$A4
- $F3F0 DEFB $A2,$F7,$38,$28,$D6,$BE,$D6,$10
- $F3F8 DEFB $10,$38,$38,$70,$F7,$F3,$F8,$F8
- $F400 DEFB $F9,$7F,$08,$04,$76,$66,$46,$06
- $F408 DEFB $CE,$3E,$00,$1C,$2A,$3E,$2A,$08
- $F410 DEFB $1C,$00,$01,$77,$23,$25,$39,$25
- $F418 DEFB $23,$77,$80,$9C,$AA,$BE,$AA,$88
- $F420 DEFB $9C,$80,$FF,$FF,$FF,$FC,$FB,$F9
- $F428 DEFB $E0,$C1,$3B,$21,$D1,$08,$04,$03
- $F430 DEFB $80,$40,$F4,$E3,$E2,$C4,$08,$F0
- $F438 DEFB $01,$02,$FF,$FF,$3F,$EF,$C7,$83
- $F440 DEFB $21,$F0,$05,$05,$05,$05,$05,$05
- $F448 DEFB $05,$05,$A0,$A0,$A0,$A1,$A1,$A1
- $F450 DEFB $A1,$A1,$82,$04,$08,$12,$12,$04
- $F458 DEFB $14,$14,$3F,$1F,$0F,$0F,$13,$09
- $F460 DEFB $15,$08,$FC,$F9,$F3,$F1,$C8,$90
- $F468 DEFB $28,$91,$E8,$B4,$5A,$B2,$E8,$EA
- $F470 DEFB $EA,$58,$85,$C5,$C5,$C5,$C5,$C5
- $F478 DEFB $C5,$C5,$A1,$A1,$A1,$A1,$A1,$A1
- $F480 DEFB $A1,$A1,$04,$14,$14,$04,$14,$14
- $F488 DEFB $04,$14,$15,$0A,$15,$0A,$15,$0A
- $F490 DEFB $15,$0A,$D1,$A9,$D1,$A9,$D1,$A9
- $F498 DEFB $D0,$A8,$FA,$5A,$F0,$54,$F4,$58
- $F4A0 DEFB $E9,$F1,$C5,$C5,$C5,$C5,$85,$85
- $F4A8 DEFB $05,$05,$78,$78,$78,$78,$78,$78
- $F4B0 DEFB $78,$78,$78,$78,$78,$78,$78,$57
- $F4B8 DEFB $78,$78,$57,$78,$78,$57,$57,$57
- $F4C0 DEFB $57,$78,$78,$57,$56,$56,$57,$78
- $F4C8 DEFB $00
+; Graphics: Picture Cards
+@label=Graphics_CardJackDiamondsData
+b$E820 DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E828 DEFB $FF,$00,$FF,$00,$01,$01,$00,$00 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E830 DEFB $FF,$0A,$35,$EA,$55,$BF,$E0,$E6 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E838 DEFB $FF,$A8,$54,$AE,$F4,$38,$70,$F0 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E840 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E848 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E850 DEFB $80,$8E,$84,$84,$84,$84,$A4,$98 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E858 DEFB $01,$01,$02,$05,$06,$05,$0A,$0F ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E860 DEFB $6C,$E0,$E2,$F3,$FE,$6F,$E3,$41 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E868 DEFB $B0,$60,$20,$E0,$40,$C0,$80,$60 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E870 DEFB $18,$18,$2C,$CF,$FF,$3C,$18,$18 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E878 DEFB $01,$1D,$09,$09,$09,$09,$49,$31 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E880 DEFB $80,$80,$88,$9C,$BE,$9C,$88,$81 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E888 DEFB $0B,$3F,$7F,$7F,$D7,$AD,$AB,$5A ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E890 DEFB $FF,$87,$C7,$41,$81,$81,$0D,$17 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E898 DEFB $F8,$FC,$FE,$FA,$BD,$B5,$BA,$DB ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8A0 DEFB $00,$00,$00,$00,$00,$00,$80,$80 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8A8 DEFB $01,$01,$11,$39,$7D,$39,$11,$01 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8B0 DEFB $A1,$A1,$A1,$A1,$A1,$A1,$A1,$A1 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8B8 DEFB $FB,$FB,$FB,$F7,$F7,$F7,$F7,$F7 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8C0 DEFB $6B,$F5,$EA,$F5,$F7,$EC,$FB,$31 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8C8 DEFB $DD,$DF,$FF,$3F,$7F,$FE,$E6,$16 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8D0 DEFB $80,$80,$80,$80,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8D8 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8E0 DEFB $A1,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8E8 DEFB $F7,$F7,$F7,$77,$77,$77,$47,$43 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8F0 DEFB $88,$C1,$FF,$F7,$EB,$F7,$F7,$EB ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E8F8 DEFB $F4,$FA,$FD,$FE,$F9,$F8,$F8,$F8 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E900 DEFB $00,$00,$00,$80,$40,$A0,$50,$28 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E908 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E618)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardJackDiamondsAttributeData
+ $E910 DEFB $78,$78,$78,$78,$78,$78         ; {Attributes.
+ $E916 DEFB $7A,$7B,$78,$78,$7A,$7A         ;
+ $E91C DEFB $7A,$79,$39,$79,$78,$7A         ;
+ $E922 DEFB $78,$79,$79,$79,$78,$78         ;
+ $E928 DEFB $78,$79,$79,$79,$78,$78         ; }
+@label=Graphics_CardJackHeartsData
+ $E92E DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E936 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E93E DEFB $FF,$00,$87,$0A,$15,$6A,$DF,$B0 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E946 DEFB $FF,$00,$71,$A8,$DE,$AB,$FD,$0E ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E94E DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E956 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E95E DEFB $80,$8E,$84,$84,$84,$84,$A4,$98 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E966 DEFB $01,$02,$05,$02,$05,$0A,$05,$02 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E96E DEFB $F6,$72,$70,$70,$3B,$39,$1C,$33 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E976 DEFB $CC,$6C,$8C,$0C,$CC,$9E,$3F,$CF ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E97E DEFB $66,$DF,$9F,$DF,$6E,$3C,$18,$00 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E986 DEFB $01,$1D,$09,$09,$09,$09,$49,$31 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E98E DEFB $80,$80,$94,$BE,$BE,$9C,$88,$80 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E996 DEFB $FF,$FE,$FC,$F8,$F0,$E0,$E0,$C0 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E99E DEFB $D1,$3A,$1D,$0E,$07,$03,$21,$40 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9A6 DEFB $18,$B8,$70,$E0,$C0,$80,$00,$00 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9AE DEFB $7F,$3F,$1F,$0F,$0F,$07,$07,$03 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9B6 DEFB $01,$01,$15,$3F,$3F,$1D,$09,$01 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9BE DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9C6 DEFB $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9CE DEFB $40,$80,$80,$80,$80,$80,$80,$80 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9D6 DEFB $1E,$5F,$AF,$57,$6B,$74,$3A,$04 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9DE DEFB $03,$03,$01,$01,$01,$03,$03,$0F ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9E6 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9EE DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9F6 DEFB $C0,$E0,$E0,$E0,$E0,$E0,$E0,$EE ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $E9FE DEFB $80,$80,$80,$80,$80,$80,$80,$80 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA06 DEFB $1C,$27,$1F,$0E,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA0E DEFB $B0,$60,$D0,$28,$14,$0A,$05,$02 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA16 DEFB $05,$05,$05,$05,$05,$05,$05,$85 ; #UDGTABLE { #N((#PC-$E726)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardJackHeartsAttributeData
+ $EA1E DEFB $78,$78,$7A,$7A,$78,$78         ; {Attributes.
+ $EA24 DEFB $7A,$7C,$78,$78,$7A,$7A         ;
+ $EA2A DEFB $7A,$57,$56,$56,$57,$7A         ;
+ $EA30 DEFB $78,$57,$50,$17,$57,$78         ;
+ $EA36 DEFB $78,$57,$50,$57,$78,$78         ; }
+@label=Graphics_CardJackSpadesData
+ $EA3C DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA44 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA4C DEFB $FF,$3F,$7F,$FF,$FF,$AA,$55,$A0 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA54 DEFB $FF,$E0,$F8,$FE,$FF,$AA,$55,$0E ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA5C DEFB $FF,$00,$FF,$00,$00,$00,$00,$18 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA64 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA6C DEFB $80,$8E,$84,$84,$84,$84,$A4,$98 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA74 DEFB $03,$05,$0A,$04,$0A,$05,$0A,$04 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA7C DEFB $3E,$34,$31,$1A,$1F,$1E,$0F,$07 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA84 DEFB $7C,$2C,$0C,$18,$F8,$78,$F0,$E0 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA8C DEFB $2C,$5E,$BF,$FF,$DB,$18,$18,$3C ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA94 DEFB $01,$1D,$09,$09,$09,$09,$49,$31 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EA9C DEFB $80,$88,$9C,$BE,$BE,$88,$9C,$80 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EAA4 DEFB $FF,$FE,$F8,$F0,$D0,$A0,$A0,$20 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EAAC DEFB $83,$09,$05,$05,$02,$01,$00,$40 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EAB4 DEFB $E1,$C8,$D0,$D0,$A0,$40,$C0,$00 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EABC DEFB $FF,$7F,$1F,$0F,$07,$05,$05,$02 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EAC4 DEFB $01,$11,$39,$7D,$7D,$11,$39,$01 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EACC DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EAD4 DEFB $40,$41,$41,$41,$41,$40,$20,$20 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EADC DEFB $80,$00,$00,$00,$00,$80,$80,$41 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EAE4 DEFB $17,$05,$0B,$97,$29,$D3,$37,$7F ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EAEC DEFB $02,$02,$82,$82,$82,$82,$82,$82 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EAF4 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EAFC DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB04 DEFB $20,$10,$10,$08,$09,$05,$02,$01 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB0C DEFB $43,$26,$2C,$D8,$78,$F8,$F0,$D0 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB14 DEFB $41,$C1,$C1,$C1,$C1,$C1,$C1,$C1 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB1C DEFB $02,$04,$04,$04,$04,$04,$FC,$74 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB24 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E834)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardJackSpadesAttributeData
+ $EB2C DEFB $78,$78,$7A,$7A,$78,$78         ; {Attributes.
+ $EB32 DEFB $78,$79,$78,$78,$78,$78         ;
+ $EB38 DEFB $78,$5F,$67,$67,$5F,$78         ;
+ $EB3E DEFB $78,$5F,$67,$7C,$5F,$78         ;
+ $EB44 DEFB $78,$5F,$67,$67,$5F,$78         ; }
+@label=Graphics_CardJackClubsData
+ $EB4A DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB52 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB5A DEFB $FF,$00,$8F,$3F,$7F,$FF,$7F,$B0 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB62 DEFB $FF,$00,$E3,$F8,$FC,$FE,$FF,$0E ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB6A DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB72 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB7A DEFB $80,$8E,$84,$84,$84,$84,$A4,$98 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB82 DEFB $01,$02,$01,$02,$05,$02,$00,$00 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB8A DEFB $2C,$BA,$20,$B0,$18,$1F,$0E,$F3 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB92 DEFB $68,$D8,$88,$48,$10,$F0,$30,$FE ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EB9A DEFB $00,$1C,$14,$6B,$5F,$6B,$08,$1C ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBA2 DEFB $01,$1D,$09,$09,$09,$09,$49,$31 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBAA DEFB $80,$9C,$AA,$BE,$AA,$88,$9C,$80 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBB2 DEFB $03,$0F,$1F,$3F,$3F,$3F,$3F,$6F ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBBA DEFB $EC,$EC,$F4,$F6,$FA,$F8,$BF,$7F ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBC2 DEFB $37,$37,$2F,$6F,$5F,$1F,$F7,$FB ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBCA DEFB $80,$C0,$E0,$E0,$A0,$E0,$50,$F0 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBD2 DEFB $01,$39,$55,$7D,$55,$11,$39,$01 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBDA DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBE2 DEFB $7E,$56,$7E,$56,$7E,$56,$7E,$6E ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBEA DEFB $E0,$20,$80,$D0,$C8,$87,$99,$FC ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBF2 DEFB $FB,$FD,$FD,$FD,$FD,$FB,$E7,$DF ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EBFA DEFB $A0,$F0,$A8,$F8,$D8,$F0,$F0,$F0 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC02 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC0A DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC12 DEFB $7F,$7F,$7F,$7F,$7E,$3E,$3F,$21 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC1A DEFB $7E,$7F,$7F,$7F,$FF,$FE,$FF,$FE ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC22 DEFB $4F,$06,$41,$97,$87,$F3,$F9,$FC ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC2A DEFB $E0,$40,$C0,$C0,$E0,$E0,$E0,$E0 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC32 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$E942)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardJackClubsAttributeData
+ $EC3A DEFB $78,$78,$7D,$7D,$78,$78         ; {Attributes.
+ $EC40 DEFB $78,$78,$78,$78,$78,$78         ;
+ $EC46 DEFB $78,$7B,$3B,$39,$79,$78         ;
+ $EC4C DEFB $78,$7B,$3B,$39,$79,$78         ;
+ $EC52 DEFB $78,$7B,$3B,$39,$79,$78         ; }
+@label=Graphics_CardQueenDiamondsData
+ $EC58 DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC60 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC68 DEFB $FF,$00,$1F,$10,$68,$54,$8B,$90 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC70 DEFB $FF,$00,$C7,$30,$08,$08,$C4,$24 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC78 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC80 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC88 DEFB $80,$98,$A4,$A4,$A4,$A4,$A8,$94 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC90 DEFB $00,$01,$01,$01,$02,$02,$02,$02 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EC98 DEFB $96,$2E,$25,$21,$20,$37,$13,$18 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECA0 DEFB $D4,$F4,$54,$12,$22,$A2,$22,$44 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECA8 DEFB $0C,$0C,$16,$67,$7F,$1E,$0C,$0C ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECB0 DEFB $01,$19,$25,$A5,$A5,$25,$29,$15 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECB8 DEFB $80,$80,$88,$9C,$BE,$9C,$88,$80 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECC0 DEFB $FB,$FB,$F8,$F0,$E1,$C0,$80,$80 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECC8 DEFB $EB,$9C,$3F,$9F,$66,$99,$66,$19 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECD0 DEFB $3B,$27,$C7,$A1,$50,$A0,$40,$80 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECD8 DEFB $00,$00,$00,$00,$00,$80,$80,$C0 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECE0 DEFB $01,$01,$11,$39,$7D,$39,$11,$01 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECE8 DEFB $A0,$A0,$A0,$A1,$A1,$A1,$A1,$A1 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECF0 DEFB $1A,$0E,$15,$0E,$1A,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ECF8 DEFB $F9,$FF,$7F,$98,$E0,$E1,$D3,$EF ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED00 DEFB $00,$00,$68,$9C,$86,$80,$80,$60 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED08 DEFB $3F,$3F,$1F,$1F,$0F,$0F,$0F,$0F ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED10 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED18 DEFB $A1,$A1,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED20 DEFB $F7,$F7,$F7,$FB,$FB,$7D,$7D,$BE ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED28 DEFB $FD,$FF,$FF,$FF,$FF,$FF,$FF,$FF ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED30 DEFB $00,$06,$07,$07,$07,$03,$03,$01 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED38 DEFB $1F,$3F,$FF,$FF,$FF,$FF,$FF,$FF ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED40 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EA50)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardQueenDiamondsAttributeData
+ $ED48 DEFB $78,$78,$78,$78,$78,$78         ; {Attributes.
+ $ED4E DEFB $7A,$78,$78,$78,$7A,$7A         ;
+ $ED54 DEFB $7A,$4F,$4F,$4F,$79,$7A         ;
+ $ED5A DEFB $78,$4E,$79,$48,$4F,$78         ;
+ $ED60 DEFB $78,$41,$41,$4F,$4F,$78         ; }
+@label=Graphics_CardQueenHeartsData
+ $ED66 DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED6E DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED76 DEFB $FF,$0B,$9D,$36,$6B,$D0,$B0,$FD ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED7E DEFB $FF,$80,$67,$B0,$58,$E8,$34,$EC ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED86 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED8E DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED96 DEFB $80,$98,$A4,$A4,$A4,$A4,$A8,$94 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $ED9E DEFB $00,$01,$01,$01,$01,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDA6 DEFB $BB,$62,$A4,$60,$AF,$E6,$B0,$5D ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDAE DEFB $B4,$2C,$54,$6C,$34,$6C,$B8,$28 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDB6 DEFB $66,$DF,$9F,$DF,$6E,$3C,$18,$00 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDBE DEFB $01,$19,$25,$25,$25,$25,$29,$15 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDC6 DEFB $80,$80,$94,$BE,$BE,$9C,$88,$80 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDCE DEFB $00,$00,$03,$07,$0E,$1E,$3E,$3E ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDD6 DEFB $31,$E0,$C0,$40,$B1,$DB,$AE,$D5 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDDE DEFB $D8,$78,$3C,$5E,$B7,$57,$B7,$6F ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDE6 DEFB $00,$00,$00,$00,$00,$80,$80,$C0 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDEE DEFB $01,$01,$29,$7D,$7D,$39,$11,$01 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDF6 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EDFE DEFB $7E,$7F,$7F,$7F,$7F,$FF,$FF,$FF ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE06 DEFB $AA,$55,$6A,$B5,$AA,$D5,$DB,$EE ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE0E DEFB $AF,$5F,$DF,$BF,$BF,$7F,$7F,$FF ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE16 DEFB $C0,$E0,$E0,$E0,$E0,$F0,$F0,$F0 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE1E DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE26 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE2E DEFB $FD,$FB,$FD,$FD,$FD,$FB,$FD,$FD ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE36 DEFB $EA,$F5,$F1,$FB,$FB,$F5,$F5,$F5 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE3E DEFB $FB,$FD,$FB,$FD,$FD,$FD,$FB,$FD ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE46 DEFB $F0,$F0,$F0,$F0,$F0,$F0,$F0,$F0 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE4E DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EB5E)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardQueenHeartsAttributeData
+ $EE56 DEFB $78,$78,$78,$78,$78,$78         ; {Attributes.
+ $EE5C DEFB $7A,$78,$78,$78,$7A,$7A         ;
+ $EE62 DEFB $7A,$79,$78,$79,$79,$7A         ;
+ $EE68 DEFB $78,$79,$79,$39,$79,$78         ;
+ $EE6E DEFB $78,$41,$39,$01,$79,$78         ; }
+@label=Graphics_CardQueenSpadesData
+ $EE74 DEFB $0F,$30,$4F,$50,$A0,$A0,$A1,$A3 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE7C DEFB $FF,$00,$FF,$00,$60,$F0,$B8,$7C ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE84 DEFB $FF,$00,$CE,$3F,$7E,$7C,$F8,$F6 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE8C DEFB $FF,$00,$DF,$E0,$F0,$78,$38,$DC ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE94 DEFB $FF,$00,$FF,$00,$00,$00,$15,$0E ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EE9C DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEA4 DEFB $82,$9B,$A4,$A4,$A4,$A4,$A8,$94 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEAC DEFB $FC,$6D,$61,$61,$F1,$03,$03,$1F ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEB4 DEFB $FB,$F1,$F0,$F3,$E9,$F8,$F7,$E0 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEBC DEFB $7C,$1C,$1E,$DE,$9E,$3E,$FC,$7C ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEC4 DEFB $1B,$0C,$30,$50,$88,$48,$44,$78 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EECC DEFB $01,$19,$25,$25,$25,$25,$29,$15 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EED4 DEFB $80,$90,$B9,$FD,$FF,$93,$BF,$87 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEDC DEFB $7F,$FE,$F2,$E5,$C5,$82,$82,$85 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEE4 DEFB $30,$1D,$07,$00,$00,$80,$80,$40 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEEC DEFB $C7,$87,$07,$0B,$0B,$17,$17,$2B ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEF4 DEFB $78,$F8,$F8,$F8,$F8,$F8,$F0,$F0 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EEFC DEFB $01,$11,$39,$7D,$7D,$11,$39,$01 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF04 DEFB $A7,$A7,$A7,$A7,$A7,$A3,$A3,$A3 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF0C DEFB $86,$85,$C4,$C4,$C4,$C4,$E8,$E9 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF14 DEFB $BF,$40,$B0,$49,$29,$52,$52,$A5 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF1C DEFB $D7,$2D,$D5,$29,$4B,$87,$87,$07 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF24 DEFB $F0,$F0,$E0,$E0,$E0,$C0,$C0,$C0 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF2C DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF34 DEFB $A3,$A3,$A3,$A3,$A3,$A1,$A1,$A1 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF3C DEFB $FE,$F9,$FE,$FC,$FF,$FC,$FF,$FE ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF44 DEFB $4A,$94,$28,$D0,$20,$C0,$00,$00 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF4C DEFB $07,$0F,$0F,$0F,$07,$07,$07,$07 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF54 DEFB $C0,$C0,$C0,$C0,$C0,$C0,$C0,$C0 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF5C DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EC6C)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardQueenSpadesAttributeData
+ $EF64 DEFB $78,$78,$78,$78,$78,$78         ; {Attributes.
+ $EF6A DEFB $78,$78,$78,$78,$78,$78         ;
+ $EF70 DEFB $78,$50,$10,$10,$78,$78         ;
+ $EF76 DEFB $78,$50,$50,$50,$78,$78         ;
+ $EF7C DEFB $78,$50,$50,$50,$78,$78         ; }
+@label=Graphics_CardQueenClubsData
+ $EF82 DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A1 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF8A DEFB $FF,$00,$FF,$00,$00,$70,$50,$AC ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF92 DEFB $FF,$00,$E7,$1F,$3F,$3E,$78,$74 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EF9A DEFB $FF,$00,$6F,$F0,$F8,$FC,$74,$6A ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFA2 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFAA DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFB2 DEFB $81,$99,$A4,$A4,$A4,$A4,$A8,$94 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFBA DEFB $7C,$AC,$20,$70,$00,$01,$01,$07 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFC2 DEFB $7E,$F4,$F2,$F0,$F7,$F3,$E8,$E7 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFCA DEFB $F6,$5E,$1F,$1F,$BF,$37,$6E,$9F ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFD2 DEFB $00,$00,$00,$00,$00,$00,$00,$80 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFDA DEFB $01,$19,$25,$25,$25,$25,$29,$15 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFE2 DEFB $80,$9C,$AA,$BE,$AA,$88,$9C,$80 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFEA DEFB $0E,$1F,$1F,$1E,$3E,$3F,$3F,$7E ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFF2 DEFB $98,$1E,$2B,$82,$80,$40,$40,$A0 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $EFFA DEFB $62,$E1,$93,$83,$05,$08,$09,$16 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F002 DEFB $60,$70,$70,$30,$B8,$F8,$F8,$3C ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F00A DEFB $01,$39,$55,$7D,$55,$11,$39,$01 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F012 DEFB $80,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F01A DEFB $7F,$7E,$7C,$7D,$7D,$7C,$7C,$7E ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F022 DEFB $50,$A8,$14,$0B,$0C,$8B,$8B,$8C ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F02A DEFB $51,$21,$C2,$02,$82,$04,$04,$84 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F032 DEFB $B8,$F8,$78,$F8,$B8,$38,$78,$78 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F03A DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F042 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F04A DEFB $7D,$7E,$7E,$7C,$3C,$3E,$3E,$3C ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F052 DEFB $14,$1B,$1B,$14,$19,$16,$16,$19 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F05A DEFB $84,$82,$82,$82,$81,$81,$81,$81 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F062 DEFB $B8,$B0,$70,$70,$B0,$F0,$30,$90 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F06A DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$ED7A)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardQueenClubsAttributeData
+ $F072 DEFB $78,$78,$78,$78,$78,$78         ; {Attributes.
+ $F078 DEFB $78,$78,$78,$78,$78,$78         ;
+ $F07E DEFB $78,$7A,$20,$20,$7A,$78         ;
+ $F084 DEFB $78,$7A,$20,$20,$7A,$78         ;
+ $F08A DEFB $78,$7A,$20,$20,$7A,$78         ; }
+@label=Graphics_CardKingDiamondsData
+ $F090 DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F098 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0A0 DEFB $FF,$32,$E6,$66,$CC,$E6,$7F,$1F ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0A8 DEFB $FF,$4C,$67,$66,$33,$67,$FE,$F8 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0B0 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0B8 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0C0 DEFB $80,$F7,$A2,$A4,$B8,$A4,$A2,$F7 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0C8 DEFB $18,$18,$2C,$CF,$FF,$3C,$18,$18 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0D0 DEFB $18,$32,$37,$30,$30,$3B,$7E,$7F ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0D8 DEFB $18,$4C,$6C,$8C,$8C,$DC,$7E,$FE ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0E0 DEFB $00,$00,$08,$1C,$3E,$1C,$08,$00 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0E8 DEFB $01,$77,$23,$25,$39,$25,$23,$77 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0F0 DEFB $80,$80,$88,$9C,$BE,$9C,$88,$80 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F0F8 DEFB $00,$03,$1F,$3D,$51,$85,$D1,$FF ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F100 DEFB $7B,$D5,$AA,$1D,$06,$03,$03,$00 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F108 DEFB $EB,$57,$AD,$79,$E1,$C1,$81,$05 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F110 DEFB $C0,$F8,$3C,$2E,$0F,$27,$17,$FF ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F118 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F120 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F128 DEFB $84,$84,$84,$84,$84,$84,$82,$C3 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F130 DEFB $0F,$1A,$1F,$1A,$1F,$1A,$1F,$9A ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F138 DEFB $E4,$BE,$D4,$B4,$D4,$BE,$DF,$BF ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F140 DEFB $87,$87,$87,$87,$87,$87,$87,$87 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F148 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F150 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F158 DEFB $C0,$E0,$F0,$F8,$F6,$F1,$F0,$F0 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F160 DEFB $7F,$00,$00,$00,$00,$FF,$1F,$1A ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F168 DEFB $BF,$7F,$5F,$5F,$60,$BF,$D8,$B8 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F170 DEFB $87,$87,$87,$47,$87,$07,$87,$87 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F178 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EE88)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardKingDiamondsAttributeData
+ $F180 DEFB $78,$78,$78,$78,$78,$78         ; {Attributes.
+ $F186 DEFB $7A,$7A,$78,$78,$7A,$7A         ;
+ $F18C DEFB $7A,$78,$20,$20,$78,$78         ;
+ $F192 DEFB $78,$60,$20,$20,$60,$78         ;
+ $F198 DEFB $78,$60,$60,$60,$60,$78         ; }
+@label=Graphics_CardKingHeartsData
+ $F19E DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1A6 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1AE DEFB $FF,$1B,$F6,$66,$66,$6F,$35,$1F ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1B6 DEFB $FF,$D8,$6F,$66,$66,$F6,$AC,$F8 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1BE DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1C6 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1CE DEFB $80,$F7,$A2,$A4,$B8,$A4,$A2,$F7 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1D6 DEFB $66,$DF,$9F,$DF,$6E,$3C,$18,$00 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1DE DEFB $18,$32,$37,$31,$31,$7A,$78,$7E ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1E6 DEFB $18,$4C,$6C,$1C,$1C,$DE,$1E,$7E ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1EE DEFB $00,$00,$14,$3E,$3E,$1C,$08,$40 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1F6 DEFB $01,$77,$23,$25,$39,$25,$23,$77 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F1FE DEFB $80,$80,$94,$BE,$BE,$9C,$88,$81 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F206 DEFB $FF,$FF,$FE,$F8,$E0,$80,$C0,$60 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F20E DEFB $F2,$99,$0C,$06,$03,$A1,$40,$15 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F216 DEFB $9B,$31,$60,$C0,$8A,$04,$80,$C0 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F21E DEFB $BF,$BF,$BF,$BF,$A7,$A1,$A9,$B3 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F226 DEFB $05,$05,$05,$05,$05,$05,$85,$85 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F22E DEFB $A1,$A1,$A1,$A1,$A1,$A1,$A0,$A0 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F236 DEFB $35,$12,$10,$10,$10,$08,$04,$03 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F23E DEFB $08,$00,$A1,$43,$07,$07,$7F,$93 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F246 DEFB $80,$94,$C8,$E0,$F2,$F1,$F0,$AB ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F24E DEFB $A6,$A4,$A8,$A8,$B0,$B0,$A0,$F8 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F256 DEFB $85,$85,$85,$85,$85,$85,$05,$05 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F25E DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F266 DEFB $00,$80,$80,$E0,$FF,$FC,$FC,$FE ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F26E DEFB $18,$17,$30,$C1,$94,$88,$40,$40 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F276 DEFB $56,$E3,$01,$41,$80,$29,$12,$02 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F27E DEFB $0C,$B9,$31,$13,$F7,$3F,$7F,$7F ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F286 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$EF96)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardKingHeartsAttributeData
+ $F28E DEFB $78,$78,$78,$78,$78,$78         ; {Attributes.
+ $F294 DEFB $7A,$7A,$78,$78,$7A,$7A         ;
+ $F29A DEFB $7A,$5F,$5F,$5F,$5F,$78         ;
+ $F2A0 DEFB $78,$5F,$5F,$5F,$5F,$78         ;
+ $F2A6 DEFB $78,$5F,$5F,$5F,$5F,$78         ; }
+@label=Graphics_CardKingSpadesData
+ $F2AC DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2B4 DEFB $FF,$00,$FF,$00,$00,$00,$00,$18 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2BC DEFB $FF,$79,$C9,$66,$32,$1A,$36,$7F ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2C4 DEFB $FF,$9E,$93,$66,$4C,$58,$6C,$FE ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2CC DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2D4 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2DC DEFB $80,$F7,$A2,$A4,$B8,$A4,$A2,$F7 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2E4 DEFB $3C,$6E,$DF,$BF,$DB,$18,$18,$3C ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2EC DEFB $30,$64,$6D,$62,$74,$FF,$F9,$FF ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2F4 DEFB $78,$BC,$BC,$3C,$7C,$FC,$FC,$FE ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F2FC DEFB $00,$00,$08,$1C,$3E,$08,$1C,$00 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F304 DEFB $01,$77,$23,$25,$39,$25,$23,$77 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F30C DEFB $80,$88,$9C,$BE,$BE,$88,$9C,$80 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F314 DEFB $00,$00,$01,$07,$1F,$7F,$FF,$FF ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F31C DEFB $FF,$E6,$80,$F0,$7C,$AF,$57,$AA ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F324 DEFB $8F,$07,$03,$1E,$7C,$EA,$D4,$AA ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F32C DEFB $00,$00,$80,$E0,$F8,$FE,$FF,$FF ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F334 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F33C DEFB $A1,$A1,$A1,$A1,$A1,$A1,$A1,$A1 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F344 DEFB $41,$72,$4F,$44,$AA,$AA,$AA,$AA ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F34C DEFB $55,$AA,$01,$FE,$00,$00,$18,$24 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F354 DEFB $54,$AA,$40,$3F,$00,$00,$00,$40 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F35C DEFB $02,$8C,$F0,$02,$2A,$2A,$2A,$2A ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F364 DEFB $85,$85,$85,$85,$85,$85,$85,$85 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F36C DEFB $A1,$A1,$A1,$A1,$A1,$A1,$A1,$A1 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F374 DEFB $AA,$AA,$54,$6C,$54,$6C,$54,$6C ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F37C DEFB $24,$1B,$05,$06,$0D,$38,$10,$00 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F384 DEFB $E0,$80,$00,$80,$40,$A1,$52,$2D ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F38C DEFB $2A,$2A,$55,$AB,$55,$A9,$51,$A1 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F394 DEFB $85,$85,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$F0A4)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardKingSpadesAttributeData
+ $F39C DEFB $78,$78,$78,$78,$78,$78         ; {Attributes.
+ $F3A2 DEFB $78,$78,$78,$78,$78,$78         ;
+ $F3A8 DEFB $78,$7C,$60,$60,$7C,$78         ;
+ $F3AE DEFB $78,$60,$07,$07,$60,$78         ;
+ $F3B4 DEFB $78,$60,$07,$07,$60,$78         ; }
+@label=Graphics_CardKingClubsData
+ $F3BA DEFB $0F,$30,$4F,$50,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F3C2 DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F3CA DEFB $FF,$1A,$F2,$E6,$CC,$E6,$72,$1F ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F3D2 DEFB $FF,$58,$4F,$67,$33,$67,$4E,$F8 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F3DA DEFB $FF,$00,$FF,$00,$00,$00,$00,$00 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F3E2 DEFB $F0,$0C,$F2,$0A,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F3EA DEFB $80,$F7,$A2,$A4,$B8,$A4,$A2,$F7 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F3F2 DEFB $38,$28,$D6,$BE,$D6,$10,$10,$38 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F3FA DEFB $38,$70,$F7,$F3,$F8,$F8,$F9,$7F ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F402 DEFB $08,$04,$76,$66,$46,$06,$CE,$3E ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F40A DEFB $00,$1C,$2A,$3E,$2A,$08,$1C,$00 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F412 DEFB $01,$77,$23,$25,$39,$25,$23,$77 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F41A DEFB $80,$9C,$AA,$BE,$AA,$88,$9C,$80 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F422 DEFB $FF,$FF,$FF,$FC,$FB,$F9,$E0,$C1 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F42A DEFB $3B,$21,$D1,$08,$04,$03,$80,$40 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F432 DEFB $F4,$E3,$E2,$C4,$08,$F0,$01,$02 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F43A DEFB $FF,$FF,$3F,$EF,$C7,$83,$21,$F0 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F442 DEFB $05,$05,$05,$05,$05,$05,$05,$05 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F44A DEFB $A0,$A0,$A0,$A1,$A1,$A1,$A1,$A1 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F452 DEFB $82,$04,$08,$12,$12,$04,$14,$14 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F45A DEFB $3F,$1F,$0F,$0F,$13,$09,$15,$08 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F462 DEFB $FC,$F9,$F3,$F1,$C8,$90,$28,$91 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F46A DEFB $E8,$B4,$5A,$B2,$E8,$EA,$EA,$58 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F472 DEFB $85,$C5,$C5,$C5,$C5,$C5,$C5,$C5 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F47A DEFB $A1,$A1,$A1,$A1,$A1,$A1,$A1,$A1 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F482 DEFB $04,$14,$14,$04,$14,$14,$04,$14 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F48A DEFB $15,$0A,$15,$0A,$15,$0A,$15,$0A ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F492 DEFB $D1,$A9,$D1,$A9,$D1,$A9,$D0,$A8 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F49A DEFB $FA,$5A,$F0,$54,$F4,$58,$E9,$F1 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+ $F4A2 DEFB $C5,$C5,$C5,$C5,$85,$85,$05,$05 ; #UDGTABLE { #N((#PC-$F1B2)/$08) |
+                                            ; #UDG(#PC) } UDGTABLE#
+@label=Graphics_CardKingClubsAttributeData
+ $F4AA DEFB $78,$78,$78,$78,$78,$78         ; {Attributes.
+ $F4B0 DEFB $78,$78,$78,$78,$78,$78         ;
+ $F4B6 DEFB $78,$57,$78,$78,$57,$78         ;
+ $F4BC DEFB $78,$57,$57,$57,$57,$78         ;
+ $F4C2 DEFB $78,$57,$56,$56,$57,$78         ; }
+
+; Data block at F4C8
+b$F4C8 DEFB $00
 
 ; Custom Font
 @label=CustomFont

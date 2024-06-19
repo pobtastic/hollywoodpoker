@@ -59,6 +59,28 @@ class HollywoodPoker:
             num += 0x01
         return '\n'.join(lines)
 
+    def get_picturecards(self):
+        lines = []
+        pc = 0xE820
+        stop = 0xF4C7
+        lines.append(f"b ${pc:04X} Graphics: Picture Cards")
+        cards = ['Jack', 'Queen', 'King']
+        suits = ['Diamonds', 'Hearts', 'Spades', 'Clubs']
+        index = 0x00
+        while (pc <= stop):
+            card = cards[index // 4 % 3]
+            suit = suits[index % 4]
+            lines.append(f"@ ${pc:04X} label=Graphics_Card{card}{suit}Data")
+            lines.append(f"  ${pc:04X},$08 #UDGTABLE {{ #N((#PC-${pc-0x0208:04X})/$08) | #UDG(#PC) }} UDGTABLE#")
+            lines.append(f"L ${pc:04X},$08,$1E")
+            pc += 0xF0
+            lines.append(f"@ ${pc:04X} label=Graphics_Card{card}{suit}AttributeData")
+            lines.append(f"  ${pc:04X},$1E,$06 Attributes.")
+            lines.append("")
+            pc += 0x1E
+            index += 0x01
+        return '\n'.join(lines)
+
     def get_disassembly(self):
         pc = 0xFBF0
         end = 0xFC0D
@@ -82,7 +104,8 @@ def run(subcommand):
 ###############################################################################
 methods = OrderedDict((
     ('cards', ('get_cards', 'Cards Graphic Data (58422-58721)')),
-    ('disassemble', ('get_disassembly', 'Disassemble'))
+    ('disassemble', ('get_disassembly', 'Disassemble')),
+    ('picturecards', ('get_picturecards', 'Picture Cards Graphic Data (59424-62663)'))
 ))
 subcommands = '\n'.join('  {} - {}'.format(k, v[1]) for k, v in methods.items())
 parser = argparse.ArgumentParser(
