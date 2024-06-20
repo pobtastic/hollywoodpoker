@@ -818,43 +818,77 @@ b$5D90 DEFB $00,$00,$00,$00,$00,$00,$00,$78
  $6D60 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $6D68 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $6D70 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6D78 DEFB $00,$21,$00,$00,$22,$A8,$5C,$21
- $6D80 DEFB $84,$8D,$22,$59,$5C,$11,$3A,$FB
- $6D88 DEFB $22,$53,$5C,$AF,$ED,$47,$21,$13
- $6D90 DEFB $E3,$22,$4B,$5C,$21,$9D,$6E,$E5
- $6D98 DEFB $3A,$00,$40,$FE,$FF,$C2,$64,$00
- $6DA0 DEFB $C8,$21,$64,$00,$E3,$C9,$21,$9D
- $6DA8 DEFB $6E,$22,$3D,$5C,$2B,$F9,$CD,$4B
- $6DB0 DEFB $78,$3A,$02,$6F,$CD,$7B,$6F,$CD
- $6DB8 DEFB $3A,$FB,$CD,$8E,$02,$3E,$0F,$A3
- $6DC0 DEFB $FE,$04,$28,$11,$FE,$0C,$28,$0D
- $6DC8 DEFB $FE,$03,$28,$09,$FE,$0B,$28,$05
- $6DD0 DEFB $CD,$46,$FB,$18,$E5,$7B,$FE,$23
- $6DD8 DEFB $28,$F6,$FE,$24,$28,$2E,$FE,$1C
- $6DE0 DEFB $28,$37,$FE,$14,$28,$42,$FE,$0C
- $6DE8 DEFB $28,$4E,$FE,$04,$28,$5A,$FE,$03
- $6DF0 DEFB $CA,$94,$6F,$FE,$0B,$CA,$BE,$73
- $6DF8 DEFB $FE,$13,$CA,$4A,$70,$21,$03,$6F
- $6E00 DEFB $11,$04,$6F,$01,$FC,$90,$ED,$B0
- $6E08 DEFB $C3,$64,$00,$05,$CD,$77,$6F,$3E
- $6E10 DEFB $01,$CD,$7B,$6F,$CD,$9A,$6F,$18
- $6E18 DEFB $2F,$CD,$77,$6F,$3E,$02,$CD,$7B
- $6E20 DEFB $6F,$3E,$06,$32,$3E,$91,$18,$A8
- $6E28 DEFB $CD,$77,$6F,$3E,$03,$CD,$7B,$6F
- $6E30 DEFB $21,$59,$6F,$CD,$50,$6F,$18,$98
- $6E38 DEFB $CD,$77,$6F,$3E,$04,$CD,$7B,$6F
- $6E40 DEFB $21,$63,$6F,$CD,$50,$6F,$18,$88
- $6E48 DEFB $CD,$77,$6F,$3E,$05,$CD,$7B,$6F
- $6E50 DEFB $B7,$2D,$EF,$5D,$EA,$5D,$9D,$6E
- $6E58 DEFB $2B,$2D,$65,$33,$58,$27,$ED,$10
- $6E60 DEFB $2C,$00,$71,$00,$85,$1C,$7D,$1C
- $6E68 DEFB $52,$1B,$76,$1B,$03,$13,$00,$3E
- $6E70 DEFB $21,$00,$00,$22,$A8,$5C,$21,$84
- $6E78 DEFB $DB,$02,$4D,$00,$D1,$F4,$00,$00
- $6E80 DEFB $F6,$57,$5C,$00,$DB,$0B,$CE,$0B
- $6E88 DEFB $CE,$0B,$B6,$40,$0B,$13,$DC,$0A
- $6E90 DEFB $FE,$15,$01,$01,$22,$14,$00,$40
- $6E98 DEFB $4A,$FB,$B1,$6E,$C9
+ $6D78 DEFB $00
+
+; Unused
+u$6D79 LD HL,$0000                          ; {#HTML(Write #N($0000,$04,$04) to
+ $6D7C LD ($5CA8),HL                        ; *<a rel="noopener nofollow"
+                                            ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C92.html#5CA8">MEMBOT</a>
+                                            ; (mem-4+#N$02).)}
+ $6D7F LD HL,$8D84                          ; {#HTML(Write #N$8D84 to *<a
+ $6D82 LD ($5C59),HL                        ; rel="noopener nofollow"
+                                            ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C59.html">E_LINE</a>.)
+                                            ; }
+ $6D85 LD DE,$FB3A                          ; #REGde=#R$FB3A.
+ $6D88 LD ($5C53),HL                        ; #HTML(Write #N$8D84 to *<a
+                                            ; rel="noopener nofollow"
+                                            ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C53.html">PROG</a>.)
+ $6D8B XOR A                                ; #REGa=#N$00.
+ $6D8C LD I,A
+ $6D8E LD HL,$E313                          ; {#HTML(Write #R$E313 to *<a
+ $6D91 LD ($5C4B),HL                        ; rel="noopener nofollow"
+                                            ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C4B.html">VARS</a>.)
+                                            ; }
+ $6D94 LD HL,$6E9D                          ; {Push #R$6E9D on the stack.
+ $6D97 PUSH HL                              ; }
+ $6D98 LD A,($4000)                         ; {#HTML(Jump to <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0066.html">RESET</a>
+ $6D9B CP $FF                               ; if *#N$4000 is not equal to #N$FF.)
+ $6D9D JP NZ,$0064                          ; }
+ $6DA0 RET Z                                ; Else, return.
+ $6DA1 LD HL,$0064
+ $6DA4 EX (SP),HL
+ $6DA5 RET                                  ; Return.
+ $6DA6 LD HL,$6E9D                          ; {#HTML(Write #R$6E9D to *<a
+ $6DA9 LD ($5C3D),HL                        ; rel="noopener nofollow"
+                                            ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3D.html">ERR_SP</a>.)
+                                            ; }
+ $6DAC DEC HL                               ; Decrease #REGhl by one.
+ $6DAD LD SP,HL
+ $6DAE CALL $784B                           ; Call #R$784B.
+ $6DB1 LD A,($6F02)                         ; #REGa=*#R$6F02.
+ $6DB4 CALL $6F7B                           ; Call #R$6F7B.
+ $6DB7 CALL $FB3A                           ; Call #R$FB3A.
+ $6DBA CALL $028E                           ; #HTML(Call <a rel="noopener
+                                            ; nofollow"
+                                            ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
+ $6DBD DEFB $3E,$0F,$A3,$FE,$04,$28,$11,$FE
+ $6DC5 DEFB $0C,$28,$0D,$FE,$03,$28,$09,$FE
+ $6DCD DEFB $0B,$28,$05,$CD,$46,$FB,$18,$E5
+ $6DD5 DEFB $7B,$FE,$23,$28,$F6,$FE,$24,$28
+ $6DDD DEFB $2E,$FE,$1C,$28,$37,$FE,$14,$28
+ $6DE5 DEFB $42,$FE,$0C,$28,$4E,$FE,$04,$28
+ $6DED DEFB $5A,$FE,$03,$CA,$94,$6F,$FE,$0B
+ $6DF5 DEFB $CA,$BE,$73,$FE,$13,$CA,$4A,$70
+ $6DFD DEFB $21,$03,$6F,$11,$04,$6F,$01,$FC
+ $6E05 DEFB $90,$ED,$B0,$C3,$64,$00,$05,$CD
+ $6E0D DEFB $77,$6F,$3E,$01,$CD,$7B,$6F,$CD
+ $6E15 DEFB $9A,$6F,$18,$2F,$CD,$77,$6F,$3E
+ $6E1D DEFB $02,$CD,$7B,$6F,$3E,$06,$32,$3E
+ $6E25 DEFB $91,$18,$A8,$CD,$77,$6F,$3E,$03
+ $6E2D DEFB $CD,$7B,$6F,$21,$59,$6F,$CD,$50
+ $6E35 DEFB $6F,$18,$98,$CD,$77,$6F,$3E,$04
+ $6E3D DEFB $CD,$7B,$6F,$21,$63,$6F,$CD,$50
+ $6E45 DEFB $6F,$18,$88,$CD,$77,$6F,$3E,$05
+ $6E4D DEFB $CD,$7B,$6F,$B7,$2D,$EF,$5D,$EA
+ $6E55 DEFB $5D,$9D,$6E,$2B,$2D,$65,$33,$58
+ $6E5D DEFB $27,$ED,$10,$2C,$00,$71,$00,$85
+ $6E65 DEFB $1C,$7D,$1C,$52,$1B,$76,$1B,$03
+ $6E6D DEFB $13,$00,$3E,$21,$00,$00,$22,$A8
+ $6E75 DEFB $5C,$21,$84,$DB,$02,$4D,$00,$D1
+ $6E7D DEFB $F4,$00,$00,$F6,$57,$5C,$00,$DB
+ $6E85 DEFB $0B,$CE,$0B,$CE,$0B,$B6,$40,$0B
+ $6E8D DEFB $13,$DC,$0A,$FE,$15,$01,$01,$22
+ $6E95 DEFB $14,$00,$40,$4A,$FB,$B1,$6E,$C9
 
 ; Title Screen
 ;
@@ -4938,12 +4972,12 @@ g$96B8 DEFB $00
 g$96B9 DEFB $00,$00,$00,$00,$00,$00,$00
  $96C0 DEFB $00,$00,$00,$00,$00,$00,$00
 
-; Players Hand?
-@label=PlayersHand?
+; Players Hand
+@label=PlayersHand
 g$96C7 DEFB $00,$00,$00,$00,$00
 
-; Girls Hand?
-@label=GirlsHand?
+; Girls Hand
+@label=GirlsHand
 g$96CC DEFB $00,$00,$00,$00,$00
 
 ; Routine at 96D1
@@ -6861,39 +6895,59 @@ c$E3B8 SUB $03       ; #REGa-=#N$03.
  $E3BC DEC B         ; }
 ; This entry point is used by the routine at #R$E33A.
 @label=PrintNumberCard
-*$E3BD LD C,B        ; #REGc=#REGb.
- $E3BE LD B,A        ; #REGb=#REGa.
- $E3BF INC B         ; Increment #REGb by one.
- $E3C0 LD DE,$001E   ; #REGde=#N($001E,$04,$04).
- $E3C3 LD HL,$E436   ; #REGhl=#R$E436.
- $E3C6 XOR A         ; #REGa=#N$00.
- $E3C7 SBC HL,DE     ; #REGhl-=#REGde (with carry).
-*$E3C9 ADD HL,DE     ; #REGhl+=#REGde.
- $E3CA DJNZ $E3C9    ; Decrease counter by one and loop back to #R$E3C9 until
-                     ; counter is zero.
- $E3CC LD ($E563),HL ; Write #REGhl to *#R$E563.
- $E3CF LD B,$04      ; #REGb=#N$04.
-*$E3D1 SRL C         ; Shift #REGc right.
- $E3D3 DJNZ $E3D1    ; Decrease counter by one and loop back to #R$E3D1 until
-                     ; counter is zero.
- $E3D5 LD A,C        ; {Write #REGc to *#R$E562.
+*$E3BD LD C,B        ; Copy the original card value into #REGc as we need #REGb
+                     ; for the loop below.
+ $E3BE LD B,A        ; Set a counter in #REGb of the card number (this is the
+                     ; lower four bits).
+ $E3BF INC B         ; Increment #REGb by one, due to the way the loop below
+                     ; works.
+ $E3C0 LD DE,$001E   ; The card UDG data blocks are #N($001E,$04,$04) in
+                     ; length, so store this in #REGde for the calculation.
+ $E3C3 LD HL,$E436   ; The card data begins from #R$E436(#N$E436) so store this
+                     ; in #REGhl.
+ $E3C6 XOR A         ; Reset the flags.
+ $E3C7 SBC HL,DE     ; Subtract #REGde from #REGhl as the loop will add it back
+                     ; and then it will be pointing to the beginning again.
+@label=FindCardUDGData_Loop
+*$E3C9 ADD HL,DE     ; Add #N($001E,$04,$04) to #REGhl to move to the next
+                     ; block of card UDG data.
+ $E3CA DJNZ $E3C9    ; Decrease the card value counter by one and loop back to
+                     ; #R$E3C9 until the appropriate card UDG data block is
+                     ; found.
+ $E3CC LD ($E563),HL ; Write the card UDG data block pointer to *#R$E563.
+; Now work out the suit.
+ $E3CF LD B,$04      ; {Using the original card value, shift the upper four
+@label=SuitShift_Loop
+*$E3D1 SRL C         ; bits to be the lower four bits.
+ $E3D3 DJNZ $E3D1    ; }
+ $E3D5 LD A,C        ; {Write the calculated suit to *#R$E562.
  $E3D6 LD ($E562),A  ; }
- $E3D9 LD B,C        ; #REGb=#REGc.
- $E3DA INC B         ; Increment #REGb by one.
- $E3DB LD DE,$0058   ; #REGde=#N($0058,$04,$04).
- $E3DE LD HL,$E6BF   ; #REGhl=#R$E6BF.
- $E3E1 XOR A         ; #REGa=#N$00.
- $E3E2 SBC HL,DE     ; #REGhl-=#REGde (with carry).
-*$E3E4 ADD HL,DE     ; #REGhl+=#REGde.
- $E3E5 DJNZ $E3E4    ; Decrease counter by one and loop back to #R$E3E4 until
-                     ; counter is zero.
- $E3E7 PUSH DE       ; Stash #REGde on the stack.
- $E3E8 POP BC        ; Restore #REGbc from the stack.
- $E3E9 LD DE,$E667   ; #REGde=#R$E667.
- $E3EC LDIR          ; LDIR.
+ $E3D9 LD B,C        ; Set a counter in #REGb of the calculated suit (this is
+                     ; the upper four bits).
+ $E3DA INC B         ; Increment #REGb by one, due to the way the loop below
+                     ; works.
+ $E3DB LD DE,$0058   ; The suit UDG data blocks are #N($0058,$04,$04) in
+                     ; length, so store this in #REGde for the calculation.
+ $E3DE LD HL,$E6BF   ; The suit UDG data begins from #R$E6BF(#N$E6BF) so store
+                     ; this in #REGhl.
+ $E3E1 XOR A         ; Reset the flags.
+ $E3E2 SBC HL,DE     ; Subtract #REGde from #REGhl as the loop will add it back
+                     ; and then it will be pointing to the beginning again.
+@label=FindSuitUDGData_Loop
+*$E3E4 ADD HL,DE     ; Add #N($0058,$04,$04) to #REGhl to move to the next
+                     ; block of suit UDG data.
+ $E3E5 DJNZ $E3E4    ; Decrease the suit counter by one and loop back to
+                     ; #R$E3E4 until the appropriate suit UDG data block is
+                     ; found.
+ $E3E7 PUSH DE       ; {Set a counter in #REGbc to the length of the suit UDG
+ $E3E8 POP BC        ; data block: #N($0058,$04,$04).}
+ $E3E9 LD DE,$E667   ; Set the target in #REGde to #R$E667.
+ $E3EC LDIR          ; Copy the suit UDG data block to the card data buffer.
+; Set the card character-set to be the in-use font.
  $E3EE LD HL,$E35F   ; {#HTML(Write #N$E35F to *<a rel="noopener nofollow"
  $E3F1 LD ($5C36),HL ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
                      ; }
+; Handle setting the colour of the card.
  $E3F4 LD A,$13      ; {BRIGHT: ON.
  $E3F6 RST $10       ;
  $E3F7 LD A,$01      ;
@@ -6902,9 +6956,11 @@ c$E3B8 SUB $03       ; #REGa-=#N$03.
  $E3FC RST $10       ;
  $E3FD LD A,$00      ;
  $E3FF RST $10       ; }
- $E400 LD A,($E562)  ; {Jump to #R$E40D if *#R$E562 is #N$02 or higher.
- $E403 CP $02        ;
+ $E400 LD A,($E562)  ; {Jump to #R$E40D if *#R$E562 is #N$02 or higher (so
+ $E403 CP $02        ; #SUIT($02<<$04) or #SUIT($03<<$04)).
  $E405 JR NC,$E40D   ; }
+; Else this card is a #SUIT($00<<$04) or #SUIT($01<<$04) so set the INK
+; appropriately.
  $E407 LD A,$10      ; {Set INK: #INK$02.
  $E409 RST $10       ;
  $E40A LD A,$02      ;
@@ -7032,8 +7088,14 @@ b$E436 DEFB $42,$43,$43,$43,$43,$44 ; {#UDGTABLE {
                                     ;   )
                                     ; } UDGTABLE#}
 
-; Current Card Colour
-@label=CurrentCardColour
+; Current Card Suit
+;
+; Will be one of:
+; #TABLE(default,centre,centre)
+; { =h Byte | =h Meaning }
+; #FOR$00,$03,,$04(n,{ #Nn | #SUIT(n<<$04) },,)
+; TABLE#
+@label=CurrentCardSuit
 g$E562 DEFB $00
 
 ; Pointer Card UDG Data

@@ -21,6 +21,29 @@ t $5D3E Messaging: Loader
 
 b $5D90
 
+u $6D79
+C $6D79,$06 #HTML(Write #N($0000,$04,$04) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C92.html#5CA8">MEMBOT</a> (mem-4+#N$02).)
+C $6D7F,$06 #HTML(Write #N$8D84 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C59.html">E_LINE</a>.)
+C $6D85,$03 #REGde=#R$FB3A.
+C $6D88,$03 #HTML(Write #N$8D84 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C53.html">PROG</a>.)
+C $6D8B,$01 #REGa=#N$00.
+C $6D8C,$02
+C $6D8E,$06 #HTML(Write #R$E313 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C4B.html">VARS</a>.)
+C $6D94,$04 Push #R$6E9D on the stack.
+C $6D98,$08 #HTML(Jump to <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0066.html">RESET</a>
+. if *#N$4000 is not equal to #N$FF.)
+C $6DA0,$01 Else, return.
+C $6DA1,$04
+C $6DA5,$01 Return.
+C $6DA6,$06 #HTML(Write #R$6E9D to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3D.html">ERR_SP</a>.)
+C $6DAC,$01 Decrease #REGhl by one.
+C $6DAD,$01
+C $6DAE,$03 Call #R$784B.
+C $6DB1,$03 #REGa=*#R$6F02.
+C $6DB4,$03 Call #R$6F7B.
+C $6DB7,$03 Call #R$FB3A.
+C $6DBA,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
+
 c $6E9D Title Screen
 @ $6E9D label=TitleScreen
   $6E9D,$06 #HTML(Write #R$6E9D to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3D.html">ERR_SP</a>.)
@@ -2095,12 +2118,12 @@ g $96B9
 
   $96C0
 
-g $96C7 Players Hand?
-@ $96C7 label=PlayersHand?
+g $96C7 Players Hand
+@ $96C7 label=PlayersHand
 B $96C7,$05
 
-g $96CC Girls Hand?
-@ $96CC label=GirlsHand?
+g $96CC Girls Hand
+@ $96CC label=GirlsHand
 B $96CC,$05
 
 c $96D1
@@ -2613,36 +2636,43 @@ c $E3B8 Print Cards
   $E3B8,$02 #REGa-=#N$03.
   $E3BA,$03 Decrease #REGb by three.
 @ $E3BD label=PrintNumberCard
-  $E3BD,$01 #REGc=#REGb.
-  $E3BE,$01 #REGb=#REGa.
-  $E3BF,$01 Increment #REGb by one.
-  $E3C0,$03 #REGde=#N($001E,$04,$04).
-  $E3C3,$03 #REGhl=#R$E436.
-  $E3C6,$01 #REGa=#N$00.
-  $E3C7,$02 #REGhl-=#REGde (with carry).
-  $E3C9,$01 #REGhl+=#REGde.
-  $E3CA,$02 Decrease counter by one and loop back to #R$E3C9 until counter is zero.
-  $E3CC,$03 Write #REGhl to *#R$E563.
+  $E3BD,$01 Copy the original card value into #REGc as we need #REGb for the loop below.
+  $E3BE,$01 Set a counter in #REGb of the card number (this is the lower four bits).
+  $E3BF,$01 Increment #REGb by one, due to the way the loop below works.
+  $E3C0,$03 The card UDG data blocks are #N($001E,$04,$04) in length, so store this in #REGde for the calculation.
+  $E3C3,$03 The card data begins from #R$E436(#N$E436) so store this in #REGhl.
+  $E3C6,$01 Reset the flags.
+  $E3C7,$02 Subtract #REGde from #REGhl as the loop will add it back and then it will be pointing to the beginning again.
+@ $E3C9 label=FindCardUDGData_Loop
+  $E3C9,$01 Add #N($001E,$04,$04) to #REGhl to move to the next block of card UDG data.
+  $E3CA,$02 Decrease the card value counter by one and loop back to #R$E3C9 until the appropriate card UDG data block is found.
+  $E3CC,$03 Write the card UDG data block pointer to *#R$E563.
+N $E3CF Now work out the suit.
   $E3CF,$02 #REGb=#N$04.
+@ $E3D1 label=SuitShift_Loop
   $E3D1,$02 Shift #REGc right.
   $E3D3,$02 Decrease counter by one and loop back to #R$E3D1 until counter is zero.
-  $E3D5,$04 Write #REGc to *#R$E562.
-  $E3D9,$01 #REGb=#REGc.
-  $E3DA,$01 Increment #REGb by one.
-  $E3DB,$03 #REGde=#N($0058,$04,$04).
-  $E3DE,$03 #REGhl=#R$E6BF.
-  $E3E1,$01 #REGa=#N$00.
-  $E3E2,$02 #REGhl-=#REGde (with carry).
-  $E3E4,$01 #REGhl+=#REGde.
-  $E3E5,$02 Decrease counter by one and loop back to #R$E3E4 until counter is zero.
-  $E3E7,$01 Stash #REGde on the stack.
-  $E3E8,$01 Restore #REGbc from the stack.
-  $E3E9,$03 #REGde=#R$E667.
-  $E3EC,$02 LDIR.
+M $E3CF,$06 Using the original card value, shift the upper four bits to be the lower four bits.
+  $E3D5,$04 Write the calculated suit to *#R$E562.
+  $E3D9,$01 Set a counter in #REGb of the calculated suit (this is the upper four bits).
+  $E3DA,$01 Increment #REGb by one, due to the way the loop below works.
+  $E3DB,$03 The suit UDG data blocks are #N($0058,$04,$04) in length, so store this in #REGde for the calculation.
+  $E3DE,$03 The suit UDG data begins from #R$E6BF(#N$E6BF) so store this in #REGhl.
+  $E3E1,$01 Reset the flags.
+  $E3E2,$02 Subtract #REGde from #REGhl as the loop will add it back and then it will be pointing to the beginning again.
+@ $E3E4 label=FindSuitUDGData_Loop
+  $E3E4,$01 Add #N($0058,$04,$04) to #REGhl to move to the next block of suit UDG data.
+  $E3E5,$02 Decrease the suit counter by one and loop back to #R$E3E4 until the appropriate suit UDG data block is found.
+  $E3E7,$02 Set a counter in #REGbc to the length of the suit UDG data block: #N($0058,$04,$04).
+  $E3E9,$03 Set the target in #REGde to #R$E667.
+  $E3EC,$02 Copy the suit UDG data block to the card data buffer.
+N $E3EE Set the card character-set to be the in-use font.
   $E3EE,$06 #HTML(Write #N$E35F to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
+N $E3F4 Handle setting the colour of the card.
   $E3F4,$06 BRIGHT: ON.
   $E3FA,$06 Set INK: #INK$00.
-  $E400,$07 Jump to #R$E40D if *#R$E562 is #N$02 or higher.
+  $E400,$07 Jump to #R$E40D if *#R$E562 is #N$02 or higher (so #SUIT($02<<$04) or #SUIT($03<<$04)).
+N $E407 Else this card is a #SUIT($00<<$04) or #SUIT($01<<$04) so set the INK appropriately.
   $E407,$06 Set INK: #INK$02.
 @ $E40D label=PrintCard
   $E40D,$03 Fetch the current *#R$E81F and store this in #REGa.
@@ -2757,8 +2787,13 @@ D $E436 This is UDG data which corresponds to the UDGs defined at #R$E567.
 .   )
 . } UDGTABLE#
 
-g $E562 Current Card Colour
-@ $E562 label=CurrentCardColour
+g $E562 Current Card Suit
+@ $E562 label=CurrentCardSuit
+D $E562 Will be one of:
+. #TABLE(default,centre,centre)
+. { =h Byte | =h Meaning }
+. #FOR$00,$03,,$04(n,{ #Nn | #SUIT(n<<$04) },,)
+. TABLE#
 B $E562,$01
 
 g $E563 Pointer Card UDG Data

@@ -1,5 +1,158 @@
 ; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
 
+[Fact:Cards]
+The cards use a simple system of splitting the value into two halves, the first
+four bits signify the card value - which, for the ease of evaluating the hands,
+starts from #N$00 representing "#CARD$00".
+
+Then, in order (as you'd expect), the cards are:
+#TABLE(default,centre,centre)
+{ =h,c2 Diamonds | =h,c2 Hearts | =h,c2 Spades | =h,c2 Clubs }
+{ =h Byte | =h Card | =h Byte | =h Card | =h Byte | =h Card | =h Byte | =h Card }
+#FOR$00,$0C,,$04(n,{ #Nn | #CARDn | #N(n+$10) | #CARD(n+$10) | #N(n+$20) | #CARD(n+$20) | #N(n+$30) | #CARD(n+$30) },,)
+TABLE#
+
+The upper four bits, when shifted four positions to the right, represent the
+suits. Obviously, they don't have to be shifted, just this is how the game
+evaluates them, so that's what we'll do here.
+
+The suits are: #FOR$00,$03,,$01(n,#Nn: #SUIT(n<<$04), , and ).
+
+Here are some examples of cards and their values:
+#TABLE(default,centre,centre,centre,centre,centre,centre)
+{ =h,r3 Byte | =h,r3 Bits | =h,c4 Breakdown | =h,c2 Result }
+{ =h,c2 Lower | =h,c2 Upper | =h,r2 Card | =h,r2 Suit }
+{ =h Byte | =h Bits | =h Byte | =h Bits }
+#FOREACH($06,$0C,$19,$1A,$27,$2B,$34),,z,{ #Nz | #EVAL(z,$02,$08) | #N(z&$0F) | #EVAL(z&$0F,$02,$04) | #N((z&$F0)>>$04) | #EVAL((z&$F0)>>$04,$02,$04) | #CARDz | #SUITz }, | ,,
+TABLE#
+
+To follow the mechanism in the game, start from #R$E313 which cycles through
+all five cards in a hand and prints them to the screen via #R$E33A.
+
+<table class="disassembly">
+  <tbody>
+    <tr>
+      <td class="asm-label">CheckCardType</td>
+      <td class="address-2">#R$E33A(#N$E33A)</td>
+      <td class="instruction">LD #REGb,#REGa</td>
+      <td class="comment-1" rowspan="1">Store the card value in #REGb to process the suit later.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E33B(#N$E33B)</td>
+      <td class="instruction">AND %#EVAL($0F,$02,$08)</td>
+      <td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E33D(#N$E33D)</td>
+      <td class="instruction">CP #N$09</td>
+      <td class="comment-1" rowspan="2">Jump to #R$E3BD if #REGa is #N$09 or lower.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E33F(#N$E33F)</td>
+      <td class="instruction">JR C,#R$E3BD</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E341(#N$E341)</td>
+      <td class="instruction">CP #N$0C</td>
+      <td class="comment-1" rowspan="2">Jump to #R$E3B8 if #REGa is equal to #N$0C.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E343(#N$E343)</td>
+      <td class="instruction">JR Z,#R$E3B8</td>
+    </tr>
+    <tr>
+      <td class="routine-comment" colspan="5">
+        <div class="comments">
+          <div class="paragraph">Anything else is a picture card, so work out what we're printing.</div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+* The picture card routine is not shown here as it complicates things, so we'll
+deal with how that works later.
+
+Let's take an example and follow it all the way through: #N$25
+The <code>AND</code> turns it into #N($25&$0F), so this card is a "#CARD$25".
+
+Moving onto #R$E3BD:
+
+<table class="disassembly">
+  <tbody>
+    <tr>
+      <td class="asm-label">PrintNumberCard</td>
+      <td class="address-2">#R$E3BD(#N$E3BD)</td>
+      <td class="instruction">LD #REGc,#REGb</td>
+      <td class="comment-1" rowspan="1">Copy the original card value into #REGc as we need #REGb for the loop below.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3BE(#N$E3BE)</td>
+      <td class="instruction">LD #REGb,#REGa</td>
+      <td class="comment-1" rowspan="1">Set a counter in #REGb of the card number (this is the lower four bits).</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3BF(#N$E3BF)</td>
+      <td class="instruction">INC #REGb</td>
+      <td class="comment-1" rowspan="1">Increment #REGb by one, due to the way the loop below works.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3C0(#N$E3C0)</td>
+      <td class="instruction">LD #REGde,$001E</td>
+      <td class="comment-1" rowspan="1">The card UDG data blocks are #N($001E,$04,$04) in length, so store this in #REGde for the calculation.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3C3(#N$E3C3)</td>
+      <td class="instruction">LD #REGhl,#R$E436(#N$E436)</td>
+      <td class="comment-1" rowspan="1">The card data begins from #R$E436(#N$E436) so store this in #REGhl.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3C6(#N$E3C6)</td>
+      <td class="instruction">XOR #REGa</td>
+      <td class="comment-1" rowspan="1">Reset the flags.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3C7(#N$E3C7)</td>
+      <td class="instruction">SBC #REGhl,#REGde</td>
+      <td class="comment-1" rowspan="1">Subtract #REGde from #REGhl as the loop will add it back and then it will be pointing to the beginning again.</td>
+    </tr>
+    <tr>
+      <td class="asm-label">FindCardUDGData_Loop</td>
+      <td class="address-2">#R$E3C9(#N$E3C9)</td>
+      <td class="instruction">ADD #REGhl,#REGde</td>
+      <td class="comment-1" rowspan="1">Add #N($001E,$04,$04) to #REGhl to move to the next block of card UDG data.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3CA(#N$E3CA)</td>
+      <td class="instruction">DJNZ #R$E3C9</td>
+      <td class="comment-1" rowspan="1">Decrease the card value counter by one and loop back to #R$E3C9 until the appropriate card UDG data block is found.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3CC(#N$E3CC)</td>
+      <td class="instruction">LD (#R$E563(#N$E563)),#REGhl</td>
+      <td class="comment-1" rowspan="1">Write the card UDG data block pointer to *#R$E563.</td>
+    </tr>
+  </tbody>
+</table>
+
+So, our card #N$25 will end up writing #R$E4CC to *#R$E563 (which will be used later).
+This references the number part of the card, without any suit.
+
+TODO...
+
 [Fact:Girls]
 To save on space, the girls are created with one initial image, and then the
 other "frames" are single sections which are overlaid on top of them.

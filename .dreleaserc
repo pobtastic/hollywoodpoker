@@ -1,4 +1,4 @@
 GAME=hollywoodpoker
-SRCFILES=$(echo hollywoodpoker.skool {hollywoodpoker,analytics,bases,changelog,girls,pokes}.ref {dark,wide}.css)
+SRCFILES=$(echo hollywoodpoker.skool {hollywoodpoker,analytics,bases,cards,changelog,data,facts,girls,pokes,sounds}.ref {dark,wide}.css)
 SKOOL2BINOPTS="-i 23867"
-WAVCONVERT=""
+WAVCONVERT="select.wav tune.wav"

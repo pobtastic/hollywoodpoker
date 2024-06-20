@@ -87,9 +87,35 @@ SectionPrefix=Audio
       6:YELLOW,
       7:WHITE))#IF({bright}>$00)( (BRIGHT))#IF({flash}>$00)( (FLASH: ON)))
 
+#DEF(#CARD(val)
+  #MAP($val&$0F)(
+    ?,
+    0:Two,
+    1:Three,
+    2:Four,
+    3:Five,
+    4:Six,
+    5:Seven,
+    6:Eight,
+    7:Nine,
+    8:Ten,
+    9:Jack,
+    10:Queen,
+    11:King,
+    12:Ace))
+
+#DEF(#SUIT(val)
+  #MAP(($val&$F0)>>$04)(
+    ?,
+    0:Diamonds,
+    1:Hearts,
+    2:Spades,
+    3:Clubs))
+
 #DEF(#MESSAGE(block)(filename)
   #PUSHS
   #SIM(start=$7D97,stop=$7DB7,a=$block)
   #SIM(start=$7DD6,stop=$7E10)
   #SCR$04{$1A0,$280,$E0,$80}($filename)
   #POPS)
+

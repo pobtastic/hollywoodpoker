@@ -3,10 +3,15 @@
 [Page:Changelog]
 SectionType=BulletPoints
 
+[Changelog:20240620]
+-
+
+- Added fact about how the cards are printed
+
 [Changelog:20240619]
 -
 
-- Added cards file (unfinished)
+- Added cards file
 
 [Changelog:20240618]
 -
