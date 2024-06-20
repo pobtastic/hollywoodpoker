@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Unused RAM at 28025</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-u">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Unused</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="23952.html">23952</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28025">Map</a></td>
+<td class="next">
+Next: <a href="28317.html">28317</a>
+</td>
+</tr>
+</table>
+<div class="description">28025: Unused</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28025"></span>28025</td>
+<td class="instruction">LD HL,0</td>
+<td class="comment-1" rowspan="2">Write 0000 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C92.html#5CA8">MEMBOT</a> (mem-4+2).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28028"></span>28028</td>
+<td class="instruction">LD (23720),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28031"></span>28031</td>
+<td class="instruction">LD HL,36228</td>
+<td class="comment-1" rowspan="2">Write 36228 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C59.html">E_LINE</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28034"></span>28034</td>
+<td class="instruction">LD (23641),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28037"></span>28037</td>
+<td class="instruction">LD DE,64314</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="64314.html">ResetThemeTune</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28040"></span>28040</td>
+<td class="instruction">LD (23635),HL</td>
+<td class="comment-1" rowspan="1">Write 36228 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C53.html">PROG</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28043"></span>28043</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28044"></span>28044</td>
+<td class="instruction">LD I,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28046"></span>28046</td>
+<td class="instruction">LD HL,58131</td>
+<td class="comment-1" rowspan="2">Write <a href="58131.html">PrintHand</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C4B.html">VARS</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28049"></span>28049</td>
+<td class="instruction">LD (23627),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28052"></span>28052</td>
+<td class="instruction">LD HL,28317</td>
+<td class="comment-1" rowspan="2">Push <a href="28317.html">TitleScreen</a> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28055"></span>28055</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28056"></span>28056</td>
+<td class="instruction">LD A,(16384)</td>
+<td class="comment-1" rowspan="3">Jump to <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0066.html">RESET</a> if *16384 is not equal to 255.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28059"></span>28059</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28061"></span>28061</td>
+<td class="instruction">JP NZ,100</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28064"></span>28064</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Else, return.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28065"></span>28065</td>
+<td class="instruction">LD HL,100</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28068"></span>28068</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28069"></span>28069</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28070"></span>28070</td>
+<td class="instruction">LD HL,28317</td>
+<td class="comment-1" rowspan="2">Write <a href="28317.html">TitleScreen</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3D.html">ERR_SP</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28073"></span>28073</td>
+<td class="instruction">LD (23613),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28076"></span>28076</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28077"></span>28077</td>
+<td class="instruction">LD SP,HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28078"></span>28078</td>
+<td class="instruction">CALL <a href="30795.html">DisplayTitleScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="30795.html">DisplayTitleScreen</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28081"></span>28081</td>
+<td class="instruction">LD A,(28418)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="28418.html">ControlMethod</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28084"></span>28084</td>
+<td class="instruction">CALL <a href="28539.html">HighlightMenuLine</a></td>
+<td class="comment-1" rowspan="1">Call <a href="28539.html">HighlightMenuLine</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28087"></span>28087</td>
+<td class="instruction">CALL <a href="64314.html">ResetThemeTune</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64314.html">ResetThemeTune</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28090"></span>28090</td>
+<td class="instruction">CALL 654</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28093"></span>28093</td>
+<td class="instruction">DEFB 62,15,163,254,4,40,17,254</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28101"></span>28101</td>
+<td class="instruction">DEFB 12,40,13,254,3,40,9,254</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28109"></span>28109</td>
+<td class="instruction">DEFB 11,40,5,205,70,251,24,229</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28117"></span>28117</td>
+<td class="instruction">DEFB 123,254,35,40,246,254,36,40</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28125"></span>28125</td>
+<td class="instruction">DEFB 46,254,28,40,55,254,20,40</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28133"></span>28133</td>
+<td class="instruction">DEFB 66,254,12,40,78,254,4,40</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28141"></span>28141</td>
+<td class="instruction">DEFB 90,254,3,202,148,111,254,11</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28149"></span>28149</td>
+<td class="instruction">DEFB 202,190,115,254,19,202,74,112</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28157"></span>28157</td>
+<td class="instruction">DEFB 33,3,111,17,4,111,1,252</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28165"></span>28165</td>
+<td class="instruction">DEFB 144,237,176,195,100,0,5,205</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28173"></span>28173</td>
+<td class="instruction">DEFB 119,111,62,1,205,123,111,205</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28181"></span>28181</td>
+<td class="instruction">DEFB 154,111,24,47,205,119,111,62</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28189"></span>28189</td>
+<td class="instruction">DEFB 2,205,123,111,62,6,50,62</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28197"></span>28197</td>
+<td class="instruction">DEFB 145,24,168,205,119,111,62,3</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28205"></span>28205</td>
+<td class="instruction">DEFB 205,123,111,33,89,111,205,80</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28213"></span>28213</td>
+<td class="instruction">DEFB 111,24,152,205,119,111,62,4</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28221"></span>28221</td>
+<td class="instruction">DEFB 205,123,111,33,99,111,205,80</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28229"></span>28229</td>
+<td class="instruction">DEFB 111,24,136,205,119,111,62,5</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28237"></span>28237</td>
+<td class="instruction">DEFB 205,123,111,183,45,239,93,234</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28245"></span>28245</td>
+<td class="instruction">DEFB 93,157,110,43,45,101,51,88</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28253"></span>28253</td>
+<td class="instruction">DEFB 39,237,16,44,0,113,0,133</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28261"></span>28261</td>
+<td class="instruction">DEFB 28,125,28,82,27,118,27,3</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28269"></span>28269</td>
+<td class="instruction">DEFB 19,0,62,33,0,0,34,168</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28277"></span>28277</td>
+<td class="instruction">DEFB 92,33,132,219,2,77,0,209</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28285"></span>28285</td>
+<td class="instruction">DEFB 244,0,0,246,87,92,0,219</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28293"></span>28293</td>
+<td class="instruction">DEFB 11,206,11,206,11,182,64,11</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28301"></span>28301</td>
+<td class="instruction">DEFB 19,220,10,254,21,1,1,34</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28309"></span>28309</td>
+<td class="instruction">DEFB 20,0,64,74,251,177,110,201</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="23952.html">23952</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28025">Map</a></td>
+<td class="next">
+Next: <a href="28317.html">28317</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/6D79.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

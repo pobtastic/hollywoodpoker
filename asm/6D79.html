@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Unused RAM at 6D79</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-u">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Unused</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="5D90.html">5D90</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#6d79">Map</a></td>
+<td class="next">
+Next: <a href="6E9D.html">6E9D</a>
+</td>
+</tr>
+</table>
+<div class="description">6D79: Unused</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d79"></span>6D79</td>
+<td class="instruction">LD HL,$0000</td>
+<td class="comment-1" rowspan="2">Write 0000 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C92.html#5CA8">MEMBOT</a> (mem-4+02).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d7c"></span>6D7C</td>
+<td class="instruction">LD ($5CA8),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d7f"></span>6D7F</td>
+<td class="instruction">LD HL,$8D84</td>
+<td class="comment-1" rowspan="2">Write 8D84 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C59.html">E_LINE</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d82"></span>6D82</td>
+<td class="instruction">LD ($5C59),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d85"></span>6D85</td>
+<td class="instruction">LD DE,$FB3A</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="FB3A.html">ResetThemeTune</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d88"></span>6D88</td>
+<td class="instruction">LD ($5C53),HL</td>
+<td class="comment-1" rowspan="1">Write 8D84 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C53.html">PROG</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d8b"></span>6D8B</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d8c"></span>6D8C</td>
+<td class="instruction">LD I,A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d8e"></span>6D8E</td>
+<td class="instruction">LD HL,$E313</td>
+<td class="comment-1" rowspan="2">Write <a href="E313.html">PrintHand</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C4B.html">VARS</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d91"></span>6D91</td>
+<td class="instruction">LD ($5C4B),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d94"></span>6D94</td>
+<td class="instruction">LD HL,$6E9D</td>
+<td class="comment-1" rowspan="2">Push <a href="6E9D.html">TitleScreen</a> on the stack.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d97"></span>6D97</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d98"></span>6D98</td>
+<td class="instruction">LD A,($4000)</td>
+<td class="comment-1" rowspan="3">Jump to <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0066.html">RESET</a> if *4000 is not equal to FF.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d9b"></span>6D9B</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6d9d"></span>6D9D</td>
+<td class="instruction">JP NZ,$0064</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6da0"></span>6DA0</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Else, return.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6da1"></span>6DA1</td>
+<td class="instruction">LD HL,$0064</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6da4"></span>6DA4</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6da5"></span>6DA5</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6da6"></span>6DA6</td>
+<td class="instruction">LD HL,$6E9D</td>
+<td class="comment-1" rowspan="2">Write <a href="6E9D.html">TitleScreen</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3D.html">ERR_SP</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6da9"></span>6DA9</td>
+<td class="instruction">LD ($5C3D),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6dac"></span>6DAC</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6dad"></span>6DAD</td>
+<td class="instruction">LD SP,HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6dae"></span>6DAE</td>
+<td class="instruction">CALL <a href="784B.html">DisplayTitleScreen</a></td>
+<td class="comment-1" rowspan="1">Call <a href="784B.html">DisplayTitleScreen</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6db1"></span>6DB1</td>
+<td class="instruction">LD A,($6F02)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="6F02.html">ControlMethod</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6db4"></span>6DB4</td>
+<td class="instruction">CALL <a href="6F7B.html">HighlightMenuLine</a></td>
+<td class="comment-1" rowspan="1">Call <a href="6F7B.html">HighlightMenuLine</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6db7"></span>6DB7</td>
+<td class="instruction">CALL <a href="FB3A.html">ResetThemeTune</a></td>
+<td class="comment-1" rowspan="1">Call <a href="FB3A.html">ResetThemeTune</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6dba"></span>6DBA</td>
+<td class="instruction">CALL $028E</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="6dbd"></span>6DBD</td>
+<td class="instruction">DEFB $3E,$0F,$A3,$FE,$04,$28,$11,$FE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6dc5"></span>6DC5</td>
+<td class="instruction">DEFB $0C,$28,$0D,$FE,$03,$28,$09,$FE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6dcd"></span>6DCD</td>
+<td class="instruction">DEFB $0B,$28,$05,$CD,$46,$FB,$18,$E5</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6dd5"></span>6DD5</td>
+<td class="instruction">DEFB $7B,$FE,$23,$28,$F6,$FE,$24,$28</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6ddd"></span>6DDD</td>
+<td class="instruction">DEFB $2E,$FE,$1C,$28,$37,$FE,$14,$28</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6de5"></span>6DE5</td>
+<td class="instruction">DEFB $42,$FE,$0C,$28,$4E,$FE,$04,$28</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6ded"></span>6DED</td>
+<td class="instruction">DEFB $5A,$FE,$03,$CA,$94,$6F,$FE,$0B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6df5"></span>6DF5</td>
+<td class="instruction">DEFB $CA,$BE,$73,$FE,$13,$CA,$4A,$70</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6dfd"></span>6DFD</td>
+<td class="instruction">DEFB $21,$03,$6F,$11,$04,$6F,$01,$FC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e05"></span>6E05</td>
+<td class="instruction">DEFB $90,$ED,$B0,$C3,$64,$00,$05,$CD</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e0d"></span>6E0D</td>
+<td class="instruction">DEFB $77,$6F,$3E,$01,$CD,$7B,$6F,$CD</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e15"></span>6E15</td>
+<td class="instruction">DEFB $9A,$6F,$18,$2F,$CD,$77,$6F,$3E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e1d"></span>6E1D</td>
+<td class="instruction">DEFB $02,$CD,$7B,$6F,$3E,$06,$32,$3E</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e25"></span>6E25</td>
+<td class="instruction">DEFB $91,$18,$A8,$CD,$77,$6F,$3E,$03</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e2d"></span>6E2D</td>
+<td class="instruction">DEFB $CD,$7B,$6F,$21,$59,$6F,$CD,$50</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e35"></span>6E35</td>
+<td class="instruction">DEFB $6F,$18,$98,$CD,$77,$6F,$3E,$04</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e3d"></span>6E3D</td>
+<td class="instruction">DEFB $CD,$7B,$6F,$21,$63,$6F,$CD,$50</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e45"></span>6E45</td>
+<td class="instruction">DEFB $6F,$18,$88,$CD,$77,$6F,$3E,$05</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e4d"></span>6E4D</td>
+<td class="instruction">DEFB $CD,$7B,$6F,$B7,$2D,$EF,$5D,$EA</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e55"></span>6E55</td>
+<td class="instruction">DEFB $5D,$9D,$6E,$2B,$2D,$65,$33,$58</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e5d"></span>6E5D</td>
+<td class="instruction">DEFB $27,$ED,$10,$2C,$00,$71,$00,$85</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e65"></span>6E65</td>
+<td class="instruction">DEFB $1C,$7D,$1C,$52,$1B,$76,$1B,$03</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e6d"></span>6E6D</td>
+<td class="instruction">DEFB $13,$00,$3E,$21,$00,$00,$22,$A8</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e75"></span>6E75</td>
+<td class="instruction">DEFB $5C,$21,$84,$DB,$02,$4D,$00,$D1</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e7d"></span>6E7D</td>
+<td class="instruction">DEFB $F4,$00,$00,$F6,$57,$5C,$00,$DB</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e85"></span>6E85</td>
+<td class="instruction">DEFB $0B,$CE,$0B,$CE,$0B,$B6,$40,$0B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e8d"></span>6E8D</td>
+<td class="instruction">DEFB $13,$DC,$0A,$FE,$15,$01,$01,$22</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="6e95"></span>6E95</td>
+<td class="instruction">DEFB $14,$00,$40,$4A,$FB,$B1,$6E,$C9</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="5D90.html">5D90</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#6d79">Map</a></td>
+<td class="next">
+Next: <a href="6E9D.html">6E9D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/28025.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

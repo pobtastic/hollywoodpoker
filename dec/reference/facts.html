@@ -23,10 +23,407 @@ gtag('config', 'G-75RERFCHBG');
 </tr>
 </table>
 <ul class="contents">
+<li><a href="#cards">Cards</a></li>
 <li><a href="#girls">Girls</a></li>
 </ul>
-<div><span id="girls"></span></div>
+<div><span id="cards"></span></div>
 <div class="box box-1">
+<div class="box-title">Cards</div>
+<div class="paragraph">
+The cards use a simple system of splitting the value into two halves, the first
+four bits signify the card value - which, for the ease of evaluating the hands,
+starts from 0 representing "Two".
+</div>
+<div class="paragraph">
+Then, in order (as you'd expect), the cards are:
+<table class="default">
+<tr>
+<th colspan="2" rowspan="1">Diamonds</th>
+<th colspan="2" rowspan="1">Hearts</th>
+<th colspan="2" rowspan="1">Spades</th>
+<th colspan="2" rowspan="1">Clubs</th>
+</tr>
+<tr>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Card</th>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Card</th>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Card</th>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Card</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">0</td>
+<td class="centre" colspan="1" rowspan="1">Two</td>
+<td class="" colspan="1" rowspan="1">16</td>
+<td class="" colspan="1" rowspan="1">Two</td>
+<td class="" colspan="1" rowspan="1">32</td>
+<td class="" colspan="1" rowspan="1">Two</td>
+<td class="" colspan="1" rowspan="1">48</td>
+<td class="" colspan="1" rowspan="1">Two</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">Three</td>
+<td class="" colspan="1" rowspan="1">17</td>
+<td class="" colspan="1" rowspan="1">Three</td>
+<td class="" colspan="1" rowspan="1">33</td>
+<td class="" colspan="1" rowspan="1">Three</td>
+<td class="" colspan="1" rowspan="1">49</td>
+<td class="" colspan="1" rowspan="1">Three</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">2</td>
+<td class="centre" colspan="1" rowspan="1">Four</td>
+<td class="" colspan="1" rowspan="1">18</td>
+<td class="" colspan="1" rowspan="1">Four</td>
+<td class="" colspan="1" rowspan="1">34</td>
+<td class="" colspan="1" rowspan="1">Four</td>
+<td class="" colspan="1" rowspan="1">50</td>
+<td class="" colspan="1" rowspan="1">Four</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">3</td>
+<td class="centre" colspan="1" rowspan="1">Five</td>
+<td class="" colspan="1" rowspan="1">19</td>
+<td class="" colspan="1" rowspan="1">Five</td>
+<td class="" colspan="1" rowspan="1">35</td>
+<td class="" colspan="1" rowspan="1">Five</td>
+<td class="" colspan="1" rowspan="1">51</td>
+<td class="" colspan="1" rowspan="1">Five</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">4</td>
+<td class="centre" colspan="1" rowspan="1">Six</td>
+<td class="" colspan="1" rowspan="1">20</td>
+<td class="" colspan="1" rowspan="1">Six</td>
+<td class="" colspan="1" rowspan="1">36</td>
+<td class="" colspan="1" rowspan="1">Six</td>
+<td class="" colspan="1" rowspan="1">52</td>
+<td class="" colspan="1" rowspan="1">Six</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">5</td>
+<td class="centre" colspan="1" rowspan="1">Seven</td>
+<td class="" colspan="1" rowspan="1">21</td>
+<td class="" colspan="1" rowspan="1">Seven</td>
+<td class="" colspan="1" rowspan="1">37</td>
+<td class="" colspan="1" rowspan="1">Seven</td>
+<td class="" colspan="1" rowspan="1">53</td>
+<td class="" colspan="1" rowspan="1">Seven</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">6</td>
+<td class="centre" colspan="1" rowspan="1">Eight</td>
+<td class="" colspan="1" rowspan="1">22</td>
+<td class="" colspan="1" rowspan="1">Eight</td>
+<td class="" colspan="1" rowspan="1">38</td>
+<td class="" colspan="1" rowspan="1">Eight</td>
+<td class="" colspan="1" rowspan="1">54</td>
+<td class="" colspan="1" rowspan="1">Eight</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">7</td>
+<td class="centre" colspan="1" rowspan="1">Nine</td>
+<td class="" colspan="1" rowspan="1">23</td>
+<td class="" colspan="1" rowspan="1">Nine</td>
+<td class="" colspan="1" rowspan="1">39</td>
+<td class="" colspan="1" rowspan="1">Nine</td>
+<td class="" colspan="1" rowspan="1">55</td>
+<td class="" colspan="1" rowspan="1">Nine</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">8</td>
+<td class="centre" colspan="1" rowspan="1">Ten</td>
+<td class="" colspan="1" rowspan="1">24</td>
+<td class="" colspan="1" rowspan="1">Ten</td>
+<td class="" colspan="1" rowspan="1">40</td>
+<td class="" colspan="1" rowspan="1">Ten</td>
+<td class="" colspan="1" rowspan="1">56</td>
+<td class="" colspan="1" rowspan="1">Ten</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">9</td>
+<td class="centre" colspan="1" rowspan="1">Jack</td>
+<td class="" colspan="1" rowspan="1">25</td>
+<td class="" colspan="1" rowspan="1">Jack</td>
+<td class="" colspan="1" rowspan="1">41</td>
+<td class="" colspan="1" rowspan="1">Jack</td>
+<td class="" colspan="1" rowspan="1">57</td>
+<td class="" colspan="1" rowspan="1">Jack</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">10</td>
+<td class="centre" colspan="1" rowspan="1">Queen</td>
+<td class="" colspan="1" rowspan="1">26</td>
+<td class="" colspan="1" rowspan="1">Queen</td>
+<td class="" colspan="1" rowspan="1">42</td>
+<td class="" colspan="1" rowspan="1">Queen</td>
+<td class="" colspan="1" rowspan="1">58</td>
+<td class="" colspan="1" rowspan="1">Queen</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">11</td>
+<td class="centre" colspan="1" rowspan="1">King</td>
+<td class="" colspan="1" rowspan="1">27</td>
+<td class="" colspan="1" rowspan="1">King</td>
+<td class="" colspan="1" rowspan="1">43</td>
+<td class="" colspan="1" rowspan="1">King</td>
+<td class="" colspan="1" rowspan="1">59</td>
+<td class="" colspan="1" rowspan="1">King</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">12</td>
+<td class="centre" colspan="1" rowspan="1">Ace</td>
+<td class="" colspan="1" rowspan="1">28</td>
+<td class="" colspan="1" rowspan="1">Ace</td>
+<td class="" colspan="1" rowspan="1">44</td>
+<td class="" colspan="1" rowspan="1">Ace</td>
+<td class="" colspan="1" rowspan="1">60</td>
+<td class="" colspan="1" rowspan="1">Ace</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+The upper four bits, when shifted four positions to the right, represent the
+suits. Obviously, they don't have to be shifted, just this is how the game
+evaluates them, so that's what we'll do here.
+</div>
+<div class="paragraph">
+The suits are: 0: Diamonds, 1: Hearts, 2: Spades and 3: Clubs.
+</div>
+<div class="paragraph">
+Here are some examples of cards and their values:
+<table class="default">
+<tr>
+<th colspan="1" rowspan="3">Byte</th>
+<th colspan="1" rowspan="3">Bits</th>
+<th colspan="4" rowspan="1">Breakdown</th>
+<th colspan="2" rowspan="1">Result</th>
+</tr>
+<tr>
+<th colspan="2" rowspan="1">Lower</th>
+<th colspan="2" rowspan="1">Upper</th>
+<th colspan="1" rowspan="2">Card</th>
+<th colspan="1" rowspan="2">Suit</th>
+</tr>
+<tr>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Bits</th>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Bits</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">6</td>
+<td class="centre" colspan="1" rowspan="1">00000110</td>
+<td class="centre" colspan="1" rowspan="1">6</td>
+<td class="centre" colspan="1" rowspan="1">0110</td>
+<td class="centre" colspan="1" rowspan="1">0</td>
+<td class="centre" colspan="1" rowspan="1">0000</td>
+<td class="" colspan="1" rowspan="1">Eight</td>
+<td class="" colspan="1" rowspan="1">Diamonds</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">12</td>
+<td class="centre" colspan="1" rowspan="1">00001100</td>
+<td class="centre" colspan="1" rowspan="1">12</td>
+<td class="centre" colspan="1" rowspan="1">1100</td>
+<td class="centre" colspan="1" rowspan="1">0</td>
+<td class="centre" colspan="1" rowspan="1">0000</td>
+<td class="" colspan="1" rowspan="1">Ace</td>
+<td class="" colspan="1" rowspan="1">Diamonds</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">25</td>
+<td class="centre" colspan="1" rowspan="1">00011001</td>
+<td class="centre" colspan="1" rowspan="1">9</td>
+<td class="centre" colspan="1" rowspan="1">1001</td>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">0001</td>
+<td class="" colspan="1" rowspan="1">Jack</td>
+<td class="" colspan="1" rowspan="1">Hearts</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">26</td>
+<td class="centre" colspan="1" rowspan="1">00011010</td>
+<td class="centre" colspan="1" rowspan="1">10</td>
+<td class="centre" colspan="1" rowspan="1">1010</td>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">0001</td>
+<td class="" colspan="1" rowspan="1">Queen</td>
+<td class="" colspan="1" rowspan="1">Hearts</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">39</td>
+<td class="centre" colspan="1" rowspan="1">00100111</td>
+<td class="centre" colspan="1" rowspan="1">7</td>
+<td class="centre" colspan="1" rowspan="1">0111</td>
+<td class="centre" colspan="1" rowspan="1">2</td>
+<td class="centre" colspan="1" rowspan="1">0010</td>
+<td class="" colspan="1" rowspan="1">Nine</td>
+<td class="" colspan="1" rowspan="1">Spades</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">43</td>
+<td class="centre" colspan="1" rowspan="1">00101011</td>
+<td class="centre" colspan="1" rowspan="1">11</td>
+<td class="centre" colspan="1" rowspan="1">1011</td>
+<td class="centre" colspan="1" rowspan="1">2</td>
+<td class="centre" colspan="1" rowspan="1">0010</td>
+<td class="" colspan="1" rowspan="1">King</td>
+<td class="" colspan="1" rowspan="1">Spades</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">52</td>
+<td class="centre" colspan="1" rowspan="1">00110100</td>
+<td class="centre" colspan="1" rowspan="1">4</td>
+<td class="centre" colspan="1" rowspan="1">0100</td>
+<td class="centre" colspan="1" rowspan="1">3</td>
+<td class="centre" colspan="1" rowspan="1">0011</td>
+<td class="" colspan="1" rowspan="1">Six</td>
+<td class="" colspan="1" rowspan="1">Clubs</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+To follow the mechanism in the game, start from <a href="../asm/58131.html">PrintHand</a> which cycles through
+all five cards in a hand and prints them to the screen via <a href="../asm/58170.html">CheckCardType</a>.
+</div>
+<div class="paragraph">
+<table class="disassembly">
+<tbody>
+<tr>
+<td class="asm-label">CheckCardType</td>
+<td class="address-2"><a href="../asm/58170.html">58170</a></td>
+<td class="instruction">LD <span class="register">B</span>,<span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Store the card value in <span class="register">B</span> to process the suit later.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58170.html#58171">58171</a></td>
+<td class="instruction">AND %00001111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58170.html#58173">58173</a></td>
+<td class="instruction">CP 9</td>
+<td class="comment-1" rowspan="2">Jump to <a href="../asm/58296.html#58301">PrintNumberCard</a> if <span class="register">A</span> is 9 or lower.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58170.html#58175">58175</a></td>
+<td class="instruction">JR C,<a href="../asm/58296.html#58301">PrintNumberCard</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58170.html#58177">58177</a></td>
+<td class="instruction">CP 12</td>
+<td class="comment-1" rowspan="2">Jump to <a href="../asm/58296.html">PrintAceCard</a> if <span class="register">A</span> is equal to 12.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58170.html#58179">58179</a></td>
+<td class="instruction">JR Z,<a href="../asm/58296.html">PrintAceCard</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">Anything else is a picture card, so work out what we're printing.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph">
+* The picture card routine is not shown here as it complicates things, so we'll
+deal with how that works later.
+</div>
+<div class="paragraph">
+Let's take an example and follow it all the way through: 37
+The <code>AND</code> turns it into 5, so this card is a "Seven".
+</div>
+<div class="paragraph">
+Moving onto <a href="../asm/58296.html#58301">PrintNumberCard</a>:
+</div>
+<div class="paragraph">
+<table class="disassembly">
+<tbody>
+<tr>
+<td class="asm-label">PrintNumberCard</td>
+<td class="address-2"><a href="../asm/58296.html#58301">58301</a></td>
+<td class="instruction">LD <span class="register">C</span>,<span class="register">B</span></td>
+<td class="comment-1" rowspan="1">Copy the original card value into <span class="register">C</span> as we need <span class="register">B</span> for the loop below.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58296.html#58302">58302</a></td>
+<td class="instruction">LD <span class="register">B</span>,<span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the card number (this is the lower four bits).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58296.html#58303">58303</a></td>
+<td class="instruction">INC <span class="register">B</span></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one, due to the way the loop below works.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58296.html#58304">58304</a></td>
+<td class="instruction">LD <span class="register">DE</span>,$001E</td>
+<td class="comment-1" rowspan="1">The card UDG data blocks are 0030 in length, so store this in <span class="register">DE</span> for the calculation.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58296.html#58307">58307</a></td>
+<td class="instruction">LD <span class="register">HL</span>,<a href="../asm/58422.html">58422</a></td>
+<td class="comment-1" rowspan="1">The card data begins from <a href="../asm/58422.html">58422</a> so store this in <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58296.html#58310">58310</a></td>
+<td class="instruction">XOR <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Reset the flags.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58296.html#58311">58311</a></td>
+<td class="instruction">SBC <span class="register">HL</span>,<span class="register">DE</span></td>
+<td class="comment-1" rowspan="1">Subtract <span class="register">DE</span> from <span class="register">HL</span> as the loop will add it back and then it will be pointing to the beginning again.</td>
+</tr>
+<tr>
+<td class="asm-label">FindCardUDGData_Loop</td>
+<td class="address-2"><a href="../asm/58296.html#58313">58313</a></td>
+<td class="instruction">ADD <span class="register">HL</span>,<span class="register">DE</span></td>
+<td class="comment-1" rowspan="1">Add 0030 to <span class="register">HL</span> to move to the next block of card UDG data.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58296.html#58314">58314</a></td>
+<td class="instruction">DJNZ <a href="../asm/58296.html#58313">FindCardUDGData_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card value counter by one and loop back to <a href="../asm/58296.html#58313">FindCardUDGData_Loop</a> until the appropriate card UDG data block is found.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/58296.html#58316">58316</a></td>
+<td class="instruction">LD (<a href="../asm/58723.html">58723</a>),<span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Write the card UDG data block pointer to *<a href="../asm/58723.html">PointerCardUDGData</a>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph">
+So, our card 37 will end up writing <a href="../asm/58422.html#58572">Graphics_CardSeven</a> to *<a href="../asm/58723.html">PointerCardUDGData</a> (which will be used later).
+This references the number part of the card, without any suit.
+</div>
+<div class="paragraph">
+TODO...
+</div>
+</div>
+<div><span id="girls"></span></div>
+<div class="box box-2">
 <div class="box-title">Girls</div>
 <div class="paragraph">
 To save on space, the girls are created with one initial image, and then the

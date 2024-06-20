@@ -33,16 +33,40 @@ Next: <a href="E563.html">E563</a>
 </td>
 </tr>
 </table>
-<div class="description">E562: Current Card Colour</div>
+<div class="description">E562: Current Card Suit</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+Will be one of: <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">00</td>
+<td class="centre" colspan="1" rowspan="1">Diamonds</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">01</td>
+<td class="centre" colspan="1" rowspan="1">Hearts</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">02</td>
+<td class="centre" colspan="1" rowspan="1">Spades</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">03</td>
+<td class="centre" colspan="1" rowspan="1">Clubs</td>
+</tr>
+</table>
+</div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">CurrentCardColour</td>
+<td class="asm-label">CurrentCardSuit</td>
 <td class="address-1"><span id="e562"></span>E562</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-0" rowspan="1"></td>

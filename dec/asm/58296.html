@@ -80,85 +80,93 @@ This entry point is used by the routine at <a href="58170.html">CheckCardType</a
 <td class="asm-label">PrintNumberCard</td>
 <td class="address-2"><span id="58301"></span>58301</td>
 <td class="instruction">LD C,B</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">B</span>.</td>
+<td class="comment-1" rowspan="1">Copy the original card value into <span class="register">C</span> as we need <span class="register">B</span> for the loop below.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58302"></span>58302</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the card number (this is the lower four bits).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58303"></span>58303</td>
 <td class="instruction">INC B</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one, due to the way the loop below works.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58304"></span>58304</td>
 <td class="instruction">LD DE,30</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=0030.</td>
+<td class="comment-1" rowspan="1">The card UDG data blocks are 0030 in length, so store this in <span class="register">DE</span> for the calculation.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58307"></span>58307</td>
 <td class="instruction">LD HL,58422</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="58422.html">Graphics_CardTwo</a>.</td>
+<td class="comment-1" rowspan="1">The card data begins from <a href="58422.html">58422</a> so store this in <span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58310"></span>58310</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+<td class="comment-1" rowspan="1">Reset the flags.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58311"></span>58311</td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
+<td class="comment-1" rowspan="1">Subtract <span class="register">DE</span> from <span class="register">HL</span> as the loop will add it back and then it will be pointing to the beginning again.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintAceCard_0</td>
+<td class="asm-label">FindCardUDGData_Loop</td>
 <td class="address-2"><span id="58313"></span>58313</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="1">Add 0030 to <span class="register">HL</span> to move to the next block of card UDG data.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58314"></span>58314</td>
-<td class="instruction">DJNZ <a href="58296.html#58313">PrintAceCard_0</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="58296.html#58313">PrintAceCard_0</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="58296.html#58313">FindCardUDGData_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card value counter by one and loop back to <a href="58296.html#58313">FindCardUDGData_Loop</a> until the appropriate card UDG data block is found.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58316"></span>58316</td>
 <td class="instruction">LD (58723),HL</td>
-<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="58723.html">PointerCardUDGData</a>.</td>
+<td class="comment-1" rowspan="1">Write the card UDG data block pointer to *<a href="58723.html">PointerCardUDGData</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58319"></span>
+<div class="comments">
+<div class="paragraph">
+Now work out the suit.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58319"></span>58319</td>
 <td class="instruction">LD B,4</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=4.</td>
+<td class="comment-1" rowspan="3">Using the original card value, shift the upper four bits to be the lower four bits.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintAceCard_1</td>
+<td class="asm-label">SuitShift_Loop</td>
 <td class="address-2"><span id="58321"></span>58321</td>
 <td class="instruction">SRL C</td>
-<td class="comment-1" rowspan="1">Shift <span class="register">C</span> right.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58323"></span>58323</td>
-<td class="instruction">DJNZ <a href="58296.html#58321">PrintAceCard_1</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="58296.html#58321">PrintAceCard_1</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="58296.html#58321">SuitShift_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58325"></span>58325</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="2">Write <span class="register">C</span> to *<a href="58722.html">CurrentCardColour</a>.</td>
+<td class="comment-1" rowspan="2">Write the calculated suit to *<a href="58722.html">CurrentCardSuit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -169,73 +177,82 @@ This entry point is used by the routine at <a href="58170.html">CheckCardType</a
 <td class="asm-label"></td>
 <td class="address-1"><span id="58329"></span>58329</td>
 <td class="instruction">LD B,C</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">C</span>.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the calculated suit (this is the upper four bits).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58330"></span>58330</td>
 <td class="instruction">INC B</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one, due to the way the loop below works.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58331"></span>58331</td>
 <td class="instruction">LD DE,88</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=0088.</td>
+<td class="comment-1" rowspan="1">The suit UDG data blocks are 0088 in length, so store this in <span class="register">DE</span> for the calculation.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58334"></span>58334</td>
 <td class="instruction">LD HL,59071</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59071.html">Graphics_DiamondsSuitData</a>.</td>
+<td class="comment-1" rowspan="1">The suit UDG data begins from <a href="59071.html">59071</a> so store this in <span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58337"></span>58337</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+<td class="comment-1" rowspan="1">Reset the flags.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58338"></span>58338</td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
+<td class="comment-1" rowspan="1">Subtract <span class="register">DE</span> from <span class="register">HL</span> as the loop will add it back and then it will be pointing to the beginning again.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintAceCard_2</td>
+<td class="asm-label">FindSuitUDGData_Loop</td>
 <td class="address-2"><span id="58340"></span>58340</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="1">Add 0088 to <span class="register">HL</span> to move to the next block of suit UDG data.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58341"></span>58341</td>
-<td class="instruction">DJNZ <a href="58296.html#58340">PrintAceCard_2</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="58296.html#58340">PrintAceCard_2</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="58296.html#58340">FindSuitUDGData_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the suit counter by one and loop back to <a href="58296.html#58340">FindSuitUDGData_Loop</a> until the appropriate suit UDG data block is found.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58343"></span>58343</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
+<td class="comment-1" rowspan="2">Set a counter in <span class="register">BC</span> to the length of the suit UDG data block: 0088.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58344"></span>58344</td>
 <td class="instruction">POP BC</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58345"></span>58345</td>
 <td class="instruction">LD DE,58983</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="58983.html">Buffer_CardData</a>.</td>
+<td class="comment-1" rowspan="1">Set the target in <span class="register">DE</span> to <a href="58983.html">Buffer_CardData</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58348"></span>58348</td>
 <td class="instruction">LDIR</td>
-<td class="comment-1" rowspan="1">LDIR.</td>
+<td class="comment-1" rowspan="1">Copy the suit UDG data block to the card data buffer.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58350"></span>
+<div class="comments">
+<div class="paragraph">
+Set the card character-set to be the in-use font.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -247,6 +264,16 @@ This entry point is used by the routine at <a href="58170.html">CheckCardType</a
 <td class="asm-label"></td>
 <td class="address-1"><span id="58353"></span>58353</td>
 <td class="instruction">LD (23606),HL</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58356"></span>
+<div class="comments">
+<div class="paragraph">
+Handle setting the colour of the card.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -297,7 +324,7 @@ BLACK.</td>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58368"></span>58368</td>
 <td class="instruction">LD A,(58722)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="58296.html#58381">PrintCard</a> if *<a href="58722.html">CurrentCardColour</a> is 2 or higher.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="58296.html#58381">PrintCard</a> if *<a href="58722.html">CurrentCardSuit</a> is 2 or higher (so Spades or Clubs).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -308,6 +335,16 @@ BLACK.</td>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58373"></span>58373</td>
 <td class="instruction">JR NC,<a href="58296.html#58381">PrintCard</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58375"></span>
+<div class="comments">
+<div class="paragraph">
+Else this card is a Diamonds or Hearts so set the INK appropriately.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
