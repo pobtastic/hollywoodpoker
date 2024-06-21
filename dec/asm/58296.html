@@ -141,7 +141,7 @@ This entry point is used by the routine at <a href="58170.html">CheckCardType</a
 <span id="58319"></span>
 <div class="comments">
 <div class="paragraph">
-Now work out the suit.
+Work out the suit.
 </div>
 </div>
 </td>
@@ -172,6 +172,16 @@ Now work out the suit.
 <td class="asm-label"></td>
 <td class="address-1"><span id="58326"></span>58326</td>
 <td class="instruction">LD (58722),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58329"></span>
+<div class="comments">
+<div class="paragraph">
+Now calculate the suit UDG data address.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -430,31 +440,31 @@ Subtract 6 from 38 the number of times for the current card position. For exampl
 <td class="asm-label"></td>
 <td class="address-1"><span id="58392"></span>58392</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Store the result in <span class="register">C</span>, this is the column position.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58393"></span>58393</td>
 <td class="instruction">LD B,12</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=12.</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> to 12 this is the row position.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58395"></span>58395</td>
 <td class="instruction">LD DE,(58723)</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="58723.html">PointerCardUDGData</a>.</td>
+<td class="comment-1" rowspan="1">Retrieve *<a href="58723.html">PointerCardUDGData</a> for the current card.</td>
 </tr>
 <tr>
 <td class="asm-label">PrintCard_Loop</td>
 <td class="address-2"><span id="58399"></span>58399</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the UDG data pointer on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58400"></span>58400</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump to <a href="58296.html#58420">PrintCard_Finish</a> if <span class="register">B</span> is equal to 7.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="58296.html#58420">PrintCard_Finish</a> when the current print line is equal to 7.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -470,13 +480,13 @@ Subtract 6 from 38 the number of times for the current card position. For exampl
 <td class="asm-label"></td>
 <td class="address-1"><span id="58405"></span>58405</td>
 <td class="instruction">CALL 3554</td>
-<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">3554</a> (CL_SET).</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">3554</a> (CL_SET) to change the co-ordinates in <span class="register">BC</span> to a screen buffer address.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58408"></span>58408</td>
 <td class="instruction">POP DE</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the UDG data pointer from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -488,13 +498,13 @@ Subtract 6 from 38 the number of times for the current card position. For exampl
 <td class="asm-label"></td>
 <td class="address-1"><span id="58410"></span>58410</td>
 <td class="instruction">LD BC,6</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0006.</td>
+<td class="comment-1" rowspan="1">Set the number of characters to print in <span class="register">BC</span> (0006).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58413"></span>58413</td>
 <td class="instruction">CALL 8252</td>
-<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a> to print to the screen.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -513,6 +523,16 @@ Subtract 6 from 38 the number of times for the current card position. For exampl
 <td class="address-1"><span id="58418"></span>58418</td>
 <td class="instruction">JR <a href="58296.html#58399">PrintCard_Loop</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="58296.html#58399">PrintCard_Loop</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58420"></span>
+<div class="comments">
+<div class="paragraph">
+Housekeeping and return.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">PrintCard_Finish</td>

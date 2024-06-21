@@ -33,51 +33,59 @@ Next: <a href="8F7C.html">8F7C</a>
 </td>
 </tr>
 </table>
-<div class="description">8F5A: Routine at 8F5A</div>
+<div class="description">8F5A: Girl Lost Round</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="8F20.html">WonRound</a>.
+Used by the routine at <a href="8F20.html">PlayerWonRound</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">GirlLostRound</td>
 <td class="address-2"><span id="8f5a"></span>8F5A</td>
 <td class="instruction">LD HL,$6464</td>
 <td class="comment-1" rowspan="2">Write 6464 to *<a href="96B5.html">PlayerCash</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f5d"></span>8F5D</td>
 <td class="instruction">LD ($96B5),HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f60"></span>8F60</td>
 <td class="instruction">LD A,($8F7D)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="8F7D.html">GirlLives</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f63"></span>8F63</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="8F5A.html#8f74">8F74</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="8F5A.html#8f74">GirlLostRound_0</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f64"></span>8F64</td>
-<td class="instruction">JR Z,<a href="8F5A.html#8f74">$8F74</a></td>
+<td class="instruction">JR Z,<a href="8F5A.html#8f74">GirlLostRound_0</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f66"></span>8F66</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f67"></span>8F67</td>
 <td class="instruction">LD ($8F7D),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="8F7D.html">GirlLives</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f6a"></span>8F6A</td>
 <td class="instruction">CALL <a href="9822.html">JumpToInPlayGirlRoutine</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9822.html">JumpToInPlayGirlRoutine</a>.</td>
@@ -97,20 +105,24 @@ Used by the routine at <a href="8F20.html">WonRound</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f6d"></span>8F6D</td>
 <td class="instruction">LD A,$05</td>
 <td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 05.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f6f"></span>8F6F</td>
 <td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f72"></span>8F72</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f73"></span>8F73</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -130,20 +142,24 @@ Used by the routine at <a href="8F20.html">WonRound</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">GirlLostRound_0</td>
 <td class="address-2"><span id="8f74"></span>8F74</td>
 <td class="instruction">LD A,$06</td>
 <td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 06.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f76"></span>8F76</td>
 <td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f79"></span>8F79</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=FF.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8f7b"></span>8F7B</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

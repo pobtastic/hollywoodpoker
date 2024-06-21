@@ -33,51 +33,59 @@ Next: <a href="36732.html">36732</a>
 </td>
 </tr>
 </table>
-<div class="description">36698: Routine at 8F5A</div>
+<div class="description">36698: Girl Lost Round</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="36640.html">WonRound</a>.
+Used by the routine at <a href="36640.html">PlayerWonRound</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">GirlLostRound</td>
 <td class="address-2"><span id="36698"></span>36698</td>
 <td class="instruction">LD HL,25700</td>
 <td class="comment-1" rowspan="2">Write 25700 to *<a href="38581.html">PlayerCash</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36701"></span>36701</td>
 <td class="instruction">LD (38581),HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36704"></span>36704</td>
 <td class="instruction">LD A,(36733)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36733.html">GirlLives</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36707"></span>36707</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="36698.html#36724">36724</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="36698.html#36724">GirlLostRound_0</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36708"></span>36708</td>
-<td class="instruction">JR Z,<a href="36698.html#36724">36724</a></td>
+<td class="instruction">JR Z,<a href="36698.html#36724">GirlLostRound_0</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36710"></span>36710</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36711"></span>36711</td>
 <td class="instruction">LD (36733),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="36733.html">GirlLives</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36714"></span>36714</td>
 <td class="instruction">CALL <a href="38946.html">JumpToInPlayGirlRoutine</a></td>
 <td class="comment-1" rowspan="1">Call <a href="38946.html">JumpToInPlayGirlRoutine</a>.</td>
@@ -97,20 +105,24 @@ Used by the routine at <a href="36640.html">WonRound</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36717"></span>36717</td>
 <td class="instruction">LD A,5</td>
 <td class="comment-1" rowspan="2">Call <a href="32151.html">Messaging_Girl</a> using message block 5.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36719"></span>36719</td>
 <td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36722"></span>36722</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36723"></span>36723</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -130,20 +142,24 @@ Used by the routine at <a href="36640.html">WonRound</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">GirlLostRound_0</td>
 <td class="address-2"><span id="36724"></span>36724</td>
 <td class="instruction">LD A,6</td>
 <td class="comment-1" rowspan="2">Call <a href="32151.html">Messaging_Girl</a> using message block 6.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36726"></span>36726</td>
 <td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36729"></span>36729</td>
 <td class="instruction">LD A,255</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=255.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36731"></span>36731</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

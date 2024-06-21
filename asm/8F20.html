@@ -33,7 +33,7 @@ Next: <a href="8F3B.html">8F3B</a>
 </td>
 </tr>
 </table>
-<div class="description">8F20: Won Round</div>
+<div class="description">8F20: Player Won Round</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,7 +45,7 @@ Used by the routines at <a href="8D4A.html">PlayGame</a> and <a href="8EE2.html"
 </td>
 </tr>
 <tr>
-<td class="asm-label">WonRound</td>
+<td class="asm-label">PlayerWonRound</td>
 <td class="address-2"><span id="8f20"></span>8F20</td>
 <td class="instruction">LD A,($96B4)</td>
 <td class="comment-1" rowspan="5">Update *<a href="96B5.html">PlayerCash</a> as the player has won this round. So, add *<a href="96B4.html">PotValue</a> to *<a href="96B5.html">PlayerCash</a> and write the result back to *<a href="96B5.html">PlayerCash</a>.</td>
@@ -109,7 +109,7 @@ Check if this is round over or game over for the girl.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f30"></span>8F30</td>
 <td class="instruction">LD A,($96B6)</td>
-<td class="comment-1" rowspan="4">Call <a href="8F5A.html">8F5A</a> if *<a href="96B6.html">GirlCash</a> is lower than 0A.</td>
+<td class="comment-1" rowspan="4">Call <a href="8F5A.html">GirlLostRound</a> if *<a href="96B6.html">GirlCash</a> is lower than 0A.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -124,7 +124,7 @@ Check if this is round over or game over for the girl.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f37"></span>8F37</td>
-<td class="instruction">CALL C,<a href="8F5A.html">$8F5A</a></td>
+<td class="instruction">CALL C,<a href="8F5A.html">GirlLostRound</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

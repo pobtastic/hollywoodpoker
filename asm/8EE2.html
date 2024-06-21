@@ -125,7 +125,7 @@ Used by the routines at <a href="8D4A.html">PlayGame</a> and <a href="8E44.html"
 <td class="asm-label">CardChecking_Loop</td>
 <td class="address-2"><span id="8efc"></span>8EFC</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="8F20.html">WonRound</a> if *<span class="register">DE</span> is lower than *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="8F20.html">PlayerWonRound</a> if *<span class="register">DE</span> is lower than *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -135,7 +135,7 @@ Used by the routines at <a href="8D4A.html">PlayGame</a> and <a href="8E44.html"
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8efe"></span>8EFE</td>
-<td class="instruction">JR C,<a href="8F20.html">WonRound</a></td>
+<td class="instruction">JR C,<a href="8F20.html">PlayerWonRound</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
