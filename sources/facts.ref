@@ -6,10 +6,10 @@ four bits signify the card value - which, for the ease of evaluating the hands,
 starts from #N$00 representing "#CARD$00".
 
 Then, in order (as you'd expect), the cards are:
-#TABLE(default,centre,centre)
+#TABLE(default,centre,,centre,,centre,,centre)
 { =h,c2 Diamonds | =h,c2 Hearts | =h,c2 Spades | =h,c2 Clubs }
 { =h Byte | =h Card | =h Byte | =h Card | =h Byte | =h Card | =h Byte | =h Card }
-#FOR$00,$0C,,$04(n,{ #Nn | #CARDn | #N(n+$10) | #CARD(n+$10) | #N(n+$20) | #CARD(n+$20) | #N(n+$30) | #CARD(n+$30) },,)
+  #FOR$00,$0C,,$04(n,{ #Nn | #CARDn | #N(n+$10) | #CARD(n+$10) | #N(n+$20) | #CARD(n+$20) | #N(n+$30) | #CARD(n+$30) },,)
 TABLE#
 
 The upper four bits, when shifted four positions to the right, represent the
@@ -18,12 +18,13 @@ evaluates them, so that's what we'll do here.
 
 The suits are: #FOR$00,$03,,$01(n,#Nn: #SUIT(n<<$04), , and ).
 
+[Fact:Card Graphics]
 Here are some examples of cards and their values:
 #TABLE(default,centre,centre,centre,centre,centre,centre)
 { =h,r3 Byte | =h,r3 Bits | =h,c4 Breakdown | =h,c2 Result }
 { =h,c2 Lower | =h,c2 Upper | =h,r2 Card | =h,r2 Suit }
 { =h Byte | =h Bits | =h Byte | =h Bits }
-#FOREACH($06,$0C,$19,$1A,$27,$2B,$34),,z,{ #Nz | #EVAL(z,$02,$08) | #N(z&$0F) | #EVAL(z&$0F,$02,$04) | #N((z&$F0)>>$04) | #EVAL((z&$F0)>>$04,$02,$04) | #CARDz | #SUITz }, | ,,
+  #FOREACH($06,$0C,$19,$1A,$27,$2B,$34),,z,{ #Nz | #EVAL(z,$02,$08) | #N(z&$0F) | #EVAL(z&$0F,$02,$04) | #N((z&$F0)>>$04) | #EVAL((z&$F0)>>$04,$02,$04) | #CARDz | #SUITz }, | ,,
 TABLE#
 
 To follow the mechanism in the game, start from #R$E313 which cycles through
@@ -75,8 +76,8 @@ all five cards in a hand and prints them to the screen via #R$E33A.
   </tbody>
 </table>
 
-* The picture card routine is not shown here as it complicates things, so we'll
-deal with how that works later.
+* The picture card routine is not shown here as it complicates things, check
+the disassembly for further details.
 
 Let's take an example and follow it all the way through: #N$25
 The <code>AND</code> turns it into #N($25&$0F), so this card is a "#CARD$25".
@@ -149,9 +150,300 @@ Moving onto #R$E3BD:
 </table>
 
 So, our card #N$25 will end up writing #R$E4CC to *#R$E563 (which will be used later).
-This references the number part of the card, without any suit.
+This references the number part of the card (without any suit applied yet).
 
-TODO...
+<table class="disassembly">
+  <tbody>
+    <tr>
+      <td class="routine-comment" colspan="5">
+        <div class="comments">
+          <div class="paragraph">
+            Work out the suit.
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3CF(#N$E3CF)</td>
+      <td class="instruction">LD #REGb,#N$04</td>
+      <td class="comment-1" rowspan="3">Using the original card value, shift the upper four bits to be the lower four bits.</td>
+    </tr>
+    <tr>
+      <td class="asm-label">SuitShift_Loop</td>
+      <td class="address-2">#R$E3D1(#N$E3D1)</td>
+      <td class="instruction">SRL #REGc</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3D3(#N$E3D3)</td>
+      <td class="instruction">DJNZ #R$E3D1</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3D5(#N$E3D5)</td>
+      <td class="instruction">LD #REGa,#REGc</td>
+      <td class="comment-1" rowspan="2">Write the calculated suit to *#R$E562.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3D6(#N$E3D6)</td>
+      <td class="instruction">LD (#R$E562(#N$E562)),#REGa</td>
+    </tr>
+    <tr>
+      <td class="routine-comment" colspan="5">
+        <div class="comments">
+          <div class="paragraph">
+            Now calculate the suit UDG data address.
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3D9(#N$E3D9)</td>
+      <td class="instruction">LD #REGb,#REGc</td>
+      <td class="comment-1" rowspan="1">Set a counter in #REGb of the calculated suit (this is the upper four bits).</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3DA(#N$E3DA)</td>
+      <td class="instruction">INC #REGb</td>
+      <td class="comment-1" rowspan="1">Increment #REGb by one, due to the way the loop below works.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3DB(#N$E3DB)</td>
+      <td class="instruction">LD #REGde,#N($0058,$04,$04)</td>
+      <td class="comment-1" rowspan="1">The suit UDG data blocks are #N($0058,$04,$04) in length, so store this in #REGde for the calculation.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3DE(#N$E3DE)</td>
+      <td class="instruction">LD #REGhl,#R$E6BF(#N$E6BF)</td>
+      <td class="comment-1" rowspan="1">The suit UDG data begins from #R$E6BF(#N$E6BF) so store this in #REGhl.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3E1(#N$E3E1)</td>
+      <td class="instruction">XOR #REGa</td>
+      <td class="comment-1" rowspan="1">Reset the flags.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3E2(#N$E3E2)</td>
+      <td class="instruction">SBC #REGhl,#REGde</td>
+      <td class="comment-1" rowspan="1">Subtract #REGde from #REGhl as the loop will add it back and then it will be pointing to the beginning again.</td>
+    </tr>
+    <tr>
+      <td class="asm-label">FindSuitUDGData_Loop</td>
+      <td class="address-2">#R$E3E4(#N$E3E4)</td>
+      <td class="instruction">ADD #REGhl,#REGde</td>
+      <td class="comment-1" rowspan="1">Add #N($0058,$04,$04) to #REGhl to move to the next block of suit UDG data.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3E5(#N$E3E5)</td>
+      <td class="instruction">DJNZ #R$E3E4</td>
+      <td class="comment-1" rowspan="1">Decrease the suit counter by one and loop back to #R$E3E4 until the appropriate suit UDG data block is found.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3E7(#N$E3E7)</td>
+      <td class="instruction">PUSH #REGde</td>
+      <td class="comment-1" rowspan="2">Set a counter in #REGbc to the length of the suit UDG data block: #N($0058,$04,$04).</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3E8(#N$E3E8)</td>
+      <td class="instruction">POP #REGbc</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3E9(#N$E3E9)</td>
+      <td class="instruction">LD #REGde,#R$E667(#N$E667)</td>
+      <td class="comment-1" rowspan="1">Set the target in #REGde to #R$E667.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3EC(#N$E3EC)</td>
+      <td class="instruction">LDIR</td>
+      <td class="comment-1" rowspan="1">Copy the suit UDG data block to the card data buffer.</td>
+    </tr>
+  </tbody>
+</table>
+
+With #N$25, after shifting the bits, we end up with #N$02 - so the suit is
+#SUIT$25. And after the "Find" loop, #REGhl will point to #R$E76F which is
+then copied into #R$E667 so it becomes the "upper part" of the font data and
+can be referenced by the UDG data.
+
+Next, we set the UDG font pointer and discover the colour of the card to be
+printed.
+
+<table class="disassembly">
+  <tbody>
+    <tr>
+      <td class="routine-comment" colspan="5">
+        <div class="comments">
+          <div class="paragraph">
+            Set the card character-set to be the in-use font.
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="asm-label">#SPACE$08</td>
+      <td class="address-1">#R$E3EE(#N$E3EE)</td>
+      <td class="instruction">LD #REGhl,#N$E35F</td>
+      <td class="comment-1" rowspan="2">Write #N$E35F to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3F1(#N$E3F1)</td>
+      <td class="instruction">LD (#N$5C36),#REGhl</td>
+    </tr>
+    <tr>
+      <td class="routine-comment" colspan="5">
+        <div class="comments">
+          <div class="paragraph">
+            Handle setting the colour of the card.
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3F4(#N$E3F4)</td>
+      <td class="instruction">LD #REGa,#N$13</td>
+      <td class="comment-1" rowspan="4">BRIGHT: ON.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3F6(#N$E3F6)</td>
+      <td class="instruction">RST #N$10</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3F7(#N$E3F7)</td>
+      <td class="instruction">LD #REGa,#N$01</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3F9(#N$E3F9)</td>
+      <td class="instruction">RST #N$10</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3FA(#N$E3FA)</td>
+      <td class="instruction">LD #REGa,#N$10</td>
+      <td class="comment-1" rowspan="4">Set INK: BLACK.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3FC(#N$E3FC)</td>
+      <td class="instruction">RST #N$10</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3FD(#N$E3FD)</td>
+      <td class="instruction">LD #REGa,#N$00</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E3FF(#N$E3FF)</td>
+      <td class="instruction">RST #N$10</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E400(#N$E400)</td>
+      <td class="instruction">LD #REGa,(#R$E562(#N$E562))</td>
+      <td class="comment-1" rowspan="3">Jump to #R$E40D if *#R$E562 is #N$02 or higher (so Spades or Clubs).</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E403(#N$E403)</td>
+      <td class="instruction">CP #N$02</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E405(#N$E405)</td>
+      <td class="instruction">JR NC,#R$E40D</td>
+    </tr>
+    <tr>
+      <td class="routine-comment" colspan="5">
+        <div class="comments">
+          <div class="paragraph">
+            Else this card is a Diamonds or Hearts so set the INK appropriately.
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E407(#N$E407)</td>
+      <td class="instruction">LD #REGa,#N$10</td>
+      <td class="comment-1" rowspan="4">Set INK: RED.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E409(#N$E409)</td>
+      <td class="instruction">RST #N$10</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E40A(#N$E40A)</td>
+      <td class="instruction">LD #REGa,#N$02</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$E40C(#N$E40C)</td>
+      <td class="instruction">RST #N$10</td>
+    </tr>
+  </tbody>
+</table>
+
+Our suit is #N$02, so the colour will be BLACK.
+
+Now we have all the components, we know the card UDG data and the suit UDG data
+has been copied into the upper range of it. We also know the colour too, so all
+that's left to do is to print it on the screen using #R$E40D.
+
+The cards are printed using the standard Spectrum printing routine, and so the
+data is stored as a series of references:
+#TABLE(default)
+  #FOR$00,$04(y,{ #FOR($00,$05)(x,#N(#PEEK($E4CC+y*$06+x)), | ) } )
+TABLE#
+
+For ease of explaining this, if the data just referenced ASCII - then the print
+would output the following letter graphics:
+#TABLE(default)
+  #FOR$00,$04(y,{ #FOR($00,$05)(x,#CHR(#PEEK($E4CC+y*$06+x)), | ) } )
+TABLE#
+
+How the code works, is that we write #N$E35F to
+<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>
+and this is where the "magic" happens! Rather than reference the graphics for
+each letter in ROM - the print routine references the game UDGs instead.
+
+So the data we have links through to these address (click to see):
+#TABLE(default)
+  #FOR$00,$04(y,{ #FOR($00,$05)(x,#LET(z=$E35F+(#PEEK($E4CC+y*$06+x))*$08)#R({z})(#N({z})), | ) } )
+TABLE#
+
+And produces the following output:
+#TABLE(default)
+  #FOR$00,$04(y,{ #FOR($00,$05)(x,#UDG($E35F+#PEEK($E4CC+y*$06+x)*$08,attr=$78), | ) } )
+TABLE#
+
+The blank spaces are due to the cards being stored "suit-less" (at least on
+game load anyway). The print routine copies in the suit UDGs when printing
+every card (regardless of the previous card suit). So the final result looks
+like this:
+#PUSHS #SIM(start=$E3E9,stop=$E3EE,hl=$E76F)
+#TABLE(default)
+  #FOR$00,$04(y,{ #FOR($00,$05)(x,#UDG($E35F+#PEEK($E4CC+y*$06+x)*$08,attr=$78)(demo-card-x-y), | ) } )
+TABLE# #POPS
 
 [Fact:Girls]
 To save on space, the girls are created with one initial image, and then the

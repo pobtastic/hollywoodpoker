@@ -3,7 +3,9 @@
 ; Label naming is loosely based on Action_ActionName_SubAction e.g. Print_HighScore_Loop.
 
 > $4000 @rom
-> $4000 @org=$4000
+> $4000 @start
+> $4000 @expand=#DEF(#POKE #LINK:Pokes)
+> $4000 @set-handle-unsupported-macros=1
 b $4000 Loading Screen
 D $4000 #UDGTABLE { =h Hollywood Poker Loading Screen. } { #SCR$02(loading) } UDGTABLE#
 @ $4000 label=Loading
@@ -12,6 +14,7 @@ D $4000 #UDGTABLE { =h Hollywood Poker Loading Screen. } { #SCR$02(loading) } UD
 
 b $5B00 Stack
 
+> $5D3B @org
 c $5D3B Game Entry Point
 @ $5D3B label=GameEntryPoint
   $5D3B,$03 Jump to #R$6E9D.
@@ -1167,8 +1170,8 @@ N $8F15 Check if this is round over or game over for the player.
   $8F15,$0A Call #R$8F3B if *#R$96B5 is lower than #N$0A.
   $8F1F,$01 Return with #REGa being #N$00.
 
-c $8F20 Won Round
-@ $8F20 label=WonRound
+c $8F20 Player Won Round
+@ $8F20 label=PlayerWonRound
   $8F20,$0B Update *#R$96B5 as the player has won this round. So, add *#R$96B4
 . to *#R$96B5 and write the result back to *#R$96B5.
 N $8F2B #UDGTABLE { #MESSAGE$04(message-04) } UDGTABLE#
@@ -1177,8 +1180,8 @@ N $8F30 Check if this is round over or game over for the girl.
   $8F30,$0A Call #R$8F5A if *#R$96B6 is lower than #N$0A.
   $8F3A,$01 Return with #REGa being #N$00.
 
-c $8F3B Lost Round
-@ $8F3B label=LostRound
+c $8F3B Player Lost Round
+@ $8F3B label=PlayerLostRound
   $8F3B,$06 Jump to #R$8F52 if *#R$8F7C is zero.
 N $8F41 The player lost, so lose a life...
   $8F41,$04 Decrease *#R$8F7C by one.
@@ -1192,7 +1195,8 @@ N $8F52 #UDGTABLE { #MESSAGE$0E(message-14) } UDGTABLE#
   $8F52,$05 Call #R$7D97 using message block #R$8951(#N$0E).
   $8F57,$03 Return with #REGa being #N$01.
 
-c $8F5A
+c $8F5A Girl Lost Round
+@ $8F5A label=GirlLostRound
   $8F5A,$06 Write #N$6464 to *#R$96B5.
   $8F60,$03 #REGa=*#R$8F7D.
   $8F63,$03 Jump to #R$8F74 if #REGa is zero.
@@ -2647,13 +2651,14 @@ c $E3B8 Print Cards
   $E3C9,$01 Add #N($001E,$04,$04) to #REGhl to move to the next block of card UDG data.
   $E3CA,$02 Decrease the card value counter by one and loop back to #R$E3C9 until the appropriate card UDG data block is found.
   $E3CC,$03 Write the card UDG data block pointer to *#R$E563.
-N $E3CF Now work out the suit.
+N $E3CF Work out the suit.
   $E3CF,$02 #REGb=#N$04.
 @ $E3D1 label=SuitShift_Loop
   $E3D1,$02 Shift #REGc right.
   $E3D3,$02 Decrease counter by one and loop back to #R$E3D1 until counter is zero.
 M $E3CF,$06 Using the original card value, shift the upper four bits to be the lower four bits.
   $E3D5,$04 Write the calculated suit to *#R$E562.
+N $E3D9 Now calculate the suit UDG data address.
   $E3D9,$01 Set a counter in #REGb of the calculated suit (this is the upper four bits).
   $E3DA,$01 Increment #REGb by one, due to the way the loop below works.
   $E3DB,$03 The suit UDG data blocks are #N($0058,$04,$04) in length, so store this in #REGde for the calculation.
@@ -2684,20 +2689,22 @@ N $E413 Subtract #N$06 from #N$26 the number of times for the current card
 @ $E415 label=FindCardPosition_Loop
   $E415,$01 #REGa-=#REGc.
   $E416,$02 Decrease card position counter by one and loop back to #R$E415 until the counter is zero.
-  $E418,$01 #REGc=#REGa.
-  $E419,$02 #REGb=#N$0C.
-  $E41B,$04 #REGde=*#R$E563.
+  $E418,$01 Store the result in #REGc, this is the column position.
+  $E419,$02 Set #REGb to #N$0C, this is the row position.
+  $E41B,$04 Retrieve *#R$E563 for the current card.
 @ $E41F label=PrintCard_Loop
-  $E41F,$01 Stash #REGde on the stack.
-  $E420,$05 Jump to #R$E434 if #REGb is equal to #N$07.
-  $E425,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">#N$0DE2</a> (CL_SET).)
-  $E428,$01 Restore #REGde from the stack.
+  $E41F,$01 Stash the UDG data pointer on the stack.
+  $E420,$05 Jump to #R$E434 when the current print line is equal to #N$07.
+  $E425,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">#N$0DE2</a>
+. (CL_SET) to change the co-ordinates in #REGbc to a screen buffer address.)
+  $E428,$01 Restore the UDG data pointer from the stack.
   $E429,$01 Stash #REGbc on the stack.
-  $E42A,$03 #REGbc=#N($0006,$04,$04).
-  $E42D,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.)
+  $E42A,$03 Set the number of characters to print in #REGbc (#N($0006,$04,$04)).
+  $E42D,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a> to print to the screen.)
   $E430,$01 Restore #REGbc from the stack.
   $E431,$01 Decrease #REGb by one.
   $E432,$02 Jump to #R$E41F.
+N $E434 Housekeeping and return.
 @ $E434 label=PrintCard_Finish
   $E434,$01 Restore #REGde from the stack.
   $E435,$01 Return.
@@ -2807,7 +2814,7 @@ W $E565,$02
 b $E567 Graphics: Card Data
 @ $E567 label=Graphics_CardData
 D $E567 Used by the routine at #R$E3B8.
-  $E567,$08 #UDGTABLE { #N((#PC-$E35F)/$08) | #UDG(#PC) } UDGTABLE#
+  $E567,$08 #UDGTABLE { #N((#PC-$E35F)/$08) | #UDG(#PC,attr=$78) } UDGTABLE#
 L $E567,$08,$20
 
   $E618
@@ -2821,7 +2828,7 @@ D $E667 Populated from one of:
 . { #R$E76F }
 . { #R$E7C7 }
 . TABLE#
-  $E667,$08 #UDGTABLE { #N((#PC-$E35F)/$08) | #UDG(#PC) } UDGTABLE#
+  $E667,$08 #UDGTABLE { #N((#PC-$E35F)/$08) | #UDG(#PC,attr=$78) } UDGTABLE#
 L $E667,$08,$0B
 
 b $E6BF Graphics: Card Suits Data
