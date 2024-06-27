@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 90BB</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9093.html">9093</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#90bb">Map</a></td>
+<td class="next">
+Next: <a href="90D8.html">90D8</a>
+</td>
+</tr>
+</table>
+<div class="description">90BB: Routine at 90BB</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="9003.html">MarkCards</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="90bb"></span>90BB</td>
+<td class="instruction">LD DE,$9055</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="9054.html#9055">9055</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90be"></span>90BE</td>
+<td class="instruction">LD HL,$96C7</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="96C7.html">PlayersHand</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90c1"></span>90C1</td>
+<td class="instruction">LD B,$05</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=05.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="90c3"></span>90C3</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90c4"></span>90C4</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="90BB.html#90c9">90C9</a> if <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90c5"></span>90C5</td>
+<td class="instruction">JR Z,<a href="90BB.html#90c9">$90C9</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="90c7"></span>90C7</td>
+<td class="instruction">LD (HL),$FF</td>
+<td class="comment-1" rowspan="1">Write FF to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="90c9"></span>90C9</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90ca"></span>90CA</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90cb"></span>90CB</td>
+<td class="instruction">DJNZ <a href="90BB.html#90c3">$90C3</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="90BB.html#90c3">90C3</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90cd"></span>90CD</td>
+<td class="instruction">LD HL,$5A21</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=5A21 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90d0"></span>90D0</td>
+<td class="instruction">LD B,$1E</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=1E.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="90d2"></span>90D2</td>
+<td class="instruction">LD (HL),$00</td>
+<td class="comment-1" rowspan="1">Write 00 to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90d4"></span>90D4</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90d5"></span>90D5</td>
+<td class="instruction">DJNZ <a href="90BB.html#90d2">$90D2</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="90BB.html#90d2">90D2</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="90d7"></span>90D7</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9093.html">9093</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#90bb">Map</a></td>
+<td class="next">
+Next: <a href="90D8.html">90D8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/37051.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

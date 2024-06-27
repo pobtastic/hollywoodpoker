@@ -64,19 +64,19 @@ Reset both the player and girls hands. Note that 255 is used to signify "draw a 
 <td class="asm-label"></td>
 <td class="address-1"><span id="36173"></span>36173</td>
 <td class="instruction">LD B,10</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=10 (i.e. two hands at 5 cards each).</td>
+<td class="comment-1" rowspan="1">Set a counter of 10 for all cards in both hands (i.e. two hands at 5 cards each).</td>
 </tr>
 <tr>
 <td class="asm-label">ResetHand_Loop</td>
 <td class="address-2"><span id="36175"></span>36175</td>
 <td class="instruction">LD (HL),255</td>
-<td class="comment-1" rowspan="1">Write 255 to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Mark card slot with 255 to signify that this card should be redrawn.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="36177"></span>36177</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment card slot pointer by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

@@ -64,19 +64,19 @@ Reset both the player and girls hands. Note that FF is used to signify "draw a n
 <td class="asm-label"></td>
 <td class="address-1"><span id="8d4d"></span>8D4D</td>
 <td class="instruction">LD B,$0A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=0A (i.e. two hands at 05 cards each).</td>
+<td class="comment-1" rowspan="1">Set a counter of 0A for all cards in both hands (i.e. two hands at 05 cards each).</td>
 </tr>
 <tr>
 <td class="asm-label">ResetHand_Loop</td>
 <td class="address-2"><span id="8d4f"></span>8D4F</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment-1" rowspan="1">Write FF to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Mark card slot with FF to signify that this card should be redrawn.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8d51"></span>8D51</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment card slot pointer by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

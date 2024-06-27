@@ -29,11 +29,11 @@ Prev: <a href="9245.html">9245</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#9258">Map</a></td>
 <td class="next">
-Next: <a href="92C6.html">92C6</a>
+Next: <a href="92C5.html">92C5</a>
 </td>
 </tr>
 </table>
-<div class="description">9258: Routine at 9258</div>
+<div class="description">9258: Handler: Raising</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,6 +45,7 @@ Used by the routine at <a href="9171.html">9171</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">HandlerRaising</td>
 <td class="address-2"><span id="9258"></span>9258</td>
 <td class="instruction">LD A,$68</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=INK:
@@ -55,11 +56,13 @@ CYAN
 .</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="925a"></span>925A</td>
 <td class="instruction">LD HL,$5A95</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=5A95 (attribute buffer location).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="925d"></span>925D</td>
 <td class="instruction">CALL <a href="9171.html#91d1">$91D1</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9171.html#91d1">91D1</a>.</td>
@@ -79,74 +82,88 @@ CYAN
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9260"></span>9260</td>
 <td class="instruction">LD A,$11</td>
 <td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="8B6D.html">11</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9262"></span>9262</td>
 <td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="asm-label">RaisingCollectUserInput</td>
 <td class="address-2"><span id="9265"></span>9265</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="2">Write 01 to *<a href="9258.html#92c5">92C5</a>.</td>
+<td class="comment-1" rowspan="2">Write 01 to *<a href="92C5.html">92C5</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9267"></span>9267</td>
 <td class="instruction">LD ($92C5),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="926a"></span>926A</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">IX</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="926c"></span>926C</td>
 <td class="instruction">CALL <a href="90D8.html">Controls</a></td>
 <td class="comment-1" rowspan="1">Call <a href="90D8.html">Controls</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="926f"></span>926F</td>
 <td class="instruction">PUSH IX</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9271"></span>9271</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="9258.html#927c">HandlerRaising_0</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9272"></span>9272</td>
-<td class="instruction">JR Z,<a href="9258.html#927c">$927C</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9258.html#927c">927C</a> if <span class="register">A</span> is zero.</td>
+<td class="instruction">JR Z,<a href="9258.html#927c">HandlerRaising_0</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9274"></span>9274</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9275"></span>9275</td>
-<td class="instruction">JR Z,<a href="9258.html#92a7">$92A7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9258.html#92a7">92A7</a> if <span class="register">A</span> is zero.</td>
+<td class="instruction">JR Z,<a href="9258.html#92a7">DecreaseRaiseAmount</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9258.html#92a7">DecreaseRaiseAmount</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9277"></span>9277</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9278"></span>9278</td>
-<td class="instruction">JR Z,<a href="9258.html#9289">$9289</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9258.html#9289">9289</a> if <span class="register">A</span> is zero.</td>
+<td class="instruction">JR Z,<a href="9258.html#9289">IncreaseRaiseAmount</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9258.html#9289">IncreaseRaiseAmount</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="927a"></span>927A</td>
-<td class="instruction">JR <a href="9258.html#9265">$9265</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9258.html#9265">9265</a>.</td>
+<td class="instruction">JR <a href="9258.html#9265">RaisingCollectUserInput</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9258.html#9265">RaisingCollectUserInput</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">HandlerRaising_0</td>
 <td class="address-2"><span id="927c"></span>927C</td>
 <td class="instruction">LD A,$78</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=INK:
@@ -157,125 +174,151 @@ WHITE
 .</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="927e"></span>927E</td>
 <td class="instruction">LD HL,$5A95</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=5A95 (attribute buffer location).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9281"></span>9281</td>
 <td class="instruction">CALL <a href="9171.html#91d1">$91D1</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9171.html#91d1">91D1</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9284"></span>9284</td>
 <td class="instruction">LD A,($96B7)</td>
 <td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9287"></span>9287</td>
 <td class="instruction">LD B,A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9288"></span>9288</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="asm-label">IncreaseRaiseAmount</td>
 <td class="address-2"><span id="9289"></span>9289</td>
 <td class="instruction">LD A,($96B7)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="928c"></span>928C</td>
 <td class="instruction">INC A</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="928d"></span>928D</td>
 <td class="instruction">CP $15</td>
-<td class="comment-1" rowspan="2">Jump to <a href="9258.html#9265">9265</a> if <span class="register">A</span> is higher than 15.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="9258.html#9265">RaisingCollectUserInput</a> if <span class="register">A</span> is higher than 15.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="928f"></span>928F</td>
-<td class="instruction">JR NC,<a href="9258.html#9265">$9265</a></td>
+<td class="instruction">JR NC,<a href="9258.html#9265">RaisingCollectUserInput</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9291"></span>9291</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9292"></span>9292</td>
 <td class="instruction">LD A,($96B5)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="9258.html#9265">9265</a> if *<a href="96B5.html">PlayerCash</a> is lower than <span class="register">B</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="9258.html#9265">RaisingCollectUserInput</a> if *<a href="96B5.html">PlayerCash</a> is lower than <span class="register">B</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9295"></span>9295</td>
 <td class="instruction">CP B</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9296"></span>9296</td>
-<td class="instruction">JR C,<a href="9258.html#9265">$9265</a></td>
+<td class="instruction">JR C,<a href="9258.html#9265">RaisingCollectUserInput</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9298"></span>9298</td>
 <td class="instruction">LD A,($96B6)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="9258.html#9265">9265</a> if *<a href="96B6.html">GirlCash</a> is lower than <span class="register">B</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="9258.html#9265">RaisingCollectUserInput</a> if *<a href="96B6.html">GirlCash</a> is lower than <span class="register">B</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="929b"></span>929B</td>
 <td class="instruction">CP B</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="929c"></span>929C</td>
-<td class="instruction">JR C,<a href="9258.html#9265">$9265</a></td>
+<td class="instruction">JR C,<a href="9258.html#9265">RaisingCollectUserInput</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="929e"></span>929E</td>
 <td class="instruction">LD A,B</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">B</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="929f"></span>929F</td>
 <td class="instruction">LD ($96B7),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92a2"></span>92A2</td>
 <td class="instruction">CALL <a href="8F7E.html">PrintStats</a></td>
 <td class="comment-1" rowspan="1">Call <a href="8F7E.html">PrintStats</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92a5"></span>92A5</td>
-<td class="instruction">JR <a href="9258.html#92b3">$92B3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9258.html#92b3">92B3</a>.</td>
+<td class="instruction">JR <a href="9258.html#92b3">HandlerRaising_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9258.html#92b3">HandlerRaising_1</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">DecreaseRaiseAmount</td>
 <td class="address-2"><span id="92a7"></span>92A7</td>
 <td class="instruction">LD A,($96B7)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92aa"></span>92AA</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92ab"></span>92AB</td>
-<td class="instruction">JR Z,<a href="9258.html#9265">$9265</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9258.html#9265">9265</a> if <span class="register">A</span> is zero.</td>
+<td class="instruction">JR Z,<a href="9258.html#9265">RaisingCollectUserInput</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9258.html#9265">RaisingCollectUserInput</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92ad"></span>92AD</td>
 <td class="instruction">LD ($96B7),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92b0"></span>92B0</td>
 <td class="instruction">CALL <a href="8F7E.html">PrintStats</a></td>
 <td class="comment-1" rowspan="1">Call <a href="8F7E.html">PrintStats</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">HandlerRaising_1</td>
 <td class="address-2"><span id="92b3"></span>92B3</td>
 <td class="instruction">LD A,$68</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=INK:
@@ -286,44 +329,46 @@ CYAN
 .</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92b5"></span>92B5</td>
 <td class="instruction">LD HL,$5A95</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=5A95 (attribute buffer location).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92b8"></span>92B8</td>
 <td class="instruction">CALL <a href="9171.html#91d1">$91D1</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9171.html#91d1">91D1</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92bb"></span>92BB</td>
 <td class="instruction">LD BC,$4000</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=4000 (screen buffer location).</td>
 </tr>
 <tr>
+<td class="asm-label">RaisePause_Loop</td>
 <td class="address-2"><span id="92be"></span>92BE</td>
 <td class="instruction">DEC C</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">C</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92bf"></span>92BF</td>
-<td class="instruction">JR NZ,<a href="9258.html#92be">$92BE</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9258.html#92be">92BE</a> until <span class="register">C</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="9258.html#92be">RaisePause_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9258.html#92be">RaisePause_Loop</a> until <span class="register">C</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92c1"></span>92C1</td>
-<td class="instruction">DJNZ <a href="9258.html#92be">$92BE</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9258.html#92be">92BE</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="9258.html#92be">RaisePause_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9258.html#92be">RaisePause_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="92c3"></span>92C3</td>
-<td class="instruction">JR <a href="9258.html#9265">$9265</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9258.html#9265">9265</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="92c5"></span>92C5</td>
-<td class="instruction">DEFB $00</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR <a href="9258.html#9265">RaisingCollectUserInput</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9258.html#9265">RaisingCollectUserInput</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -333,7 +378,7 @@ Prev: <a href="9245.html">9245</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#9258">Map</a></td>
 <td class="next">
-Next: <a href="92C6.html">92C6</a>
+Next: <a href="92C5.html">92C5</a>
 </td>
 </tr>
 </table>

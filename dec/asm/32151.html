@@ -39,7 +39,7 @@ Next: <a href="32363.html">32363</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="30623.html">LifeLost</a>, <a href="36080.html">InitialiseNewGame</a>, <a href="36158.html">Print_GameOver</a>, <a href="36170.html">PlayGame</a>, <a href="36578.html">Handler_Showdown</a>, <a href="36614.html">GirlWonRound</a>, <a href="36640.html">PlayerWonRound</a>, <a href="36667.html">PlayerLostRound</a>, <a href="36698.html">GirlLostRound</a>, <a href="36867.html">MarkCards</a>, <a href="37233.html">37233</a>, <a href="37464.html">37464</a> and <a href="38412.html">38412</a>.
+Used by the routines at <a href="30623.html">LifeLost</a>, <a href="36080.html">InitialiseNewGame</a>, <a href="36158.html">Print_GameOver</a>, <a href="36170.html">PlayGame</a>, <a href="36578.html">Handler_Showdown</a>, <a href="36614.html">GirlWonRound</a>, <a href="36640.html">PlayerWonRound</a>, <a href="36667.html">PlayerLostRound</a>, <a href="36698.html">GirlLostRound</a>, <a href="36867.html">MarkCards</a>, <a href="37233.html">37233</a>, <a href="37464.html">HandlerRaising</a> and <a href="38412.html">38412</a>.
 </div>
 </div>
 <table class="input">
@@ -48,7 +48,7 @@ Used by the routines at <a href="30623.html">LifeLost</a>, <a href="36080.html">
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Message ID</td>
+<td class="register-desc">Message block ID</td>
 </tr>
 </table>
 </td>
@@ -58,7 +58,7 @@ Used by the routines at <a href="30623.html">LifeLost</a>, <a href="36080.html">
 <span id="32151"></span>
 <div class="comments">
 <div class="paragraph">
-19 is the highest message ID.
+19 is the highest message block ID.
 </div>
 </div>
 </td>
@@ -67,13 +67,13 @@ Used by the routines at <a href="30623.html">LifeLost</a>, <a href="36080.html">
 <td class="asm-label">Messaging_Girl</td>
 <td class="address-2"><span id="32151"></span>32151</td>
 <td class="instruction">LD (36079),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="36074.html#36079">CurrentMessageID</a>.</td>
+<td class="comment-1" rowspan="1">Write the given message block ID to *<a href="36079.html">CurrentMessageBlock</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32154"></span>32154</td>
 <td class="instruction">CP 19</td>
-<td class="comment-1" rowspan="2">Return if <span class="register">A</span> is higher than 19.</td>
+<td class="comment-1" rowspan="2">Return if the message block ID is equal to or higher than 19.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -130,6 +130,16 @@ Find the relevant message block.
 <td class="instruction">JR NZ,<a href="32151.html#32161">FindMessagingBlock</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="32167"></span>
+<div class="comments">
+<div class="paragraph">
+Reference the message block data.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32167"></span>32167</td>
 <td class="instruction">LD E,(HL)</td>
@@ -149,7 +159,7 @@ Find the relevant message block.
 <td class="asm-label"></td>
 <td class="address-1"><span id="32170"></span>32170</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="2">Load the number of messages in this message block into <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="3">Write the number of messages in this message block to *<a href="36074.html">CurrentNumberOfMessagesInBlock</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -160,28 +170,36 @@ Find the relevant message block.
 <td class="asm-label"></td>
 <td class="address-1"><span id="32172"></span>32172</td>
 <td class="instruction">LD (36074),A</td>
-<td class="comment-1" rowspan="1">Write the number of messages in this message block to *<a href="36074.html">36074</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32175"></span>32175</td>
 <td class="instruction">LD (36075),DE</td>
-<td class="comment-1" rowspan="1">Write <span class="register">DE</span> to *<a href="36074.html#36075">36075</a>.</td>
+<td class="comment-1" rowspan="2">Write <span class="register">DE</span> to both *<a href="36075.html">PointerToStartOfCurrentMessageBlock</a> and *<a href="36077.html">PointerCurrentMessageString</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32179"></span>32179</td>
 <td class="instruction">LD (36077),DE</td>
-<td class="comment-1" rowspan="1">Write <span class="register">DE</span> to *<a href="36074.html#36077">36077</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_0</td>
+<td class="routine-comment" colspan="5">
+<span id="32183"></span>
+<div class="comments">
+<div class="paragraph">
+Loop through each message in this message block until the random number generator returns a number less than 10. This is likely a completely arbitrary number.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PickRandomMessage</td>
 <td class="address-2"><span id="32183"></span>32183</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=the number of messages in this message block.</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_1</td>
+<td class="asm-label">PickRandomMessage_Loop</td>
 <td class="address-2"><span id="32184"></span>32184</td>
 <td class="instruction">CALL <a href="38265.html">GetRandomNumber</a></td>
 <td class="comment-1" rowspan="1">Call <a href="38265.html">GetRandomNumber</a>.</td>
@@ -190,18 +208,28 @@ Find the relevant message block.
 <td class="asm-label"></td>
 <td class="address-1"><span id="32187"></span>32187</td>
 <td class="instruction">CP 10</td>
-<td class="comment-1" rowspan="2">Jump to <a href="32151.html#32214">Messaging_Girl_2</a> if <span class="register">A</span> is lower than 10.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="32151.html#32214">Prepare_GirlMessaging</a> if the picked random number is lower than 10.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32189"></span>32189</td>
-<td class="instruction">JR C,<a href="32151.html#32214">Messaging_Girl_2</a></td>
+<td class="instruction">JR C,<a href="32151.html#32214">Prepare_GirlMessaging</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32191"></span>
+<div class="comments">
+<div class="paragraph">
+Each message is 0054 bytes long, so here we're moving to the address of the next message.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32191"></span>32191</td>
 <td class="instruction">LD DE,54</td>
-<td class="comment-1" rowspan="3"><span class="register">HL</span>=*<a href="36074.html#36077">36077</a>+0054.</td>
+<td class="comment-1" rowspan="3"><span class="register">HL</span>=*<a href="36077.html">PointerCurrentMessageString</a>+0054.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -217,19 +245,29 @@ Find the relevant message block.
 <td class="asm-label"></td>
 <td class="address-1"><span id="32198"></span>32198</td>
 <td class="instruction">LD (36077),HL</td>
-<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="36074.html#36077">36077</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="36077.html">PointerCurrentMessageString</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32201"></span>32201</td>
-<td class="instruction">DJNZ <a href="32151.html#32184">Messaging_Girl_1</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="32151.html#32184">Messaging_Girl_1</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="32151.html#32184">PickRandomMessage_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="32151.html#32184">PickRandomMessage_Loop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32203"></span>
+<div class="comments">
+<div class="paragraph">
+Nothing was picked, so refresh the message count and repoint *<a href="36077.html">PointerCurrentMessageString</a> to the first message again.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32203"></span>32203</td>
 <td class="instruction">LD HL,(36075)</td>
-<td class="comment-1" rowspan="2">Write *<a href="36074.html#36075">36075</a> to *<a href="36074.html#36077">36077</a>.</td>
+<td class="comment-1" rowspan="2">Write *<a href="36075.html">PointerToStartOfCurrentMessageBlock</a> to *<a href="36077.html">PointerCurrentMessageString</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -240,25 +278,45 @@ Find the relevant message block.
 <td class="asm-label"></td>
 <td class="address-1"><span id="32209"></span>32209</td>
 <td class="instruction">LD A,(36074)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36074.html">36074</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36074.html">CurrentNumberOfMessagesInBlock</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32212"></span>32212</td>
-<td class="instruction">JR <a href="32151.html#32183">Messaging_Girl_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32183">Messaging_Girl_0</a>.</td>
+<td class="instruction">JR <a href="32151.html#32183">PickRandomMessage</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32183">PickRandomMessage</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_2</td>
+<td class="routine-comment" colspan="5">
+<span id="32214"></span>
+<div class="comments">
+<div class="paragraph">
+A message has been picked, so prepare the display for printing it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Prepare_GirlMessaging</td>
 <td class="address-2"><span id="32214"></span>32214</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+<td class="comment-1" rowspan="1">Set the current line as 0.</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_3</td>
+<td class="asm-label">Print_GirlMessaging_Loop</td>
 <td class="address-2"><span id="32215"></span>32215</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the current line on the stack.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32216"></span>
+<div class="comments">
+<div class="paragraph">
+Set the speech bubble attributes.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -369,43 +427,53 @@ WHITE.</td>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32242"></span>32242</td>
 <td class="instruction">LD DE,(36077)</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="36074.html#36077">36077</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="36077.html">PointerCurrentMessageString</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32246"></span>32246</td>
 <td class="instruction">LD BC,14</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0014.</td>
+<td class="comment-1" rowspan="1">Set the line length 0014 in <span class="register">BC</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32249"></span>32249</td>
 <td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the current line from the stack.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32250"></span>
+<div class="comments">
+<div class="paragraph">
+The last line is two characters less than the previous lines. This gives us a slight "speech bubble" effect. Kind of... Sorta...
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32250"></span>32250</td>
 <td class="instruction">CP 3</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 3.</td>
+<td class="comment-1" rowspan="1">Are we on line 3?</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32252"></span>32252</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the current line on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32253"></span>32253</td>
-<td class="instruction">JR NZ,<a href="32151.html#32257">Messaging_Girl_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32257">Messaging_Girl_4</a> if {} is not zero.</td>
+<td class="instruction">JR NZ,<a href="32151.html#32257">Print_GirlMessaging</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32257">Print_GirlMessaging</a> if we're not yet on line 3.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32255"></span>32255</td>
 <td class="instruction">DEC BC</td>
-<td class="comment-1" rowspan="2">Decrease <span class="register">BC</span> by two.</td>
+<td class="comment-1" rowspan="2">Decrease the message length by two.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -413,33 +481,53 @@ WHITE.</td>
 <td class="instruction">DEC BC</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_4</td>
+<td class="routine-comment" colspan="5">
+<span id="32257"></span>
+<div class="comments">
+<div class="paragraph">
+Print the current line.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_GirlMessaging</td>
 <td class="address-2"><span id="32257"></span>32257</td>
 <td class="instruction">CALL <a href="63434.html">Print40ColumnText</a></td>
 <td class="comment-1" rowspan="1">Call <a href="63434.html">Print40ColumnText</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="32260"></span>
+<div class="comments">
+<div class="paragraph">
+On return, <span class="register">DE</span> points to the start of the next line - so update the pointer.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32260"></span>32260</td>
 <td class="instruction">LD (36077),DE</td>
-<td class="comment-1" rowspan="1">Write <span class="register">DE</span> to *<a href="36074.html#36077">36077</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">DE</span> to *<a href="36077.html">PointerCurrentMessageString</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32264"></span>32264</td>
 <td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the current line from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32265"></span>32265</td>
 <td class="instruction">CP 3</td>
-<td class="comment-1" rowspan="2">Jump to <a href="32151.html#32272">Messaging_Girl_5</a> if <span class="register">A</span> is equal to 3.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="32151.html#32272">Printed_GirlMessaging</a> if we're on line 3.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32267"></span>32267</td>
-<td class="instruction">JR Z,<a href="32151.html#32272">Messaging_Girl_5</a></td>
+<td class="instruction">JR Z,<a href="32151.html#32272">Printed_GirlMessaging</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -450,14 +538,24 @@ WHITE.</td>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32270"></span>32270</td>
-<td class="instruction">JR <a href="32151.html#32215">Messaging_Girl_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32215">Messaging_Girl_3</a>.</td>
+<td class="instruction">JR <a href="32151.html#32215">Print_GirlMessaging_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32215">Print_GirlMessaging_Loop</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_5</td>
+<td class="routine-comment" colspan="5">
+<span id="32272"></span>
+<div class="comments">
+<div class="paragraph">
+The messaging has been printed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Printed_GirlMessaging</td>
 <td class="address-2"><span id="32272"></span>32272</td>
 <td class="instruction">LD A,(36079)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="32151.html#32285">Messaging_Girl_6</a> if *<a href="36074.html#36079">CurrentMessageID</a> is equal to 17.</td>
+<td class="comment-1" rowspan="5">Jump to <a href="32151.html#32285">Messaging_Girl_0</a> if *<a href="36079.html">CurrentMessageBlock</a> is equal to either <a href="35693.html">17</a> or <a href="35315.html">15</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -467,30 +565,29 @@ WHITE.</td>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32277"></span>32277</td>
-<td class="instruction">JR Z,<a href="32151.html#32285">Messaging_Girl_6</a></td>
+<td class="instruction">JR Z,<a href="32151.html#32285">Messaging_Girl_0</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32279"></span>32279</td>
 <td class="instruction">CP 15</td>
-<td class="comment-1" rowspan="2">Jump to <a href="32151.html#32285">Messaging_Girl_6</a> if *<a href="36074.html#36079">CurrentMessageID</a> is equal to 15.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32281"></span>32281</td>
-<td class="instruction">JR Z,<a href="32151.html#32285">Messaging_Girl_6</a></td>
+<td class="instruction">JR Z,<a href="32151.html#32285">Messaging_Girl_0</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32283"></span>32283</td>
-<td class="instruction">JR <a href="32151.html#32290">Messaging_Girl_7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32290">Messaging_Girl_7</a>.</td>
+<td class="instruction">JR <a href="32151.html#32290">GirlMessaging_GetInput</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32290">GirlMessaging_GetInput</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_6</td>
+<td class="asm-label">Messaging_Girl_0</td>
 <td class="address-2"><span id="32285"></span>32285</td>
 <td class="instruction">LD A,0</td>
-<td class="comment-1" rowspan="2">Write 0 to *<a href="37464.html#37573">37573</a>.</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="37573.html">37573</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -498,7 +595,7 @@ WHITE.</td>
 <td class="instruction">LD (37573),A</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_7</td>
+<td class="asm-label">GirlMessaging_GetInput</td>
 <td class="address-2"><span id="32290"></span>32290</td>
 <td class="instruction">CALL <a href="37080.html">Controls</a></td>
 <td class="comment-1" rowspan="1">Call <a href="37080.html">Controls</a>.</td>
@@ -507,18 +604,18 @@ WHITE.</td>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32293"></span>32293</td>
 <td class="instruction">CP 5</td>
-<td class="comment-1" rowspan="2">Jump to <a href="32151.html#32290">Messaging_Girl_7</a> if <span class="register">A</span> is higher than 5.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="32151.html#32290">GirlMessaging_GetInput</a> if <span class="register">A</span> is higher than 5.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32295"></span>32295</td>
-<td class="instruction">JR NC,<a href="32151.html#32290">Messaging_Girl_7</a></td>
+<td class="instruction">JR NC,<a href="32151.html#32290">GirlMessaging_GetInput</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32297"></span>32297</td>
 <td class="instruction">LD A,(36079)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="32363.html">RemoveSpeechBubble</a> if *<a href="36074.html#36079">CurrentMessageID</a> is not equal to 18.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="32363.html">RemoveSpeechBubble</a> if *<a href="36079.html">CurrentMessageBlock</a> is not equal to <a href="35855.html">18</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -549,7 +646,7 @@ WHITE.</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=32.</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_8</td>
+<td class="asm-label">Messaging_Girl_1</td>
 <td class="address-2"><span id="32312"></span>32312</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">DE</span> on the stack.</td>
@@ -566,7 +663,7 @@ WHITE.</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=6.</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_9</td>
+<td class="asm-label">Messaging_Girl_2</td>
 <td class="address-2"><span id="32316"></span>32316</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
@@ -643,8 +740,8 @@ WHITE.</td>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32334"></span>32334</td>
-<td class="instruction">DJNZ <a href="32151.html#32316">Messaging_Girl_9</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="32151.html#32316">Messaging_Girl_9</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="32151.html#32316">Messaging_Girl_2</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="32151.html#32316">Messaging_Girl_2</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -653,10 +750,10 @@ WHITE.</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=14.</td>
 </tr>
 <tr>
-<td class="asm-label">Messaging_Girl_10</td>
+<td class="asm-label">Messaging_Girl_3</td>
 <td class="address-2"><span id="32338"></span>32338</td>
-<td class="instruction">DJNZ <a href="32151.html#32338">Messaging_Girl_10</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="32151.html#32338">Messaging_Girl_10</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="32151.html#32338">Messaging_Girl_3</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="32151.html#32338">Messaging_Girl_3</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -667,8 +764,8 @@ WHITE.</td>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32341"></span>32341</td>
-<td class="instruction">JR NZ,<a href="32151.html#32338">Messaging_Girl_10</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32338">Messaging_Girl_10</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="32151.html#32338">Messaging_Girl_3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32338">Messaging_Girl_3</a> until <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -702,8 +799,8 @@ WHITE.</td>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="32348"></span>32348</td>
-<td class="instruction">JR NZ,<a href="32151.html#32312">Messaging_Girl_8</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32312">Messaging_Girl_8</a> until <span class="register">C</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="32151.html#32312">Messaging_Girl_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="32151.html#32312">Messaging_Girl_1</a> until <span class="register">C</span> is zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
