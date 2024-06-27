@@ -370,6 +370,7 @@ N $729D #HTML(<blockquote>In all instances the #REGe register is returned with
   $72FA,$01 Restore #REGhl from the stack.
   $72FB,$01 Stash #REGhl on the stack.
   $72FC,$01 Write #REGa to *#REGhl.
+  $72FD,$01 Print #REGa to the screen.
   $72FE,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
 N $72FE Handle if no keys are being pressed, for reference:
 N $72FE #HTML(<blockquote>In all instances the #REGe register is returned with
@@ -544,14 +545,13 @@ N $784B #UDGTABLE { #PUSHS #SIM(start=$784B,stop=$7906)#SCR$02(title-screen) #PO
   $784D,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1601.html">CHAN_OPEN</a>.)
 
   $7850,$05 #HTML(Set the border to #INK$04 using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/2294.html#229b">BORDER</a>.)
+  $7855,$04
+  $7859,$04
 N $785D Set the UDG graphics pointer.
   $785D,$06 #HTML(Write #R$F4C9(#N$F3C9) (#R$F4C9) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
 
-  $7863,$02 #REGa=#COLOUR$27.
-  $7865,$03 #HTML(Write #REGa to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.)
-
-  $7868,$02 #REGa=#COLOUR$20.
-  $786A,$03 #HTML(Write #REGa to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C48.html">BORDCR</a>.)
+  $7863,$05 #HTML(Write #COLOUR$27 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.)
+  $7868,$05 #HTML(Write #COLOUR$20 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C48.html">BORDCR</a>.)
 
   $786D,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.)
 N $7870 Draw three sections which are white on the left, and black on the right:
@@ -650,7 +650,8 @@ R $7917 DE Attribute data
 R $7917 HL Attribute buffer location
 R $7917 B Width
 R $7917 C Length
-  $7917,$06
+N $7917 Convert length into number of character blocks.
+  $7917,$06 Divide the length by #N$08 and store the result in #REGc.
 @ $791D label=WriteAttributeData_Loop
   $791D,$02 Stash #REGhl and #REGbc on the stack.
 @ $791F label=WriteAttributeData_CopyLoop
@@ -746,56 +747,75 @@ N $7D3D #UDGTABLE
 
 c $7D97 Messaging: Girl
 @ $7D97 label=Messaging_Girl
-R $7D97 A Message ID
-N $7D97 #N$13 is the highest message ID.
-  $7D97,$03 Write #REGa to *#R$8CEF.
-  $7D9A,$03 Return if #REGa is higher than #N$13.
+R $7D97 A Message block ID
+N $7D97 #N$13 is the highest message block ID.
+  $7D97,$03 Write the given message block ID to *#R$8CEF.
+  $7D9A,$03 Return if the message block ID is equal to or higher than #N$13.
   $7D9D,$01 Increment #REGa by one.
   $7D9E,$03 #REGhl=#R$8CB1(#N$8CAE) (i.e. #R$8CB1-#N$03).
 N $7DA1 Find the relevant message block.
 @ $7DA1 label=FindMessagingBlock
   $7DA1,$03 Increment #REGhl by three.
   $7DA4,$03 Decrease #REGa by one and keep jumping back to #R$7DA1 until it is zero.
+N $7DA7 Reference the message block data.
   $7DA7,$03 Load the referenced message block into #REGde.
-  $7DAA,$02 Load the number of messages in this message block into #REGa.
-  $7DAC,$03 Write the number of messages in this message block to *#R$8CEA.
-  $7DAF,$04 Write #REGde to *#R$8CEB.
-  $7DB3,$04 Write #REGde to *#R$8CED.
+  $7DAA,$05 Write the number of messages in this message block to *#R$8CEA.
+  $7DAF,$08 Write #REGde to both *#R$8CEB and *#R$8CED.
+N $7DB7 Loop through each message in this message block until the random number
+. generator returns a number less than #N$0A. This is likely a completely
+. arbitrary number.
+@ $7DB7 label=PickRandomMessage
   $7DB7,$01 #REGb=the number of messages in this message block.
+@ $7DB8 label=PickRandomMessage_Loop
   $7DB8,$03 Call #R$9579.
-  $7DBB,$04 Jump to #R$7DD6 if #REGa is lower than #N$0A.
+  $7DBB,$04 Jump to #R$7DD6 if the picked random number is lower than #N$0A.
+N $7DBF Each message is #N($0036,$04,$04) bytes long, so here we're moving to
+. the address of the next message.
   $7DBF,$07 #REGhl=*#R$8CED+#N($0036,$04,$04).
   $7DC6,$03 Write #REGhl to *#R$8CED.
   $7DC9,$02 Decrease counter by one and loop back to #R$7DB8 until counter is zero.
+N $7DCB Nothing was picked, so refresh the message count and repoint *#R$8CED
+. to the first message again.
   $7DCB,$06 Write *#R$8CEB to *#R$8CED.
   $7DD1,$03 #REGa=*#R$8CEA.
   $7DD4,$02 Jump to #R$7DB7.
-  $7DD6,$01 #REGa=#N$00.
-  $7DD7,$01 Stash #REGaf on the stack.
+N $7DD6 A message has been picked, so prepare the display for printing it.
+@ $7DD6 label=Prepare_GirlMessaging
+  $7DD6,$01 Set the current line as #N$00.
+@ $7DD7 label=Print_GirlMessaging_Loop
+  $7DD7,$01 Stash the current line on the stack.
+N $7DD8 Set the speech bubble attributes.
   $7DD8,$05 Set INK: #INK$00.
   $7DDD,$06 Set PAPER: #INK$07.
   $7DE3,$09 PRINT AT: #N$00#RAW(,) #N$0D.
   $7DEC,$06 BRIGHT: ON.
   $7DF2,$04 #REGde=*#R$8CED.
-  $7DF6,$03 #REGbc=#N($000E,$04,$04).
-  $7DF9,$01 Restore #REGaf from the stack.
-  $7DFA,$02 Compare #REGa with #N$03.
-  $7DFC,$01 Stash #REGaf on the stack.
-  $7DFD,$02 Jump to #R$7E01 if {} is not zero.
-  $7DFF,$02 Decrease #REGbc by two.
+  $7DF6,$03 Set the line length #N($000E,$04,$04) in #REGbc.
+  $7DF9,$01 Restore the current line from the stack.
+N $7DFA The last line is two characters less than the previous lines. This
+. gives us a slight "speech bubble" effect. Kind of... Sorta...
+  $7DFA,$02 Are we on line #N$03?
+  $7DFC,$01 Stash the current line on the stack.
+  $7DFD,$02 Jump to #R$7E01 if we're not yet on line #N$03.
+  $7DFF,$02 Decrease the message length by two.
+N $7E01 Print the current line.
+@ $7E01 label=Print_GirlMessaging
   $7E01,$03 Call #R$F7CA.
+N $7E04 On return, #REGde points to the start of the next line - so update the pointer.
   $7E04,$04 Write #REGde to *#R$8CED.
-  $7E08,$01 Restore #REGaf from the stack.
-  $7E09,$04 Jump to #R$7E10 if #REGa is equal to #N$03.
+  $7E08,$01 Restore the current line from the stack.
+  $7E09,$04 Jump to #R$7E10 if we're on line #N$03.
   $7E0D,$01 Increment #REGa by one.
   $7E0E,$02 Jump to #R$7DD7.
-  $7E10,$07 Jump to #R$7E1D if *#R$8CEF is equal to #N$11.
-  $7E17,$04 Jump to #R$7E1D if *#R$8CEF is equal to #N$0F.
+N $7E10 The messaging has been printed.
+@ $7E10 label=Printed_GirlMessaging
+  $7E10,$0B Jump to #R$7E1D if *#R$8CEF is equal to either #R$8B6D(#N$11) or #R$89F3(#N$0F).
   $7E1B,$02 Jump to #R$7E22.
   $7E1D,$05 Write #N$00 to *#R$92C5.
+@ $7E22 label=GirlMessaging_GetInput
   $7E22,$03 Call #R$90D8.
   $7E25,$04 Jump to #R$7E22 if #REGa is higher than #N$05.
-  $7E29,$07 Jump to #R$7E6B if *#R$8CEF is not equal to #N$12.
+  $7E29,$07 Jump to #R$7E6B if *#R$8CEF is not equal to #R$8C0F(#N$12).
   $7E30,$03 #REGhl=#N$5800 (screen buffer location).
   $7E33,$03 #REGde=#N$583F (attribute buffer location).
   $7E36,$02 #REGc=#N$20.
@@ -976,11 +996,20 @@ W $8CB1,$02 Points to #R(#PEEK(#PC)+(#PEEK(#PC+$01)*$100)).
 B $8CB3,$01 Number of messages in block: #N(#PEEK(#PC)).
 L $8CB1,$03,$13
 
-g $8CEA Messaging?
+g $8CEA Message Block: Number Of Messages
+@ $8CEA label=CurrentNumberOfMessagesInBlock
 B $8CEA,$01
+
+g $8CEB Pointer To Current Message Block
+@ $8CEB label=PointerToStartOfCurrentMessageBlock
 W $8CEB,$02
+
+g $8CED Pointer To Current Message String
+@ $8CED label=PointerCurrentMessageString
 W $8CED,$02
-@ $8CEF label=CurrentMessageID
+
+g $8CEF Message Block: Current Message Block ID
+@ $8CEF label=CurrentMessageBlock
 B $8CEF,$01
 
 c $8CF0 Initialise New Game
@@ -1009,8 +1038,7 @@ N $8D27 #UDGTABLE { #MESSAGE$12(message-18) } UDGTABLE#
 c $8D3E Print "Game Over"
 @ $8D3E label=Print_GameOver
 N $8D3E #UDGTABLE { #MESSAGE$07(message-07) } UDGTABLE#
-  $8D3E,$02 #REGa=#R$8585(#N$07).
-  $8D40,$02 Jump to #R$8D44.
+  $8D3E,$04 Jump to #R$8D44 using message block #R$8585(#N$07).
 N $8D42 #UDGTABLE { #MESSAGE$0E(message-14) } UDGTABLE#
 @ $8D42 label=Print_RoundOver
   $8D42,$05 Call #R$7D97 using message block #R$8951(#N$0E).
@@ -1026,10 +1054,10 @@ N $8D4A Reset both the player and girls hands. Note that #N$FF is used to
 . signify "draw a new card".
 @ $8D4A label=PlayGame
   $8D4A,$03 #REGhl=#R$96C7.
-  $8D4D,$02 #REGb=#N$0A (i.e. two hands at #N$05 cards each).
+  $8D4D,$02 Set a counter of #N$0A for all cards in both hands (i.e. two hands at #N$05 cards each).
 @ $8D4F label=ResetHand_Loop
-  $8D4F,$02 Write #N$FF to *#REGhl.
-  $8D51,$01 Increment #REGhl by one.
+  $8D4F,$02 Mark card slot with #N$FF to signify that this card should be redrawn.
+  $8D51,$01 Increment card slot pointer by one.
   $8D52,$02 Decrease the card counter by one and loop back to #R$8D4F until both hands have been reset.
 N $8D54 Prep the attributes for the final parts of printing the UI.
   $8D54,$05 #HTML(Write #COLOUR$20 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.)
@@ -1139,6 +1167,78 @@ c $8E5A Draw User Interface
 N $8E5A #PUSHS #UDGTABLE
 . { #SIM(start=$8D54,stop=$8D6D)#SIM(start=$8D73,stop=$8D81)#SCR$02{$00,$11C,$200,$60}(user-interface) }
 . UDGTABLE# #POPS
+  $8E5A,$03 #REGhl=#N$5620 (screen buffer location).
+  $8E5D,$02 #REGe=#N$02.
+  $8E5F,$02 #REGd=#N$02.
+  $8E61,$01 Stash #REGhl on the stack.
+  $8E62,$02 #REGc=#N$03.
+  $8E64,$02 Write #N$03 to *#REGhl.
+  $8E66,$01 Increment #REGhl by one.
+  $8E67,$02 #REGb=#N$1E.
+  $8E69,$02 Write #N$FF to *#REGhl.
+  $8E6B,$01 Increment #REGhl by one.
+  $8E6C,$02 Decrease counter by one and loop back to #R$8E69 until counter is zero.
+  $8E6E,$02 Write #N$C0 to *#REGhl.
+  $8E70,$01 Stash #REGde on the stack.
+  $8E71,$04 #REGhl+=#N($0021,$04,$04).
+  $8E75,$01 Restore #REGde from the stack.
+  $8E76,$01 Decrease #REGc by one.
+  $8E77,$02 Jump to #R$8E64 until #REGc is zero.
+  $8E79,$01 Restore #REGhl from the stack.
+  $8E7A,$01 Increment #REGh by one.
+  $8E7B,$01 Decrease #REGd by one.
+  $8E7C,$02 Jump to #R$8E61 until #REGd is zero.
+  $8E7E,$01 Temporarily stash #REGde on the stack.
+  $8E7F,$05 #REGhl-=#N($07C0,$04,$04).
+  $8E84,$01 Restore #REGde from the stack.
+  $8E85,$01 Decrease #REGe by one.
+  $8E86,$02 Jump to #R$8E5F until #REGe is zero.
+  $8E88,$03 #REGhl=#N$5040 (screen buffer location).
+  $8E8B,$02 #REGc=#N$08.
+  $8E8D,$01 Stash #REGhl on the stack.
+  $8E8E,$02 #REGb=#N$03.
+  $8E90,$02 Write #N$03 to *#REGhl.
+  $8E92,$04 #REGhl+=#N($001F,$04,$04).
+  $8E96,$02 Write #N$C0 to *#REGhl.
+  $8E98,$04 #REGhl+=#N($0021,$04,$04).
+  $8E9C,$02 Decrease counter by one and loop back to #R$8E90 until counter is zero.
+  $8E9E,$01 Restore #REGhl from the stack.
+  $8E9F,$01 Increment #REGh by one.
+  $8EA0,$01 Decrease #REGc by one.
+  $8EA1,$02 Jump to #R$8E8D until #REGc is zero.
+  $8EA3,$03 #REGhl=#N$504F (screen buffer location).
+  $8EA6,$02 #REGc=#N$01.
+  $8EA8,$03 Call #R$8ECD.
+  $8EAB,$03 #REGhl=#N$508A (screen buffer location).
+  $8EAE,$03 Call #R$8ECB.
+  $8EB1,$03 #REGhl=#N$5094 (screen buffer location).
+  $8EB4,$03 Call #R$8ECB.
+  $8EB7,$03 #REGhl=#N$5A41 (attribute buffer location).
+  $8EBA,$02 #REGc=#N$03.
+  $8EBC,$02 #REGb=#N$1E.
+  $8EBE,$02 Write #COLOUR$78 to *#REGhl.
+  $8EC0,$01 Increment #REGhl by one.
+  $8EC1,$02 Decrease counter by one and loop back to #R$8EBE until counter is zero.
+  $8EC3,$04 #REGhl+=#N($0022,$04,$04).
+  $8EC7,$01 Decrease #REGc by one.
+  $8EC8,$02 Jump to #R$8EBC until #REGc is zero.
+  $8ECA,$01 Return.
+
+  $8ECB,$02 #REGc=#N$02.
+  $8ECD,$01 Stash #REGhl on the stack.
+  $8ECE,$02 #REGb=#N$08.
+  $8ED0,$02 Write #N$01 to *#REGhl.
+  $8ED2,$01 Increment #REGhl by one.
+  $8ED3,$02 Write #N$80 to *#REGhl.
+  $8ED5,$01 Decrease #REGhl by one.
+  $8ED6,$01 Increment #REGh by one.
+  $8ED7,$02 Decrease counter by one and loop back to #R$8ED0 until counter is zero.
+  $8ED9,$01 Restore #REGhl from the stack.
+  $8EDA,$03 #REGde=#N($0040,$04,$04).
+  $8EDD,$01 #REGhl+=#REGde.
+  $8EDE,$01 Decrease #REGc by one.
+  $8EDF,$02 Jump to #R$8ECD until #REGc is zero.
+  $8EE1,$01 Return.
 
 c $8EE2 Handler: Showdown
 @ $8EE2 label=Handler_Showdown
@@ -1336,11 +1436,12 @@ W $905A,$02
 c $905C
   $905C,$03 #REGa=*#R$9054.
   $905F,$01 Stash #REGaf on the stack.
-  $9060,$01 Set the bits from #REGa.
-  $9061,$02 Jump to #R$9065 if #REGa is not zero.
+  $9060,$03 Jump to #R$9065 if #REGa is not zero.
   $9063,$02 #REGa=#N$05.
   $9065,$01 Decrease #REGa by one.
   $9066,$02 Jump to #R$9073.
+
+c $9068
   $9068,$03 #REGa=*#R$9054.
   $906B,$01 Stash #REGaf on the stack.
   $906C,$04 Jump to #R$9072 if #REGa is not equal to #N$04.
@@ -1364,6 +1465,8 @@ c $905C
   $908D,$01 Increment #REGhl by one.
   $908E,$02 Decrease counter by one and loop back to #R$908C until counter is zero.
   $9090,$03 Jump to #R$9012.
+
+c $9093
   $9093,$03 #REGhl=#R$9055.
   $9096,$02 #REGb=#N$05.
   $9098,$02 #REGc=#N$00.
@@ -1386,12 +1489,13 @@ c $905C
   $90B6,$02,b$01 Flip bits 0-5.
   $90B8,$01 Write #REGa to *#REGhl.
   $90B9,$02 Jump to #R$9090.
+
+c $90BB
   $90BB,$03 #REGde=#R$9055.
   $90BE,$03 #REGhl=#R$96C7.
   $90C1,$02 #REGb=#N$05.
   $90C3,$01 #REGa=*#REGde.
-  $90C4,$01 Set the bits from #REGa.
-  $90C5,$02 Jump to #R$90C9 if #REGa is zero.
+  $90C4,$03 Jump to #R$90C9 if #REGa is zero.
   $90C7,$02 Write #N$FF to *#REGhl.
   $90C9,$01 Increment #REGhl by one.
   $90CA,$01 Increment #REGde by one.
@@ -1594,29 +1698,31 @@ c $9245 Player Add To Pot
   $9250,$07 Add *#R$96B7 to *#R$96B4 and write this back to *#R$96B4.
   $9257,$01 Return.
 
-c $9258
+c $9258 Handler: Raising
+@ $9258 label=HandlerRaising
   $9258,$02 #REGa=#COLOUR$68.
   $925A,$03 #REGhl=#N$5A95 (attribute buffer location).
   $925D,$03 Call #R$91D1.
 N $9260 #UDGTABLE { #MESSAGE$11(message-17) } UDGTABLE#
   $9260,$05 Call #R$7D97 using message block #R$8B6D(#N$11).
+@ $9265 label=RaisingCollectUserInput
   $9265,$05 Write #N$01 to *#R$92C5.
   $926A,$02 Restore #REGix from the stack.
   $926C,$03 Call #R$90D8.
   $926F,$02 Stash #REGix on the stack.
-  $9271,$01 Set the bits from #REGa.
-  $9272,$02 Jump to #R$927C if #REGa is zero.
+  $9271,$03 Jump to #R$927C if #REGa is zero.
   $9274,$01 Decrease #REGa by one.
   $9275,$02 Jump to #R$92A7 if #REGa is zero.
   $9277,$01 Decrease #REGa by one.
   $9278,$02 Jump to #R$9289 if #REGa is zero.
   $927A,$02 Jump to #R$9265.
+
   $927C,$02 #REGa=#COLOUR$78.
   $927E,$03 #REGhl=#N$5A95 (attribute buffer location).
   $9281,$03 Call #R$91D1.
   $9284,$04 #REGb=*#R$96B7.
   $9288,$01 Return.
-
+@ $9289 label=IncreaseRaiseAmount
   $9289,$03 #REGa=*#R$96B7.
   $928C,$01 Increment #REGa by one.
   $928D,$04 Jump to #R$9265 if #REGa is higher than #N$15.
@@ -1627,7 +1733,7 @@ N $9260 #UDGTABLE { #MESSAGE$11(message-17) } UDGTABLE#
   $929F,$03 Write #REGa to *#R$96B7.
   $92A2,$03 Call #R$8F7E.
   $92A5,$02 Jump to #R$92B3.
-
+@ $92A7 label=DecreaseRaiseAmount
   $92A7,$03 #REGa=*#R$96B7.
   $92AA,$01 Decrease #REGa by one.
   $92AB,$02 Jump to #R$9265 if #REGa is zero.
@@ -1637,10 +1743,13 @@ N $9260 #UDGTABLE { #MESSAGE$11(message-17) } UDGTABLE#
   $92B5,$03 #REGhl=#N$5A95 (attribute buffer location).
   $92B8,$03 Call #R$91D1.
   $92BB,$03 #REGbc=#N$4000 (screen buffer location).
+@ $92BE label=RaisePause_Loop
   $92BE,$01 Decrease #REGc by one.
   $92BF,$02 Jump to #R$92BE until #REGc is zero.
   $92C1,$02 Decrease counter by one and loop back to #R$92BE until counter is zero.
   $92C3,$02 Jump to #R$9265.
+
+g $92C5
 B $92C5,$01
 
 t $92C6 Messaging: In-Game
@@ -2010,8 +2119,7 @@ g $95BB Card Deck
 B $95BB,$34,$0D
 
 c $95EF
-  $95EF,$02 Stash #REGix on the stack.
-  $95F1,$01 Restore #REGde from the stack.
+  $95EF,$03 #REGde=#REGix (using the stack).
   $95F2,$02 #REGb=#N$04.
   $95F4,$01 #REGa=*#REGde.
   $95F5,$02,b$01 Keep only bits 4-7.
