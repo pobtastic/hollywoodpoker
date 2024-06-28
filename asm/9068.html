@@ -33,7 +33,7 @@ Next: <a href="9093.html">9093</a>
 </td>
 </tr>
 </table>
-<div class="description">9068: Routine at 9068</div>
+<div class="description">9068: Mark Cards: Move Cursor Right</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,30 +45,36 @@ Used by the routine at <a href="9003.html">MarkCards</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_CursorRight</td>
 <td class="address-2"><span id="9068"></span>9068</td>
 <td class="instruction">LD A,($9054)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="9054.html">9054</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="9054.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="906b"></span>906B</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="906c"></span>906C</td>
 <td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="2">Jump to <a href="9068.html#9072">9072</a> if <span class="register">A</span> is not equal to 04.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="9068.html#9072">MarkCards_CursorRight_0</a> if <span class="register">A</span> is not equal to 04.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="906e"></span>906E</td>
-<td class="instruction">JR NZ,<a href="9068.html#9072">$9072</a></td>
+<td class="instruction">JR NZ,<a href="9068.html#9072">MarkCards_CursorRight_0</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9070"></span>9070</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=FF.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_CursorRight_0</td>
 <td class="address-2"><span id="9072"></span>9072</td>
 <td class="instruction">INC A</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
@@ -78,110 +84,128 @@ Used by the routine at <a href="9003.html">MarkCards</a>.
 <span id="9073"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="905C.html">905C</a>.
+This entry point is used by the routine at <a href="905C.html">MarkCards_CursorLeft</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_CursorRight_1</td>
 <td class="address-2"><span id="9073"></span>9073</td>
 <td class="instruction">LD ($9054),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="9054.html">9054</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="9054.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9076"></span>9076</td>
 <td class="instruction">POP AF</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9077"></span>9077</td>
 <td class="instruction">INC A</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9078"></span>9078</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9079"></span>9079</td>
 <td class="instruction">LD HL,$9054</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9054.html">9054</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9054.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_CursorRight_2</td>
 <td class="address-2"><span id="907c"></span>907C</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="907d"></span>907D</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="907e"></span>907E</td>
-<td class="instruction">JR NZ,<a href="9068.html#907c">$907C</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9068.html#907c">907C</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="9068.html#907c">MarkCards_CursorRight_2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9068.html#907c">MarkCards_CursorRight_2</a> until <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9080"></span>9080</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9081"></span>9081</td>
 <td class="instruction">LD HL,$5A1B</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=5A1B (attribute buffer location).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9084"></span>9084</td>
 <td class="instruction">LD DE,$0006</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=0006.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_CursorRight_3</td>
 <td class="address-2"><span id="9087"></span>9087</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9088"></span>9088</td>
-<td class="instruction">DJNZ <a href="9068.html#9087">$9087</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9068.html#9087">9087</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="9068.html#9087">MarkCards_CursorRight_3</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9068.html#9087">MarkCards_CursorRight_3</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="908a"></span>908A</td>
 <td class="instruction">LD B,$06</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=06.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_CursorRight_4</td>
 <td class="address-2"><span id="908c"></span>908C</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="908d"></span>908D</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="908e"></span>908E</td>
-<td class="instruction">DJNZ <a href="9068.html#908c">$908C</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9068.html#908c">908C</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="9068.html#908c">MarkCards_CursorRight_4</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9068.html#908c">MarkCards_CursorRight_4</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="9090"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="9093.html">9093</a>.
+This entry point is used by the routine at <a href="9093.html">MarkCards_SelectCard</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_CursorRight_5</td>
 <td class="address-2"><span id="9090"></span>9090</td>
-<td class="instruction">JP <a href="9003.html#9012">MarkCards_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9003.html#9012">MarkCards_1</a>.</td>
+<td class="instruction">JP <a href="9003.html#9012">FindSelectedCardAttribute</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9003.html#9012">FindSelectedCardAttribute</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

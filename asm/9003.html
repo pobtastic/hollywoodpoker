@@ -62,7 +62,7 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 <td class="asm-label">MarkCards</td>
 <td class="address-2"><span id="9003"></span>9003</td>
 <td class="instruction">LD A,$0F</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 0F.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="89F3.html">0F</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -70,19 +70,29 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 <td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="9008"></span>
+<div class="comments">
+<div class="paragraph">
+Reset <a href="9054.html">SelectedMarkedCard</a> and <a href="9055.html">MarkedCards</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9008"></span>9008</td>
 <td class="instruction">LD HL,$9054</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9054.html">9054</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9054.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="900b"></span>900B</td>
 <td class="instruction">LD B,$06</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=06.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> for 06 bytes.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_0</td>
+<td class="asm-label">ResetMarkedCardFlags_Loop</td>
 <td class="address-2"><span id="900d"></span>900D</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-1" rowspan="1">Write 00 to *<span class="register">HL</span>.</td>
@@ -96,21 +106,21 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9010"></span>9010</td>
-<td class="instruction">DJNZ <a href="9003.html#900d">MarkCards_0</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9003.html#900d">MarkCards_0</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="9003.html#900d">ResetMarkedCardFlags_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the counter by one and loop back to <a href="9003.html#900d">ResetMarkedCardFlags_Loop</a> until the counter is zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="9012"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="9068.html">9068</a>.
+This entry point is used by the routine at <a href="9068.html">MarkCards_CursorRight</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_1</td>
+<td class="asm-label">FindSelectedCardAttribute</td>
 <td class="address-2"><span id="9012"></span>9012</td>
 <td class="instruction">LD HL,$5A1B</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=5A1B (attribute buffer location).</td>
@@ -119,7 +129,7 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="9015"></span>9015</td>
 <td class="instruction">LD A,($9054)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="9054.html">9054</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="9054.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -131,10 +141,20 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="901b"></span>901B</td>
 <td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one for the calculation (as position 00-01 won't work).</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_2</td>
+<td class="routine-comment" colspan="5">
+<span id="901c"></span>
+<div class="comments">
+<div class="paragraph">
+Keep adding 0006 to <span class="register">HL</span> while decreasing the selected card position by one. When the card position reaches zero, this is where the selected card attribute block is for this card position.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">FindSelectedCardAttribute_Loop</td>
 <td class="address-2"><span id="901c"></span>901C</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
@@ -148,32 +168,52 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="901e"></span>901E</td>
-<td class="instruction">JR NZ,<a href="9003.html#901c">MarkCards_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9003.html#901c">MarkCards_2</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="9003.html#901c">FindSelectedCardAttribute_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9003.html#901c">FindSelectedCardAttribute_Loop</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9020"></span>
+<div class="comments">
+<div class="paragraph">
+The attribute block under the selected card has been located.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9020"></span>9020</td>
 <td class="instruction">LD ($905A),HL</td>
-<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="9054.html#905a">905A</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="905A.html">PointerMarkedCardAttributeBuffer</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_3</td>
+<td class="routine-comment" colspan="5">
+<span id="9023"></span>
+<div class="comments">
+<div class="paragraph">
+Flash the attributes under the selected card.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">SelectedCardAttributeFlash</td>
 <td class="address-2"><span id="9023"></span>9023</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=00.</td>
+<td class="comment-1" rowspan="1">Initialise the flash count to 00 in <span class="register">C</span>.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_4</td>
+<td class="asm-label">SelectedCardAttributeFlash_Loop</td>
 <td class="address-2"><span id="9025"></span>9025</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">C</span>.</td>
+<td class="comment-1" rowspan="1">Copy the count into <span class="register">A</span> for conversion into a usable attribute value.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9026"></span>9026</td>
 <td class="instruction">SLA A</td>
-<td class="comment-1" rowspan="3">Shift <span class="register">A</span> left three positions (with carry).</td>
+<td class="comment-1" rowspan="3">Convert the INK value into a PAPER value.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -189,22 +229,22 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="902c"></span>902C</td>
 <td class="instruction">OR %01000000</td>
-<td class="comment-1" rowspan="1">Set bit 6.</td>
+<td class="comment-1" rowspan="1">Set the BRIGHT bit.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="902e"></span>902E</td>
 <td class="instruction">LD HL,($905A)</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="9054.html#905a">905A</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="905A.html">PointerMarkedCardAttributeBuffer</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9031"></span>9031</td>
 <td class="instruction">LD B,$06</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=06.</td>
+<td class="comment-1" rowspan="1">Set a counter to the width of a card to <span class="register">B</span> (06 bytes).</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_5</td>
+<td class="asm-label">SelectedCardWriteAttributeLine</td>
 <td class="address-2"><span id="9033"></span>9033</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
@@ -218,8 +258,18 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9035"></span>9035</td>
-<td class="instruction">DJNZ <a href="9003.html#9033">MarkCards_5</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9003.html#9033">MarkCards_5</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="9003.html#9033">SelectedCardWriteAttributeLine</a></td>
+<td class="comment-1" rowspan="1">Decrease the width counter by one and loop back to <a href="9003.html#9033">SelectedCardWriteAttributeLine</a> until all the attribute bytes have been written.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9037"></span>
+<div class="comments">
+<div class="paragraph">
+Introduce a tiny delay for the sake of the colour change effect.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -228,7 +278,7 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <td class="comment-1" rowspan="1"><span class="register">D</span>=19.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_6</td>
+<td class="asm-label">TinyPause_Loop</td>
 <td class="address-2"><span id="9039"></span>9039</td>
 <td class="instruction">DEC D</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">D</span> by one.</td>
@@ -236,8 +286,18 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="903a"></span>903A</td>
-<td class="instruction">JR NZ,<a href="9003.html#9039">MarkCards_6</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9003.html#9039">MarkCards_6</a> until <span class="register">D</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="9003.html#9039">TinyPause_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9003.html#9039">TinyPause_Loop</a> until <span class="register">D</span> is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="903c"></span>
+<div class="comments">
+<div class="paragraph">
+Update the flash count, and keep jumping back until the count is equal to 08... As there are only 07 colours.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -249,7 +309,7 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="903d"></span>903D</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="3">Jump to <a href="9003.html#9025">MarkCards_4</a> if <span class="register">C</span> is not equal to 08.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="9003.html#9025">SelectedCardAttributeFlash_Loop</a> if <span class="register">C</span> is not equal to 08.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -259,7 +319,17 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9040"></span>9040</td>
-<td class="instruction">JR NZ,<a href="9003.html#9025">MarkCards_4</a></td>
+<td class="instruction">JR NZ,<a href="9003.html#9025">SelectedCardAttributeFlash_Loop</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9042"></span>
+<div class="comments">
+<div class="paragraph">
+The count is 08 so continue here.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -271,47 +341,46 @@ This entry point is used by the routine at <a href="9068.html">9068</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="9045"></span>9045</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="9093.html">MarkCards_SelectCard</a> if "select" has been pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9046"></span>9046</td>
-<td class="instruction">JR Z,<a href="9093.html">$9093</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9093.html">9093</a> if <span class="register">A</span> is zero.</td>
+<td class="instruction">JR Z,<a href="9093.html">MarkCards_SelectCard</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9048"></span>9048</td>
 <td class="instruction">CP $03</td>
-<td class="comment-1" rowspan="2">Jump to <a href="905C.html">905C</a> if <span class="register">A</span> is equal to 03.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="905C.html">MarkCards_CursorLeft</a> if "left" has been pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="904a"></span>904A</td>
-<td class="instruction">JR Z,<a href="905C.html">$905C</a></td>
+<td class="instruction">JR Z,<a href="905C.html">MarkCards_CursorLeft</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="904c"></span>904C</td>
 <td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="2">Jump to <a href="9068.html">9068</a> if <span class="register">A</span> is equal to 04.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="9068.html">MarkCards_CursorRight</a> if "right" has been pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="904e"></span>904E</td>
-<td class="instruction">JR Z,<a href="9068.html">$9068</a></td>
+<td class="instruction">JR Z,<a href="9068.html">MarkCards_CursorRight</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9050"></span>9050</td>
-<td class="instruction">JR C,<a href="90BB.html">$90BB</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="90BB.html">90BB</a> if <span class="register">A</span> is lower than 04.</td>
+<td class="instruction">JR C,<a href="90BB.html">HandlerMarkCards</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="90BB.html">HandlerMarkCards</a> if <span class="register">A</span> is lower than 04.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9052"></span>9052</td>
-<td class="instruction">JR <a href="9003.html#9023">MarkCards_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9003.html#9023">MarkCards_3</a>.</td>
+<td class="instruction">JR <a href="9003.html#9023">SelectedCardAttributeFlash</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9003.html#9023">SelectedCardAttributeFlash</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

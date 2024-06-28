@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="36948.html">36948</a>
+Prev: <a href="36954.html">36954</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#36956">Map</a></td>
 <td class="next">
@@ -33,7 +33,7 @@ Next: <a href="36968.html">36968</a>
 </td>
 </tr>
 </table>
-<div class="description">36956: Routine at 905C</div>
+<div class="description">36956: Mark Cards: Move Cursor Left</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,44 +45,51 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_CursorLeft</td>
 <td class="address-2"><span id="36956"></span>36956</td>
 <td class="instruction">LD A,(36948)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36948.html">36948</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36948.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36959"></span>36959</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36960"></span>36960</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="36956.html#36965">36965</a> if <span class="register">A</span> is not zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="36956.html#36965">MarkCards_CursorLeft_0</a> if <span class="register">A</span> is not zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36961"></span>36961</td>
-<td class="instruction">JR NZ,<a href="36956.html#36965">36965</a></td>
+<td class="instruction">JR NZ,<a href="36956.html#36965">MarkCards_CursorLeft_0</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36963"></span>36963</td>
 <td class="instruction">LD A,5</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=5.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_CursorLeft_0</td>
 <td class="address-2"><span id="36965"></span>36965</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="36966"></span>36966</td>
-<td class="instruction">JR <a href="36968.html#36979">36979</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="36968.html#36979">36979</a>.</td>
+<td class="instruction">JR <a href="36968.html#36979">MarkCards_CursorRight_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36968.html#36979">MarkCards_CursorRight_1</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="36948.html">36948</a>
+Prev: <a href="36954.html">36954</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#36956">Map</a></td>
 <td class="next">

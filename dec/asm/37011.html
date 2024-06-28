@@ -33,7 +33,7 @@ Next: <a href="37051.html">37051</a>
 </td>
 </tr>
 </table>
-<div class="description">37011: Routine at 9093</div>
+<div class="description">37011: Mark Cards: Select Card</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,122 +45,145 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_SelectCard</td>
 <td class="address-2"><span id="37011"></span>37011</td>
 <td class="instruction">LD HL,36949</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36948.html#36949">36949</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36949.html">MarkedCards</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37014"></span>37014</td>
 <td class="instruction">LD B,5</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37016"></span>37016</td>
 <td class="instruction">LD C,0</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=0.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_SelectCard_0</td>
 <td class="address-2"><span id="37018"></span>37018</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37019"></span>37019</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="37011.html#37023">MarkCards_SelectCard_1</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37020"></span>37020</td>
-<td class="instruction">JR Z,<a href="37011.html#37023">37023</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37011.html#37023">37023</a> if <span class="register">A</span> is zero.</td>
+<td class="instruction">JR Z,<a href="37011.html#37023">MarkCards_SelectCard_1</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37022"></span>37022</td>
 <td class="instruction">INC C</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">C</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_SelectCard_1</td>
 <td class="address-2"><span id="37023"></span>37023</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37024"></span>37024</td>
-<td class="instruction">DJNZ <a href="37011.html#37018">37018</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37011.html#37018">37018</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="37011.html#37018">MarkCards_SelectCard_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37011.html#37018">MarkCards_SelectCard_0</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37026"></span>37026</td>
 <td class="instruction">LD A,(36948)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36948.html">36948</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36948.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37029"></span>37029</td>
 <td class="instruction">INC A</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37030"></span>37030</td>
 <td class="instruction">LD HL,36948</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36948.html">36948</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36948.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_SelectCard_2</td>
 <td class="address-2"><span id="37033"></span>37033</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37034"></span>37034</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37035"></span>37035</td>
-<td class="instruction">JR NZ,<a href="37011.html#37033">37033</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37011.html#37033">37033</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="37011.html#37033">MarkCards_SelectCard_2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37011.html#37033">MarkCards_SelectCard_2</a> until <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37037"></span>37037</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="3">Jump to <a href="37011.html#37045">37045</a> if <span class="register">C</span> is lower than 3.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="37011.html#37045">MarkCards_SelectCard_3</a> if <span class="register">C</span> is lower than 3.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37038"></span>37038</td>
 <td class="instruction">CP 3</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37040"></span>37040</td>
-<td class="instruction">JR C,<a href="37011.html#37045">37045</a></td>
+<td class="instruction">JR C,<a href="37011.html#37045">MarkCards_SelectCard_3</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37042"></span>37042</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37043"></span>37043</td>
-<td class="instruction">JR <a href="37011.html#37048">37048</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37011.html#37048">37048</a>.</td>
+<td class="instruction">JR <a href="37011.html#37048">MarkCards_SelectCard_4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37011.html#37048">MarkCards_SelectCard_4</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_SelectCard_3</td>
 <td class="address-2"><span id="37045"></span>37045</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37046"></span>37046</td>
 <td class="instruction">XOR %00111111</td>
 <td class="comment-1" rowspan="1">Flip bits 0-5.</td>
 </tr>
 <tr>
+<td class="asm-label">MarkCards_SelectCard_4</td>
 <td class="address-2"><span id="37048"></span>37048</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37049"></span>37049</td>
-<td class="instruction">JR <a href="36968.html#37008">37008</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="36968.html#37008">37008</a>.</td>
+<td class="instruction">JR <a href="36968.html#37008">MarkCards_CursorRight_5</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36968.html#37008">MarkCards_CursorRight_5</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -33,7 +33,7 @@ Next: <a href="90D8.html">90D8</a>
 </td>
 </tr>
 </table>
-<div class="description">90BB: Routine at 90BB</div>
+<div class="description">90BB: Handler: Mark Cards</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,80 +45,150 @@ Used by the routine at <a href="9003.html">MarkCards</a>.
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="90bb"></span>90BB</td>
-<td class="instruction">LD DE,$9055</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="9054.html#9055">9055</a>.</td>
+<td class="routine-comment" colspan="5">
+<span id="90bb"></span>
+<div class="comments">
+<div class="paragraph">
+Sets the cards in the players hand to be redrawn, where they've been marked in <a href="9055.html">MarkedCards</a>.
+</div>
+</div>
+</td>
 </tr>
 <tr>
+<td class="asm-label">HandlerMarkCards</td>
+<td class="address-2"><span id="90bb"></span>90BB</td>
+<td class="instruction">LD DE,$9055</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="9055.html">MarkedCards</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90be"></span>90BE</td>
 <td class="instruction">LD HL,$96C7</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="96C7.html">PlayersHand</a>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="90c1"></span>90C1</td>
-<td class="instruction">LD B,$05</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=05.</td>
+<td class="routine-comment" colspan="5">
+<span id="90c1"></span>
+<div class="comments">
+<div class="paragraph">
+Cycle through each marked card from <a href="9055.html">MarkedCards</a>, and set the appropriate card in the players hand to be redrawn (FF) if it's set to do so.
+</div>
+</div>
+</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="90c1"></span>90C1</td>
+<td class="instruction">LD B,$05</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> for the 05 cards in a hand.</td>
+</tr>
+<tr>
+<td class="asm-label">HandlerMarkCards_Loop</td>
 <td class="address-2"><span id="90c3"></span>90C3</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90c4"></span>90C4</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="90BB.html#90c9">90C9</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="90BB.html#90c9">DontMarkCard</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90c5"></span>90C5</td>
-<td class="instruction">JR Z,<a href="90BB.html#90c9">$90C9</a></td>
+<td class="instruction">JR Z,<a href="90BB.html#90c9">DontMarkCard</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="90c7"></span>
+<div class="comments">
+<div class="paragraph">
+Set the card in the hand to be redrawn.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90c7"></span>90C7</td>
 <td class="instruction">LD (HL),$FF</td>
 <td class="comment-1" rowspan="1">Write FF to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="90c9"></span>
+<div class="comments">
+<div class="paragraph">
+Move onto the next card.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DontMarkCard</td>
 <td class="address-2"><span id="90c9"></span>90C9</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="2">Increment both <span class="register">DE</span> and <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90ca"></span>90CA</td>
 <td class="instruction">INC DE</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90cb"></span>90CB</td>
-<td class="instruction">DJNZ <a href="90BB.html#90c3">$90C3</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="90BB.html#90c3">90C3</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="90BB.html#90c3">HandlerMarkCards_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card counter by one and loop back to <a href="90BB.html#90c3">HandlerMarkCards_Loop</a> until all cards have been considered.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="90cd"></span>
+<div class="comments">
+<div class="paragraph">
+Clean up the UI for marking cards.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90cd"></span>90CD</td>
 <td class="instruction">LD HL,$5A21</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=5A21 (attribute buffer location).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90d0"></span>90D0</td>
 <td class="instruction">LD B,$1E</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=1E.</td>
 </tr>
 <tr>
+<td class="asm-label">ResetMarkCardsAttributes_Loop</td>
 <td class="address-2"><span id="90d2"></span>90D2</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-1" rowspan="1">Write 00 to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Write INK:
+BLACK,
+PAPER:
+BLACK
+
+ to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90d4"></span>90D4</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90d5"></span>90D5</td>
-<td class="instruction">DJNZ <a href="90BB.html#90d2">$90D2</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="90BB.html#90d2">90D2</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="90BB.html#90d2">ResetMarkCardsAttributes_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="90BB.html#90d2">ResetMarkCardsAttributes_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="90d7"></span>90D7</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
