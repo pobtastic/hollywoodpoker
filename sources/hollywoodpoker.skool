@@ -3904,60 +3904,88 @@ c$8F7E LD HL,$8FE2   ; #REGhl=#R$8FE2.
 ; { #MESSAGE$0F(message-15) }
 ; UDGTABLE#
 @label=MarkCards
-c$9003 LD A,$0F      ; {Call #R$7D97 using message block #N$0F.
+c$9003 LD A,$0F      ; {Call #R$7D97 using message block #R$89F3(#N$0F).
  $9005 CALL $7D97    ; }
+; Reset #R$9054 and #R$9055.
  $9008 LD HL,$9054   ; #REGhl=#R$9054.
- $900B LD B,$06      ; #REGb=#N$06.
+ $900B LD B,$06      ; Set a counter in #REGb for #N$06 bytes.
+@label=ResetMarkedCardFlags_Loop
 *$900D LD (HL),$00   ; Write #N$00 to *#REGhl.
  $900F INC HL        ; Increment #REGhl by one.
- $9010 DJNZ $900D    ; Decrease counter by one and loop back to #R$900D until
-                     ; counter is zero.
+ $9010 DJNZ $900D    ; Decrease the counter by one and loop back to #R$900D
+                     ; until the counter is zero.
 ; This entry point is used by the routine at #R$9068.
+@label=FindSelectedCardAttribute
 *$9012 LD HL,$5A1B   ; #REGhl=#N$5A1B (attribute buffer location).
  $9015 LD A,($9054)  ; #REGa=*#R$9054.
  $9018 LD DE,$0006   ; #REGde=#N($0006,$04,$04).
- $901B INC A         ; Increment #REGa by one.
+ $901B INC A         ; Increment #REGa by one for the calculation (as position #N$00-#N$01
+                     ; won't work).
+; Keep adding #N($0006,$04,$04) to #REGhl while decreasing the selected
+; card position by one. When the card position reaches zero, this is where the
+; selected card attribute block is for this card position.
+@label=FindSelectedCardAttribute_Loop
 *$901C ADD HL,DE     ; #REGhl+=#REGde.
  $901D DEC A         ; Decrease #REGa by one.
  $901E JR NZ,$901C   ; Jump to #R$901C until #REGa is zero.
+; The attribute block under the selected card has been located.
  $9020 LD ($905A),HL ; Write #REGhl to *#R$905A.
-*$9023 LD C,$00      ; #REGc=#N$00.
-*$9025 LD A,C        ; #REGa=#REGc.
- $9026 SLA A         ; {Shift #REGa left three positions (with carry).
+; Flash the attributes under the selected card.
+@label=SelectedCardAttributeFlash
+*$9023 LD C,$00      ; Initialise the flash count to #N$00 in #REGc.
+@label=SelectedCardAttributeFlash_Loop
+*$9025 LD A,C        ; Copy the count into #REGa for conversion into a usable
+                     ; attribute value.
+ $9026 SLA A         ; {Convert the INK value into a PAPER value.
  $9028 SLA A         ;
  $902A SLA A         ; }
- $902C OR %01000000  ; Set bit 6.
+ $902C OR %01000000  ; Set the BRIGHT bit.
  $902E LD HL,($905A) ; #REGhl=*#R$905A.
- $9031 LD B,$06      ; #REGb=#N$06.
+ $9031 LD B,$06      ; Set a counter to the width of a card to #REGb (#N$06
+                     ; bytes).
+@label=SelectedCardWriteAttributeLine
 *$9033 LD (HL),A     ; Write #REGa to *#REGhl.
  $9034 INC HL        ; Increment #REGhl by one.
- $9035 DJNZ $9033    ; Decrease counter by one and loop back to #R$9033 until
-                     ; counter is zero.
+ $9035 DJNZ $9033    ; Decrease the width counter by one and loop back to
+                     ; #R$9033 until all the attribute bytes have been written.
+; Introduce a tiny delay for the sake of the colour change effect.
  $9037 LD D,$19      ; #REGd=#N$19.
+@label=TinyPause_Loop
 *$9039 DEC D         ; Decrease #REGd by one.
  $903A JR NZ,$9039   ; Jump to #R$9039 until #REGd is zero.
+; Update the flash count, and keep jumping back until the count is equal
+; to #N$08... As there are only #N$07 colours.
  $903C INC C         ; Increment #REGc by one.
  $903D LD A,C        ; {Jump to #R$9025 if #REGc is not equal to #N$08.
  $903E CP $08        ;
  $9040 JR NZ,$9025   ; }
+; The count is #N$08, so continue here.
  $9042 CALL $90D8    ; Call #R$90D8.
- $9045 OR A          ; Set the bits from #REGa.
- $9046 JR Z,$9093    ; Jump to #R$9093 if #REGa is zero.
- $9048 CP $03        ; {Jump to #R$905C if #REGa is equal to #N$03.
+ $9045 OR A          ; {Jump to #R$9093 if "select" has been pressed.
+ $9046 JR Z,$9093    ; }
+ $9048 CP $03        ; {Jump to #R$905C if "left" has been pressed.
  $904A JR Z,$905C    ; }
- $904C CP $04        ; {Jump to #R$9068 if #REGa is equal to #N$04.
+ $904C CP $04        ; {Jump to #R$9068 if "right" has been pressed.
  $904E JR Z,$9068    ; }
  $9050 JR C,$90BB    ; Jump to #R$90BB if #REGa is lower than #N$04.
  $9052 JR $9023      ; Jump to #R$9023.
 
-; Data block at 9054
-b$9054 DEFB $00
- $9055 DEFB $00,$00,$00,$00,$00
- $905A DEFW $0000
+; Selected Marked Card
+@label=SelectedMarkedCard
+g$9054 DEFB $00
 
-; Routine at 905C
+; Marked Cards
+@label=MarkedCards
+g$9055 DEFB $00,$00,$00,$00,$00
+
+; Selected Marked Card Attribute Buffer
+@label=PointerMarkedCardAttributeBuffer
+g$905A DEFW $0000
+
+; Mark Cards: Move Cursor Left
 ;
 ; Used by the routine at #R$9003.
+@label=MarkCards_CursorLeft
 c$905C LD A,($9054)  ; #REGa=*#R$9054.
  $905F PUSH AF       ; Stash #REGaf on the stack.
  $9060 OR A          ; {Jump to #R$9065 if #REGa is not zero.
@@ -3966,9 +3994,10 @@ c$905C LD A,($9054)  ; #REGa=*#R$9054.
 *$9065 DEC A         ; Decrease #REGa by one.
  $9066 JR $9073      ; Jump to #R$9073.
 
-; Routine at 9068
+; Mark Cards: Move Cursor Right
 ;
 ; Used by the routine at #R$9003.
+@label=MarkCards_CursorRight
 c$9068 LD A,($9054)  ; #REGa=*#R$9054.
  $906B PUSH AF       ; Stash #REGaf on the stack.
  $906C CP $04        ; {Jump to #R$9072 if #REGa is not equal to #N$04.
@@ -3998,15 +4027,16 @@ c$9068 LD A,($9054)  ; #REGa=*#R$9054.
 ; This entry point is used by the routine at #R$9093.
 *$9090 JP $9012      ; Jump to #R$9012.
 
-; Routine at 9093
+; Mark Cards: Select Card
 ;
 ; Used by the routine at #R$9003.
+@label=MarkCards_SelectCard
 c$9093 LD HL,$9055   ; #REGhl=#R$9055.
  $9096 LD B,$05      ; #REGb=#N$05.
  $9098 LD C,$00      ; #REGc=#N$00.
 *$909A LD A,(HL)     ; #REGa=*#REGhl.
- $909B OR A          ; Set the bits from #REGa.
- $909C JR Z,$909F    ; Jump to #R$909F if #REGa is zero.
+ $909B OR A          ; {Jump to #R$909F if #REGa is zero.
+ $909C JR Z,$909F    ; }
  $909E INC C         ; Increment #REGc by one.
 *$909F INC HL        ; Increment #REGhl by one.
  $90A0 DJNZ $909A    ; Decrease counter by one and loop back to #R$909A until
@@ -4027,23 +4057,37 @@ c$9093 LD HL,$9055   ; #REGhl=#R$9055.
 *$90B8 LD (HL),A     ; Write #REGa to *#REGhl.
  $90B9 JR $9090      ; Jump to #R$9090.
 
-; Routine at 90BB
+; Handler: Mark Cards
 ;
 ; Used by the routine at #R$9003.
+;
+; .
+;
+; Sets the cards in the players hand to be redrawn, where they've been
+; marked in #R$9055.
+@label=HandlerMarkCards
 c$90BB LD DE,$9055   ; #REGde=#R$9055.
  $90BE LD HL,$96C7   ; #REGhl=#R$96C7.
- $90C1 LD B,$05      ; #REGb=#N$05.
+; Cycle through each marked card from #R$9055, and set the appropriate
+; card in the players hand to be redrawn (#N$FF) if it's set to do so.
+ $90C1 LD B,$05      ; Set a counter in #REGb for the #N$05 cards in a hand.
+@label=HandlerMarkCards_Loop
 *$90C3 LD A,(DE)     ; #REGa=*#REGde.
  $90C4 OR A          ; {Jump to #R$90C9 if #REGa is zero.
  $90C5 JR Z,$90C9    ; }
+; Set the card in the hand to be redrawn.
  $90C7 LD (HL),$FF   ; Write #N$FF to *#REGhl.
-*$90C9 INC HL        ; Increment #REGhl by one.
- $90CA INC DE        ; Increment #REGde by one.
- $90CB DJNZ $90C3    ; Decrease counter by one and loop back to #R$90C3 until
-                     ; counter is zero.
+; Move onto the next card.
+@label=DontMarkCard
+*$90C9 INC HL        ; {Increment both #REGde and #REGhl by one.
+ $90CA INC DE        ; }
+ $90CB DJNZ $90C3    ; Decrease the card counter by one and loop back to #R$90C3 until all
+                     ; cards have been considered.
+; Clean up the UI for marking cards.
  $90CD LD HL,$5A21   ; #REGhl=#N$5A21 (attribute buffer location).
  $90D0 LD B,$1E      ; #REGb=#N$1E.
-*$90D2 LD (HL),$00   ; Write #N$00 to *#REGhl.
+@label=ResetMarkCardsAttributes_Loop
+*$90D2 LD (HL),$00   ; Write #COLOUR$00 to *#REGhl.
  $90D4 INC HL        ; Increment #REGhl by one.
  $90D5 DJNZ $90D2    ; Decrease counter by one and loop back to #R$90D2 until
                      ; counter is zero.

@@ -1392,48 +1392,73 @@ B $8FE8,$01 "ENTER".
 c $9003 Mark Cards
 @ $9003 label=MarkCards
 N $9003 #UDGTABLE { #MESSAGE$0F(message-15) } UDGTABLE#
-  $9003,$05 Call #R$7D97 using message block #N$0F.
+  $9003,$05 Call #R$7D97 using message block #R$89F3(#N$0F).
+N $9008 Reset #R$9054 and #R$9055.
   $9008,$03 #REGhl=#R$9054.
-  $900B,$02 #REGb=#N$06.
+  $900B,$02 Set a counter in #REGb for #N$06 bytes.
+@ $900D label=ResetMarkedCardFlags_Loop
   $900D,$02 Write #N$00 to *#REGhl.
   $900F,$01 Increment #REGhl by one.
-  $9010,$02 Decrease counter by one and loop back to #R$900D until counter is zero.
+  $9010,$02 Decrease the counter by one and loop back to #R$900D until the counter is zero.
+@ $9012 label=FindSelectedCardAttribute
   $9012,$03 #REGhl=#N$5A1B (attribute buffer location).
   $9015,$03 #REGa=*#R$9054.
   $9018,$03 #REGde=#N($0006,$04,$04).
-  $901B,$01 Increment #REGa by one.
+  $901B,$01 Increment #REGa by one for the calculation (as position #N$00-#N$01
+. won't work).
+N $901C Keep adding #N($0006,$04,$04) to #REGhl while decreasing the selected
+. card position by one. When the card position reaches zero, this is where the
+. selected card attribute block is for this card position.
+@ $901C label=FindSelectedCardAttribute_Loop
   $901C,$01 #REGhl+=#REGde.
   $901D,$01 Decrease #REGa by one.
   $901E,$02 Jump to #R$901C until #REGa is zero.
+N $9020 The attribute block under the selected card has been located.
   $9020,$03 Write #REGhl to *#R$905A.
-  $9023,$02 #REGc=#N$00.
-  $9025,$01 #REGa=#REGc.
-  $9026,$06 Shift #REGa left three positions (with carry).
-  $902C,$02,b$01 Set bit 6.
+N $9023 Flash the attributes under the selected card.
+@ $9023 label=SelectedCardAttributeFlash
+  $9023,$02 Initialise the flash count to #N$00 in #REGc.
+@ $9025 label=SelectedCardAttributeFlash_Loop
+  $9025,$01 Copy the count into #REGa for conversion into a usable attribute value.
+  $9026,$06 Convert the INK value into a PAPER value.
+  $902C,$02,b$01 Set the BRIGHT bit.
   $902E,$03 #REGhl=*#R$905A.
-  $9031,$02 #REGb=#N$06.
+  $9031,$02 Set a counter to the width of a card to #REGb (#N$06 bytes).
+@ $9033 label=SelectedCardWriteAttributeLine
   $9033,$01 Write #REGa to *#REGhl.
   $9034,$01 Increment #REGhl by one.
-  $9035,$02 Decrease counter by one and loop back to #R$9033 until counter is zero.
+  $9035,$02 Decrease the width counter by one and loop back to #R$9033 until all the attribute bytes have been written.
+N $9037 Introduce a tiny delay for the sake of the colour change effect.
   $9037,$02 #REGd=#N$19.
+@ $9039 label=TinyPause_Loop
   $9039,$01 Decrease #REGd by one.
   $903A,$02 Jump to #R$9039 until #REGd is zero.
+N $903C Update the flash count, and keep jumping back until the count is equal
+. to #N$08... As there are only #N$07 colours.
   $903C,$01 Increment #REGc by one.
   $903D,$05 Jump to #R$9025 if #REGc is not equal to #N$08.
+N $9042 The count is #N$08, so continue here.
   $9042,$03 Call #R$90D8.
-  $9045,$01 Set the bits from #REGa.
-  $9046,$02 Jump to #R$9093 if #REGa is zero.
-  $9048,$04 Jump to #R$905C if #REGa is equal to #N$03.
-  $904C,$04 Jump to #R$9068 if #REGa is equal to #N$04.
+  $9045,$03 Jump to #R$9093 if "select" has been pressed.
+  $9048,$04 Jump to #R$905C if "left" has been pressed.
+  $904C,$04 Jump to #R$9068 if "right" has been pressed.
   $9050,$02 Jump to #R$90BB if #REGa is lower than #N$04.
   $9052,$02 Jump to #R$9023.
 
-b $9054
-  $9054,$01
-  $9055
+g $9054 Selected Marked Card
+@ $9054 label=SelectedMarkedCard
+B $9054,$01
+
+g $9055 Marked Cards
+@ $9055 label=MarkedCards
+B $9055,$05
+
+g $905A Selected Marked Card Attribute Buffer
+@ $905A label=PointerMarkedCardAttributeBuffer
 W $905A,$02
 
-c $905C
+c $905C Mark Cards: Move Cursor Left
+@ $905C label=MarkCards_CursorLeft
   $905C,$03 #REGa=*#R$9054.
   $905F,$01 Stash #REGaf on the stack.
   $9060,$03 Jump to #R$9065 if #REGa is not zero.
@@ -1441,7 +1466,8 @@ c $905C
   $9065,$01 Decrease #REGa by one.
   $9066,$02 Jump to #R$9073.
 
-c $9068
+c $9068 Mark Cards: Move Cursor Right
+@ $9068 label=MarkCards_CursorRight
   $9068,$03 #REGa=*#R$9054.
   $906B,$01 Stash #REGaf on the stack.
   $906C,$04 Jump to #R$9072 if #REGa is not equal to #N$04.
@@ -1466,13 +1492,13 @@ c $9068
   $908E,$02 Decrease counter by one and loop back to #R$908C until counter is zero.
   $9090,$03 Jump to #R$9012.
 
-c $9093
+c $9093 Mark Cards: Select Card
+@ $9093 label=MarkCards_SelectCard
   $9093,$03 #REGhl=#R$9055.
   $9096,$02 #REGb=#N$05.
   $9098,$02 #REGc=#N$00.
   $909A,$01 #REGa=*#REGhl.
-  $909B,$01 Set the bits from #REGa.
-  $909C,$02 Jump to #R$909F if #REGa is zero.
+  $909B,$03 Jump to #R$909F if #REGa is zero.
   $909E,$01 Increment #REGc by one.
   $909F,$01 Increment #REGhl by one.
   $90A0,$02 Decrease counter by one and loop back to #R$909A until counter is zero.
@@ -1490,19 +1516,30 @@ c $9093
   $90B8,$01 Write #REGa to *#REGhl.
   $90B9,$02 Jump to #R$9090.
 
-c $90BB
+c $90BB Handler: Mark Cards
+@ $90BB label=HandlerMarkCards
+N $90BB Sets the cards in the players hand to be redrawn, where they've been
+. marked in #R$9055.
   $90BB,$03 #REGde=#R$9055.
   $90BE,$03 #REGhl=#R$96C7.
-  $90C1,$02 #REGb=#N$05.
+N $90C1 Cycle through each marked card from #R$9055, and set the appropriate
+. card in the players hand to be redrawn (#N$FF) if it's set to do so.
+  $90C1,$02 Set a counter in #REGb for the #N$05 cards in a hand.
+@ $90C3 label=HandlerMarkCards_Loop
   $90C3,$01 #REGa=*#REGde.
   $90C4,$03 Jump to #R$90C9 if #REGa is zero.
+N $90C7 Set the card in the hand to be redrawn.
   $90C7,$02 Write #N$FF to *#REGhl.
-  $90C9,$01 Increment #REGhl by one.
-  $90CA,$01 Increment #REGde by one.
-  $90CB,$02 Decrease counter by one and loop back to #R$90C3 until counter is zero.
+N $90C9 Move onto the next card.
+@ $90C9 label=DontMarkCard
+  $90C9,$02 Increment both #REGde and #REGhl by one.
+  $90CB,$02 Decrease the card counter by one and loop back to #R$90C3 until all
+. cards have been considered.
+N $90CD Clean up the UI for marking cards.
   $90CD,$03 #REGhl=#N$5A21 (attribute buffer location).
   $90D0,$02 #REGb=#N$1E.
-  $90D2,$02 Write #N$00 to *#REGhl.
+@ $90D2 label=ResetMarkCardsAttributes_Loop
+  $90D2,$02 Write #COLOUR$00 to *#REGhl.
   $90D4,$01 Increment #REGhl by one.
   $90D5,$02 Decrease counter by one and loop back to #R$90D2 until counter is zero.
   $90D7,$01 Return.
