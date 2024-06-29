@@ -1128,17 +1128,18 @@ N $8D95 Make the girl buy in.
   $8E00,$03 Write #REGa to *#R$8E42.
   $8E03,$02 Jump to #R$8E22 if #REGa is zero.
 N $8E05 #UDGTABLE { #MESSAGE$0D(message-13) } UDGTABLE#
-  $8E05,$05 Call #R$7D97 using message block #N$0D.
+@ $8E05 label=GirlsTurn
+  $8E05,$05 Call #R$7D97 using message block #R$88E5(#N$0D).
   $8E0A,$03 Call #R$960C.
   $8E0D,$01 Stash #REGaf on the stack.
   $8E0E,$03 Call #R$8F7E.
   $8E11,$01 Restore #REGaf from the stack.
-  $8E12,$04 Jump to #R$8F20 if #REGa is zero.
-  $8E16,$05 Call #R$8EE2 if #REGa is equal to #N$03.
+  $8E12,$04 Jump to #R$8F20 if the girl has "dropped".
+  $8E16,$05 Call #R$8EE2 if the game is in "showdown" mode.
   $8E1B,$04 Write #N$00 to *#R$8E43.
   $8E1F,$03 Call #R$8E44.
 N $8E22 #UDGTABLE { #MESSAGE$0C(message-12) } UDGTABLE#
-  $8E22,$05 Call #R$7D97 using message block #N$0C.
+  $8E22,$05 Call #R$7D97 using message block #R$891B(#N$0C).
   $8E27,$03 Call #R$8F7E.
   $8E2A,$03 Call #R$9171.
   $8E2D,$04 Jump to #R$8F06 if #REGa is zero.
@@ -1437,12 +1438,12 @@ N $903C Update the flash count, and keep jumping back until the count is equal
 . to #N$08... As there are only #N$07 colours.
   $903C,$01 Increment #REGc by one.
   $903D,$05 Jump to #R$9025 if #REGc is not equal to #N$08.
-N $9042 The count is #N$08, so continue here.
+N $9042 The count is #N$08, so continue here and collect the user input.
   $9042,$03 Call #R$90D8.
   $9045,$03 Jump to #R$9093 if "select" has been pressed.
   $9048,$04 Jump to #R$905C if "left" has been pressed.
   $904C,$04 Jump to #R$9068 if "right" has been pressed.
-  $9050,$02 Jump to #R$90BB if #REGa is lower than #N$04.
+  $9050,$02 Jump to #R$90BB if "up" or "down" have been pressed.
   $9052,$02 Jump to #R$9023.
 
 g $9054 Selected Marked Card
@@ -1459,60 +1460,100 @@ W $905A,$02
 
 c $905C Mark Cards: Move Cursor Left
 @ $905C label=MarkCards_CursorLeft
-  $905C,$03 #REGa=*#R$9054.
-  $905F,$01 Stash #REGaf on the stack.
-  $9060,$03 Jump to #R$9065 if #REGa is not zero.
+  $905C,$03 Fetch the current cursor position from *#R$9054.
+  $905F,$01 Stash the cursor position on the stack.
+  $9060,$03 Jump to #R$9065 if the current cursor position is not the first card.
+N $9063 The position IS zero, so reset it to the end of the list of cards +#N$01.
   $9063,$02 #REGa=#N$05.
-  $9065,$01 Decrease #REGa by one.
+N $9065 Move the cursor position left one card.
+@ $9065 label=MoveCursorLeft
+  $9065,$01 Decrease the cursor position by one.
   $9066,$02 Jump to #R$9073.
 
 c $9068 Mark Cards: Move Cursor Right
 @ $9068 label=MarkCards_CursorRight
-  $9068,$03 #REGa=*#R$9054.
-  $906B,$01 Stash #REGaf on the stack.
-  $906C,$04 Jump to #R$9072 if #REGa is not equal to #N$04.
+E $9068 Continue on to #R$9073.
+  $9068,$03 Fetch the current cursor position from *#R$9054.
+  $906B,$01 Stash the cursor position on the stack.
+  $906C,$04 Jump to #R$9072 if the current cursor position is not the last card.
+N $9070 The position IS the last card, position #N$04#RAW(,) so reset it to the start
+. of the list of cards -#N$01.
   $9070,$02 #REGa=#N$FF.
-  $9072,$01 Increment #REGa by one.
-  $9073,$03 Write #REGa to *#R$9054.
-  $9076,$01 Restore #REGaf from the stack.
-  $9077,$01 Increment #REGa by one.
-  $9078,$01 #REGb=#REGa.
-  $9079,$03 #REGhl=#R$9054.
+N $9072 Move the cursor position right one card.
+@ $9072 label=MoveCursorRight
+  $9072,$01 Increment the cursor position by one.
+
+c $9073 Mark Cards: Update Cursor Position
+@ $9073 label=MarkCards_UpdateCursorPosition
+D $9073 The cursor has been requested to move away from a slot, so this routine
+. will replace the cursor with the selected/ unselected colour that the slot
+. should be.
+.
+. Used by the routines at #R$905C and #R$9068.
+  $9073,$03 Write the updated cursor position to *#R$9054.
+  $9076,$01 Restore the previous cursor position from the stack.
+  $9077,$02 Increment the previous cursor position by one for the loop below
+. and also store it as a counter in #REGb.
+N $9079 Locate the previous position in #R$9055.
+  $9079,$03 #REGhl=#R$9054 (e.g. #R$9055-#N$01).
+@ $907C label=FindOldMarkedCard_Loop
   $907C,$01 Increment #REGhl by one.
   $907D,$01 Decrease #REGa by one.
   $907E,$02 Jump to #R$907C until #REGa is zero.
+N $9080 Fetch the old marked card position data.
   $9080,$01 #REGa=*#REGhl.
+N $9081 Now find the position in the attribute buffer for the old cursor
+. position (using #REGb which was stored earlier).
   $9081,$03 #REGhl=#N$5A1B (attribute buffer location).
   $9084,$03 #REGde=#N($0006,$04,$04).
+@ $9087 label=FindOldMarkedCardAttribute_Loop
   $9087,$01 #REGhl+=#REGde.
   $9088,$02 Decrease counter by one and loop back to #R$9087 until counter is zero.
-  $908A,$02 #REGb=#N$06.
+N $908A Write the selected/ unselected attribute data back to the slot.
+  $908A,$02 Set a counter of #N$06, which is the width of a card.
+@ $908C label=ClearOldMarkedCardAttribute_Loop
   $908C,$01 Write #REGa to *#REGhl.
   $908D,$01 Increment #REGhl by one.
   $908E,$02 Decrease counter by one and loop back to #R$908C until counter is zero.
+@ $9090 label=Alias_FindSelectedCardAttribute
   $9090,$03 Jump to #R$9012.
 
 c $9093 Mark Cards: Select Card
 @ $9093 label=MarkCards_SelectCard
+N $9093 Count the number of cards marked already, there is a maximum limit of
+. #N$03 markable cards.
   $9093,$03 #REGhl=#R$9055.
-  $9096,$02 #REGb=#N$05.
-  $9098,$02 #REGc=#N$00.
+  $9096,$02 Set a counter of #N$05 for the total number of cards in a hand.
+  $9098,$02 Use #REGc to count the number of already marked cards.
+@ $909A label=CountMarkedCards_Loop
   $909A,$01 #REGa=*#REGhl.
-  $909B,$03 Jump to #R$909F if #REGa is zero.
+  $909B,$03 Jump to #R$909F if this card isn't marked.
+N $909E This card is marked, so increment the "already marked" counter.
   $909E,$01 Increment #REGc by one.
-  $909F,$01 Increment #REGhl by one.
-  $90A0,$02 Decrease counter by one and loop back to #R$909A until counter is zero.
+@ $909F label=CountMarkedCards_Next
+  $909F,$01 Move the marked card pointer to the next card.
+  $90A0,$02 Decrease the card count by one and loop back to #R$909A until all
+. card slots have been checked.
+N $90A2 Find the marked card data.
   $90A2,$03 #REGa=*#R$9054.
-  $90A5,$01 Increment #REGa by one.
+  $90A5,$01 Increment #REGa by one for the loop below.
   $90A6,$03 #REGhl=#R$9054.
+@ $90A9 label=FindMarkedCard_Loop
   $90A9,$01 Increment #REGhl by one.
   $90AA,$01 Decrease #REGa by one.
   $90AB,$02 Jump to #R$90A9 until #REGa is zero.
-  $90AD,$05 Jump to #R$90B5 if #REGc is lower than #N$03.
+N $90AD Have less than #N$03 cards been marked already?
+  $90AD,$05 Jump to #R$90B5 if there are less than #N$03 marked cards.
+N $90B2 The maximum limit of #N$03 marked cards has already been reached, so
+. don't allow this card to be marked.
   $90B2,$01 #REGa=#N$00.
   $90B3,$02 Jump to #R$90B8.
+N $90B5 Switch the state of the card, if it was selected - make it now
+. unselected, and if it was unselected - make it selected.
+@ $90B5 label=ToggleMarkedCard
   $90B5,$01 #REGa=*#REGhl.
   $90B6,$02,b$01 Flip bits 0-5.
+@ $90B8 label=WriteMarkedCardData
   $90B8,$01 Write #REGa to *#REGhl.
   $90B9,$02 Jump to #R$9090.
 
@@ -1972,7 +2013,7 @@ c $9337
 
 c $9473
   $9473,$03 #REGde=#R$9540.
-  $9476,$01 #REGa=#N$00.
+  $9476,$01 Reset flags.
   $9477,$02 #REGhl-=#REGde (with carry).
   $9479,$01 #REGa=#REGl.
   $947A,$01 Return.
@@ -2172,7 +2213,8 @@ c $95EF
   $9609,$01 #REGa=#N$00.
   $960A,$02 Jump to #R$9603.
 
-c $960C
+c $960C Girl Artificial Intelligence
+@ $960C label=GirlArtificialIntelligence
   $960C,$03 #REGa=*#R$96C0.
   $960F,$01 #REGc=#REGa.
   $9610,$04 Jump to #R$9626 if #REGa is lower than #N$02.
@@ -2188,9 +2230,9 @@ c $960C
   $962A,$04 Jump to #R$968C if #REGa is lower than #N$1E.
   $962E,$02 Decrease counter by one and loop back to #R$9627 until counter is zero.
 N $9630 #UDGTABLE { #MESSAGE$01(message-01) } UDGTABLE#
-  $9630,$05 Call #R$7D97 using message block #N$01.
-  $9635,$01 #REGa=#N$00
-  $9636,$01 Return.
+  $9630,$05 Call #R$7D97 using message block #R$7F9D(#N$01).
+  $9635,$02 Return with #REGa=#N$00 ("drop").
+
   $9637,$07 Jump to #R$968C if *#R$8E59 is equal to #N$07.
   $963E,$03 #REGa=*#R$96B7.
   $9641,$03 Call #R$96A1.
@@ -2204,13 +2246,12 @@ N $9630 #UDGTABLE { #MESSAGE$01(message-01) } UDGTABLE#
   $9655,$01 #REGb=#REGa.
   $9656,$02 Jump to #R$966C if {} is not zero.
 N $9658 #UDGTABLE { #MESSAGE$03(message-03) } UDGTABLE#
-  $9658,$05 Call #R$7D97 using message block #N$03.
-  $965D,$03 #REGa=*#R$96B7.
-  $9660,$01 #REGd=#REGa.
+  $9658,$05 Call #R$7D97 using message block #R$81B9(#N$03).
+  $965D,$04 #REGd=*#R$96B7.
   $9661,$04 Write #N$00 to *#R$96B7.
-  $9665,$05 Return with #REGa=#N$02 if #REGd is not zero.
-  $966A,$01 Increment #REGa by one.
-  $966B,$01 Return.
+  $9665,$05 Return with #REGa=#N$02 ("hold") if #REGd is not zero.
+  $966A,$02 Return with #REGa=#N$03 ("showdown").
+
 N $966C
   $966C,$06 Jump to #R$967D if *#R$96B5 is higher than #REGb.
   $9672,$06 Write *#R$96B5 to *#R$96B7.
@@ -2219,17 +2260,17 @@ N $966C
   $967D,$04 Write #REGb to *#R$96B7.
   $9681,$03 Call #R$96A1.
 N $9684 #UDGTABLE { #MESSAGE$02(message-02) } UDGTABLE#
-  $9684,$05 Call #R$7D97 using message block #N$02.
-  $9689,$02 #REGa=#N$01.
-  $968B,$01 Return.
-N $968C
+  $9684,$05 Call #R$7D97 using message block #R$80AB(#N$02).
+  $9689,$03 Return with #REGa=#N$01 ("raise").
+
+N $968C Action is Girl will hold...
+@ $968C label=GirlAction_Hold
   $968C,$06 Jump to #R$96B1 if *#R$96B7 is zero.
   $9692,$03 Call #R$96A1.
   $9695,$04 Write #N$00 to *#R$96B7.
 N $9699 #UDGTABLE { #MESSAGE$03(message-03) } UDGTABLE#
-  $9699,$05 Call #R$7D97 using message block #N$03.
-  $969E,$02 #REGa=#N$02.
-  $96A0,$01 Return.
+  $9699,$05 Call #R$7D97 using message block #R$81B9(#N$03).
+  $969E,$03 Return with #REGa=#N$02 ("hold").
 
 c $96A1 Girl Add To Pot
 @ $96A1 label=GirlAddToPot
@@ -2287,7 +2328,7 @@ c $96D1
   $96E5,$07 Jump to #R$9705 if *#R$949B is equal to #N$03.
   $96EC,$04 #REGd=*#R$949C.
   $96F0,$03 #REGhl=#R$96CC.
-  $96F3,$02 #REGb=#N$05.
+  $96F3,$02 Set a counter in #REGb of #N$05 for the total number of cards in a hand.
   $96F5,$02 #REGc=#N$03.
   $96F7,$01 #REGa=*#REGhl.
   $96F8,$02,b$01 Keep only bits 0-3.

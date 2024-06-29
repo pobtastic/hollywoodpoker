@@ -3542,15 +3542,16 @@ c$8D4A LD HL,$96C7   ; #REGhl=#R$96C7.
 ; #UDGTABLE
 ; { #MESSAGE$0D(message-13) }
 ; UDGTABLE#
-*$8E05 LD A,$0D      ; {Call #R$7D97 using message block #N$0D.
+@label=GirlsTurn
+*$8E05 LD A,$0D      ; {Call #R$7D97 using message block #R$88E5(#N$0D).
  $8E07 CALL $7D97    ; }
  $8E0A CALL $960C    ; Call #R$960C.
  $8E0D PUSH AF       ; Stash #REGaf on the stack.
  $8E0E CALL $8F7E    ; Call #R$8F7E.
  $8E11 POP AF        ; Restore #REGaf from the stack.
- $8E12 OR A          ; {Jump to #R$8F20 if #REGa is zero.
+ $8E12 OR A          ; {Jump to #R$8F20 if the girl has "dropped".
  $8E13 JP Z,$8F20    ; }
- $8E16 CP $03        ; {Call #R$8EE2 if #REGa is equal to #N$03.
+ $8E16 CP $03        ; {Call #R$8EE2 if the game is in "showdown" mode.
  $8E18 CALL Z,$8EE2  ; }
  $8E1B XOR A         ; {Write #N$00 to *#R$8E43.
  $8E1C LD ($8E43),A  ; }
@@ -3558,7 +3559,7 @@ c$8D4A LD HL,$96C7   ; #REGhl=#R$96C7.
 ; #UDGTABLE
 ; { #MESSAGE$0C(message-12) }
 ; UDGTABLE#
-*$8E22 LD A,$0C      ; {Call #R$7D97 using message block #N$0C.
+*$8E22 LD A,$0C      ; {Call #R$7D97 using message block #R$891B(#N$0C).
  $8E24 CALL $7D97    ; }
  $8E27 CALL $8F7E    ; Call #R$8F7E.
  $8E2A CALL $9171    ; Call #R$9171.
@@ -3914,7 +3915,7 @@ c$9003 LD A,$0F      ; {Call #R$7D97 using message block #R$89F3(#N$0F).
  $900F INC HL        ; Increment #REGhl by one.
  $9010 DJNZ $900D    ; Decrease the counter by one and loop back to #R$900D
                      ; until the counter is zero.
-; This entry point is used by the routine at #R$9068.
+; This entry point is used by the routine at #R$9073.
 @label=FindSelectedCardAttribute
 *$9012 LD HL,$5A1B   ; #REGhl=#N$5A1B (attribute buffer location).
  $9015 LD A,($9054)  ; #REGa=*#R$9054.
@@ -3959,7 +3960,7 @@ c$9003 LD A,$0F      ; {Call #R$7D97 using message block #R$89F3(#N$0F).
  $903D LD A,C        ; {Jump to #R$9025 if #REGc is not equal to #N$08.
  $903E CP $08        ;
  $9040 JR NZ,$9025   ; }
-; The count is #N$08, so continue here.
+; The count is #N$08, so continue here and collect the user input.
  $9042 CALL $90D8    ; Call #R$90D8.
  $9045 OR A          ; {Jump to #R$9093 if "select" has been pressed.
  $9046 JR Z,$9093    ; }
@@ -3967,7 +3968,7 @@ c$9003 LD A,$0F      ; {Call #R$7D97 using message block #R$89F3(#N$0F).
  $904A JR Z,$905C    ; }
  $904C CP $04        ; {Jump to #R$9068 if "right" has been pressed.
  $904E JR Z,$9068    ; }
- $9050 JR C,$90BB    ; Jump to #R$90BB if #REGa is lower than #N$04.
+ $9050 JR C,$90BB    ; Jump to #R$90BB if "up" or "down" have been pressed.
  $9052 JR $9023      ; Jump to #R$9023.
 
 ; Selected Marked Card
@@ -3986,74 +3987,117 @@ g$905A DEFW $0000
 ;
 ; Used by the routine at #R$9003.
 @label=MarkCards_CursorLeft
-c$905C LD A,($9054)  ; #REGa=*#R$9054.
- $905F PUSH AF       ; Stash #REGaf on the stack.
- $9060 OR A          ; {Jump to #R$9065 if #REGa is not zero.
- $9061 JR NZ,$9065   ; }
+c$905C LD A,($9054)  ; Fetch the current cursor position from *#R$9054.
+ $905F PUSH AF       ; Stash the cursor position on the stack.
+ $9060 OR A          ; {Jump to #R$9065 if the current cursor position is not
+ $9061 JR NZ,$9065   ; the first card.}
+; The position IS zero, so reset it to the end of the list of cards +#N$01.
  $9063 LD A,$05      ; #REGa=#N$05.
-*$9065 DEC A         ; Decrease #REGa by one.
+; Move the cursor position left one card.
+@label=MoveCursorLeft
+*$9065 DEC A         ; Decrease the cursor position by one.
  $9066 JR $9073      ; Jump to #R$9073.
 
 ; Mark Cards: Move Cursor Right
 ;
 ; Used by the routine at #R$9003.
 @label=MarkCards_CursorRight
-c$9068 LD A,($9054)  ; #REGa=*#R$9054.
- $906B PUSH AF       ; Stash #REGaf on the stack.
- $906C CP $04        ; {Jump to #R$9072 if #REGa is not equal to #N$04.
- $906E JR NZ,$9072   ; }
+c$9068 LD A,($9054)  ; Fetch the current cursor position from *#R$9054.
+ $906B PUSH AF       ; Stash the cursor position on the stack.
+ $906C CP $04        ; {Jump to #R$9072 if the current cursor position is not
+ $906E JR NZ,$9072   ; the last card.}
+; The position IS the last card, position #N$04#RAW(,) so reset it to the start
+; of the list of cards -#N$01.
  $9070 LD A,$FF      ; #REGa=#N$FF.
-*$9072 INC A         ; Increment #REGa by one.
-; This entry point is used by the routine at #R$905C.
-*$9073 LD ($9054),A  ; Write #REGa to *#R$9054.
- $9076 POP AF        ; Restore #REGaf from the stack.
- $9077 INC A         ; Increment #REGa by one.
- $9078 LD B,A        ; #REGb=#REGa.
- $9079 LD HL,$9054   ; #REGhl=#R$9054.
+; Move the cursor position right one card.
+@label=MoveCursorRight
+*$9072 INC A         ; Increment the cursor position by one.
+; Continue on to #R$9073.
+
+; Mark Cards: Update Cursor Position
+;
+; The cursor has been requested to move away from a slot, so this routine
+; will replace the cursor with the selected/ unselected colour that the slot
+; should be.
+; .
+; Used by the routines at #R$905C and #R$9068.
+@label=MarkCards_UpdateCursorPosition
+c$9073 LD ($9054),A  ; Write the updated cursor position to *#R$9054.
+ $9076 POP AF        ; Restore the previous cursor position from the stack.
+ $9077 INC A         ; {Increment the previous cursor position by one for the loop below
+ $9078 LD B,A        ; and also store it as a counter in #REGb.}
+; Locate the previous position in #R$9055.
+ $9079 LD HL,$9054   ; #REGhl=#R$9054 (e.g. #R$9055-#N$01).
+@label=FindOldMarkedCard_Loop
 *$907C INC HL        ; Increment #REGhl by one.
  $907D DEC A         ; Decrease #REGa by one.
  $907E JR NZ,$907C   ; Jump to #R$907C until #REGa is zero.
+; Fetch the old marked card position data.
  $9080 LD A,(HL)     ; #REGa=*#REGhl.
+; Now find the position in the attribute buffer for the old cursor
+; position (using #REGb which was stored earlier).
  $9081 LD HL,$5A1B   ; #REGhl=#N$5A1B (attribute buffer location).
  $9084 LD DE,$0006   ; #REGde=#N($0006,$04,$04).
+@label=FindOldMarkedCardAttribute_Loop
 *$9087 ADD HL,DE     ; #REGhl+=#REGde.
  $9088 DJNZ $9087    ; Decrease counter by one and loop back to #R$9087 until
                      ; counter is zero.
- $908A LD B,$06      ; #REGb=#N$06.
+; Write the selected/ unselected attribute data back to the slot.
+ $908A LD B,$06      ; Set a counter of #N$06, which is the width of a card.
+@label=ClearOldMarkedCardAttribute_Loop
 *$908C LD (HL),A     ; Write #REGa to *#REGhl.
  $908D INC HL        ; Increment #REGhl by one.
  $908E DJNZ $908C    ; Decrease counter by one and loop back to #R$908C until
                      ; counter is zero.
 ; This entry point is used by the routine at #R$9093.
+@label=Alias_FindSelectedCardAttribute
 *$9090 JP $9012      ; Jump to #R$9012.
 
 ; Mark Cards: Select Card
 ;
 ; Used by the routine at #R$9003.
+;
+; .
+;
+; Count the number of cards marked already, there is a maximum limit of
+; #N$03 markable cards.
 @label=MarkCards_SelectCard
 c$9093 LD HL,$9055   ; #REGhl=#R$9055.
- $9096 LD B,$05      ; #REGb=#N$05.
- $9098 LD C,$00      ; #REGc=#N$00.
+ $9096 LD B,$05      ; Set a counter of #N$05 for the total number of cards in
+                     ; a hand.
+ $9098 LD C,$00      ; Use #REGc to count the number of already marked cards.
+@label=CountMarkedCards_Loop
 *$909A LD A,(HL)     ; #REGa=*#REGhl.
- $909B OR A          ; {Jump to #R$909F if #REGa is zero.
+ $909B OR A          ; {Jump to #R$909F if this card isn't marked.
  $909C JR Z,$909F    ; }
+; This card is marked, so increment the "already marked" counter.
  $909E INC C         ; Increment #REGc by one.
-*$909F INC HL        ; Increment #REGhl by one.
- $90A0 DJNZ $909A    ; Decrease counter by one and loop back to #R$909A until
-                     ; counter is zero.
+@label=CountMarkedCards_Next
+*$909F INC HL        ; Move the marked card pointer to the next card.
+ $90A0 DJNZ $909A    ; Decrease the card count by one and loop back to #R$909A until all
+                     ; card slots have been checked.
+; Find the marked card data.
  $90A2 LD A,($9054)  ; #REGa=*#R$9054.
- $90A5 INC A         ; Increment #REGa by one.
+ $90A5 INC A         ; Increment #REGa by one for the loop below.
  $90A6 LD HL,$9054   ; #REGhl=#R$9054.
+@label=FindMarkedCard_Loop
 *$90A9 INC HL        ; Increment #REGhl by one.
  $90AA DEC A         ; Decrease #REGa by one.
  $90AB JR NZ,$90A9   ; Jump to #R$90A9 until #REGa is zero.
- $90AD LD A,C        ; {Jump to #R$90B5 if #REGc is lower than #N$03.
- $90AE CP $03        ;
+; Have less than #N$03 cards been marked already?
+ $90AD LD A,C        ; {Jump to #R$90B5 if there are less than #N$03 marked
+ $90AE CP $03        ; cards.
  $90B0 JR C,$90B5    ; }
+; The maximum limit of #N$03 marked cards has already been reached, so
+; don't allow this card to be marked.
  $90B2 XOR A         ; #REGa=#N$00.
  $90B3 JR $90B8      ; Jump to #R$90B8.
+; Switch the state of the card, if it was selected - make it now
+; unselected, and if it was unselected - make it selected.
+@label=ToggleMarkedCard
 *$90B5 LD A,(HL)     ; #REGa=*#REGhl.
  $90B6 XOR %00111111 ; Flip bits 0-5.
+@label=WriteMarkedCardData
 *$90B8 LD (HL),A     ; Write #REGa to *#REGhl.
  $90B9 JR $9090      ; Jump to #R$9090.
 
@@ -4645,7 +4689,7 @@ c$9337 LD HL,$949B   ; #REGhl=#R$949B.
 ;
 ; Used by the routines at #R$9337 and #R$96D1.
 c$9473 LD DE,$9540   ; #REGde=#R$9540.
- $9476 XOR A         ; #REGa=#N$00.
+ $9476 XOR A         ; Reset flags.
  $9477 SBC HL,DE     ; #REGhl-=#REGde (with carry).
  $9479 LD A,L        ; #REGa=#REGl.
  $947A RET           ; Return.
@@ -4940,9 +4984,10 @@ c$95EF PUSH IX       ; {#REGde=#REGix (using the stack).
 *$9609 XOR A         ; #REGa=#N$00.
  $960A JR $9603      ; Jump to #R$9603.
 
-; Routine at 960C
+; Girl Artificial Intelligence
 ;
 ; Used by the routine at #R$8D4A.
+@label=GirlArtificialIntelligence
 c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
  $960F LD C,A        ; #REGc=#REGa.
  $9610 CP $02        ; {Jump to #R$9626 if #REGa is lower than #N$02.
@@ -4966,10 +5011,10 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
 ; #UDGTABLE
 ; { #MESSAGE$01(message-01) }
 ; UDGTABLE#
- $9630 LD A,$01      ; {Call #R$7D97 using message block #N$01.
+ $9630 LD A,$01      ; {Call #R$7D97 using message block #R$7F9D(#N$01).
  $9632 CALL $7D97    ; }
- $9635 XOR A         ; #REGa=#N$00
- $9636 RET           ; Return.
+ $9635 XOR A         ; {Return with #REGa=#N$00 ("drop").
+ $9636 RET           ; }
 *$9637 LD A,($8E59)  ; {Jump to #R$968C if *#R$8E59 is equal to #N$07.
  $963A CP $07        ;
  $963C JR Z,$968C    ; }
@@ -4989,18 +5034,18 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
 ; #UDGTABLE
 ; { #MESSAGE$03(message-03) }
 ; UDGTABLE#
-*$9658 LD A,$03      ; {Call #R$7D97 using message block #N$03.
+*$9658 LD A,$03      ; {Call #R$7D97 using message block #R$81B9(#N$03).
  $965A CALL $7D97    ; }
- $965D LD A,($96B7)  ; #REGa=*#R$96B7.
- $9660 LD D,A        ; #REGd=#REGa.
+ $965D LD A,($96B7)  ; {#REGd=*#R$96B7.
+ $9660 LD D,A        ; }
  $9661 XOR A         ; {Write #N$00 to *#R$96B7.
  $9662 LD ($96B7),A  ; }
- $9665 LD A,D        ; {Return with #REGa=#N$02 if #REGd is not zero.
+ $9665 LD A,D        ; {Return with #REGa=#N$02 ("hold") if #REGd is not zero.
  $9666 OR A          ;
  $9667 LD A,$02      ;
  $9669 RET NZ        ; }
- $966A INC A         ; Increment #REGa by one.
- $966B RET           ; Return.
+ $966A INC A         ; {Return with #REGa=#N$03 ("showdown").
+ $966B RET           ; }
 *$966C LD A,($96B5)  ; {Jump to #R$967D if *#R$96B5 is higher than #REGb.
  $966F CP B          ;
  $9670 JR NC,$967D   ; }
@@ -5015,10 +5060,12 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
 ; #UDGTABLE
 ; { #MESSAGE$02(message-02) }
 ; UDGTABLE#
- $9684 LD A,$02      ; {Call #R$7D97 using message block #N$02.
+ $9684 LD A,$02      ; {Call #R$7D97 using message block #R$80AB(#N$02).
  $9686 CALL $7D97    ; }
- $9689 LD A,$01      ; #REGa=#N$01.
- $968B RET           ; Return.
+ $9689 LD A,$01      ; {Return with #REGa=#N$01 ("raise").
+ $968B RET           ; }
+; Action is Girl will hold...
+@label=GirlAction_Hold
 *$968C LD A,($96B7)  ; {Jump to #R$96B1 if *#R$96B7 is zero.
  $968F OR A          ;
  $9690 JR Z,$96B1    ; }
@@ -5028,10 +5075,10 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
 ; #UDGTABLE
 ; { #MESSAGE$03(message-03) }
 ; UDGTABLE#
- $9699 LD A,$03      ; {Call #R$7D97 using message block #N$03.
+ $9699 LD A,$03      ; {Call #R$7D97 using message block #R$81B9(#N$03).
  $969B CALL $7D97    ; }
- $969E LD A,$02      ; #REGa=#N$02.
- $96A0 RET           ; Return.
+ $969E LD A,$02      ; {Return with #REGa=#N$02 ("hold").
+ $96A0 RET           ; }
 
 ; Girl Add To Pot
 ;
@@ -5106,7 +5153,8 @@ c$96D1 LD A,($949B)  ; #REGa=*#R$949B.
 *$96EC LD A,($949C)  ; {#REGd=*#R$949C.
  $96EF LD D,A        ; }
  $96F0 LD HL,$96CC   ; #REGhl=#R$96CC.
- $96F3 LD B,$05      ; #REGb=#N$05.
+ $96F3 LD B,$05      ; Set a counter in #REGb of #N$05 for the total number of
+                     ; cards in a hand.
  $96F5 LD C,$03      ; #REGc=#N$03.
 *$96F7 LD A,(HL)     ; #REGa=*#REGhl.
  $96F8 AND %00001111 ; Keep only bits 0-3.
