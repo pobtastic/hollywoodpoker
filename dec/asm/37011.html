@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="36968.html">36968</a>
+Prev: <a href="36979.html">36979</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#37011">Map</a></td>
 <td class="next">
@@ -45,6 +45,16 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="37011"></span>
+<div class="comments">
+<div class="paragraph">
+Count the number of cards marked already, there is a maximum limit of 3 markable cards.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">MarkCards_SelectCard</td>
 <td class="address-2"><span id="37011"></span>37011</td>
 <td class="instruction">LD HL,36949</td>
@@ -54,16 +64,16 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="37014"></span>37014</td>
 <td class="instruction">LD B,5</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
+<td class="comment-1" rowspan="1">Set a counter of 5 for the total number of cards in a hand.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37016"></span>37016</td>
 <td class="instruction">LD C,0</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=0.</td>
+<td class="comment-1" rowspan="1">Use <span class="register">C</span> to count the number of already marked cards.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_SelectCard_0</td>
+<td class="asm-label">CountMarkedCards_Loop</td>
 <td class="address-2"><span id="37018"></span>37018</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
@@ -72,12 +82,22 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="37019"></span>37019</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="37011.html#37023">MarkCards_SelectCard_1</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="37011.html#37023">CountMarkedCards_Next</a> if this card isn't marked.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37020"></span>37020</td>
-<td class="instruction">JR Z,<a href="37011.html#37023">MarkCards_SelectCard_1</a></td>
+<td class="instruction">JR Z,<a href="37011.html#37023">CountMarkedCards_Next</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37022"></span>
+<div class="comments">
+<div class="paragraph">
+This card is marked, so increment the "already marked" counter.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -86,16 +106,26 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <td class="comment-1" rowspan="1">Increment <span class="register">C</span> by one.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_SelectCard_1</td>
+<td class="asm-label">CountMarkedCards_Next</td>
 <td class="address-2"><span id="37023"></span>37023</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Move the marked card pointer to the next card.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37024"></span>37024</td>
-<td class="instruction">DJNZ <a href="37011.html#37018">MarkCards_SelectCard_0</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37011.html#37018">MarkCards_SelectCard_0</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="37011.html#37018">CountMarkedCards_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card count by one and loop back to <a href="37011.html#37018">CountMarkedCards_Loop</a> until all card slots have been checked.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37026"></span>
+<div class="comments">
+<div class="paragraph">
+Find the marked card data.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -107,7 +137,7 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="37029"></span>37029</td>
 <td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one for the loop below.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -116,7 +146,7 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36948.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_SelectCard_2</td>
+<td class="asm-label">FindMarkedCard_Loop</td>
 <td class="address-2"><span id="37033"></span>37033</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
@@ -130,14 +160,24 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37035"></span>37035</td>
-<td class="instruction">JR NZ,<a href="37011.html#37033">MarkCards_SelectCard_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37011.html#37033">MarkCards_SelectCard_2</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="37011.html#37033">FindMarkedCard_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37011.html#37033">FindMarkedCard_Loop</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37037"></span>
+<div class="comments">
+<div class="paragraph">
+Have less than 3 cards been marked already?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37037"></span>37037</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="3">Jump to <a href="37011.html#37045">MarkCards_SelectCard_3</a> if <span class="register">C</span> is lower than 3.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="37011.html#37045">ToggleMarkedCard</a> if there are less than 3 marked cards.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -147,7 +187,17 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37040"></span>37040</td>
-<td class="instruction">JR C,<a href="37011.html#37045">MarkCards_SelectCard_3</a></td>
+<td class="instruction">JR C,<a href="37011.html#37045">ToggleMarkedCard</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37042"></span>
+<div class="comments">
+<div class="paragraph">
+The maximum limit of 3 marked cards has already been reached, so don't allow this card to be marked.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -158,11 +208,21 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37043"></span>37043</td>
-<td class="instruction">JR <a href="37011.html#37048">MarkCards_SelectCard_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37011.html#37048">MarkCards_SelectCard_4</a>.</td>
+<td class="instruction">JR <a href="37011.html#37048">WriteMarkedCardData</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37011.html#37048">WriteMarkedCardData</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_SelectCard_3</td>
+<td class="routine-comment" colspan="5">
+<span id="37045"></span>
+<div class="comments">
+<div class="paragraph">
+Switch the state of the card, if it was selected - make it now unselected, and if it was unselected - make it selected.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">ToggleMarkedCard</td>
 <td class="address-2"><span id="37045"></span>37045</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
@@ -174,7 +234,7 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <td class="comment-1" rowspan="1">Flip bits 0-5.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_SelectCard_4</td>
+<td class="asm-label">WriteMarkedCardData</td>
 <td class="address-2"><span id="37048"></span>37048</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
@@ -182,14 +242,14 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37049"></span>37049</td>
-<td class="instruction">JR <a href="36968.html#37008">MarkCards_CursorRight_5</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="36968.html#37008">MarkCards_CursorRight_5</a>.</td>
+<td class="instruction">JR <a href="36979.html#37008">Alias_FindSelectedCardAttribute</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36979.html#37008">Alias_FindSelectedCardAttribute</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="36968.html">36968</a>
+Prev: <a href="36979.html">36979</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#37011">Map</a></td>
 <td class="next">

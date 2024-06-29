@@ -48,24 +48,34 @@ Used by the routine at <a href="9003.html">MarkCards</a>.
 <td class="asm-label">MarkCards_CursorLeft</td>
 <td class="address-2"><span id="905c"></span>905C</td>
 <td class="instruction">LD A,($9054)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="9054.html">SelectedMarkedCard</a>.</td>
+<td class="comment-1" rowspan="1">Fetch the current cursor position from *<a href="9054.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="905f"></span>905F</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the cursor position on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9060"></span>9060</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="905C.html#9065">MarkCards_CursorLeft_0</a> if <span class="register">A</span> is not zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="905C.html#9065">MoveCursorLeft</a> if the current cursor position is not the first card.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9061"></span>9061</td>
-<td class="instruction">JR NZ,<a href="905C.html#9065">MarkCards_CursorLeft_0</a></td>
+<td class="instruction">JR NZ,<a href="905C.html#9065">MoveCursorLeft</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9063"></span>
+<div class="comments">
+<div class="paragraph">
+The position IS zero, so reset it to the end of the list of cards +01.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -74,16 +84,26 @@ Used by the routine at <a href="9003.html">MarkCards</a>.
 <td class="comment-1" rowspan="1"><span class="register">A</span>=05.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_CursorLeft_0</td>
+<td class="routine-comment" colspan="5">
+<span id="9065"></span>
+<div class="comments">
+<div class="paragraph">
+Move the cursor position left one card.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">MoveCursorLeft</td>
 <td class="address-2"><span id="9065"></span>9065</td>
 <td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+<td class="comment-1" rowspan="1">Decrease the cursor position by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9066"></span>9066</td>
-<td class="instruction">JR <a href="9068.html#9073">MarkCards_CursorRight_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9068.html#9073">MarkCards_CursorRight_1</a>.</td>
+<td class="instruction">JR <a href="9073.html">MarkCards_UpdateCursorPosition</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9073.html">MarkCards_UpdateCursorPosition</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

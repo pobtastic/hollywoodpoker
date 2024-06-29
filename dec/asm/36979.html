@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 36979</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36968.html">36968</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36979">Map</a></td>
+<td class="next">
+Next: <a href="37011.html">37011</a>
+</td>
+</tr>
+</table>
+<div class="description">36979: Mark Cards: Update Cursor Position</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The cursor has been requested to move away from a slot, so this routine will replace the cursor with the selected/ unselected colour that the slot should be.
+</div>
+<div class="paragraph">
+Used by the routines at <a href="36956.html">MarkCards_CursorLeft</a> and <a href="36968.html">MarkCards_CursorRight</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">MarkCards_UpdateCursorPosition</td>
+<td class="address-2"><span id="36979"></span>36979</td>
+<td class="instruction">LD (36948),A</td>
+<td class="comment-1" rowspan="1">Write the updated cursor position to *<a href="36948.html">SelectedMarkedCard</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36982"></span>36982</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore the previous cursor position from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36983"></span>36983</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">Increment the previous cursor position by one for the loop below and also store it as a counter in <span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36984"></span>36984</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36985"></span>
+<div class="comments">
+<div class="paragraph">
+Locate the previous position in <a href="36949.html">MarkedCards</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36985"></span>36985</td>
+<td class="instruction">LD HL,36948</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36948.html">SelectedMarkedCard</a> (e.g. <a href="36949.html">MarkedCards</a>-1).</td>
+</tr>
+<tr>
+<td class="asm-label">FindOldMarkedCard_Loop</td>
+<td class="address-2"><span id="36988"></span>36988</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36989"></span>36989</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36990"></span>36990</td>
+<td class="instruction">JR NZ,<a href="36979.html#36988">FindOldMarkedCard_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36979.html#36988">FindOldMarkedCard_Loop</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36992"></span>
+<div class="comments">
+<div class="paragraph">
+Fetch the old marked card position data.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36992"></span>36992</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36993"></span>
+<div class="comments">
+<div class="paragraph">
+Now find the position in the attribute buffer for the old cursor position (using <span class="register">B</span> which was stored earlier).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36993"></span>36993</td>
+<td class="instruction">LD HL,23067</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=23067 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="36996"></span>36996</td>
+<td class="instruction">LD DE,6</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=0006.</td>
+</tr>
+<tr>
+<td class="asm-label">FindOldMarkedCardAttribute_Loop</td>
+<td class="address-2"><span id="36999"></span>36999</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37000"></span>37000</td>
+<td class="instruction">DJNZ <a href="36979.html#36999">FindOldMarkedCardAttribute_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36979.html#36999">FindOldMarkedCardAttribute_Loop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37002"></span>
+<div class="comments">
+<div class="paragraph">
+Write the selected/ unselected attribute data back to the slot.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37002"></span>37002</td>
+<td class="instruction">LD B,6</td>
+<td class="comment-1" rowspan="1">Set a counter of 6 which is the width of a card.</td>
+</tr>
+<tr>
+<td class="asm-label">ClearOldMarkedCardAttribute_Loop</td>
+<td class="address-2"><span id="37004"></span>37004</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37005"></span>37005</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37006"></span>37006</td>
+<td class="instruction">DJNZ <a href="36979.html#37004">ClearOldMarkedCardAttribute_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36979.html#37004">ClearOldMarkedCardAttribute_Loop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37008"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="37011.html">MarkCards_SelectCard</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Alias_FindSelectedCardAttribute</td>
+<td class="address-2"><span id="37008"></span>37008</td>
+<td class="instruction">JP <a href="36867.html#36882">FindSelectedCardAttribute</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="36867.html#36882">FindSelectedCardAttribute</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36968.html">36968</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36979">Map</a></td>
+<td class="next">
+Next: <a href="37011.html">37011</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/9073.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

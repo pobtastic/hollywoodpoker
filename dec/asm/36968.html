@@ -29,7 +29,7 @@ Prev: <a href="36956.html">36956</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#36968">Map</a></td>
 <td class="next">
-Next: <a href="37011.html">37011</a>
+Next: <a href="36979.html">36979</a>
 </td>
 </tr>
 </table>
@@ -48,24 +48,34 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <td class="asm-label">MarkCards_CursorRight</td>
 <td class="address-2"><span id="36968"></span>36968</td>
 <td class="instruction">LD A,(36948)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="36948.html">SelectedMarkedCard</a>.</td>
+<td class="comment-1" rowspan="1">Fetch the current cursor position from *<a href="36948.html">SelectedMarkedCard</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="36971"></span>36971</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the cursor position on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="36972"></span>36972</td>
 <td class="instruction">CP 4</td>
-<td class="comment-1" rowspan="2">Jump to <a href="36968.html#36978">MarkCards_CursorRight_0</a> if <span class="register">A</span> is not equal to 4.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="36968.html#36978">MoveCursorRight</a> if the current cursor position is not the last card.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="36974"></span>36974</td>
-<td class="instruction">JR NZ,<a href="36968.html#36978">MarkCards_CursorRight_0</a></td>
+<td class="instruction">JR NZ,<a href="36968.html#36978">MoveCursorRight</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36976"></span>
+<div class="comments">
+<div class="paragraph">
+The position IS the last card, position 4, so reset it to the start of the list of cards -1.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -74,138 +84,29 @@ Used by the routine at <a href="36867.html">MarkCards</a>.
 <td class="comment-1" rowspan="1"><span class="register">A</span>=255.</td>
 </tr>
 <tr>
-<td class="asm-label">MarkCards_CursorRight_0</td>
+<td class="routine-comment" colspan="5">
+<span id="36978"></span>
+<div class="comments">
+<div class="paragraph">
+Move the cursor position right one card.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">MoveCursorRight</td>
 <td class="address-2"><span id="36978"></span>36978</td>
 <td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the cursor position by one.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="36979"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="36956.html">MarkCards_CursorLeft</a>.
+Continue on to <a href="36979.html">MarkCards_UpdateCursorPosition</a>.
 </div>
 </div>
 </td>
-</tr>
-<tr>
-<td class="asm-label">MarkCards_CursorRight_1</td>
-<td class="address-2"><span id="36979"></span>36979</td>
-<td class="instruction">LD (36948),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="36948.html">SelectedMarkedCard</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="36982"></span>36982</td>
-<td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="36983"></span>36983</td>
-<td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="36984"></span>36984</td>
-<td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="36985"></span>36985</td>
-<td class="instruction">LD HL,36948</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="36948.html">SelectedMarkedCard</a>.</td>
-</tr>
-<tr>
-<td class="asm-label">MarkCards_CursorRight_2</td>
-<td class="address-2"><span id="36988"></span>36988</td>
-<td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="36989"></span>36989</td>
-<td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="36990"></span>36990</td>
-<td class="instruction">JR NZ,<a href="36968.html#36988">MarkCards_CursorRight_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="36968.html#36988">MarkCards_CursorRight_2</a> until <span class="register">A</span> is zero.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="36992"></span>36992</td>
-<td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="36993"></span>36993</td>
-<td class="instruction">LD HL,23067</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=23067 (attribute buffer location).</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="36996"></span>36996</td>
-<td class="instruction">LD DE,6</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=0006.</td>
-</tr>
-<tr>
-<td class="asm-label">MarkCards_CursorRight_3</td>
-<td class="address-2"><span id="36999"></span>36999</td>
-<td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="37000"></span>37000</td>
-<td class="instruction">DJNZ <a href="36968.html#36999">MarkCards_CursorRight_3</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36968.html#36999">MarkCards_CursorRight_3</a> until counter is zero.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="37002"></span>37002</td>
-<td class="instruction">LD B,6</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=6.</td>
-</tr>
-<tr>
-<td class="asm-label">MarkCards_CursorRight_4</td>
-<td class="address-2"><span id="37004"></span>37004</td>
-<td class="instruction">LD (HL),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="37005"></span>37005</td>
-<td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="37006"></span>37006</td>
-<td class="instruction">DJNZ <a href="36968.html#37004">MarkCards_CursorRight_4</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="36968.html#37004">MarkCards_CursorRight_4</a> until counter is zero.</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="37008"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="37011.html">MarkCards_SelectCard</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">MarkCards_CursorRight_5</td>
-<td class="address-2"><span id="37008"></span>37008</td>
-<td class="instruction">JP <a href="36867.html#36882">FindSelectedCardAttribute</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="36867.html#36882">FindSelectedCardAttribute</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -215,7 +116,7 @@ Prev: <a href="36956.html">36956</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#36968">Map</a></td>
 <td class="next">
-Next: <a href="37011.html">37011</a>
+Next: <a href="36979.html">36979</a>
 </td>
 </tr>
 </table>

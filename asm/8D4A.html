@@ -554,8 +554,8 @@ Make the girl buy in.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e03"></span>8E03</td>
-<td class="instruction">JR Z,<a href="8D4A.html#8e22">PlayGame_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="8D4A.html#8e22">PlayGame_2</a> if <span class="register">A</span> is zero.</td>
+<td class="instruction">JR Z,<a href="8D4A.html#8e22">PlayGame_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="8D4A.html#8e22">PlayGame_1</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -572,10 +572,10 @@ Make the girl buy in.
 </td>
 </tr>
 <tr>
-<td class="asm-label">PlayGame_1</td>
+<td class="asm-label">GirlsTurn</td>
 <td class="address-2"><span id="8e05"></span>8E05</td>
 <td class="instruction">LD A,$0D</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 0D.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="88E5.html">0D</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -585,8 +585,8 @@ Make the girl buy in.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e0a"></span>8E0A</td>
-<td class="instruction">CALL <a href="960C.html">$960C</a></td>
-<td class="comment-1" rowspan="1">Call <a href="960C.html">960C</a>.</td>
+<td class="instruction">CALL <a href="960C.html">GirlArtificialIntelligence</a></td>
+<td class="comment-1" rowspan="1">Call <a href="960C.html">GirlArtificialIntelligence</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -610,7 +610,7 @@ Make the girl buy in.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e12"></span>8E12</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="8F20.html">PlayerWonRound</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="8F20.html">PlayerWonRound</a> if the girl has "dropped".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -621,7 +621,7 @@ Make the girl buy in.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e16"></span>8E16</td>
 <td class="instruction">CP $03</td>
-<td class="comment-1" rowspan="2">Call <a href="8EE2.html">Handler_Showdown</a> if <span class="register">A</span> is equal to 03.</td>
+<td class="comment-1" rowspan="2">Call <a href="8EE2.html">Handler_Showdown</a> if the game is in "showdown" mode.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -660,10 +660,10 @@ Make the girl buy in.
 </td>
 </tr>
 <tr>
-<td class="asm-label">PlayGame_2</td>
+<td class="asm-label">PlayGame_1</td>
 <td class="address-2"><span id="8e22"></span>8E22</td>
 <td class="instruction">LD A,$0C</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 0C.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="891B.html">0C</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -730,8 +730,8 @@ Make the girl buy in.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e40"></span>8E40</td>
-<td class="instruction">JR <a href="8D4A.html#8e05">PlayGame_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="8D4A.html#8e05">PlayGame_1</a>.</td>
+<td class="instruction">JR <a href="8D4A.html#8e05">GirlsTurn</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="8D4A.html#8e05">GirlsTurn</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

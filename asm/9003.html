@@ -114,7 +114,7 @@ Reset <a href="9054.html">SelectedMarkedCard</a> and <a href="9055.html">MarkedC
 <span id="9012"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="9068.html">MarkCards_CursorRight</a>.
+This entry point is used by the routine at <a href="9073.html">MarkCards_UpdateCursorPosition</a>.
 </div>
 </div>
 </td>
@@ -326,7 +326,7 @@ Update the flash count, and keep jumping back until the count is equal to 08... 
 <span id="9042"></span>
 <div class="comments">
 <div class="paragraph">
-The count is 08 so continue here.
+The count is 08 so continue here and collect the user input.
 </div>
 </div>
 </td>
@@ -374,7 +374,7 @@ The count is 08 so continue here.
 <td class="asm-label"></td>
 <td class="address-1"><span id="9050"></span>9050</td>
 <td class="instruction">JR C,<a href="90BB.html">HandlerMarkCards</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="90BB.html">HandlerMarkCards</a> if <span class="register">A</span> is lower than 04.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="90BB.html">HandlerMarkCards</a> if "up" or "down" have been pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

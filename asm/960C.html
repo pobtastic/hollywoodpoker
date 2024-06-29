@@ -33,7 +33,7 @@ Next: <a href="96A1.html">96A1</a>
 </td>
 </tr>
 </table>
-<div class="description">960C: Routine at 960C</div>
+<div class="description">960C: Girl Artificial Intelligence</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,90 +45,108 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence</td>
 <td class="address-2"><span id="960c"></span>960C</td>
 <td class="instruction">LD A,($96C0)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B9.html#96c0">96C0</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="960f"></span>960F</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9610"></span>9610</td>
 <td class="instruction">CP $02</td>
-<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9626">9626</a> if <span class="register">A</span> is lower than 02.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9626">GirlArtificialIntelligence_2</a> if <span class="register">A</span> is lower than 02.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9612"></span>9612</td>
-<td class="instruction">JR C,<a href="960C.html#9626">$9626</a></td>
+<td class="instruction">JR C,<a href="960C.html#9626">GirlArtificialIntelligence_2</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9614"></span>9614</td>
 <td class="instruction">RL C</td>
 <td class="comment-1" rowspan="1">Rotate <span class="register">C</span> left.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9616"></span>9616</td>
 <td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="2">Jump to <a href="960C.html#961c">961C</a> if <span class="register">A</span> is lower than 04.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="960C.html#961c">GirlArtificialIntelligence_0</a> if <span class="register">A</span> is lower than 04.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9618"></span>9618</td>
-<td class="instruction">JR C,<a href="960C.html#961c">$961C</a></td>
+<td class="instruction">JR C,<a href="960C.html#961c">GirlArtificialIntelligence_0</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="961a"></span>961A</td>
 <td class="instruction">RL C</td>
 <td class="comment-1" rowspan="1">Rotate <span class="register">C</span> left.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_0</td>
 <td class="address-2"><span id="961c"></span>961C</td>
 <td class="instruction">LD B,C</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">C</span>.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_1</td>
 <td class="address-2"><span id="961d"></span>961D</td>
 <td class="instruction">CALL <a href="9579.html">GetRandomNumber</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9579.html">GetRandomNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9620"></span>9620</td>
 <td class="instruction">CP $0E</td>
-<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9637">9637</a> if <span class="register">A</span> is lower than 0E.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9637">GirlArtificialIntelligence_4</a> if <span class="register">A</span> is lower than 0E.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9622"></span>9622</td>
-<td class="instruction">JR C,<a href="960C.html#9637">$9637</a></td>
+<td class="instruction">JR C,<a href="960C.html#9637">GirlArtificialIntelligence_4</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9624"></span>9624</td>
-<td class="instruction">DJNZ <a href="960C.html#961d">$961D</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="960C.html#961d">961D</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="960C.html#961d">GirlArtificialIntelligence_1</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="960C.html#961d">GirlArtificialIntelligence_1</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_2</td>
 <td class="address-2"><span id="9626"></span>9626</td>
 <td class="instruction">LD B,C</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">C</span>.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_3</td>
 <td class="address-2"><span id="9627"></span>9627</td>
 <td class="instruction">CALL <a href="9579.html">GetRandomNumber</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9579.html">GetRandomNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="962a"></span>962A</td>
 <td class="instruction">CP $1E</td>
-<td class="comment-1" rowspan="2">Jump to <a href="960C.html#968c">968C</a> if <span class="register">A</span> is lower than 1E.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="960C.html#968c">GirlAction_Hold</a> if <span class="register">A</span> is lower than 1E.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="962c"></span>962C</td>
-<td class="instruction">JR C,<a href="960C.html#968c">$968C</a></td>
+<td class="instruction">JR C,<a href="960C.html#968c">GirlAction_Hold</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="962e"></span>962E</td>
-<td class="instruction">DJNZ <a href="960C.html#9627">$9627</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="960C.html#9627">9627</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="960C.html#9627">GirlArtificialIntelligence_3</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="960C.html#9627">GirlArtificialIntelligence_3</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -145,99 +163,118 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9630"></span>9630</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 01.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="7F9D.html">01</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9632"></span>9632</td>
 <td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9635"></span>9635</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=00</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=00 ("drop").</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9636"></span>9636</td>
 <td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_4</td>
 <td class="address-2"><span id="9637"></span>9637</td>
 <td class="instruction">LD A,($8E59)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="960C.html#968c">968C</a> if *<a href="8E44.html#8e59">8E59</a> is equal to 07.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="960C.html#968c">GirlAction_Hold</a> if *<a href="8E44.html#8e59">8E59</a> is equal to 07.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="963a"></span>963A</td>
 <td class="instruction">CP $07</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="963c"></span>963C</td>
-<td class="instruction">JR Z,<a href="960C.html#968c">$968C</a></td>
+<td class="instruction">JR Z,<a href="960C.html#968c">GirlAction_Hold</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="963e"></span>963E</td>
 <td class="instruction">LD A,($96B7)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9641"></span>9641</td>
 <td class="instruction">CALL <a href="96A1.html">GirlAddToPot</a></td>
 <td class="comment-1" rowspan="1">Call <a href="96A1.html">GirlAddToPot</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_5</td>
 <td class="address-2"><span id="9644"></span>9644</td>
 <td class="instruction">CALL <a href="9579.html">GetRandomNumber</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9579.html">GetRandomNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9647"></span>9647</td>
 <td class="instruction">SRA A</td>
 <td class="comment-1" rowspan="1">Shift <span class="register">A</span> right (with carry).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9649"></span>9649</td>
 <td class="instruction">SUB $06</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>-=06.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="964b"></span>964B</td>
-<td class="instruction">JR C,<a href="960C.html#9644">$9644</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="960C.html#9644">9644</a> if {} is lower.</td>
+<td class="instruction">JR C,<a href="960C.html#9644">GirlArtificialIntelligence_5</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="960C.html#9644">GirlArtificialIntelligence_5</a> if {} is lower.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="964d"></span>964D</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="964e"></span>964E</td>
 <td class="instruction">LD A,($96B6)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="960C.html#966c">966C</a> if *<a href="96B6.html">GirlCash</a> is higher than <span class="register">B</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="960C.html#966c">GirlArtificialIntelligence_7</a> if *<a href="96B6.html">GirlCash</a> is higher than <span class="register">B</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9651"></span>9651</td>
 <td class="instruction">CP B</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9652"></span>9652</td>
-<td class="instruction">JR NC,<a href="960C.html#966c">$966C</a></td>
+<td class="instruction">JR NC,<a href="960C.html#966c">GirlArtificialIntelligence_7</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9654"></span>9654</td>
 <td class="instruction">OR A</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9655"></span>9655</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9656"></span>9656</td>
-<td class="instruction">JR NZ,<a href="960C.html#966c">$966C</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="960C.html#966c">966C</a> if {} is not zero.</td>
+<td class="instruction">JR NZ,<a href="960C.html#966c">GirlArtificialIntelligence_7</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="960C.html#966c">GirlArtificialIntelligence_7</a> if {} is not zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -254,106 +291,127 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_6</td>
 <td class="address-2"><span id="9658"></span>9658</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 03.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="81B9.html">03</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="965a"></span>965A</td>
 <td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="965d"></span>965D</td>
 <td class="instruction">LD A,($96B7)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B7.html">CurrentRaiseValue</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">D</span>=*<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9660"></span>9660</td>
 <td class="instruction">LD D,A</td>
-<td class="comment-1" rowspan="1"><span class="register">D</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9661"></span>9661</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Write 00 to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9662"></span>9662</td>
 <td class="instruction">LD ($96B7),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9665"></span>9665</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-1" rowspan="4">Return with <span class="register">A</span>=02 if <span class="register">D</span> is not zero.</td>
+<td class="comment-1" rowspan="4">Return with <span class="register">A</span>=02 ("hold") if <span class="register">D</span> is not zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9666"></span>9666</td>
 <td class="instruction">OR A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9667"></span>9667</td>
 <td class="instruction">LD A,$02</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9669"></span>9669</td>
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="966a"></span>966A</td>
 <td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=03 ("showdown").</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="966b"></span>966B</td>
 <td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_7</td>
 <td class="address-2"><span id="966c"></span>966C</td>
 <td class="instruction">LD A,($96B5)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="960C.html#967d">967D</a> if *<a href="96B5.html">PlayerCash</a> is higher than <span class="register">B</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="960C.html#967d">GirlArtificialIntelligence_8</a> if *<a href="96B5.html">PlayerCash</a> is higher than <span class="register">B</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="966f"></span>966F</td>
 <td class="instruction">CP B</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9670"></span>9670</td>
-<td class="instruction">JR NC,<a href="960C.html#967d">$967D</a></td>
+<td class="instruction">JR NC,<a href="960C.html#967d">GirlArtificialIntelligence_8</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9672"></span>9672</td>
 <td class="instruction">LD A,($96B5)</td>
 <td class="comment-1" rowspan="2">Write *<a href="96B5.html">PlayerCash</a> to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9675"></span>9675</td>
 <td class="instruction">LD ($96B7),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9678"></span>9678</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9658">9658</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9658">GirlArtificialIntelligence_6</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9679"></span>9679</td>
-<td class="instruction">JR Z,<a href="960C.html#9658">$9658</a></td>
+<td class="instruction">JR Z,<a href="960C.html#9658">GirlArtificialIntelligence_6</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="967b"></span>967B</td>
-<td class="instruction">JR <a href="960C.html#9681">$9681</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="960C.html#9681">9681</a>.</td>
+<td class="instruction">JR <a href="960C.html#9681">GirlArtificialIntelligence_9</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="960C.html#9681">GirlArtificialIntelligence_9</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_8</td>
 <td class="address-2"><span id="967d"></span>967D</td>
 <td class="instruction">LD A,B</td>
 <td class="comment-1" rowspan="2">Write <span class="register">B</span> to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="967e"></span>967E</td>
 <td class="instruction">LD ($96B7),A</td>
 </tr>
 <tr>
+<td class="asm-label">GirlArtificialIntelligence_9</td>
 <td class="address-2"><span id="9681"></span>9681</td>
 <td class="instruction">CALL <a href="96A1.html">GirlAddToPot</a></td>
 <td class="comment-1" rowspan="1">Call <a href="96A1.html">GirlAddToPot</a>.</td>
@@ -373,48 +431,67 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9684"></span>9684</td>
 <td class="instruction">LD A,$02</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 02.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="80AB.html">02</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9686"></span>9686</td>
 <td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9689"></span>9689</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=01.</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=01 ("raise").</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="968b"></span>968B</td>
 <td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="968c"></span>
+<div class="comments">
+<div class="paragraph">
+Action is Girl will hold...
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GirlAction_Hold</td>
 <td class="address-2"><span id="968c"></span>968C</td>
 <td class="instruction">LD A,($96B7)</td>
 <td class="comment-1" rowspan="3">Jump to <a href="96B1.html">96B1</a> if *<a href="96B7.html">CurrentRaiseValue</a> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="968f"></span>968F</td>
 <td class="instruction">OR A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9690"></span>9690</td>
 <td class="instruction">JR Z,<a href="96B1.html">$96B1</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9692"></span>9692</td>
 <td class="instruction">CALL <a href="96A1.html">GirlAddToPot</a></td>
 <td class="comment-1" rowspan="1">Call <a href="96A1.html">GirlAddToPot</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9695"></span>9695</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="2">Write 00 to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9696"></span>9696</td>
 <td class="instruction">LD ($96B7),A</td>
 </tr>
@@ -433,23 +510,26 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9699"></span>9699</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 03.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="81B9.html">03</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="969b"></span>969B</td>
 <td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="969e"></span>969E</td>
 <td class="instruction">LD A,$02</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=02.</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=02 ("hold").</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="96a0"></span>96A0</td>
 <td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">
