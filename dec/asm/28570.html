@@ -29,7 +29,7 @@ Prev: <a href="28564.html">28564</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#28570">Map</a></td>
 <td class="next">
-Next: <a href="28746.html">28746</a>
+Next: <a href="28745.html">28745</a>
 </td>
 </tr>
 </table>
@@ -48,7 +48,7 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="asm-label">CollectUserDefinedKeys</td>
 <td class="address-2"><span id="28570"></span>28570</td>
 <td class="instruction">LD A,1</td>
-<td class="comment-1" rowspan="2">Write 1 to *<a href="28570.html#28745">28745</a>.</td>
+<td class="comment-1" rowspan="2">Write 1 to *<a href="28745.html">CurrentIndexUserDefinedKey</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -62,13 +62,23 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="28525.html">KeyboardKeymap</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="28578"></span>
+<div class="comments">
+<div class="paragraph">
+Blank the first entry of all five user-defined key sets.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28578"></span>28578</td>
 <td class="instruction">LD B,5</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_0</td>
+<td class="asm-label">BlankUserDefinedKeys_Loop</td>
 <td class="address-2"><span id="28580"></span>28580</td>
 <td class="instruction">LD (HL),0</td>
 <td class="comment-1" rowspan="1">Write 0 to *<span class="register">HL</span>.</td>
@@ -87,14 +97,34 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28584"></span>28584</td>
-<td class="instruction">DJNZ <a href="28570.html#28580">CollectUserDefinedKeys_0</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28580">CollectUserDefinedKeys_0</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="28570.html#28580">BlankUserDefinedKeys_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28580">BlankUserDefinedKeys_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_1</td>
+<td class="routine-comment" colspan="5">
+<span id="28586"></span>
+<div class="comments">
+<div class="paragraph">
+Debounce Loop.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">UserDefinedKeyDebounce_Loop</td>
 <td class="address-2"><span id="28586"></span>28586</td>
 <td class="instruction">CALL 654</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28589"></span>
+<div class="comments">
+<div class="paragraph">
+<blockquote>In all instances the <span class="register">E</span> register is returned with a value in the range of +0 to +39 the value being different for each of the forty keys of the keyboard, or the value +255 for no-key.</blockquote>
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -105,8 +135,18 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28590"></span>28590</td>
-<td class="instruction">JR NZ,<a href="28570.html#28586">CollectUserDefinedKeys_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28586">CollectUserDefinedKeys_1</a> until <span class="register">E</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="28570.html#28586">UserDefinedKeyDebounce_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28586">UserDefinedKeyDebounce_Loop</a> until <span class="register">E</span> is zero (e.g. no keys are being pressed).</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28592"></span>
+<div class="comments">
+<div class="paragraph">
+Get ready to collect keypresses.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -120,19 +160,24 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="instruction">LD (23560),A</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_2</td>
+<td class="asm-label">UserDefinedKeyCollectInput_Loop</td>
 <td class="address-2"><span id="28596"></span>28596</td>
 <td class="instruction">LD C,5</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=5.</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=INK:
+CYAN,
+PAPER:
+BLACK
+
+.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28598"></span>28598</td>
-<td class="instruction">CALL <a href="28570.html#28725">CollectUserDefinedKeys_11</a></td>
-<td class="comment-1" rowspan="1">Call <a href="28570.html#28725">CollectUserDefinedKeys_11</a>.</td>
+<td class="instruction">CALL <a href="28570.html#28725">FindUserDefinedKeyAttribute</a></td>
+<td class="comment-1" rowspan="1">Call <a href="28570.html#28725">FindUserDefinedKeyAttribute</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_3</td>
+<td class="asm-label">UserDefinedKeyCollectInput</td>
 <td class="address-2"><span id="28601"></span>28601</td>
 <td class="instruction">CALL 703</td>
 <td class="comment-1" rowspan="1">Call <a href="https://skoolkit.ca/disassemblies/rom/hex/asm/02BF.html">KEYBOARD</a>.</td>
@@ -141,13 +186,12 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="28604"></span>28604</td>
 <td class="instruction">BIT 5,(IY+1)</td>
-<td class="comment-1" rowspan="1">Test bit 5 of *<span class="register">IX</span>+1.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">UserDefinedKeyCollectInput</a> if no key was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28608"></span>28608</td>
-<td class="instruction">JR Z,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if {} is zero.</td>
+<td class="instruction">JR Z,<a href="28570.html#28601">UserDefinedKeyCollectInput</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -159,70 +203,80 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="28613"></span>28613</td>
 <td class="instruction">CP 13</td>
-<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28637">CollectUserDefinedKeys_4</a> if <span class="register">A</span> is equal to 13.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28637">FindExistingKeyboardKeymap</a> if <span class="register">A</span> is equal to 13.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28615"></span>28615</td>
-<td class="instruction">JR Z,<a href="28570.html#28637">CollectUserDefinedKeys_4</a></td>
+<td class="instruction">JR Z,<a href="28570.html#28637">FindExistingKeyboardKeymap</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28617"></span>28617</td>
 <td class="instruction">CP 32</td>
-<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28637">CollectUserDefinedKeys_4</a> if <span class="register">A</span> is equal to 32.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28637">FindExistingKeyboardKeymap</a> if <span class="register">A</span> is equal to 32.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28619"></span>28619</td>
-<td class="instruction">JR Z,<a href="28570.html#28637">CollectUserDefinedKeys_4</a></td>
+<td class="instruction">JR Z,<a href="28570.html#28637">FindExistingKeyboardKeymap</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28621"></span>28621</td>
 <td class="instruction">CP 48</td>
-<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if <span class="register">A</span> is lower than 48.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">UserDefinedKeyCollectInput</a> if <span class="register">A</span> is lower than 48.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28623"></span>28623</td>
-<td class="instruction">JR C,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
+<td class="instruction">JR C,<a href="28570.html#28601">UserDefinedKeyCollectInput</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28625"></span>28625</td>
 <td class="instruction">CP 91</td>
-<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if <span class="register">A</span> is higher than 91.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">UserDefinedKeyCollectInput</a> if <span class="register">A</span> is higher than 91.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28627"></span>28627</td>
-<td class="instruction">JR NC,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
+<td class="instruction">JR NC,<a href="28570.html#28601">UserDefinedKeyCollectInput</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28629"></span>28629</td>
 <td class="instruction">CP 65</td>
-<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28637">CollectUserDefinedKeys_4</a> if <span class="register">A</span> is higher than 65.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28637">FindExistingKeyboardKeymap</a> if <span class="register">A</span> is higher than 65.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28631"></span>28631</td>
-<td class="instruction">JR NC,<a href="28570.html#28637">CollectUserDefinedKeys_4</a></td>
+<td class="instruction">JR NC,<a href="28570.html#28637">FindExistingKeyboardKeymap</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28633"></span>28633</td>
 <td class="instruction">CP 58</td>
-<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if <span class="register">A</span> is higher than 58.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28601">UserDefinedKeyCollectInput</a> if <span class="register">A</span> is higher than 58.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28635"></span>28635</td>
-<td class="instruction">JR NC,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
+<td class="instruction">JR NC,<a href="28570.html#28601">UserDefinedKeyCollectInput</a></td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_4</td>
+<td class="routine-comment" colspan="5">
+<span id="28637"></span>
+<div class="comments">
+<div class="paragraph">
+Check if the key which has been pressed already exists for any other key.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">FindExistingKeyboardKeymap</td>
 <td class="address-2"><span id="28637"></span>28637</td>
 <td class="instruction">LD HL,28525</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="28525.html">KeyboardKeymap</a>.</td>
@@ -231,19 +285,19 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="28640"></span>28640</td>
 <td class="instruction">LD D,A</td>
-<td class="comment-1" rowspan="1"><span class="register">D</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Store the keypress in <span class="register">D</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28641"></span>28641</td>
 <td class="instruction">LD B,5</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> as there are 5 keys to check in total.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_5</td>
+<td class="asm-label">FindExistingKeyboardKeymap_Loop</td>
 <td class="address-2"><span id="28643"></span>28643</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="28570.html#28601">CollectUserDefinedKeys_3</a> if *<span class="register">HL</span> is equal to <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="28570.html#28601">UserDefinedKeyCollectInput</a> if the current keypress already exists in the user-defined keymap table.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -253,7 +307,7 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28645"></span>28645</td>
-<td class="instruction">JR Z,<a href="28570.html#28601">CollectUserDefinedKeys_3</a></td>
+<td class="instruction">JR Z,<a href="28570.html#28601">UserDefinedKeyCollectInput</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -269,14 +323,24 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28649"></span>28649</td>
-<td class="instruction">DJNZ <a href="28570.html#28643">CollectUserDefinedKeys_5</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28643">CollectUserDefinedKeys_5</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="28570.html#28643">FindExistingKeyboardKeymap_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the keymap counter by one and loop back to <a href="28570.html#28643">FindExistingKeyboardKeymap_Loop</a> until all keymaps have been checked.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28651"></span>
+<div class="comments">
+<div class="paragraph">
+The keypress is good, so find the keyboard keymap position we need to update.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28651"></span>28651</td>
 <td class="instruction">LD A,(28745)</td>
-<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="28570.html#28745">28745</a>.</td>
+<td class="comment-1" rowspan="2">Set a counter in <span class="register">B</span> of *<a href="28745.html">CurrentIndexUserDefinedKey</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -287,10 +351,10 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="28655"></span>28655</td>
 <td class="instruction">LD HL,28523</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="28515.html#28523">28523</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="28525.html">28523</a> (e.g. <a href="28525.html">KeyboardKeymap</a>-2).</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_6</td>
+<td class="asm-label">FindCurrentKeyboardKeymap_Loop</td>
 <td class="address-2"><span id="28658"></span>28658</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="2">Increment <span class="register">HL</span> by two.</td>
@@ -303,50 +367,71 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28660"></span>28660</td>
-<td class="instruction">DJNZ <a href="28570.html#28658">CollectUserDefinedKeys_6</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28658">CollectUserDefinedKeys_6</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="28570.html#28658">FindCurrentKeyboardKeymap_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28658">FindCurrentKeyboardKeymap_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28662"></span>28662</td>
 <td class="instruction">LD (HL),D</td>
-<td class="comment-1" rowspan="1">Write <span class="register">D</span> to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="2">Write the keypress to *<span class="register">HL</span> and also stash it on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28663"></span>28663</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28664"></span>
+<div class="comments">
+<div class="paragraph">
+Calculate the screen co-ordinates.
+</div>
+<div class="paragraph">
+<span class="register">B</span>, the row, is a simple calculation of: 24-*<a href="28745.html">CurrentIndexUserDefinedKey</a>.
+</div>
+<div class="paragraph">
+<span class="register">C</span>, the column, will always be 11.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28664"></span>28664</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="5">Calculate the screen co-ordinates for the index currently in-focus and store them in <span class="register">BC</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28665"></span>28665</td>
 <td class="instruction">LD A,24</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=24.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28667"></span>28667</td>
 <td class="instruction">SUB B</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28668"></span>28668</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28669"></span>28669</td>
 <td class="instruction">LD C,11</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=11.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28671"></span>
+<div class="comments">
+<div class="paragraph">
+Convert the screen co-ordinates into a screen buffer location pointer.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -358,83 +443,106 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="28674"></span>28674</td>
 <td class="instruction">POP DE</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
+<td class="comment-1" rowspan="2">Fetch the keypress from the stack and store it in <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28675"></span>28675</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">D</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28676"></span>28676</td>
 <td class="instruction">CP 13</td>
-<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28717">CollectUserDefinedKeys_10</a> if <span class="register">A</span> is equal to 13.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28717">Print_Enter</a> if "enter" is the keypress.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28678"></span>28678</td>
-<td class="instruction">JR Z,<a href="28570.html#28717">CollectUserDefinedKeys_10</a></td>
+<td class="instruction">JR Z,<a href="28570.html#28717">Print_Enter</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28680"></span>28680</td>
 <td class="instruction">CP 32</td>
-<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28709">CollectUserDefinedKeys_9</a> if <span class="register">A</span> is equal to 32.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28709">Print_Space</a> if "space" is the keypress.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28682"></span>28682</td>
-<td class="instruction">JR Z,<a href="28570.html#28709">CollectUserDefinedKeys_9</a></td>
+<td class="instruction">JR Z,<a href="28570.html#28709">Print_Space</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28684"></span>
+<div class="comments">
+<div class="paragraph">
+Else, it's a printable character so display it.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28684"></span>28684</td>
 <td class="instruction">RST 16</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Print the character to the screen.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_7</td>
+<td class="asm-label">PrintWhitespace</td>
 <td class="address-2"><span id="28685"></span>28685</td>
 <td class="instruction">LD B,4</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=4.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> to print 4 ASCII spaces.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_8</td>
+<td class="asm-label">PrintWhitespace_Loop</td>
 <td class="address-2"><span id="28687"></span>28687</td>
 <td class="instruction">LD A,32</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=32.</td>
+<td class="comment-1" rowspan="2">Print an ASCII space " ".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28689"></span>28689</td>
 <td class="instruction">RST 16</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28690"></span>28690</td>
-<td class="instruction">DJNZ <a href="28570.html#28687">CollectUserDefinedKeys_8</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28687">CollectUserDefinedKeys_8</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="28570.html#28687">PrintWhitespace_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the space counter by one and loop back to <a href="28570.html#28687">PrintWhitespace_Loop</a> until the counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28692"></span>28692</td>
 <td class="instruction">LD C,7</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=7.</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=INK:
+WHITE,
+PAPER:
+BLACK
+
+.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28694"></span>28694</td>
-<td class="instruction">CALL <a href="28570.html#28725">CollectUserDefinedKeys_11</a></td>
-<td class="comment-1" rowspan="1">Call <a href="28570.html#28725">CollectUserDefinedKeys_11</a>.</td>
+<td class="instruction">CALL <a href="28570.html#28725">FindUserDefinedKeyAttribute</a></td>
+<td class="comment-1" rowspan="1">Call <a href="28570.html#28725">FindUserDefinedKeyAttribute</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28697"></span>
+<div class="comments">
+<div class="paragraph">
+Move to the next user-defined key index.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28697"></span>28697</td>
 <td class="instruction">LD A,(28745)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="28570.html#28745">28745</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="28745.html">CurrentIndexUserDefinedKey</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -446,18 +554,18 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="28701"></span>28701</td>
 <td class="instruction">LD (28745),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="28570.html#28745">28745</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="28745.html">CurrentIndexUserDefinedKey</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28704"></span>28704</td>
 <td class="instruction">CP 6</td>
-<td class="comment-1" rowspan="2">Jump to <a href="28570.html#28596">CollectUserDefinedKeys_2</a> if <span class="register">A</span> is not equal to 6.</td>
+<td class="comment-1" rowspan="2">Keep jumping back to <a href="28570.html#28596">UserDefinedKeyCollectInput_Loop</a> until all user-defined keys have been collected.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28706"></span>28706</td>
-<td class="instruction">JR NZ,<a href="28570.html#28596">CollectUserDefinedKeys_2</a></td>
+<td class="instruction">JR NZ,<a href="28570.html#28596">UserDefinedKeyCollectInput_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -466,7 +574,17 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_9</td>
+<td class="routine-comment" colspan="5">
+<span id="28709"></span>
+<div class="comments">
+<div class="paragraph">
+Prints the word "SPACE".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Space</td>
 <td class="address-2"><span id="28709"></span>28709</td>
 <td class="instruction">LD HL,31297</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="31297.html">Messaging_Space</a>.</td>
@@ -480,11 +598,21 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28715"></span>28715</td>
-<td class="instruction">JR <a href="28570.html#28685">CollectUserDefinedKeys_7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28685">CollectUserDefinedKeys_7</a>.</td>
+<td class="instruction">JR <a href="28570.html#28685">PrintWhitespace</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28685">PrintWhitespace</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_10</td>
+<td class="routine-comment" colspan="5">
+<span id="28717"></span>
+<div class="comments">
+<div class="paragraph">
+Prints the word "ENTER".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Enter</td>
 <td class="address-2"><span id="28717"></span>28717</td>
 <td class="instruction">LD HL,31303</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="31303.html">Messaging_Enter</a>.</td>
@@ -498,11 +626,21 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28723"></span>28723</td>
-<td class="instruction">JR <a href="28570.html#28685">CollectUserDefinedKeys_7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28685">CollectUserDefinedKeys_7</a>.</td>
+<td class="instruction">JR <a href="28570.html#28685">PrintWhitespace</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28685">PrintWhitespace</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_11</td>
+<td class="routine-comment" colspan="5">
+<span id="28725"></span>
+<div class="comments">
+<div class="paragraph">
+22539+(32*<a href="28745.html">CurrentIndexUserDefinedKey</a>) to find the attribute buffer address for the user-defined key currently being processed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">FindUserDefinedKeyAttribute</td>
 <td class="address-2"><span id="28725"></span>28725</td>
 <td class="instruction">LD HL,22539</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=22539 (attribute buffer location).</td>
@@ -517,34 +655,44 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="28731"></span>28731</td>
 <td class="instruction">LD A,(28745)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="28570.html#28745">28745</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="28745.html">CurrentIndexUserDefinedKey</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_12</td>
+<td class="asm-label">FindUserDefinedKeyAttribute_Loop</td>
 <td class="address-2"><span id="28734"></span>28734</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>+=0032.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28735"></span>28735</td>
 <td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+<td class="comment-1" rowspan="1">Decrease the index by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28736"></span>28736</td>
-<td class="instruction">JR NZ,<a href="28570.html#28734">CollectUserDefinedKeys_12</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="28570.html#28734">CollectUserDefinedKeys_12</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="28570.html#28734">FindUserDefinedKeyAttribute_Loop</a></td>
+<td class="comment-1" rowspan="1">Keep jumping back to <a href="28570.html#28734">FindUserDefinedKeyAttribute_Loop</a> until the index is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28738"></span>
+<div class="comments">
+<div class="paragraph">
+<span class="register">HL</span> now holds a pointer to the attribute line for the user-defined key currently being processed.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28738"></span>28738</td>
 <td class="instruction">LD B,20</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=20.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> for 20 character blocks to "paint".</td>
 </tr>
 <tr>
-<td class="asm-label">CollectUserDefinedKeys_13</td>
+<td class="asm-label">SetUserDefinedKeyAttribute_Loop</td>
 <td class="address-2"><span id="28740"></span>28740</td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-1" rowspan="1">Write <span class="register">C</span> to *<span class="register">HL</span>.</td>
@@ -558,20 +706,14 @@ Used by the routine at <a href="28419.html">TitleScreen_DefineKeysSelected</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28742"></span>28742</td>
-<td class="instruction">DJNZ <a href="28570.html#28740">CollectUserDefinedKeys_13</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28740">CollectUserDefinedKeys_13</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="28570.html#28740">SetUserDefinedKeyAttribute_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="28570.html#28740">SetUserDefinedKeyAttribute_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28744"></span>28744</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="28745"></span>28745</td>
-<td class="instruction">DEFB 0</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -581,7 +723,7 @@ Prev: <a href="28564.html">28564</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#28570">Map</a></td>
 <td class="next">
-Next: <a href="28746.html">28746</a>
+Next: <a href="28745.html">28745</a>
 </td>
 </tr>
 </table>

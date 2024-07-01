@@ -33,7 +33,7 @@ Next: <a href="29544.html">29544</a>
 </td>
 </tr>
 </table>
-<div class="description">29338: Routine at 729A</div>
+<div class="description">29338: Winners Table Name Entry</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -55,7 +55,7 @@ Debounce the key press.
 </td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop</td>
+<td class="asm-label">WinnersTableNameEntry</td>
 <td class="address-2"><span id="29338"></span>29338</td>
 <td class="instruction">CALL 654</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
@@ -82,8 +82,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29342"></span>29342</td>
-<td class="instruction">JR NZ,<a href="29338.html#29338">Debounce_Loop</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="29338.html">Debounce_Loop</a> unless no keys are being pressed.</td>
+<td class="instruction">JR NZ,<a href="29338.html#29338">WinnersTableNameEntry</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29338.html">WinnersTableNameEntry</a> unless no keys are being pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -110,10 +110,10 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1">Copy *<a href="39139.html">CurrentStage</a> into <span class="register">D</span>.</td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop_0</td>
+<td class="asm-label">WinnersTableNameEntry_0</td>
 <td class="address-2"><span id="29353"></span>29353</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29365">Debounce_Loop_1</a> if *<span class="register">HL</span> is lower than <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29365">WinnersTableNameEntry_1</a> if *<span class="register">HL</span> is lower than <span class="register">D</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -123,7 +123,7 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29355"></span>29355</td>
-<td class="instruction">JR C,<a href="29338.html#29365">Debounce_Loop_1</a></td>
+<td class="instruction">JR C,<a href="29338.html#29365">WinnersTableNameEntry_1</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -144,8 +144,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29360"></span>29360</td>
-<td class="instruction">DJNZ <a href="29338.html#29353">Debounce_Loop_0</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="29338.html#29353">Debounce_Loop_0</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="29338.html#29353">WinnersTableNameEntry_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="29338.html#29353">WinnersTableNameEntry_0</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -154,7 +154,7 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1">Jump to <a href="28317.html">TitleScreen</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop_1</td>
+<td class="asm-label">WinnersTableNameEntry_1</td>
 <td class="address-2"><span id="29365"></span>29365</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">BC</span> and <span class="register">HL</span> on the stack.</td>
@@ -230,7 +230,7 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1"><span class="register">B</span>=13.</td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop_2</td>
+<td class="asm-label">WinnersTableNameEntry_2</td>
 <td class="address-2"><span id="29392"></span>29392</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">BC</span> and <span class="register">HL</span> on the stack.</td>
@@ -241,7 +241,7 @@ Handle if no keys are being pressed, for reference:
 <td class="instruction">PUSH HL</td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop_3</td>
+<td class="asm-label">WinnersTableNameEntry_3</td>
 <td class="address-2"><span id="29394"></span>29394</td>
 <td class="instruction">RES 5,(IY+1)</td>
 <td class="comment-1" rowspan="1">Reset bit 5 of *<span class="register">IX</span>+1.</td>
@@ -261,14 +261,14 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29405"></span>29405</td>
-<td class="instruction">JR Z,<a href="29338.html#29394">Debounce_Loop_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29394">Debounce_Loop_3</a> if {} is zero.</td>
+<td class="instruction">JR Z,<a href="29338.html#29394">WinnersTableNameEntry_3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29394">WinnersTableNameEntry_3</a> if {} is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29407"></span>29407</td>
 <td class="instruction">LD A,(23560)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29495">Debounce_Loop_6</a> if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to 13.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29495">WinnersTableNameEntry_6</a> if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to 13.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -278,18 +278,18 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29412"></span>29412</td>
-<td class="instruction">JR Z,<a href="29338.html#29495">Debounce_Loop_6</a></td>
+<td class="instruction">JR Z,<a href="29338.html#29495">WinnersTableNameEntry_6</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29414"></span>29414</td>
 <td class="instruction">CP 12</td>
-<td class="comment-1" rowspan="2">Jump to <a href="29338.html#29456">Debounce_Loop_5</a> if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to 12.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="29338.html#29456">WinnersTableNameEntry_5</a> if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to 12.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29416"></span>29416</td>
-<td class="instruction">JR Z,<a href="29338.html#29456">Debounce_Loop_5</a></td>
+<td class="instruction">JR Z,<a href="29338.html#29456">WinnersTableNameEntry_5</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -301,7 +301,7 @@ Handle if no keys are being pressed, for reference:
 <td class="asm-label"></td>
 <td class="address-1"><span id="29419"></span>29419</td>
 <td class="instruction">LD A,(29494)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29394">Debounce_Loop_3</a> if *<a href="29338.html#29494">29494</a> is not zero.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29394">WinnersTableNameEntry_3</a> if *<a href="29338.html#29494">29494</a> is not zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -311,13 +311,13 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29423"></span>29423</td>
-<td class="instruction">JR NZ,<a href="29338.html#29394">Debounce_Loop_3</a></td>
+<td class="instruction">JR NZ,<a href="29338.html#29394">WinnersTableNameEntry_3</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29425"></span>29425</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29394">Debounce_Loop_3</a> if <span class="register">B</span> is lower than 32.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29394">WinnersTableNameEntry_3</a> if <span class="register">B</span> is lower than 32.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -327,18 +327,18 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29428"></span>29428</td>
-<td class="instruction">JR C,<a href="29338.html#29394">Debounce_Loop_3</a></td>
+<td class="instruction">JR C,<a href="29338.html#29394">WinnersTableNameEntry_3</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29430"></span>29430</td>
 <td class="instruction">CP 123</td>
-<td class="comment-1" rowspan="2">Jump to <a href="29338.html#29394">Debounce_Loop_3</a> if <span class="register">B</span> is higher than 123.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="29338.html#29394">WinnersTableNameEntry_3</a> if <span class="register">B</span> is higher than 123.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29432"></span>29432</td>
-<td class="instruction">JR NC,<a href="29338.html#29394">Debounce_Loop_3</a></td>
+<td class="instruction">JR NC,<a href="29338.html#29394">WinnersTableNameEntry_3</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -378,7 +378,7 @@ Handle if no keys are being pressed, for reference:
 </td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop_4</td>
+<td class="asm-label">WinnersTableNameEntry_4</td>
 <td class="address-2"><span id="29438"></span>29438</td>
 <td class="instruction">CALL 654</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
@@ -392,8 +392,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29442"></span>29442</td>
-<td class="instruction">JR NZ,<a href="29338.html#29438">Debounce_Loop_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29438">Debounce_Loop_4</a> unless no keys are being pressed.</td>
+<td class="instruction">JR NZ,<a href="29338.html#29438">WinnersTableNameEntry_4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29438">WinnersTableNameEntry_4</a> unless no keys are being pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -415,8 +415,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29447"></span>29447</td>
-<td class="instruction">DJNZ <a href="29338.html#29392">Debounce_Loop_2</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="29338.html#29392">Debounce_Loop_2</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="29338.html#29392">WinnersTableNameEntry_2</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="29338.html#29392">WinnersTableNameEntry_2</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -432,11 +432,11 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29454"></span>29454</td>
-<td class="instruction">JR <a href="29338.html#29392">Debounce_Loop_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29392">Debounce_Loop_2</a>.</td>
+<td class="instruction">JR <a href="29338.html#29392">WinnersTableNameEntry_2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29392">WinnersTableNameEntry_2</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop_5</td>
+<td class="asm-label">WinnersTableNameEntry_5</td>
 <td class="address-2"><span id="29456"></span>29456</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">HL</span> and <span class="register">BC</span> from the stack.</td>
@@ -461,7 +461,7 @@ Handle if no keys are being pressed, for reference:
 <td class="asm-label"></td>
 <td class="address-1"><span id="29462"></span>29462</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29392">Debounce_Loop_2</a> if <span class="register">B</span> is equal to 13.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="29338.html#29392">WinnersTableNameEntry_2</a> if <span class="register">B</span> is equal to 13.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -471,7 +471,7 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29465"></span>29465</td>
-<td class="instruction">JR Z,<a href="29338.html#29392">Debounce_Loop_2</a></td>
+<td class="instruction">JR Z,<a href="29338.html#29392">WinnersTableNameEntry_2</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -556,8 +556,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29492"></span>29492</td>
-<td class="instruction">JR <a href="29338.html#29394">Debounce_Loop_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29394">Debounce_Loop_3</a>.</td>
+<td class="instruction">JR <a href="29338.html#29394">WinnersTableNameEntry_3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29394">WinnersTableNameEntry_3</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -566,7 +566,7 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop_6</td>
+<td class="asm-label">WinnersTableNameEntry_6</td>
 <td class="address-2"><span id="29495"></span>29495</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="4">Restore <span class="register">HL</span>, <span class="register">BC</span>, <span class="register">HL</span> and <span class="register">BC</span> from the stack.</td>
@@ -593,7 +593,7 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">B</span>.</td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop_7</td>
+<td class="asm-label">WinnersTableNameEntry_7</td>
 <td class="address-2"><span id="29500"></span>29500</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
@@ -629,8 +629,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29506"></span>29506</td>
-<td class="instruction">DJNZ <a href="29338.html#29500">Debounce_Loop_7</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="29338.html#29500">Debounce_Loop_7</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="29338.html#29500">WinnersTableNameEntry_7</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="29338.html#29500">WinnersTableNameEntry_7</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -645,7 +645,7 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="29569.html">29570</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Debounce_Loop_8</td>
+<td class="asm-label">WinnersTableNameEntry_8</td>
 <td class="address-2"><span id="29513"></span>29513</td>
 <td class="instruction">LD H,(IX+0)</td>
 <td class="comment-1" rowspan="1"><span class="register">H</span>=*<span class="register">IX</span>+0.</td>
@@ -717,8 +717,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="29539"></span>29539</td>
-<td class="instruction">JR NZ,<a href="29338.html#29513">Debounce_Loop_8</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29513">Debounce_Loop_8</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="29338.html#29513">WinnersTableNameEntry_8</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29338.html#29513">WinnersTableNameEntry_8</a> until <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

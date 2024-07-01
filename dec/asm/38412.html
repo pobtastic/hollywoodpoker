@@ -29,7 +29,7 @@ Prev: <a href="38383.html">38383</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#38412">Map</a></td>
 <td class="next">
-Next: <a href="38561.html">38561</a>
+Next: <a href="38508.html">38508</a>
 </td>
 </tr>
 </table>
@@ -135,12 +135,12 @@ Used by the routine at <a href="36170.html">PlayGame</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="38442"></span>38442</td>
 <td class="instruction">CP 30</td>
-<td class="comment-1" rowspan="2">Jump to <a href="38412.html#38540">GirlAction_Hold</a> if <span class="register">A</span> is lower than 30.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="38540.html">GirlAction_Hold</a> if <span class="register">A</span> is lower than 30.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38444"></span>38444</td>
-<td class="instruction">JR C,<a href="38412.html#38540">GirlAction_Hold</a></td>
+<td class="instruction">JR C,<a href="38540.html">GirlAction_Hold</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -188,7 +188,7 @@ Used by the routine at <a href="36170.html">PlayGame</a>.
 <td class="asm-label">GirlArtificialIntelligence_4</td>
 <td class="address-2"><span id="38455"></span>38455</td>
 <td class="instruction">LD A,(36441)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="38412.html#38540">GirlAction_Hold</a> if *<a href="36420.html#36441">36441</a> is equal to 7.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="38540.html">GirlAction_Hold</a> if *<a href="36420.html#36441">36441</a> is equal to 7.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -198,7 +198,7 @@ Used by the routine at <a href="36170.html">PlayGame</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38460"></span>38460</td>
-<td class="instruction">JR Z,<a href="38412.html#38540">GirlAction_Hold</a></td>
+<td class="instruction">JR Z,<a href="38540.html">GirlAction_Hold</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -246,7 +246,7 @@ Used by the routine at <a href="36170.html">PlayGame</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="38478"></span>38478</td>
 <td class="instruction">LD A,(38582)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="38412.html#38508">GirlArtificialIntelligence_7</a> if *<a href="38582.html">GirlCash</a> is higher than <span class="register">B</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="38508.html">GirlAction_Raise</a> if *<a href="38582.html">GirlCash</a> is higher than <span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -256,7 +256,7 @@ Used by the routine at <a href="36170.html">PlayGame</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38482"></span>38482</td>
-<td class="instruction">JR NC,<a href="38412.html#38508">GirlArtificialIntelligence_7</a></td>
+<td class="instruction">JR NC,<a href="38508.html">GirlAction_Raise</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -273,8 +273,8 @@ Used by the routine at <a href="36170.html">PlayGame</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38486"></span>38486</td>
-<td class="instruction">JR NZ,<a href="38412.html#38508">GirlArtificialIntelligence_7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="38412.html#38508">GirlArtificialIntelligence_7</a> if {} is not zero.</td>
+<td class="instruction">JR NZ,<a href="38508.html">GirlAction_Raise</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38508.html">GirlAction_Raise</a> if {} is not zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -355,182 +355,6 @@ Used by the routine at <a href="36170.html">PlayGame</a>.
 <td class="address-1"><span id="38507"></span>38507</td>
 <td class="instruction">RET</td>
 </tr>
-<tr>
-<td class="asm-label">GirlArtificialIntelligence_7</td>
-<td class="address-2"><span id="38508"></span>38508</td>
-<td class="instruction">LD A,(38581)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="38412.html#38525">GirlArtificialIntelligence_8</a> if *<a href="38581.html">PlayerCash</a> is higher than <span class="register">B</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38511"></span>38511</td>
-<td class="instruction">CP B</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38512"></span>38512</td>
-<td class="instruction">JR NC,<a href="38412.html#38525">GirlArtificialIntelligence_8</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38514"></span>38514</td>
-<td class="instruction">LD A,(38581)</td>
-<td class="comment-1" rowspan="2">Write *<a href="38581.html">PlayerCash</a> to *<a href="38583.html">CurrentRaiseValue</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38517"></span>38517</td>
-<td class="instruction">LD (38583),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38520"></span>38520</td>
-<td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="38412.html#38488">GirlArtificialIntelligence_6</a> if <span class="register">A</span> is zero.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38521"></span>38521</td>
-<td class="instruction">JR Z,<a href="38412.html#38488">GirlArtificialIntelligence_6</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38523"></span>38523</td>
-<td class="instruction">JR <a href="38412.html#38529">GirlArtificialIntelligence_9</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="38412.html#38529">GirlArtificialIntelligence_9</a>.</td>
-</tr>
-<tr>
-<td class="asm-label">GirlArtificialIntelligence_8</td>
-<td class="address-2"><span id="38525"></span>38525</td>
-<td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="2">Write <span class="register">B</span> to *<a href="38583.html">CurrentRaiseValue</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38526"></span>38526</td>
-<td class="instruction">LD (38583),A</td>
-</tr>
-<tr>
-<td class="asm-label">GirlArtificialIntelligence_9</td>
-<td class="address-2"><span id="38529"></span>38529</td>
-<td class="instruction">CALL <a href="38561.html">GirlAddToPot</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38561.html">GirlAddToPot</a>.</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="38532"></span>
-<div class="comments">
-<div class="paragraph">
-<table class="">
-<tr>
-<td class="" colspan="1" rowspan="1"><img alt="message-02" src="../../images/scr/message-02.png" /></td>
-</tr>
-</table>
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38532"></span>38532</td>
-<td class="instruction">LD A,2</td>
-<td class="comment-1" rowspan="2">Call <a href="32151.html">Messaging_Girl</a> using message block <a href="32939.html">2</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38534"></span>38534</td>
-<td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38537"></span>38537</td>
-<td class="instruction">LD A,1</td>
-<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=1 ("raise").</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38539"></span>38539</td>
-<td class="instruction">RET</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="38540"></span>
-<div class="comments">
-<div class="paragraph">
-Action is Girl will hold...
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">GirlAction_Hold</td>
-<td class="address-2"><span id="38540"></span>38540</td>
-<td class="instruction">LD A,(38583)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="38577.html">38577</a> if *<a href="38583.html">CurrentRaiseValue</a> is zero.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38543"></span>38543</td>
-<td class="instruction">OR A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38544"></span>38544</td>
-<td class="instruction">JR Z,<a href="38577.html">38577</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38546"></span>38546</td>
-<td class="instruction">CALL <a href="38561.html">GirlAddToPot</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38561.html">GirlAddToPot</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38549"></span>38549</td>
-<td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2">Write 0 to *<a href="38583.html">CurrentRaiseValue</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38550"></span>38550</td>
-<td class="instruction">LD (38583),A</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="38553"></span>
-<div class="comments">
-<div class="paragraph">
-<table class="">
-<tr>
-<td class="" colspan="1" rowspan="1"><img alt="message-03" src="../../images/scr/message-03.png" /></td>
-</tr>
-</table>
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38553"></span>38553</td>
-<td class="instruction">LD A,3</td>
-<td class="comment-1" rowspan="2">Call <a href="32151.html">Messaging_Girl</a> using message block <a href="33209.html">3</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38555"></span>38555</td>
-<td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38558"></span>38558</td>
-<td class="instruction">LD A,2</td>
-<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=2 ("hold").</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38560"></span>38560</td>
-<td class="instruction">RET</td>
-</tr>
 </table>
 <table class="asm-navigation">
 <tr>
@@ -539,7 +363,7 @@ Prev: <a href="38383.html">38383</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#38412">Map</a></td>
 <td class="next">
-Next: <a href="38561.html">38561</a>
+Next: <a href="38508.html">38508</a>
 </td>
 </tr>
 </table>

@@ -45,6 +45,85 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="959b"></span>
+<div class="comments">
+<div class="paragraph">
+This routine generates the following bytes in <a href="95BB.html">CardDeck</a>:   <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Address Block</th>
+<th colspan="13" rowspan="1">Bytes</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="95BB.html">95BB</a></td>
+<td class="" colspan="1" rowspan="1">00</td>
+<td class="" colspan="1" rowspan="1">01</td>
+<td class="" colspan="1" rowspan="1">02</td>
+<td class="" colspan="1" rowspan="1">03</td>
+<td class="" colspan="1" rowspan="1">04</td>
+<td class="" colspan="1" rowspan="1">05</td>
+<td class="" colspan="1" rowspan="1">06</td>
+<td class="" colspan="1" rowspan="1">07</td>
+<td class="" colspan="1" rowspan="1">08</td>
+<td class="" colspan="1" rowspan="1">09</td>
+<td class="" colspan="1" rowspan="1">0A</td>
+<td class="" colspan="1" rowspan="1">0B</td>
+<td class="" colspan="1" rowspan="1">0C</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="95BB.html#95c8">95C8</a></td>
+<td class="" colspan="1" rowspan="1">10</td>
+<td class="" colspan="1" rowspan="1">11</td>
+<td class="" colspan="1" rowspan="1">12</td>
+<td class="" colspan="1" rowspan="1">13</td>
+<td class="" colspan="1" rowspan="1">14</td>
+<td class="" colspan="1" rowspan="1">15</td>
+<td class="" colspan="1" rowspan="1">16</td>
+<td class="" colspan="1" rowspan="1">17</td>
+<td class="" colspan="1" rowspan="1">18</td>
+<td class="" colspan="1" rowspan="1">19</td>
+<td class="" colspan="1" rowspan="1">1A</td>
+<td class="" colspan="1" rowspan="1">1B</td>
+<td class="" colspan="1" rowspan="1">1C</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="95BB.html#95d5">95D5</a></td>
+<td class="" colspan="1" rowspan="1">20</td>
+<td class="" colspan="1" rowspan="1">21</td>
+<td class="" colspan="1" rowspan="1">22</td>
+<td class="" colspan="1" rowspan="1">23</td>
+<td class="" colspan="1" rowspan="1">24</td>
+<td class="" colspan="1" rowspan="1">25</td>
+<td class="" colspan="1" rowspan="1">26</td>
+<td class="" colspan="1" rowspan="1">27</td>
+<td class="" colspan="1" rowspan="1">28</td>
+<td class="" colspan="1" rowspan="1">29</td>
+<td class="" colspan="1" rowspan="1">2A</td>
+<td class="" colspan="1" rowspan="1">2B</td>
+<td class="" colspan="1" rowspan="1">2C</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="95BB.html#95e2">95E2</a></td>
+<td class="" colspan="1" rowspan="1">30</td>
+<td class="" colspan="1" rowspan="1">31</td>
+<td class="" colspan="1" rowspan="1">32</td>
+<td class="" colspan="1" rowspan="1">33</td>
+<td class="" colspan="1" rowspan="1">34</td>
+<td class="" colspan="1" rowspan="1">35</td>
+<td class="" colspan="1" rowspan="1">36</td>
+<td class="" colspan="1" rowspan="1">37</td>
+<td class="" colspan="1" rowspan="1">38</td>
+<td class="" colspan="1" rowspan="1">39</td>
+<td class="" colspan="1" rowspan="1">3A</td>
+<td class="" colspan="1" rowspan="1">3B</td>
+<td class="" colspan="1" rowspan="1">3C</td>
+</tr>
+</table>  See <a href="../reference/facts.html#cards">cards</a> for what these numbers represent.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">ResetDeck</td>
 <td class="address-2"><span id="959b"></span>959B</td>
 <td class="instruction">LD HL,$95BB</td>
@@ -54,43 +133,72 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="959e"></span>959E</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=00.</td>
+<td class="comment-1" rowspan="1">Initialise <span class="register">C</span> to 00 this will hold the suit value.</td>
 </tr>
 <tr>
-<td class="asm-label">ResetDeck_0</td>
+<td class="asm-label">ResetSuit_Loop</td>
 <td class="address-2"><span id="95a0"></span>95A0</td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=00.</td>
+<td class="comment-1" rowspan="1">Initialise <span class="register">B</span> to 00 this will hold the card value.</td>
 </tr>
 <tr>
-<td class="asm-label">ResetDeck_1</td>
+<td class="routine-comment" colspan="5">
+<span id="95a2"></span>
+<div class="comments">
+<div class="paragraph">
+The suit "value" is held as: <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Bits</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">00</td>
+<td class="centre" colspan="1" rowspan="1">00000000</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">10</td>
+<td class="centre" colspan="1" rowspan="1">00010000</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">20</td>
+<td class="centre" colspan="1" rowspan="1">00100000</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">30</td>
+<td class="centre" colspan="1" rowspan="1">00110000</td>
+</tr>
+</table> The following loop utilises the "suit" counter in <span class="register">C</span> which is 00-03 and shifts the bits into the correct position.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">ResetCards_Loop</td>
 <td class="address-2"><span id="95a2"></span>95A2</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">C</span>.</td>
+<td class="comment-1" rowspan="1">Fetch the current "suit" value, and store it in <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95a3"></span>95A3</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">BC</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Temporarily stash <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95a4"></span>95A4</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
+<td class="comment-1" rowspan="3">Shift <span class="register">A</span> left four positions.</td>
 </tr>
 <tr>
-<td class="asm-label">ResetDeck_2</td>
+<td class="asm-label">ResetSuitShift_Loop</td>
 <td class="address-2"><span id="95a6"></span>95A6</td>
 <td class="instruction">SLA A</td>
-<td class="comment-1" rowspan="1">Shift <span class="register">A</span> left (with carry).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95a8"></span>95A8</td>
-<td class="instruction">DJNZ <a href="959B.html#95a6">ResetDeck_2</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="959B.html#95a6">ResetDeck_2</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="959B.html#95a6">ResetSuitShift_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -99,28 +207,38 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 <td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="95ab"></span>
+<div class="comments">
+<div class="paragraph">
+Process and write the current card value to the deck.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95ab"></span>95AB</td>
 <td class="instruction">OR B</td>
-<td class="comment-1" rowspan="1">Set the bits from <span class="register">B</span>.</td>
+<td class="comment-1" rowspan="1">Merge the suit bits and the card value together.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95ac"></span>95AC</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Write the card value to the current position in the deck.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95ad"></span>95AD</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the current deck position by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95ae"></span>95AE</td>
 <td class="instruction">INC B</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the card value by one.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -136,7 +254,7 @@ There are 0D cards for each suit.
 <td class="asm-label"></td>
 <td class="address-1"><span id="95af"></span>95AF</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump to <a href="959B.html#95a2">ResetDeck_1</a> if <span class="register">B</span> is not equal to 0D.</td>
+<td class="comment-1" rowspan="3">Keep jumping back to <a href="959B.html#95a2">ResetCards_Loop</a> until all card values have been written for this suit.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -146,20 +264,20 @@ There are 0D cards for each suit.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95b2"></span>95B2</td>
-<td class="instruction">JR NZ,<a href="959B.html#95a2">ResetDeck_1</a></td>
+<td class="instruction">JR NZ,<a href="959B.html#95a2">ResetCards_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95b4"></span>95B4</td>
 <td class="instruction">INC C</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">C</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the suit value by one.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="95b5"></span>
 <div class="comments">
 <div class="paragraph">
-There are four suits.
+There are four suits, are we finished now?
 </div>
 </div>
 </td>
@@ -168,7 +286,7 @@ There are four suits.
 <td class="asm-label"></td>
 <td class="address-1"><span id="95b5"></span>95B5</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="3">Jump to <a href="959B.html#95a0">ResetDeck_0</a> if <span class="register">C</span> is not equal to 04.</td>
+<td class="comment-1" rowspan="3">Keep jumping back to <a href="959B.html#95a0">ResetSuit_Loop</a> until all suits have been processed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -178,7 +296,7 @@ There are four suits.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="95b8"></span>95B8</td>
-<td class="instruction">JR NZ,<a href="959B.html#95a0">ResetDeck_0</a></td>
+<td class="instruction">JR NZ,<a href="959B.html#95a0">ResetSuit_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

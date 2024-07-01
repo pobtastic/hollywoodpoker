@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 37421</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37344.html">37344</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37421">Map</a></td>
+<td class="next">
+Next: <a href="37445.html">37445</a>
+</td>
+</tr>
+</table>
+<div class="description">37421: Player Actions: Hold</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="37298.html">InGame_Select</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PlayerAction_Hold</td>
+<td class="address-2"><span id="37421"></span>37421</td>
+<td class="instruction">LD A,(38583)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="37421.html#37442">PlayerAction_Showdown</a> if *<a href="38583.html">CurrentRaiseValue</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37424"></span>37424</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37425"></span>37425</td>
+<td class="instruction">JR Z,<a href="37421.html#37442">PlayerAction_Showdown</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37427"></span>37427</td>
+<td class="instruction">CALL <a href="37445.html">PlayerAddToPot</a></td>
+<td class="comment-1" rowspan="1">Call <a href="37445.html">PlayerAddToPot</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37430"></span>37430</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="38583.html">CurrentRaiseValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37431"></span>37431</td>
+<td class="instruction">LD (38583),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37434"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="message-11" src="../../images/scr/message-11.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37434"></span>37434</td>
+<td class="instruction">LD A,11</td>
+<td class="comment-1" rowspan="2">Call <a href="32151.html">Messaging_Girl</a> using message block <a href="34883.html">11</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37436"></span>37436</td>
+<td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37439"></span>37439</td>
+<td class="instruction">LD A,2</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=2 ("hold").</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37441"></span>37441</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">PlayerAction_Showdown</td>
+<td class="address-2"><span id="37442"></span>37442</td>
+<td class="instruction">LD A,3</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=3 ("showdown").</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37444"></span>37444</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37344.html">37344</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37421">Map</a></td>
+<td class="next">
+Next: <a href="37445.html">37445</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/922D.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 918B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9171.html">9171</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#918b">Map</a></td>
+<td class="next">
+Next: <a href="91B2.html">91B2</a>
+</td>
+</tr>
+</table>
+<div class="description">918B: In-Game: Move Cursor</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="9171.html">InGameControls</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Keypress</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">InGame_MoveCursor</td>
+<td class="address-2"><span id="918b"></span>918B</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash the keypress on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="918c"></span>918C</td>
+<td class="instruction">LD B,$78</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=INK:
+BLACK,
+PAPER:
+WHITE
+(BRIGHT)
+.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="918e"></span>918E</td>
+<td class="instruction">CALL <a href="91C2.html">InGame_UpdateCursorPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="91C2.html">InGame_UpdateCursorPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9191"></span>9191</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore the keypress from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9192"></span>9192</td>
+<td class="instruction">CP $04</td>
+<td class="comment-1" rowspan="3">Jump to <a href="918B.html#91a1">Handler_MoveCursorRight</a> if "right" was pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9194"></span>9194</td>
+<td class="instruction">LD A,($91D8)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9197"></span>9197</td>
+<td class="instruction">JR Z,<a href="918B.html#91a1">Handler_MoveCursorRight</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9199"></span>
+<div class="comments">
+<div class="paragraph">
+Else "left" was pressed, so check if there's a slot on the left still to move to.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9199"></span>9199</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="918B.html#919e">InGame_MoveCursorLeft</a> if *<a href="91D8.html">InGame_HighlightedOption</a> is not zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="919a"></span>919A</td>
+<td class="instruction">JR NZ,<a href="918B.html#919e">InGame_MoveCursorLeft</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="919c"></span>
+<div class="comments">
+<div class="paragraph">
+The cursor IS at the first position, 00 so reset it to the last position +01.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="919c"></span>919C</td>
+<td class="instruction">LD A,$03</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=03.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="919e"></span>
+<div class="comments">
+<div class="paragraph">
+Process the "left" action.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">InGame_MoveCursorLeft</td>
+<td class="address-2"><span id="919e"></span>919E</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="919f"></span>919F</td>
+<td class="instruction">JR <a href="918B.html#91a8">InGame_WriteCursorPosition</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="918B.html#91a8">InGame_WriteCursorPosition</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="91a1"></span>
+<div class="comments">
+<div class="paragraph">
+Handle moving the cursor right.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MoveCursorRight</td>
+<td class="address-2"><span id="91a1"></span>91A1</td>
+<td class="instruction">CP $02</td>
+<td class="comment-1" rowspan="2">Jump to <a href="918B.html#91a7">InGame_MoveCursorRight</a> if the cursor still has slots to the right it can move to, and is not in the last position.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91a3"></span>91A3</td>
+<td class="instruction">JR NZ,<a href="918B.html#91a7">InGame_MoveCursorRight</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="91a5"></span>
+<div class="comments">
+<div class="paragraph">
+The cursor IS at the last position, 02 so reset it to the starting position -01.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91a5"></span>91A5</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=FF.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="91a7"></span>
+<div class="comments">
+<div class="paragraph">
+Process the "right" action.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">InGame_MoveCursorRight</td>
+<td class="address-2"><span id="91a7"></span>91A7</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment the cursor position by one.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="91a8"></span>
+<div class="comments">
+<div class="paragraph">
+The cursor position has changed, left or right, both actions follow the same flow.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">InGame_WriteCursorPosition</td>
+<td class="address-2"><span id="91a8"></span>91A8</td>
+<td class="instruction">LD ($91D8),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="91D8.html">InGame_HighlightedOption</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91ab"></span>91AB</td>
+<td class="instruction">LD B,$68</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=INK:
+BLACK,
+PAPER:
+CYAN
+(BRIGHT)
+.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91ad"></span>91AD</td>
+<td class="instruction">CALL <a href="91C2.html">InGame_UpdateCursorPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="91C2.html">InGame_UpdateCursorPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91b0"></span>91B0</td>
+<td class="instruction">JR <a href="9171.html#917b">InGameControls_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9171.html#917b">InGameControls_Loop</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="9171.html">9171</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#918b">Map</a></td>
+<td class="next">
+Next: <a href="91B2.html">91B2</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/37259.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

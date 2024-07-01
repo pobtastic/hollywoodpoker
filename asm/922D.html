@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 922D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="91E0.html">91E0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#922d">Map</a></td>
+<td class="next">
+Next: <a href="9245.html">9245</a>
+</td>
+</tr>
+</table>
+<div class="description">922D: Player Actions: Hold</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="91B2.html">InGame_Select</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PlayerAction_Hold</td>
+<td class="address-2"><span id="922d"></span>922D</td>
+<td class="instruction">LD A,($96B7)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="922D.html#9242">PlayerAction_Showdown</a> if *<a href="96B7.html">CurrentRaiseValue</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9230"></span>9230</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9231"></span>9231</td>
+<td class="instruction">JR Z,<a href="922D.html#9242">PlayerAction_Showdown</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9233"></span>9233</td>
+<td class="instruction">CALL <a href="9245.html">PlayerAddToPot</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9245.html">PlayerAddToPot</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9236"></span>9236</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 00 to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9237"></span>9237</td>
+<td class="instruction">LD ($96B7),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="923a"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="message-11" src="../images/scr/message-11.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="923a"></span>923A</td>
+<td class="instruction">LD A,$0B</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="8843.html">0B</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="923c"></span>923C</td>
+<td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="923f"></span>923F</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=02 ("hold").</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9241"></span>9241</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">PlayerAction_Showdown</td>
+<td class="address-2"><span id="9242"></span>9242</td>
+<td class="instruction">LD A,$03</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=03 ("showdown").</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9244"></span>9244</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="91E0.html">91E0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#922d">Map</a></td>
+<td class="next">
+Next: <a href="9245.html">9245</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/37421.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 91C2</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="91B2.html">91B2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#91c2">Map</a></td>
+<td class="next">
+Next: <a href="91D8.html">91D8</a>
+</td>
+</tr>
+</table>
+<div class="description">91C2: In-Game: Update Cursor Position</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="9171.html">InGameControls</a>, <a href="918B.html">InGame_MoveCursor</a> and <a href="91B2.html">InGame_Select</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">InGame_UpdateCursorPosition</td>
+<td class="address-2"><span id="91c2"></span>91C2</td>
+<td class="instruction">LD A,($91D8)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="91D8.html">InGame_HighlightedOption</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91c5"></span>91C5</td>
+<td class="instruction">LD HL,$5AB7</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=5AB7 (attribute buffer location).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91c8"></span>91C8</td>
+<td class="instruction">LD DE,$000A</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=000A.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91cb"></span>91CB</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label">InGame_UpdateCursorPosition_0</td>
+<td class="address-2"><span id="91cc"></span>91CC</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91cd"></span>91CD</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91ce"></span>91CE</td>
+<td class="instruction">JR NZ,<a href="91C2.html#91cc">InGame_UpdateCursorPosition_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="91C2.html#91cc">InGame_UpdateCursorPosition_0</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91d0"></span>91D0</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="91d1"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="9258.html">HandlerRaising</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">InGame_UpdateCursorPosition_1</td>
+<td class="address-2"><span id="91d1"></span>91D1</td>
+<td class="instruction">LD B,$0A</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=0A.</td>
+</tr>
+<tr>
+<td class="asm-label">InGame_UpdateCursorPosition_2</td>
+<td class="address-2"><span id="91d3"></span>91D3</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91d4"></span>91D4</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91d5"></span>91D5</td>
+<td class="instruction">DJNZ <a href="91C2.html#91d3">InGame_UpdateCursorPosition_2</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="91C2.html#91d3">InGame_UpdateCursorPosition_2</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91d7"></span>91D7</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="91B2.html">91B2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#91c2">Map</a></td>
+<td class="next">
+Next: <a href="91D8.html">91D8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/37314.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

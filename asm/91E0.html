@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 91E0</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="91D9.html">91D9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#91e0">Map</a></td>
+<td class="next">
+Next: <a href="922D.html">922D</a>
+</td>
+</tr>
+</table>
+<div class="description">91E0: Player Action: Raise</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="91B2.html">InGame_Select</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">PlayerAction_Raise</td>
+<td class="address-2"><span id="91e0"></span>91E0</td>
+<td class="instruction">LD A,($8E59)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="9171.html">InGameControls</a> if *<a href="8E44.html#8e59">8E59</a> is equal to 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91e3"></span>91E3</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91e5"></span>91E5</td>
+<td class="instruction">JP Z,<a href="9171.html">InGameControls</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91e8"></span>91E8</td>
+<td class="instruction">LD A,($96B5)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B5.html">PlayerCash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91eb"></span>91EB</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91ec"></span>91EC</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="9171.html">InGameControls</a> if *<a href="96B5.html">PlayerCash</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91ed"></span>91ED</td>
+<td class="instruction">JP Z,<a href="9171.html">InGameControls</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91f0"></span>91F0</td>
+<td class="instruction">LD A,($96B6)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B6.html">GirlCash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91f3"></span>91F3</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="9171.html">InGameControls</a> if *<a href="96B6.html">GirlCash</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91f4"></span>91F4</td>
+<td class="instruction">JP Z,<a href="9171.html">InGameControls</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91f7"></span>91F7</td>
+<td class="instruction">LD A,($96B7)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B7.html">CurrentRaiseValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91fa"></span>91FA</td>
+<td class="instruction">SUB C</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91fb"></span>91FB</td>
+<td class="instruction">JP Z,<a href="9171.html">InGameControls</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9171.html">InGameControls</a> if {} is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91fe"></span>91FE</td>
+<td class="instruction">ADD A,C</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>+=<span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="91ff"></span>91FF</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9200"></span>9200</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Write 01 to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9202"></span>9202</td>
+<td class="instruction">LD ($96B7),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9205"></span>9205</td>
+<td class="instruction">CALL <a href="8F7E.html">PrintStats</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8F7E.html">PrintStats</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9208"></span>9208</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9209"></span>9209</td>
+<td class="instruction">LD ($96B7),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="920c"></span>920C</td>
+<td class="instruction">CALL <a href="9245.html">PlayerAddToPot</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9245.html">PlayerAddToPot</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="920f"></span>920F</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Write 01 to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9211"></span>9211</td>
+<td class="instruction">LD ($96B7),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9214"></span>9214</td>
+<td class="instruction">CALL <a href="9258.html">HandlerRaising</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9258.html">HandlerRaising</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9217"></span>9217</td>
+<td class="instruction">LD A,($96B5)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B5.html">PlayerCash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="921a"></span>921A</td>
+<td class="instruction">SUB B</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="921b"></span>921B</td>
+<td class="instruction">LD ($96B5),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="96B5.html">PlayerCash</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="921e"></span>921E</td>
+<td class="instruction">LD A,($96B4)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B4.html">PotValue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9221"></span>9221</td>
+<td class="instruction">ADD A,B</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>+=<span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9222"></span>9222</td>
+<td class="instruction">LD ($96B4),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="96B4.html">PotValue</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9225"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="message-16" src="../images/scr/message-16.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9225"></span>9225</td>
+<td class="instruction">LD A,$10</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="8A29.html">10</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9227"></span>9227</td>
+<td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="922a"></span>922A</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=01 ("raise").</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="922c"></span>922C</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="91D9.html">91D9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#91e0">Map</a></td>
+<td class="next">
+Next: <a href="922D.html">922D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/37344.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>
