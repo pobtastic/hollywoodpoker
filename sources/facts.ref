@@ -1,6 +1,6 @@
 ; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
 
-[Fact:Cards]
+[Fact:cards:Cards]
 The cards use a simple system of splitting the value into two halves, the first
 four bits signify the card value - which, for the ease of evaluating the hands,
 starts from #N$00 representing "#CARD$00".

@@ -1,6 +1,7 @@
 @rom
 @start
 @expand=#DEF(#POKE #LINK:Pokes)
+@expand=#DEF(#FACT #LINK:Facts)
 @set-handle-unsupported-macros=1
 
 ; Loading Screen
@@ -227,8 +228,8 @@ b$4000 DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,
  $5AC0 DEFB $07,$38,$38,$38,$38,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$07,$38 ;
  $5AE0 DEFB $07,$07,$07,$07,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$03,$07,$04,$04,$04 ; }
 
-; Stack
-b$5B00 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+; Unused
+u$5B00 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $5B08 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $5B10 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $5B18 DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -824,7 +825,7 @@ b$5D90 DEFB $00,$00,$00,$00,$00,$00,$00,$78
  $6D70 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $6D78 DEFB $00
 
-; Unused
+; Stack
 u$6D79 LD HL,$0000                          ; {#HTML(Write #N($0000,$04,$04) to
  $6D7C LD ($5CA8),HL                        ; *<a rel="noopener nofollow"
                                             ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C92.html#5CA8">MEMBOT</a>
@@ -901,8 +902,8 @@ u$6D79 LD HL,$0000                          ; {#HTML(Write #N($0000,$04,$04) to
 c$6E9D LD HL,$6E9D    ; {#HTML(Write #R$6E9D to *<a rel="noopener nofollow"
  $6EA0 LD ($5C3D),HL  ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3D.html">ERR_SP</a>.)
                       ; }
- $6EA3 DEC HL         ; Decrease #REGhl by one.
- $6EA4 LD SP,HL       ; Set the stack pointer to the address held by #REGhl.
+ $6EA3 DEC HL         ; {Set the stack pointer to #R$6D79(#N$6E9C).
+ $6EA4 LD SP,HL       ; }
  $6EA5 CALL $784B     ; Call #R$784B.
  $6EA8 LD A,($6F02)   ; {Highlight the currently selected menu item in #R$6F02.
  $6EAB CALL $6F7B     ; }
@@ -972,8 +973,8 @@ g$6F02 DEFB $05
 ; Used by the routine at #R$6E9D.
 @label=TitleScreen_DefineKeysSelected
 c$6F03 CALL $6F77    ; Call #R$6F77.
- $6F06 LD A,$01      ; #REGa=#N$01.
- $6F08 CALL $6F7B    ; Call #R$6F7B.
+ $6F06 LD A,$01      ; {Call #R$6F7B with active menu item #N$01.
+ $6F08 CALL $6F7B    ; }
  $6F0B CALL $6F9A    ; Call #R$6F9A.
  $6F0E JR $6F3F      ; Jump to #R$6F3F.
 
@@ -982,8 +983,8 @@ c$6F03 CALL $6F77    ; Call #R$6F77.
 ; Used by the routine at #R$6E9D.
 @label=TitleScreen_KempstonSelected
 c$6F10 CALL $6F77    ; Call #R$6F77.
- $6F13 LD A,$02      ; #REGa=#N$02.
- $6F15 CALL $6F7B    ; Call #R$6F7B.
+ $6F13 LD A,$02      ; {Call #R$6F7B with active menu item #N$02.
+ $6F15 CALL $6F7B    ; }
  $6F18 LD A,$06      ; {Write #N$06 to *#R$913E.
  $6F1A LD ($913E),A  ; }
  $6F1D JR $6EC7      ; Jump to #R$6EC7.
@@ -993,8 +994,8 @@ c$6F10 CALL $6F77    ; Call #R$6F77.
 ; Used by the routine at #R$6E9D.
 @label=TitleScreen_CursorSelected
 c$6F1F CALL $6F77    ; Call #R$6F77.
- $6F22 LD A,$03      ; #REGa=#N$03.
- $6F24 CALL $6F7B    ; Call #R$6F7B.
+ $6F22 LD A,$03      ; {Call #R$6F7B with active menu item #N$03.
+ $6F24 CALL $6F7B    ; }
  $6F27 LD HL,$6F59   ; #REGhl=#R$6F59.
  $6F2A CALL $6F50    ; Call #R$6F50.
  $6F2D JR $6EC7      ; Jump to #R$6EC7.
@@ -1004,8 +1005,8 @@ c$6F1F CALL $6F77    ; Call #R$6F77.
 ; Used by the routine at #R$6E9D.
 @label=TitleScreen_SinclairIF2Selected
 c$6F2F CALL $6F77    ; Call #R$6F77.
- $6F32 LD A,$04      ; #REGa=#N$04.
- $6F34 CALL $6F7B    ; Call #R$6F7B.
+ $6F32 LD A,$04      ; {Call #R$6F7B with active menu item #N$04.
+ $6F34 CALL $6F7B    ; }
  $6F37 LD HL,$6F63   ; #REGhl=#R$6F63.
  $6F3A CALL $6F50    ; Call #R$6F50.
  $6F3D JR $6EC7      ; Jump to #R$6EC7.
@@ -1015,8 +1016,8 @@ c$6F2F CALL $6F77    ; Call #R$6F77.
 ; Used by the routines at #R$6E9D and #R$6F03.
 @label=TitleScreen_KeyboardSelected
 c$6F3F CALL $6F77    ; Call #R$6F77.
- $6F42 LD A,$05      ; #REGa=#N$05.
- $6F44 CALL $6F7B    ; Call #R$6F7B.
+ $6F42 LD A,$05      ; {Call #R$6F7B with active menu item #N$05.
+ $6F44 CALL $6F7B    ; }
  $6F47 LD HL,$6F6D   ; #REGhl=#R$6F6D.
  $6F4A CALL $6F50    ; Call #R$6F50.
  $6F4D JP $6EC7      ; Jump to #R$6EC7.
@@ -1115,25 +1116,36 @@ c$6F94 CALL $8CF0    ; Call #R$8CF0.
 c$6F9A LD A,$01       ; {Write #N$01 to *#R$7049.
  $6F9C LD ($7049),A   ; }
  $6F9F LD HL,$6F6D    ; #REGhl=#R$6F6D.
+; Blank the first entry of all five user-defined key sets.
  $6FA2 LD B,$05       ; #REGb=#N$05.
+@label=BlankUserDefinedKeys_Loop
 *$6FA4 LD (HL),$00    ; Write #N$00 to *#REGhl.
  $6FA6 INC HL         ; {Increment #REGhl by two.
  $6FA7 INC HL         ; }
  $6FA8 DJNZ $6FA4     ; Decrease counter by one and loop back to #R$6FA4 until
                       ; counter is zero.
+; Debounce Loop.
+@label=UserDefinedKeyDebounce_Loop
 *$6FAA CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
+; #HTML(<blockquote>In all instances the #REGe register is returned with
+; a value in the range of +#N$00 to +#N$27, the value being different for each
+; of the forty keys of the keyboard, or the value +#N$FF, for no-key.</blockquote>)
  $6FAD INC E          ; Increment #REGe by one.
- $6FAE JR NZ,$6FAA    ; Jump to #R$6FAA until #REGe is zero.
+ $6FAE JR NZ,$6FAA    ; Jump to #R$6FAA until #REGe is zero (e.g. no keys are
+                      ; being pressed).
+; Get ready to collect keypresses.
  $6FB0 XOR A          ; {#HTML(Write #N$00 to <a
  $6FB1 LD ($5C08),A   ; href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a>
                       ; (last key pressed).)}
-*$6FB4 LD C,$05       ; #REGc=#N$05.
+@label=UserDefinedKeyCollectInput_Loop
+*$6FB4 LD C,$05       ; #REGc=#COLOUR$05.
  $6FB6 CALL $7035     ; Call #R$7035.
+@label=UserDefinedKeyCollectInput
 *$6FB9 CALL $02BF     ; #HTML(Call <a
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/02BF.html">KEYBOARD</a>.)
- $6FBC BIT 5,(IY+$01) ; Test bit 5 of *#REGix+#N$01.
- $6FC0 JR Z,$6FB9     ; Jump to #R$6FB9 if {} is zero.
+ $6FBC BIT 5,(IY+$01) ; {Jump to #R$6FB9 if no key was pressed.
+ $6FC0 JR Z,$6FB9     ; }
  $6FC2 LD A,($5C08)   ; #HTML(#REGa=*<a
                       ; href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a>
                       ; (last key pressed).)
@@ -1149,74 +1161,105 @@ c$6F9A LD A,$01       ; {Write #N$01 to *#R$7049.
  $6FD7 JR NC,$6FDD    ; }
  $6FD9 CP $3A         ; {Jump to #R$6FB9 if #REGa is higher than #N$3A.
  $6FDB JR NC,$6FB9    ; }
+; Check if the key which has been pressed already exists for any other key.
+@label=FindExistingKeyboardKeymap
 *$6FDD LD HL,$6F6D    ; #REGhl=#R$6F6D.
- $6FE0 LD D,A         ; #REGd=#REGa.
- $6FE1 LD B,$05       ; #REGb=#N$05.
-*$6FE3 LD A,(HL)      ; {Jump to #R$6FB9 if *#REGhl is equal to #REGd.
- $6FE4 CP D           ;
+ $6FE0 LD D,A         ; Store the keypress in #REGd.
+ $6FE1 LD B,$05       ; Set a counter in #REGb as there are #N$05 keys to check
+                      ; in total.
+@label=FindExistingKeyboardKeymap_Loop
+*$6FE3 LD A,(HL)      ; {Jump to #R$6FB9 if the current keypress already exists
+ $6FE4 CP D           ; in the user-defined keymap table.
  $6FE5 JR Z,$6FB9     ; }
  $6FE7 INC HL         ; {Increment #REGhl by two.
  $6FE8 INC HL         ; }
- $6FE9 DJNZ $6FE3     ; Decrease counter by one and loop back to #R$6FE3 until
-                      ; counter is zero.
- $6FEB LD A,($7049)   ; {#REGb=*#R$7049.
+ $6FE9 DJNZ $6FE3     ; Decrease the keymap counter by one and loop back to
+                      ; #R$6FE3 until all keymaps have been checked.
+; The keypress is good, so find the keyboard keymap position we need to update.
+ $6FEB LD A,($7049)   ; {Set a counter in #REGb of *#R$7049.
  $6FEE LD B,A         ; }
- $6FEF LD HL,$6F6B    ; #REGhl=#R$6F6B.
+ $6FEF LD HL,$6F6B    ; #REGhl=#R$6F6D(#N$6F6B) (e.g. #R$6F6D-#N$02).
+@label=FindCurrentKeyboardKeymap_Loop
 *$6FF2 INC HL         ; {Increment #REGhl by two.
  $6FF3 INC HL         ; }
  $6FF4 DJNZ $6FF2     ; Decrease counter by one and loop back to #R$6FF2 until
                       ; counter is zero.
- $6FF6 LD (HL),D      ; Write #REGd to *#REGhl.
- $6FF7 PUSH DE        ; Stash #REGde on the stack.
- $6FF8 LD B,A         ; #REGb=#REGa.
- $6FF9 LD A,$18       ; #REGa=#N$18.
- $6FFB SUB B          ; #REGa-=#REGb.
- $6FFC LD B,A         ; #REGb=#REGa.
- $6FFD LD C,$0B       ; #REGc=#N$0B.
+ $6FF6 LD (HL),D      ; {Write the keypress to *#REGhl and also stash it on the
+ $6FF7 PUSH DE        ; stack.}
+; Calculate the screen co-ordinates.
+; .
+; #REGb, the row, is a simple calculation of: #N$18-*#R$7049.
+; .
+; #REGc, the column, will always be #N$0B.
+ $6FF8 LD B,A         ; {Calculate the screen co-ordinates for the index currently in-focus
+ $6FF9 LD A,$18       ; and store them in #REGbc.
+ $6FFB SUB B          ;
+ $6FFC LD B,A         ;
+ $6FFD LD C,$0B       ; }
+; Convert the screen co-ordinates into a screen buffer location pointer.
  $6FFF CALL $0DE2     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">#N$0DE2</a>
                       ; (CL_SET).)
- $7002 POP DE         ; Restore #REGde from the stack.
- $7003 LD A,D         ; #REGa=#REGd.
- $7004 CP $0D         ; {Jump to #R$702D if #REGa is equal to #N$0D.
+ $7002 POP DE         ; {Fetch the keypress from the stack and store it in
+ $7003 LD A,D         ; #REGa.}
+ $7004 CP $0D         ; {Jump to #R$702D if "enter" is the keypress.
  $7006 JR Z,$702D     ; }
- $7008 CP $20         ; {Jump to #R$7025 if #REGa is equal to #N$20.
+ $7008 CP $20         ; {Jump to #R$7025 if "space" is the keypress.
  $700A JR Z,$7025     ; }
- $700C RST $10        ;
-*$700D LD B,$04       ; #REGb=#N$04.
-*$700F LD A,$20       ; #REGa=#N$20.
- $7011 RST $10        ;
- $7012 DJNZ $700F     ; Decrease counter by one and loop back to #R$700F until
-                      ; counter is zero.
- $7014 LD C,$07       ; #REGc=#N$07.
+; Else, it's a printable character so display it.
+ $700C RST $10        ; Print the character to the screen.
+@label=PrintWhitespace
+*$700D LD B,$04       ; Set a counter in #REGb to print #N$04 ASCII spaces.
+@label=PrintWhitespace_Loop
+*$700F LD A,$20       ; {Print an ASCII space " ".
+ $7011 RST $10        ; }
+ $7012 DJNZ $700F     ; Decrease the space counter by one and loop back to
+                      ; #R$700F until the counter is zero.
+ $7014 LD C,$07       ; #REGc=#COLOUR$07.
  $7016 CALL $7035     ; Call #R$7035.
+; Move to the next user-defined key index.
  $7019 LD A,($7049)   ; #REGa=*#R$7049.
  $701C INC A          ; Increment #REGa by one.
  $701D LD ($7049),A   ; Write #REGa to *#R$7049.
- $7020 CP $06         ; {Jump to #R$6FB4 if #REGa is not equal to #N$06.
- $7022 JR NZ,$6FB4    ; }
+ $7020 CP $06         ; {Keep jumping back to #R$6FB4 until all user-defined
+ $7022 JR NZ,$6FB4    ; keys have been collected.}
  $7024 RET            ; Return.
+; Prints the word "SPACE".
+@label=Print_Space
 *$7025 LD HL,$7A41    ; #REGhl=#R$7A41.
  $7028 CALL $187D     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.)
  $702B JR $700D       ; Jump to #R$700D.
+; Prints the word "ENTER".
+@label=Print_Enter
 *$702D LD HL,$7A47    ; #REGhl=#R$7A47.
  $7030 CALL $187D     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.)
  $7033 JR $700D       ; Jump to #R$700D.
+; #N$580B+(#N$20*#R$7049) to find the attribute buffer address for the
+; user-defined key currently being processed.
+@label=FindUserDefinedKeyAttribute
 *$7035 LD HL,$580B    ; #REGhl=#N$580B (attribute buffer location).
  $7038 LD DE,$0020    ; #REGde=#N($0020,$04,$04).
  $703B LD A,($7049)   ; #REGa=*#R$7049.
-*$703E ADD HL,DE      ; #REGhl+=#REGde.
- $703F DEC A          ; Decrease #REGa by one.
- $7040 JR NZ,$703E    ; Jump to #R$703E until #REGa is zero.
- $7042 LD B,$14       ; #REGb=#N$14.
+@label=FindUserDefinedKeyAttribute_Loop
+*$703E ADD HL,DE      ; #REGhl+=#N($0020,$04,$04).
+ $703F DEC A          ; Decrease the index by one.
+ $7040 JR NZ,$703E    ; Keep jumping back to #R$703E until the index is zero.
+; #REGhl now holds a pointer to the attribute line for the user-defined
+; key currently being processed.
+ $7042 LD B,$14       ; Set a counter in #REGb for #N$14 character blocks to
+                      ; "paint".
+@label=SetUserDefinedKeyAttribute_Loop
 *$7044 LD (HL),C      ; Write #REGc to *#REGhl.
  $7045 INC HL         ; Increment #REGhl by one.
  $7046 DJNZ $7044     ; Decrease counter by one and loop back to #R$7044 until
                       ; counter is zero.
  $7048 RET            ; Return.
- $7049 DEFB $00       ;
+
+; Current User-Defined Key Index
+@label=CurrentIndexUserDefinedKey
+g$7049 DEFB $00
 
 ; Display Winners List Page
 ;
@@ -1306,14 +1349,14 @@ t$7073 DEFB $16,$01,$01                  ; PRINT AT: #N(#PEEK(#PC+$01)),
                                          ; #N(#PEEK(#PC+$02)).
  $7280 DEFM "                          " ; "#STR(#PC,$04,$1A)".
 
-; Routine at 729A
+; Winners Table Name Entry
 ;
 ; Used by the routine at #R$6F94.
 ;
 ; .
 ;
 ; Debounce the key press.
-@label=Debounce_Loop
+@label=WinnersTableNameEntry
 c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
 ; Handle if no keys are being pressed, for reference:
@@ -2606,7 +2649,8 @@ b$7D3D DEFB $00,$00  ; {Pixels.
 ; Messaging: Girl
 ;
 ; Used by the routines at #R$779F, #R$8CF0, #R$8D3E, #R$8D4A, #R$8EE2, #R$8F06,
-; #R$8F20, #R$8F3B, #R$8F5A, #R$9003, #R$9171, #R$9258 and #R$960C.
+; #R$8F20, #R$8F3B, #R$8F5A, #R$9003, #R$91D9, #R$91E0, #R$922D, #R$9258,
+; #R$960C, #R$966C and #R$968C.
 ;
 ; A Message block ID
 ;
@@ -3816,7 +3860,7 @@ g$8F7D DEFB $07
 
 ; Print Stats
 ;
-; Used by the routines at #R$8D4A, #R$9171 and #R$9258.
+; Used by the routines at #R$8D4A, #R$91E0 and #R$9258.
 @label=PrintStats
 c$8F7E LD HL,$8FE2   ; #REGhl=#R$8FE2.
  $8F81 CALL $187D    ; #HTML(Call <a rel="noopener nofollow"
@@ -4279,13 +4323,16 @@ c$9148 LD B,$3A      ; Set a read counter of #N$3A.
  $916E LD C,$FF      ; #REGc=#N$FF.
  $9170 RET           ; Return.
 
-; Routine at 9171
+; In-Game: Controls
 ;
-; Used by the routine at #R$8D4A.
+; Used by the routines at #R$8D4A and #R$91E0.
+@label=InGameControls
 c$9171 LD A,$01      ; {Write #N$01 to *#R$91D8.
  $9173 LD ($91D8),A  ; }
  $9176 LD B,$68      ; #REGb=#COLOUR$68.
  $9178 CALL $91C2    ; Call #R$91C2.
+; This entry point is used by the routine at #R$918B.
+@label=InGameControls_Loop
 *$917B CALL $90D8    ; Call #R$90D8.
  $917E CP $03        ; {Jump to #R$918B if "left" has been pressed.
  $9180 JR Z,$918B    ; }
@@ -4294,36 +4341,67 @@ c$9171 LD A,$01      ; {Write #N$01 to *#R$91D8.
  $9186 OR A          ; {Jump to #R$91B2 if "select" has been pressed.
  $9187 JR Z,$91B2    ; }
  $9189 JR $917B      ; Jump to #R$917B.
-*$918B PUSH AF       ; Stash #REGaf on the stack.
+
+; In-Game: Move Cursor
+;
+; Used by the routine at #R$9171.
+;
+; A Keypress
+@label=InGame_MoveCursor
+c$918B PUSH AF       ; Stash the keypress on the stack.
  $918C LD B,$78      ; #REGb=#COLOUR$78.
  $918E CALL $91C2    ; Call #R$91C2.
- $9191 POP AF        ; Restore #REGaf from the stack.
- $9192 CP $04        ; Compare #REGa with #N$04.
- $9194 LD A,($91D8)  ; #REGa=*#R$91D8.
- $9197 JR Z,$91A1    ; Jump to #R$91A1 if #REGa was equal to #N$04 on line
-                     ; #R$9192.
+ $9191 POP AF        ; Restore the keypress from the stack.
+ $9192 CP $04        ; {Jump to #R$91A1 if "right" was pressed.
+ $9194 LD A,($91D8)  ;
+ $9197 JR Z,$91A1    ; }
+; Else "left" was pressed, so check if there's a slot on the left still
+; to move to.
  $9199 OR A          ; {Jump to #R$919E if *#R$91D8 is not zero.
  $919A JR NZ,$919E   ; }
+; The cursor IS at the first position, #N$00, so reset it to the last
+; position +#N$01.
  $919C LD A,$03      ; #REGa=#N$03.
+; Process the "left" action.
+@label=InGame_MoveCursorLeft
 *$919E DEC A         ; Decrease #REGa by one.
  $919F JR $91A8      ; Jump to #R$91A8.
-*$91A1 CP $02        ; {Jump to #R$91A7 if #REGa is not equal to #N$02.
- $91A3 JR NZ,$91A7   ; }
+; Handle moving the cursor right.
+@label=Handler_MoveCursorRight
+*$91A1 CP $02        ; {Jump to #R$91A7 if the cursor still has slots to the right it can
+ $91A3 JR NZ,$91A7   ; move to, and is not in the last position.}
+; The cursor IS at the last position, #N$02, so reset it to the starting
+; position -#N$01.
  $91A5 LD A,$FF      ; #REGa=#N$FF.
-*$91A7 INC A         ; Increment #REGa by one.
+; Process the "right" action.
+@label=InGame_MoveCursorRight
+*$91A7 INC A         ; Increment the cursor position by one.
+; The cursor position has changed, left or right, both actions follow the
+; same flow.
+@label=InGame_WriteCursorPosition
 *$91A8 LD ($91D8),A  ; Write #REGa to *#R$91D8.
  $91AB LD B,$68      ; #REGb=#COLOUR$68.
  $91AD CALL $91C2    ; Call #R$91C2.
  $91B0 JR $917B      ; Jump to #R$917B.
-*$91B2 LD B,$78      ; #REGb=#COLOUR$78.
+
+; In-Game: Select
+;
+; Used by the routine at #R$9171.
+@label=InGame_Select
+c$91B2 LD B,$78      ; #REGb=#COLOUR$78.
  $91B4 CALL $91C2    ; Call #R$91C2.
- $91B7 LD A,($91D8)  ; {Jump to #R$91D9 if *#R$91D8 is zero.
+ $91B7 LD A,($91D8)  ; {Jump to #R$91D9 if *#R$91D8 is #N$00.
  $91BA OR A          ;
  $91BB JR Z,$91D9    ; }
- $91BD DEC A         ; Decrease #REGa by one.
- $91BE JR Z,$922D    ; Jump to #R$922D if #REGa is zero.
- $91C0 JR $91E0      ; Jump to #R$91E0.
-*$91C2 LD A,($91D8)  ; #REGa=*#R$91D8.
+ $91BD DEC A         ; {Jump to #R$922D if *#R$91D8 is #N$01.
+ $91BE JR Z,$922D    ; }
+ $91C0 JR $91E0      ; Else, jump to #R$91E0.
+
+; In-Game: Update Cursor Position
+;
+; Used by the routines at #R$9171, #R$918B and #R$91B2.
+@label=InGame_UpdateCursorPosition
+c$91C2 LD A,($91D8)  ; #REGa=*#R$91D8.
  $91C5 LD HL,$5AB7   ; #REGhl=#N$5AB7 (attribute buffer location).
  $91C8 LD DE,$000A   ; #REGde=#N($000A,$04,$04).
  $91CB INC A         ; Increment #REGa by one.
@@ -4338,15 +4416,31 @@ c$9171 LD A,$01      ; {Write #N$01 to *#R$91D8.
  $91D5 DJNZ $91D3    ; Decrease counter by one and loop back to #R$91D3 until
                      ; counter is zero.
  $91D7 RET           ; Return.
- $91D8 DEFB $01      ;
+
+; In-Game: Highlighted Option
+@label=InGame_HighlightedOption
+g$91D8 DEFB $01
+
+; Player Action: Drop
+;
+; Used by the routine at #R$91B2.
+;
+; .
+;
 ; #UDGTABLE
 ; { #MESSAGE$0A(message-10) }
 ; UDGTABLE#
-*$91D9 LD A,$0A      ; {Call #R$7D97 using message block #R$8735(#N$0A).
+@label=PlayerAction_Drop
+c$91D9 LD A,$0A      ; {Call #R$7D97 using message block #R$8735(#N$0A).
  $91DB CALL $7D97    ; }
- $91DE XOR A         ; #REGa=#N$00.
- $91DF RET           ; Return.
-*$91E0 LD A,($8E59)  ; {Jump to #R$9171 if *#R$8E59 is equal to #N$07.
+ $91DE XOR A         ; {Return with #REGa=#N$00 ("drop").
+ $91DF RET           ; }
+
+; Player Action: Raise
+;
+; Used by the routine at #R$91B2.
+@label=PlayerAction_Raise
+c$91E0 LD A,($8E59)  ; {Jump to #R$9171 if *#R$8E59 is equal to #N$07.
  $91E3 CP $07        ;
  $91E5 JP Z,$9171    ; }
  $91E8 LD A,($96B5)  ; #REGa=*#R$96B5.
@@ -4381,9 +4475,14 @@ c$9171 LD A,$01      ; {Write #N$01 to *#R$91D8.
 ; UDGTABLE#
  $9225 LD A,$10      ; {Call #R$7D97 using message block #R$8A29(#N$10).
  $9227 CALL $7D97    ; }
- $922A LD A,$01      ; #REGa=#N$01.
- $922C RET           ; Return.
-*$922D LD A,($96B7)  ; {Jump to #R$9242 if *#R$96B7 is zero.
+ $922A LD A,$01      ; {Return with #REGa=#N$01 ("raise").
+ $922C RET           ; }
+
+; Player Actions: Hold
+;
+; Used by the routine at #R$91B2.
+@label=PlayerAction_Hold
+c$922D LD A,($96B7)  ; {Jump to #R$9242 if *#R$96B7 is zero.
  $9230 OR A          ;
  $9231 JR Z,$9242    ; }
  $9233 CALL $9245    ; Call #R$9245.
@@ -4394,14 +4493,15 @@ c$9171 LD A,$01      ; {Write #N$01 to *#R$91D8.
 ; UDGTABLE#
  $923A LD A,$0B      ; {Call #R$7D97 using message block #R$8843(#N$0B).
  $923C CALL $7D97    ; }
- $923F LD A,$02      ; #REGa=#N$02.
- $9241 RET           ; Return.
-*$9242 LD A,$03      ; #REGa=#N$03.
- $9244 RET           ; Return.
+ $923F LD A,$02      ; {Return with #REGa=#N$02 ("hold").
+ $9241 RET           ; }
+@label=PlayerAction_Showdown
+*$9242 LD A,$03      ; {Return with #REGa=#N$03 ("showdown").
+ $9244 RET           ; }
 
 ; Player Add To Pot
 ;
-; Used by the routines at #R$8D4A and #R$9171.
+; Used by the routines at #R$8D4A, #R$91E0 and #R$922D.
 @label=PlayerAddToPot
 c$9245 LD A,($96B7)  ; {Subtract *#R$96B7 from *#R$96B5 and write it back to
  $9248 LD B,A        ; *#R$96B5.
@@ -4415,7 +4515,7 @@ c$9245 LD A,($96B7)  ; {Subtract *#R$96B7 from *#R$96B5 and write it back to
 
 ; Handler: Raising
 ;
-; Used by the routine at #R$9171.
+; Used by the routine at #R$91E0.
 @label=HandlerRaising
 c$9258 LD A,$68      ; #REGa=#COLOUR$68.
  $925A LD HL,$5A95   ; #REGhl=#N$5A95 (attribute buffer location).
@@ -4929,29 +5029,54 @@ c$9579 LD A,R        ; {#REGh=#REGr.
 ; Reset Deck
 ;
 ; Used by the routine at #R$8D4A.
+;
+; .
+;
+; This routine generates the following bytes in #R$95BB:
+; #PUSHS #SIM(start=$959B,stop=$95BA)
+; #TABLE(default,centre)
+; { =h Address Block | =h,c13 Bytes }
+; #FOR$00,$03,,$04(x,{ #LET(addr=$95BB+(x*$0D))#R({addr})(#N({addr})) |
+;   #FOR($00,$0C,,$04)(y,#N(#PEEK({addr}+y)), | )
+; })
+; TABLE# #POPS
+; See #FACT#cards(cards) for what these numbers represent.
 @label=ResetDeck
 c$959B LD HL,$95BB   ; #REGhl=#R$95BB.
- $959E LD C,$00      ; #REGc=#N$00.
-*$95A0 LD B,$00      ; #REGb=#N$00.
-*$95A2 LD A,C        ; #REGa=#REGc.
- $95A3 PUSH BC       ; Stash #REGbc on the stack.
- $95A4 LD B,$04      ; #REGb=#N$04.
-*$95A6 SLA A         ; Shift #REGa left (with carry).
- $95A8 DJNZ $95A6    ; Decrease counter by one and loop back to #R$95A6 until
-                     ; counter is zero.
+ $959E LD C,$00      ; Initialise #REGc to #N$00, this will hold the suit
+                     ; value.
+@label=ResetSuit_Loop
+*$95A0 LD B,$00      ; Initialise #REGb to #N$00, this will hold the card
+                     ; value.
+; The suit "value" is held as:
+; #TABLE(default,centre,centre)
+; { =h Byte | =h Bits }
+; #FOR$00,$30,$10,$04(x,{ #Nx | #EVAL(x,$02,$08) })
+; TABLE#
+; The following loop utilises the "suit" counter in #REGc which is #N$00-#N$03,
+; and shifts the bits into the correct position.
+@label=ResetCards_Loop
+*$95A2 LD A,C        ; Fetch the current "suit" value, and store it in #REGa.
+ $95A3 PUSH BC       ; Temporarily stash #REGbc on the stack.
+ $95A4 LD B,$04      ; {Shift #REGa left four positions.
+@label=ResetSuitShift_Loop
+*$95A6 SLA A         ;
+ $95A8 DJNZ $95A6    ; }
  $95AA POP BC        ; Restore #REGbc from the stack.
- $95AB OR B          ; Set the bits from #REGb.
- $95AC LD (HL),A     ; Write #REGa to *#REGhl.
- $95AD INC HL        ; Increment #REGhl by one.
- $95AE INC B         ; Increment #REGb by one.
+; Process and write the current card value to the deck.
+ $95AB OR B          ; Merge the suit bits and the card value together.
+ $95AC LD (HL),A     ; Write the card value to the current position in the
+                     ; deck.
+ $95AD INC HL        ; Increment the current deck position by one.
+ $95AE INC B         ; Increment the card value by one.
 ; There are #N$0D cards for each suit.
- $95AF LD A,B        ; {Jump to #R$95A2 if #REGb is not equal to #N$0D.
- $95B0 CP $0D        ;
+ $95AF LD A,B        ; {Keep jumping back to #R$95A2 until all card values have
+ $95B0 CP $0D        ; been written for this suit.
  $95B2 JR NZ,$95A2   ; }
- $95B4 INC C         ; Increment #REGc by one.
-; There are four suits.
- $95B5 LD A,C        ; {Jump to #R$95A0 if #REGc is not equal to #N$04.
- $95B6 CP $04        ;
+ $95B4 INC C         ; Increment the suit value by one.
+; There are four suits, are we finished now?
+ $95B5 LD A,C        ; {Keep jumping back to #R$95A0 until all suits have been
+ $95B6 CP $04        ; processed.
  $95B8 JR NZ,$95A0   ; }
  $95BA RET           ; Return.
 
@@ -5046,16 +5171,30 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
  $9669 RET NZ        ; }
  $966A INC A         ; {Return with #REGa=#N$03 ("showdown").
  $966B RET           ; }
-*$966C LD A,($96B5)  ; {Jump to #R$967D if *#R$96B5 is higher than #REGb.
- $966F CP B          ;
+
+; Girl Action: Raise
+;
+; Used by the routine at #R$960C.
+;
+; B Girls raise amount
+;
+; Can the player afford this raise amount?
+@label=GirlAction_Raise
+c$966C LD A,($96B5)  ; {Jump to #R$967D if *#R$96B5 is higher than the girls
+ $966F CP B          ; raise amount.
  $9670 JR NC,$967D   ; }
+; The player can't afford this raise, so just use what they have left...
  $9672 LD A,($96B5)  ; {Write *#R$96B5 to *#R$96B7.
  $9675 LD ($96B7),A  ; }
- $9678 OR A          ; {Jump to #R$9658 if #REGa is zero.
+; Check if the player is out of cash.
+ $9678 OR A          ; {Jump to #R$9658 if the player has no cash left.
  $9679 JR Z,$9658    ; }
  $967B JR $9681      ; Jump to #R$9681.
-*$967D LD A,B        ; {Write #REGb to *#R$96B7.
+; Process the raise.
+@label=GirlRaise
+*$967D LD A,B        ; {Write the raise amount to *#R$96B7.
  $967E LD ($96B7),A  ; }
+@label=GirlRaise_AddToPot
 *$9681 CALL $96A1    ; Call #R$96A1.
 ; #UDGTABLE
 ; { #MESSAGE$02(message-02) }
@@ -5064,9 +5203,12 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
  $9686 CALL $7D97    ; }
  $9689 LD A,$01      ; {Return with #REGa=#N$01 ("raise").
  $968B RET           ; }
-; Action is Girl will hold...
+
+; Girl Action: Hold
+;
+; Used by the routine at #R$960C.
 @label=GirlAction_Hold
-*$968C LD A,($96B7)  ; {Jump to #R$96B1 if *#R$96B7 is zero.
+c$968C LD A,($96B7)  ; {Jump to #R$96B1 if *#R$96B7 is zero.
  $968F OR A          ;
  $9690 JR Z,$96B1    ; }
  $9692 CALL $96A1    ; Call #R$96A1.
@@ -5082,9 +5224,10 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
 
 ; Girl Add To Pot
 ;
-; Used by the routines at #R$8D4A and #R$960C.
+; Used by the routines at #R$8D4A, #R$960C, #R$966C and #R$968C.
 ;
-; A Value to add to Pot
+;   A Value to add to Pot
+; O:B Value being added to Pot
 @label=GirlAddToPot
 c$96A1 LD B,A        ; Store the value to add in #REGb.
  $96A2 LD A,($96B6)  ; {Subtract the value to add from *#R$96B6.
@@ -5095,11 +5238,12 @@ c$96A1 LD B,A        ; Store the value to add in #REGb.
  $96AD LD ($96B4),A  ; }
  $96B0 RET           ; Return.
 
-; Routine at 96B1
+; Girl Action: Showdown
 ;
-; Used by the routine at #R$960C.
-c$96B1 LD A,$03      ; #REGa=#N$03.
- $96B3 RET           ; Return.
+; Used by the routine at #R$968C.
+@label=GirlAction_Showdown
+c$96B1 LD A,$03      ; {Return with #REGa=#N$03 ("showdown").
+ $96B3 RET           ; }
 
 ; Pot Value
 @label=PotValue
@@ -5182,12 +5326,18 @@ c$96D1 LD A,($949B)  ; #REGa=*#R$949B.
  $9719 JR NZ,$9714   ; }
  $971B LD (HL),$FF   ; Write #N$FF to *#REGhl.
  $971D RET           ; Return.
- $971E DEFB $09      ;
- $971F DEFB $07      ;
- $9720 DEFB $06      ;
- $9721 DEFB $05      ;
-; This entry point is used by the routines at #R$90D8 and #R$9148.
-*$9722 LD HL,($5C3D) ; {#HTML(Jump to the address held by *<a rel="noopener
+
+; Game status buffer entry at 971E
+g$971E DEFB $09
+ $971F DEFB $07
+ $9720 DEFB $06
+ $9721 DEFB $05
+
+; Quit Game
+;
+; Used by the routines at #R$90D8 and #R$9148.
+@label=QuitGame
+c$9722 LD HL,($5C3D) ; {#HTML(Jump to the address held by *<a rel="noopener
  $9725 JP (HL)       ; nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3D.html">ERR_SP</a>.)
                      ; }
