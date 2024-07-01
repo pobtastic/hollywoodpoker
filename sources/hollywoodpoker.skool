@@ -1202,6 +1202,8 @@ c$6F9A LD A,$01       ; {Write #N$01 to *#R$7049.
                       ; (CL_SET).)
  $7002 POP DE         ; {Fetch the keypress from the stack and store it in
  $7003 LD A,D         ; #REGa.}
+; Handle printing keywords for control keys (which are still valid as
+; choose-able keys).
  $7004 CP $0D         ; {Jump to #R$702D if "enter" is the keypress.
  $7006 JR Z,$702D     ; }
  $7008 CP $20         ; {Jump to #R$7025 if "space" is the keypress.
@@ -1251,7 +1253,7 @@ c$6F9A LD A,$01       ; {Write #N$01 to *#R$7049.
  $7042 LD B,$14       ; Set a counter in #REGb for #N$14 character blocks to
                       ; "paint".
 @label=SetUserDefinedKeyAttribute_Loop
-*$7044 LD (HL),C      ; Write #REGc to *#REGhl.
+*$7044 LD (HL),C      ; Write the attribute byte held by #REGc to *#REGhl.
  $7045 INC HL         ; Increment #REGhl by one.
  $7046 DJNZ $7044     ; Decrease counter by one and loop back to #R$7044 until
                       ; counter is zero.
@@ -1367,23 +1369,30 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
  $729D INC E          ; Set the zero flag if no keys have been pressed.
  $729E JR NZ,$729A    ; Jump to #R$729A unless no keys are being pressed.
  $72A0 LD A,($98E3)   ; #REGa=*#R$98E3.
- $72A3 LD B,$08       ; Set a counter of #N$08.
+ $72A3 LD B,$08       ; Set a counter of #N$08 which is the total number of
+                      ; scores held by the game.
  $72A5 LD HL,$7368    ; #REGhl=#R$7368.
  $72A8 LD D,A         ; Copy *#R$98E3 into #REGd.
+@label=CheckPosition_Loop
 *$72A9 LD A,(HL)      ; {Jump to #R$72B5 if *#REGhl is lower than #REGd.
  $72AA CP D           ;
  $72AB JR C,$72B5     ; }
+; Move onto the next entry.
  $72AD INC HL         ; {Increment #REGhl by three.
  $72AE INC HL         ;
  $72AF INC HL         ; }
  $72B0 DJNZ $72A9     ; Decrease counter by one and loop back to #R$72A9 until
                       ; counter is zero.
+; The players stage wasn't higher than any of the stored stages.
  $72B2 JP $6E9D       ; Jump to #R$6E9D.
+; This is a highscore so collect the users name.
+@label=CollectName
 *$72B5 PUSH BC        ; {Stash #REGbc and #REGhl on the stack.
  $72B6 PUSH HL        ; }
  $72B7 LD HL,$7399    ; #REGhl=#R$7399.
  $72BA CALL $187D     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.)
+; Clear out the buffer from any previous name entries.
  $72BD LD HL,$7383    ; #REGhl=#R$7383.
  $72C0 LD B,$16       ; Set a counter of #N$16 which is the maximum length of
                       ; the name entry buffer.
@@ -1396,20 +1405,23 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
  $72C8 LD ($7336),A   ; }
  $72CB LD HL,$7383    ; #REGhl=#R$7383.
  $72CE LD B,$0D       ; #REGb=#N$0D.
-*$72D0 PUSH BC        ; {Stash #REGbc and #REGhl on the stack.
+@label=NameEntryCollectInput
+*$72D0 PUSH BC        ; {Stash #REGbc and the buffer pointer on the stack.
  $72D1 PUSH HL        ; }
-*$72D2 RES 5,(IY+$01) ; Reset bit 5 of *#REGix+#N$01.
+@label=NameEntryCollectInput_Loop
+*$72D2 RES 5,(IY+$01) ; #HTML(Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>
+                      ; which resets "when a new key has been pressed".)
  $72D6 CALL $02BF     ; #HTML(Call <a
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/02BF.html">KEYBOARD</a>.)
- $72D9 BIT 5,(IY+$01) ; Test bit 5 of *#REGix+#N$01.
- $72DD JR Z,$72D2     ; Jump to #R$72D2 if {} is zero.
+ $72D9 BIT 5,(IY+$01) ; {Jump to #R$72D2 if no key was pressed.
+ $72DD JR Z,$72D2     ; }
  $72DF LD A,($5C08)   ; {#HTML(Jump to #R$7337 if *<a
  $72E2 CP $0D         ; href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a>
  $72E4 JR Z,$7337     ; (last key pressed) is equal to #N$0D.)}
  $72E6 CP $0C         ; {#HTML(Jump to #R$7310 if *<a
  $72E8 JR Z,$7310     ; href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a>
                       ; (last key pressed) is equal to #N$0C.)}
- $72EA LD B,A         ; #REGb=#REGa.
+ $72EA LD B,A         ; Copy the keypress into #REGb.
  $72EB LD A,($7336)   ; {Jump to #R$72D2 if *#R$7336 is not zero.
  $72EE OR A           ;
  $72EF JR NZ,$72D2    ; }
@@ -1418,20 +1430,22 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
  $72F4 JR C,$72D2     ; }
  $72F6 CP $7B         ; {Jump to #R$72D2 if #REGb is higher than #N$7B.
  $72F8 JR NC,$72D2    ; }
- $72FA POP HL         ; Restore #REGhl from the stack.
- $72FB PUSH HL        ; Stash #REGhl on the stack.
- $72FC LD (HL),A      ; Write #REGa to *#REGhl.
- $72FD RST $10        ; Print #REGa to the screen.
+ $72FA POP HL         ; Restore the buffer pointer from the stack.
+ $72FB PUSH HL        ; Stash the buffer pointer on the stack again.
+ $72FC LD (HL),A      ; Write the keypress to the current position in the
+                      ; buffer.
+ $72FD RST $10        ; Print the keypress to the screen.
 ; Handle if no keys are being pressed, for reference:
 ; .
 ; #HTML(<blockquote>In all instances the #REGe register is returned with
 ; a value in the range of +#N$00 to +#N$27, the value being different for each
 ; of the forty keys of the keyboard, or the value +#N$FF, for no-key.</blockquote>)
+@label=NameEntryDebounce_Loop
 *$72FE CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
  $7301 INC E          ; Set the zero flag if no keys have been pressed.
  $7302 JR NZ,$72FE    ; Jump to #R$72FE unless no keys are being pressed.
- $7304 POP HL         ; {Restore #REGhl and #REGbc from the stack.
+ $7304 POP HL         ; {Restore the buffer pointer and #REGbc from the stack.
  $7305 POP BC         ; }
  $7306 INC HL         ; Increment #REGhl by one.
  $7307 DJNZ $72D0     ; Decrease counter by one and loop back to #R$72D0 until
@@ -1457,7 +1471,8 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
  $7327 INC B          ; Increment #REGb by one.
  $7328 PUSH BC        ; {Stash #REGbc and #REGhl on the stack.
  $7329 PUSH HL        ; }
- $732A RES 5,(IY+$01) ; Reset bit 5 of *#REGix+#N$01.
+ $732A RES 5,(IY+$01) ; #HTML(Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>
+                      ; which resets "when a new key has been pressed".)
  $732E LD BC,$0000    ; #REGbc=#N($0000,$04,$04).
  $7331 CALL $1F3D     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.)
@@ -1494,24 +1509,38 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
  $7363 JR NZ,$7349    ; Jump to #R$7349 until #REGa is zero.
  $7365 JP $704A       ; Jump to #R$704A.
 
-; Data block at 7368
-b$7368 DEFB $09
- $7369 DEFW $70B4
- $736B DEFB $08
- $736C DEFW $70D1
- $736E DEFB $07
- $736F DEFW $70EE
- $7371 DEFB $06
- $7372 DEFW $710B
- $7374 DEFB $05
- $7375 DEFW $7162
- $7377 DEFB $04
- $7378 DEFW $717F
- $737A DEFB $03
- $737B DEFW $719C
- $737D DEFB $02
- $737E DEFW $71B9
- $7380 DEFB $00
+; Table: Winners Pointers
+;
+; .
+;
+; .
+;
+; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
+@label=TablePointersWinnersData
+g$7368 DEFB $09      ; Position.
+ $7369 DEFW $70B4    ; Address.
+; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
+ $736B DEFB $08      ; Position.
+ $736C DEFW $70D1    ; Address.
+; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
+ $736E DEFB $07      ; Position.
+ $736F DEFW $70EE    ; Address.
+; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
+ $7371 DEFB $06      ; Position.
+ $7372 DEFW $710B    ; Address.
+; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
+ $7374 DEFB $05      ; Position.
+ $7375 DEFW $7162    ; Address.
+; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
+ $7377 DEFB $04      ; Position.
+ $7378 DEFW $717F    ; Address.
+; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
+ $737A DEFB $03      ; Position.
+ $737B DEFW $719C    ; Address.
+; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
+ $737D DEFB $02      ; Position.
+ $737E DEFW $71B9    ; Address.
+ $7380 DEFB $00      ; Terminator?
 
 ; Name Entry Buffer Pointer
 @label=Reference_NameEntry
@@ -2120,10 +2149,13 @@ c$779F DI            ; Disable interrupts.
  $77B5 LD A,H        ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C92.html#5CA6">MEMBOT</a>
  $77B6 OR L          ; (mem-4+#N$02) is not zero.)
  $77B7 JR NZ,$77C0   ; }
-; #UDGTABLE
-; { #MESSAGE$08(message-08) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$08,$00(message-08-00) | #N$02 | #MESSAGE$08,$01(message-08-01) }
+; { #N$03 | #MESSAGE$08,$02(message-08-02) | #N$04 | #MESSAGE$08,$03(message-08-03) }
 ; UDGTABLE#
- $77B9 LD A,$08      ; {Call #R$7D97 using message block #N$08.
+ $77B9 LD A,$08      ; {Call #R$7D97 using message block #R$85BB(#N$08).
  $77BB CALL $7D97    ; }
  $77BE EI            ; Enable interrupts.
  $77BF RET           ; Return.
@@ -3438,10 +3470,13 @@ c$8CF0 LD HL,$0606   ; {Write #N$06 to *#R$8F7C and #N$06 to *#R$8F7D.
  $8D20 LD A,($98E3)  ; {Jump to #R$8D3E if *#R$98E3 is equal to #N$11.
  $8D23 CP $11        ;
  $8D25 JR Z,$8D3E    ; }
-; #UDGTABLE
-; { #MESSAGE$12(message-18) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$12,$00(message-18-00) | #N$02 | #MESSAGE$12,$01(message-18-01) }
+; { #N$03 | #MESSAGE$12,$02(message-18-02) }
 ; UDGTABLE#
- $8D27 LD A,$12      ; {Call #R$7D97 using message block #N$12.
+ $8D27 LD A,$12      ; {Call #R$7D97 using message block #R$8C0F(#N$12).
  $8D29 CALL $7D97    ; }
  $8D2C LD A,$04      ; {Write #N$04 to *#R$8F7D.
  $8D2E LD ($8F7D),A  ; }
@@ -3457,21 +3492,26 @@ c$8CF0 LD HL,$0606   ; {Write #N$06 to *#R$8F7C and #N$06 to *#R$8F7D.
 ;
 ; .
 ;
-; #UDGTABLE
-; { #MESSAGE$07(message-07) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre)
+; { =h ID | =h Message }
+; { #N$01 | #MESSAGE$07(message-07) }
 ; UDGTABLE#
 @label=Print_GameOver
 c$8D3E LD A,$07      ; {Jump to #R$8D44 using message block #R$8585(#N$07).
  $8D40 JR $8D44      ; }
-; #UDGTABLE
-; { #MESSAGE$0E(message-14) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$0E,$00(message-14-00) | #N$02 | #MESSAGE$0E,$01(message-14-01) }
+; { #N$03 | #MESSAGE$0E,$02(message-14-02) }
 ; UDGTABLE#
 @label=Print_RoundOver
 *$8D42 LD A,$0E      ; {Call #R$7D97 using message block #R$8951(#N$0E).
 @label=PrintAlias
 *$8D44 CALL $7D97    ; }
- $8D47 XOR A         ; #REGa=#N$00.
- $8D48 RET           ; Return.
+ $8D47 XOR A         ; {Return with #REGa=#N$00.
+ $8D48 RET           ; }
 
 ; Game status buffer entry at 8D49
 g$8D49 DEFB $00
@@ -3583,8 +3623,10 @@ c$8D4A LD HL,$96C7   ; #REGhl=#R$96C7.
  $8DFE XOR %00000001 ; Flip bit 0.
  $8E00 LD ($8E42),A  ; Write #REGa to *#R$8E42.
  $8E03 JR Z,$8E22    ; Jump to #R$8E22 if #REGa is zero.
-; #UDGTABLE
-; { #MESSAGE$0D(message-13) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre)
+; { =h ID | =h Message }
+; { #N$01 | #MESSAGE$0D,$00(message-13-00) }
 ; UDGTABLE#
 @label=GirlsTurn
 *$8E05 LD A,$0D      ; {Call #R$7D97 using message block #R$88E5(#N$0D).
@@ -3600,8 +3642,10 @@ c$8D4A LD HL,$96C7   ; #REGhl=#R$96C7.
  $8E1B XOR A         ; {Write #N$00 to *#R$8E43.
  $8E1C LD ($8E43),A  ; }
  $8E1F CALL $8E44    ; Call #R$8E44.
-; #UDGTABLE
-; { #MESSAGE$0C(message-12) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre)
+; { =h ID | =h Message }
+; { #N$01 | #MESSAGE$0C,$00(message-12-00) }
 ; UDGTABLE#
 *$8E22 LD A,$0C      ; {Call #R$7D97 using message block #R$891B(#N$0C).
  $8E24 CALL $7D97    ; }
@@ -3734,10 +3778,13 @@ c$8EE2 LD A,($8E43)  ; {Return if *#R$8E43 is not zero.
  $8EE5 OR A          ;
  $8EE6 RET NZ        ; }
  $8EE7 POP HL        ; Restore #REGhl from the stack.
-; #UDGTABLE
-; { #MESSAGE$09(message-09) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$09,$00(message-09-00) | #N$02 | #MESSAGE$09,$01(message-09-01) }
+; { #N$03 | #MESSAGE$09,$02(message-09-02) }
 ; UDGTABLE#
- $8EE8 LD A,$09      ; {Call #R$7D97 using message block #N$09.
+ $8EE8 LD A,$09      ; {Call #R$7D97 using message block #R$8693(#N$09).
  $8EEA CALL $7D97    ; }
  $8EED LD IX,$96CC   ; #REGix=#R$96CC.
  $8EF1 CALL $E313    ; Call #R$E313.
@@ -3765,8 +3812,13 @@ c$8F06 LD A,($96B4)  ; {Update *#R$96B6 as the girl has won this round. So, add 
  $8F0D ADD A,B       ;
  $8F0E LD ($96B6),A  ; }
 ; Display a random "I've won" message.
-; #UDGTABLE { #MESSAGE$00(message-00) } UDGTABLE#
- $8F11 XOR A         ; {Call #R$7D97 using message block #N$00.
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$00,$00(message-00-00) | #N$02 | #MESSAGE$00,$01(message-00-01) }
+; { #N$03 | #MESSAGE$00,$02(message-00-02) | #N$04 | #MESSAGE$00,$03(message-00-03) }
+; { #N$05 | #MESSAGE$00,$04(message-00-04) }
+; UDGTABLE#
+ $8F11 XOR A         ; {Call #R$7D97 using message block #R$7E8F(#N$00).
  $8F12 CALL $7D97    ; }
 ; Check if this is round over or game over for the player.
  $8F15 LD A,($96B5)  ; {Call #R$8F3B if *#R$96B5 is lower than #N$0A.
@@ -3784,17 +3836,21 @@ c$8F20 LD A,($96B4)  ; {Update *#R$96B5 as the player has won this round. So, ad
  $8F24 LD A,($96B5)  ;
  $8F27 ADD A,B       ;
  $8F28 LD ($96B5),A  ; }
-; #UDGTABLE
-; { #MESSAGE$04(message-04) }
+; Display a random "You've won" message.
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$04,$00(message-04-00) | #N$02 | #MESSAGE$04,$01(message-04-01) }
+; { #N$03 | #MESSAGE$04,$02(message-04-02) | #N$04 | #MESSAGE$04,$03(message-04-03) }
+; { #N$05 | #MESSAGE$04,$04(message-04-04) }
 ; UDGTABLE#
- $8F2B LD A,$04      ; {Call #R$7D97 using message block #N$04.
+ $8F2B LD A,$04      ; {Call #R$7D97 using message block #R$825B(#N$04).
  $8F2D CALL $7D97    ; }
 ; Check if this is round over or game over for the girl.
  $8F30 LD A,($96B6)  ; {Call #R$8F5A if *#R$96B6 is lower than #N$0A.
  $8F33 CP $0A        ;
  $8F35 LD A,$00      ;
  $8F37 CALL C,$8F5A  ; }
- $8F3A RET           ; Return with #REGa being #N$00.
+ $8F3A RET           ; Return with #REGa=#N$00.
 
 ; Player Lost Round
 ;
@@ -3812,15 +3868,18 @@ c$8F3B LD A,($8F7C)  ; {Jump to #R$8F52 if *#R$8F7C is zero.
  $8F4B LD A,$08      ; #REGa=#N$08 (does nothing, this is immediately
                      ; overwritten).
  $8F4D CALL $779F    ; Call #R$779F.
- $8F50 XOR A         ; {Return with #REGa being #N$00.
+ $8F50 XOR A         ; {Return with #REGa=#N$00.
  $8F51 RET           ; }
-; #UDGTABLE
-; { #MESSAGE$0E(message-14) }
+; Display a random "Round lost" message.
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$0E,$00(message-14-00) | #N$02 | #MESSAGE$0E,$01(message-14-01) }
+; { #N$03 | #MESSAGE$0E,$02(message-14-02) }
 ; UDGTABLE#
 @label=LostRound_GameOver
 *$8F52 LD A,$0E      ; {Call #R$7D97 using message block #R$8951(#N$0E).
  $8F54 CALL $7D97    ; }
- $8F57 LD A,$01      ; {Return with #REGa being #N$01.
+ $8F57 LD A,$01      ; {Return with #REGa=#N$01.
  $8F59 RET           ; }
 
 ; Girl Lost Round
@@ -3830,25 +3889,34 @@ c$8F3B LD A,($8F7C)  ; {Jump to #R$8F52 if *#R$8F7C is zero.
 c$8F5A LD HL,$6464   ; {Write #N$6464 to *#R$96B5.
  $8F5D LD ($96B5),HL ; }
  $8F60 LD A,($8F7D)  ; #REGa=*#R$8F7D.
- $8F63 OR A          ; {Jump to #R$8F74 if #REGa is zero.
+ $8F63 OR A          ; {Jump to #R$8F74 if the girl is already out of lives.
  $8F64 JR Z,$8F74    ; }
- $8F66 DEC A         ; Decrease #REGa by one.
- $8F67 LD ($8F7D),A  ; Write #REGa to *#R$8F7D.
+ $8F66 DEC A         ; {Decrease the girls life by one and write this value
+ $8F67 LD ($8F7D),A  ; back to *#R$8F7D.}
  $8F6A CALL $9822    ; Call #R$9822.
-; #UDGTABLE
-; { #MESSAGE$05(message-05) }
+; Display a random "Girl lost round" message.
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$05,$00(message-05-00) | #N$02 | #MESSAGE$05,$01(message-05-01) }
+; { #N$03 | #MESSAGE$05,$02(message-05-02) | #N$04 | #MESSAGE$05,$03(message-05-03) }
+; { #N$05 | #MESSAGE$05,$04(message-05-04) }
 ; UDGTABLE#
- $8F6D LD A,$05      ; {Call #R$7D97 using message block #N$05.
+ $8F6D LD A,$05      ; {Call #R$7D97 using message block #R$8369(#N$05).
  $8F6F CALL $7D97    ; }
- $8F72 XOR A         ; #REGa=#N$00.
- $8F73 RET           ; Return.
-; #UDGTABLE
-; { #MESSAGE$06(message-06) }
+ $8F72 XOR A         ; {Return with #REGa=#N$00.
+ $8F73 RET           ; }
+; Display a random "Girl lost game" message.
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$06,$00(message-06-00) | #N$02 | #MESSAGE$06,$01(message-06-01) }
+; { #N$03 | #MESSAGE$06,$02(message-06-02) | #N$04 | #MESSAGE$06,$03(message-06-03) }
+; { #N$05 | #MESSAGE$06,$04(message-06-04) }
 ; UDGTABLE#
-*$8F74 LD A,$06      ; {Call #R$7D97 using message block #N$06.
+@label=GirlLostAllLives
+*$8F74 LD A,$06      ; {Call #R$7D97 using message block #R$8477(#N$06).
  $8F76 CALL $7D97    ; }
- $8F79 LD A,$FF      ; #REGa=#N$FF.
- $8F7B RET           ; Return.
+ $8F79 LD A,$FF      ; {Return with #REGa=#N$FF.
+ $8F7B RET           ; }
 
 ; Player Lives
 @label=PlayerLives
@@ -3945,8 +4013,10 @@ c$8F7E LD HL,$8FE2   ; #REGhl=#R$8FE2.
 ;
 ; .
 ;
-; #UDGTABLE
-; { #MESSAGE$0F(message-15) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre)
+; { =h ID | =h Message }
+; { #N$01 | #MESSAGE$0F,$00(message-15-00) }
 ; UDGTABLE#
 @label=MarkCards
 c$9003 LD A,$0F      ; {Call #R$7D97 using message block #R$89F3(#N$0F).
@@ -4427,8 +4497,12 @@ g$91D8 DEFB $01
 ;
 ; .
 ;
-; #UDGTABLE
-; { #MESSAGE$0A(message-10) }
+; Display a random "taunt" message.
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$0A,$00(message-10-00) | #N$02 | #MESSAGE$0A,$01(message-10-01) }
+; { #N$03 | #MESSAGE$0A,$02(message-10-02) | #N$04 | #MESSAGE$0A,$03(message-10-03) }
+; { #N$05 | #MESSAGE$0A,$04(message-10-04) }
 ; UDGTABLE#
 @label=PlayerAction_Drop
 c$91D9 LD A,$0A      ; {Call #R$7D97 using message block #R$8735(#N$0A).
@@ -4443,13 +4517,16 @@ c$91D9 LD A,$0A      ; {Call #R$7D97 using message block #R$8735(#N$0A).
 c$91E0 LD A,($8E59)  ; {Jump to #R$9171 if *#R$8E59 is equal to #N$07.
  $91E3 CP $07        ;
  $91E5 JP Z,$9171    ; }
- $91E8 LD A,($96B5)  ; #REGa=*#R$96B5.
- $91EB LD C,A        ; #REGc=#REGa.
+ $91E8 LD A,($96B5)  ; {#REGc=*#R$96B5.
+ $91EB LD C,A        ; }
+; The player can't raise if they have no cash.
  $91EC OR A          ; {Jump to #R$9171 if *#R$96B5 is zero.
  $91ED JP Z,$9171    ; }
- $91F0 LD A,($96B6)  ; #REGa=*#R$96B6.
- $91F3 OR A          ; {Jump to #R$9171 if *#R$96B6 is zero.
+; The player can't raise if the girl has no cash.
+ $91F0 LD A,($96B6)  ; {Jump to #R$9171 if *#R$96B6 is zero.
+ $91F3 OR A          ;
  $91F4 JP Z,$9171    ; }
+; Both the player and the girl have cash, but there are still checks to make.
  $91F7 LD A,($96B7)  ; #REGa=*#R$96B7.
  $91FA SUB C         ; #REGa-=#REGc.
  $91FB JP Z,$9171    ; Jump to #R$9171 if {} is zero.
@@ -4470,8 +4547,12 @@ c$91E0 LD A,($8E59)  ; {Jump to #R$9171 if *#R$8E59 is equal to #N$07.
  $921E LD A,($96B4)  ; #REGa=*#R$96B4.
  $9221 ADD A,B       ; #REGa+=#REGb.
  $9222 LD ($96B4),A  ; Write #REGa to *#R$96B4.
-; #UDGTABLE
-; { #MESSAGE$10(message-16) }
+; Display a random "nervous about the player raising" message.
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$10,$00(message-16-00) | #N$02 | #MESSAGE$10,$01(message-16-01) }
+; { #N$03 | #MESSAGE$10,$02(message-16-02) | #N$04 | #MESSAGE$10,$03(message-16-03) }
+; { #N$05 | #MESSAGE$10,$04(message-16-04) | #N$06 | #MESSAGE$10,$05(message-16-05) }
 ; UDGTABLE#
  $9225 LD A,$10      ; {Call #R$7D97 using message block #R$8A29(#N$10).
  $9227 CALL $7D97    ; }
@@ -4488,8 +4569,11 @@ c$922D LD A,($96B7)  ; {Jump to #R$9242 if *#R$96B7 is zero.
  $9233 CALL $9245    ; Call #R$9245.
  $9236 XOR A         ; {Write #N$00 to *#R$96B7.
  $9237 LD ($96B7),A  ; }
-; #UDGTABLE
-; { #MESSAGE$0B(message-11) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$0B,$00(message-11-00) | #N$02 | #MESSAGE$0B,$01(message-11-01) }
+; { #N$03 | #MESSAGE$0B,$02(message-11-02) }
 ; UDGTABLE#
  $923A LD A,$0B      ; {Call #R$7D97 using message block #R$8843(#N$0B).
  $923C CALL $7D97    ; }
@@ -4520,8 +4604,11 @@ c$9245 LD A,($96B7)  ; {Subtract *#R$96B7 from *#R$96B5 and write it back to
 c$9258 LD A,$68      ; #REGa=#COLOUR$68.
  $925A LD HL,$5A95   ; #REGhl=#N$5A95 (attribute buffer location).
  $925D CALL $91D1    ; Call #R$91D1.
-; #UDGTABLE
-; { #MESSAGE$11(message-17) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$11,$00(message-17-00) | #N$02 | #MESSAGE$11,$01(message-17-01) }
+; { #N$03 | #MESSAGE$11,$02(message-17-02) }
 ; UDGTABLE#
  $9260 LD A,$11      ; {Call #R$7D97 using message block #R$8B6D(#N$11).
  $9262 CALL $7D97    ; }
@@ -5133,8 +5220,12 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
  $962C JR C,$968C    ; }
  $962E DJNZ $9627    ; Decrease counter by one and loop back to #R$9627 until
                      ; counter is zero.
-; #UDGTABLE
-; { #MESSAGE$01(message-01) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$01,$00(message-01-00) | #N$02 | #MESSAGE$01,$01(message-01-01) }
+; { #N$03 | #MESSAGE$01,$02(message-01-02) | #N$04 | #MESSAGE$01,$03(message-01-03) }
+; { #N$05 | #MESSAGE$01,$04(message-01-04) }
 ; UDGTABLE#
  $9630 LD A,$01      ; {Call #R$7D97 using message block #R$7F9D(#N$01).
  $9632 CALL $7D97    ; }
@@ -5156,8 +5247,11 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
  $9654 OR A          ;
  $9655 LD B,A        ; #REGb=#REGa.
  $9656 JR NZ,$966C   ; Jump to #R$966C if {} is not zero.
-; #UDGTABLE
-; { #MESSAGE$03(message-03) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$03,$00(message-03-00) | #N$02 | #MESSAGE$03,$01(message-03-01) }
+; { #N$03 | #MESSAGE$03,$02(message-03-02) }
 ; UDGTABLE#
 *$9658 LD A,$03      ; {Call #R$7D97 using message block #R$81B9(#N$03).
  $965A CALL $7D97    ; }
@@ -5196,8 +5290,12 @@ c$966C LD A,($96B5)  ; {Jump to #R$967D if *#R$96B5 is higher than the girls
  $967E LD ($96B7),A  ; }
 @label=GirlRaise_AddToPot
 *$9681 CALL $96A1    ; Call #R$96A1.
-; #UDGTABLE
-; { #MESSAGE$02(message-02) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$02,$00(message-02-00) | #N$02 | #MESSAGE$02,$01(message-02-01) }
+; { #N$03 | #MESSAGE$02,$02(message-02-02) | #N$04 | #MESSAGE$02,$03(message-02-03) }
+; { #N$05 | #MESSAGE$02,$04(message-02-04) }
 ; UDGTABLE#
  $9684 LD A,$02      ; {Call #R$7D97 using message block #R$80AB(#N$02).
  $9686 CALL $7D97    ; }
@@ -5214,8 +5312,11 @@ c$968C LD A,($96B7)  ; {Jump to #R$96B1 if *#R$96B7 is zero.
  $9692 CALL $96A1    ; Call #R$96A1.
  $9695 XOR A         ; {Write #N$00 to *#R$96B7.
  $9696 LD ($96B7),A  ; }
-; #UDGTABLE
-; { #MESSAGE$03(message-03) }
+; Messaging options:
+; #UDGTABLE(default,centre,centre,centre,centre)
+; { =h ID | =h Message | =h ID | =h Message }
+; { #N$01 | #MESSAGE$03,$00(message-03-00) | #N$02 | #MESSAGE$03,$01(message-03-01) }
+; { #N$03 | #MESSAGE$03,$02(message-03-02) }
 ; UDGTABLE#
  $9699 LD A,$03      ; {Call #R$7D97 using message block #R$81B9(#N$03).
  $969B CALL $7D97    ; }

@@ -112,10 +112,10 @@ SectionPrefix=Audio
     2:Spades,
     3:Clubs))
 
-#DEF(#MESSAGE(block)(filename)
+#DEF(#MESSAGE(block,n=$00)(filename)
   #PUSHS
   #SIM(start=$7D97,stop=$7DB7,a=$block)
+  #SIM(start=$7DC6,stop=$7DC9,hl=$36*$n+#PEEK$8CED+#PEEK($8CEE)*$100)
   #SIM(start=$7DD6,stop=$7E10)
   #SCR$04{$1A0,$280,$E0,$80}($filename)
   #POPS)
-
