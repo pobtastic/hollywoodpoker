@@ -65,24 +65,23 @@ Used by the routine at <a href="8F20.html">PlayerWonRound</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f63"></span>8F63</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="8F5A.html#8f74">GirlLostRound_0</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="8F5A.html#8f74">GirlLostAllLives</a> if the girl is already out of lives.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f64"></span>8F64</td>
-<td class="instruction">JR Z,<a href="8F5A.html#8f74">GirlLostRound_0</a></td>
+<td class="instruction">JR Z,<a href="8F5A.html#8f74">GirlLostAllLives</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f66"></span>8F66</td>
 <td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+<td class="comment-1" rowspan="2">Decrease the girls life by one and write this value back to *<a href="8F7D.html">GirlLives</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f67"></span>8F67</td>
 <td class="instruction">LD ($8F7D),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="8F7D.html">GirlLives</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -95,9 +94,28 @@ Used by the routine at <a href="8F20.html">PlayerWonRound</a>.
 <span id="8f6d"></span>
 <div class="comments">
 <div class="paragraph">
-<table class="">
+Display a random "Girl lost round" message. <table class="default">
 <tr>
-<td class="" colspan="1" rowspan="1"><img alt="message-05" src="../images/scr/message-05.png" /></td>
+<th colspan="1" rowspan="1">ID</th>
+<th colspan="1" rowspan="1">Message</th>
+<th colspan="1" rowspan="1">ID</th>
+<th colspan="1" rowspan="1">Message</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">01</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-05-00" src="../images/scr/message-05-00.png" /></td>
+<td class="centre" colspan="1" rowspan="1">02</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-05-01" src="../images/scr/message-05-01.png" /></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">03</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-05-02" src="../images/scr/message-05-02.png" /></td>
+<td class="centre" colspan="1" rowspan="1">04</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-05-03" src="../images/scr/message-05-03.png" /></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">05</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-05-04" src="../images/scr/message-05-04.png" /></td>
 </tr>
 </table>
 </div>
@@ -108,7 +126,7 @@ Used by the routine at <a href="8F20.html">PlayerWonRound</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f6d"></span>8F6D</td>
 <td class="instruction">LD A,$05</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 05.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="8369.html">05</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -119,22 +137,40 @@ Used by the routine at <a href="8F20.html">PlayerWonRound</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f72"></span>8F72</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=00.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f73"></span>8F73</td>
 <td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="8f74"></span>
 <div class="comments">
 <div class="paragraph">
-<table class="">
+Display a random "Girl lost game" message. <table class="default">
 <tr>
-<td class="" colspan="1" rowspan="1"><img alt="message-06" src="../images/scr/message-06.png" /></td>
+<th colspan="1" rowspan="1">ID</th>
+<th colspan="1" rowspan="1">Message</th>
+<th colspan="1" rowspan="1">ID</th>
+<th colspan="1" rowspan="1">Message</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">01</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-06-00" src="../images/scr/message-06-00.png" /></td>
+<td class="centre" colspan="1" rowspan="1">02</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-06-01" src="../images/scr/message-06-01.png" /></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">03</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-06-02" src="../images/scr/message-06-02.png" /></td>
+<td class="centre" colspan="1" rowspan="1">04</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-06-03" src="../images/scr/message-06-03.png" /></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">05</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-06-04" src="../images/scr/message-06-04.png" /></td>
 </tr>
 </table>
 </div>
@@ -142,10 +178,10 @@ Used by the routine at <a href="8F20.html">PlayerWonRound</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label">GirlLostRound_0</td>
+<td class="asm-label">GirlLostAllLives</td>
 <td class="address-2"><span id="8f74"></span>8F74</td>
 <td class="instruction">LD A,$06</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 06.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="8477.html">06</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -156,13 +192,12 @@ Used by the routine at <a href="8F20.html">PlayerWonRound</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f79"></span>8F79</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=FF.</td>
+<td class="comment-1" rowspan="2">Return with <span class="register">A</span>=FF.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f7b"></span>8F7B</td>
 <td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

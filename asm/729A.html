@@ -95,13 +95,13 @@ Handle if no keys are being pressed, for reference:
 <td class="asm-label"></td>
 <td class="address-1"><span id="72a3"></span>72A3</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-1" rowspan="1">Set a counter of 08.</td>
+<td class="comment-1" rowspan="1">Set a counter of 08 which is the total number of scores held by the game.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72a5"></span>72A5</td>
 <td class="instruction">LD HL,$7368</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="7368.html">7368</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="7368.html">TablePointersWinnersData</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -110,10 +110,10 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1">Copy *<a href="98E3.html">CurrentStage</a> into <span class="register">D</span>.</td>
 </tr>
 <tr>
-<td class="asm-label">WinnersTableNameEntry_0</td>
+<td class="asm-label">CheckPosition_Loop</td>
 <td class="address-2"><span id="72a9"></span>72A9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="729A.html#72b5">WinnersTableNameEntry_1</a> if *<span class="register">HL</span> is lower than <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="729A.html#72b5">CollectName</a> if *<span class="register">HL</span> is lower than <span class="register">D</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -123,7 +123,17 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72ab"></span>72AB</td>
-<td class="instruction">JR C,<a href="729A.html#72b5">WinnersTableNameEntry_1</a></td>
+<td class="instruction">JR C,<a href="729A.html#72b5">CollectName</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="72ad"></span>
+<div class="comments">
+<div class="paragraph">
+Move onto the next entry.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -144,8 +154,18 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72b0"></span>72B0</td>
-<td class="instruction">DJNZ <a href="729A.html#72a9">WinnersTableNameEntry_0</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="729A.html#72a9">WinnersTableNameEntry_0</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="729A.html#72a9">CheckPosition_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="729A.html#72a9">CheckPosition_Loop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="72b2"></span>
+<div class="comments">
+<div class="paragraph">
+The players stage wasn't higher than any of the stored stages.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -154,7 +174,17 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1">Jump to <a href="6E9D.html">TitleScreen</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">WinnersTableNameEntry_1</td>
+<td class="routine-comment" colspan="5">
+<span id="72b5"></span>
+<div class="comments">
+<div class="paragraph">
+This is a highscore so collect the users name.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">CollectName</td>
 <td class="address-2"><span id="72b5"></span>72B5</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">BC</span> and <span class="register">HL</span> on the stack.</td>
@@ -175,6 +205,16 @@ Handle if no keys are being pressed, for reference:
 <td class="address-1"><span id="72ba"></span>72BA</td>
 <td class="instruction">CALL $187D</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="72bd"></span>
+<div class="comments">
+<div class="paragraph">
+Clear out the buffer from any previous name entries.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -230,10 +270,10 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1"><span class="register">B</span>=0D.</td>
 </tr>
 <tr>
-<td class="asm-label">WinnersTableNameEntry_2</td>
+<td class="asm-label">NameEntryCollectInput</td>
 <td class="address-2"><span id="72d0"></span>72D0</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-1" rowspan="2">Stash <span class="register">BC</span> and <span class="register">HL</span> on the stack.</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">BC</span> and the buffer pointer on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -241,10 +281,10 @@ Handle if no keys are being pressed, for reference:
 <td class="instruction">PUSH HL</td>
 </tr>
 <tr>
-<td class="asm-label">WinnersTableNameEntry_3</td>
+<td class="asm-label">NameEntryCollectInput_Loop</td>
 <td class="address-2"><span id="72d2"></span>72D2</td>
 <td class="instruction">RES 5,(IY+$01)</td>
-<td class="comment-1" rowspan="1">Reset bit 5 of *<span class="register">IX</span>+01.</td>
+<td class="comment-1" rowspan="1">Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a> which resets "when a new key has been pressed".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -256,19 +296,18 @@ Handle if no keys are being pressed, for reference:
 <td class="asm-label"></td>
 <td class="address-1"><span id="72d9"></span>72D9</td>
 <td class="instruction">BIT 5,(IY+$01)</td>
-<td class="comment-1" rowspan="1">Test bit 5 of *<span class="register">IX</span>+01.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="729A.html#72d2">NameEntryCollectInput_Loop</a> if no key was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72dd"></span>72DD</td>
-<td class="instruction">JR Z,<a href="729A.html#72d2">WinnersTableNameEntry_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="729A.html#72d2">WinnersTableNameEntry_3</a> if {} is zero.</td>
+<td class="instruction">JR Z,<a href="729A.html#72d2">NameEntryCollectInput_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72df"></span>72DF</td>
 <td class="instruction">LD A,($5C08)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="729A.html#7337">WinnersTableNameEntry_6</a> if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to 0D.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="729A.html#7337">WinnersTableNameEntry_1</a> if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to 0D.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -278,30 +317,30 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72e4"></span>72E4</td>
-<td class="instruction">JR Z,<a href="729A.html#7337">WinnersTableNameEntry_6</a></td>
+<td class="instruction">JR Z,<a href="729A.html#7337">WinnersTableNameEntry_1</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72e6"></span>72E6</td>
 <td class="instruction">CP $0C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="729A.html#7310">WinnersTableNameEntry_5</a> if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to 0C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="729A.html#7310">WinnersTableNameEntry_0</a> if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to 0C.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72e8"></span>72E8</td>
-<td class="instruction">JR Z,<a href="729A.html#7310">WinnersTableNameEntry_5</a></td>
+<td class="instruction">JR Z,<a href="729A.html#7310">WinnersTableNameEntry_0</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72ea"></span>72EA</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Copy the keypress into <span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72eb"></span>72EB</td>
 <td class="instruction">LD A,($7336)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="729A.html#72d2">WinnersTableNameEntry_3</a> if *<a href="729A.html#7336">7336</a> is not zero.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="729A.html#72d2">NameEntryCollectInput_Loop</a> if *<a href="729A.html#7336">7336</a> is not zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -311,13 +350,13 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72ef"></span>72EF</td>
-<td class="instruction">JR NZ,<a href="729A.html#72d2">WinnersTableNameEntry_3</a></td>
+<td class="instruction">JR NZ,<a href="729A.html#72d2">NameEntryCollectInput_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72f1"></span>72F1</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump to <a href="729A.html#72d2">WinnersTableNameEntry_3</a> if <span class="register">B</span> is lower than 20.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="729A.html#72d2">NameEntryCollectInput_Loop</a> if <span class="register">B</span> is lower than 20.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -327,42 +366,42 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72f4"></span>72F4</td>
-<td class="instruction">JR C,<a href="729A.html#72d2">WinnersTableNameEntry_3</a></td>
+<td class="instruction">JR C,<a href="729A.html#72d2">NameEntryCollectInput_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72f6"></span>72F6</td>
 <td class="instruction">CP $7B</td>
-<td class="comment-1" rowspan="2">Jump to <a href="729A.html#72d2">WinnersTableNameEntry_3</a> if <span class="register">B</span> is higher than 7B.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="729A.html#72d2">NameEntryCollectInput_Loop</a> if <span class="register">B</span> is higher than 7B.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72f8"></span>72F8</td>
-<td class="instruction">JR NC,<a href="729A.html#72d2">WinnersTableNameEntry_3</a></td>
+<td class="instruction">JR NC,<a href="729A.html#72d2">NameEntryCollectInput_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72fa"></span>72FA</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the buffer pointer from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72fb"></span>72FB</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the buffer pointer on the stack again.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72fc"></span>72FC</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Write the keypress to the current position in the buffer.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="72fd"></span>72FD</td>
 <td class="instruction">RST $10</td>
-<td class="comment-1" rowspan="1">Print <span class="register">A</span> to the screen.</td>
+<td class="comment-1" rowspan="1">Print the keypress to the screen.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -378,7 +417,7 @@ Handle if no keys are being pressed, for reference:
 </td>
 </tr>
 <tr>
-<td class="asm-label">WinnersTableNameEntry_4</td>
+<td class="asm-label">NameEntryDebounce_Loop</td>
 <td class="address-2"><span id="72fe"></span>72FE</td>
 <td class="instruction">CALL $028E</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
@@ -392,14 +431,14 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="7302"></span>7302</td>
-<td class="instruction">JR NZ,<a href="729A.html#72fe">WinnersTableNameEntry_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="729A.html#72fe">WinnersTableNameEntry_4</a> unless no keys are being pressed.</td>
+<td class="instruction">JR NZ,<a href="729A.html#72fe">NameEntryDebounce_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="729A.html#72fe">NameEntryDebounce_Loop</a> unless no keys are being pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="7304"></span>7304</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="2">Restore <span class="register">HL</span> and <span class="register">BC</span> from the stack.</td>
+<td class="comment-1" rowspan="2">Restore the buffer pointer and <span class="register">BC</span> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -415,8 +454,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="7307"></span>7307</td>
-<td class="instruction">DJNZ <a href="729A.html#72d0">WinnersTableNameEntry_2</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="729A.html#72d0">WinnersTableNameEntry_2</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="729A.html#72d0">NameEntryCollectInput</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="729A.html#72d0">NameEntryCollectInput</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -432,11 +471,11 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="730e"></span>730E</td>
-<td class="instruction">JR <a href="729A.html#72d0">WinnersTableNameEntry_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="729A.html#72d0">WinnersTableNameEntry_2</a>.</td>
+<td class="instruction">JR <a href="729A.html#72d0">NameEntryCollectInput</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="729A.html#72d0">NameEntryCollectInput</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">WinnersTableNameEntry_5</td>
+<td class="asm-label">WinnersTableNameEntry_0</td>
 <td class="address-2"><span id="7310"></span>7310</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">HL</span> and <span class="register">BC</span> from the stack.</td>
@@ -461,7 +500,7 @@ Handle if no keys are being pressed, for reference:
 <td class="asm-label"></td>
 <td class="address-1"><span id="7316"></span>7316</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump to <a href="729A.html#72d0">WinnersTableNameEntry_2</a> if <span class="register">B</span> is equal to 0D.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="729A.html#72d0">NameEntryCollectInput</a> if <span class="register">B</span> is equal to 0D.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -471,7 +510,7 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="7319"></span>7319</td>
-<td class="instruction">JR Z,<a href="729A.html#72d0">WinnersTableNameEntry_2</a></td>
+<td class="instruction">JR Z,<a href="729A.html#72d0">NameEntryCollectInput</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -539,7 +578,7 @@ Handle if no keys are being pressed, for reference:
 <td class="asm-label"></td>
 <td class="address-1"><span id="732a"></span>732A</td>
 <td class="instruction">RES 5,(IY+$01)</td>
-<td class="comment-1" rowspan="1">Reset bit 5 of *<span class="register">IX</span>+01.</td>
+<td class="comment-1" rowspan="1">Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a> which resets "when a new key has been pressed".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -556,8 +595,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="7334"></span>7334</td>
-<td class="instruction">JR <a href="729A.html#72d2">WinnersTableNameEntry_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="729A.html#72d2">WinnersTableNameEntry_3</a>.</td>
+<td class="instruction">JR <a href="729A.html#72d2">NameEntryCollectInput_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="729A.html#72d2">NameEntryCollectInput_Loop</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -566,7 +605,7 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">WinnersTableNameEntry_6</td>
+<td class="asm-label">WinnersTableNameEntry_1</td>
 <td class="address-2"><span id="7337"></span>7337</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="4">Restore <span class="register">HL</span>, <span class="register">BC</span>, <span class="register">HL</span> and <span class="register">BC</span> from the stack.</td>
@@ -593,7 +632,7 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">B</span>.</td>
 </tr>
 <tr>
-<td class="asm-label">WinnersTableNameEntry_7</td>
+<td class="asm-label">WinnersTableNameEntry_2</td>
 <td class="address-2"><span id="733c"></span>733C</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
@@ -629,8 +668,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="7342"></span>7342</td>
-<td class="instruction">DJNZ <a href="729A.html#733c">WinnersTableNameEntry_7</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="729A.html#733c">WinnersTableNameEntry_7</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="729A.html#733c">WinnersTableNameEntry_2</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="729A.html#733c">WinnersTableNameEntry_2</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -645,7 +684,7 @@ Handle if no keys are being pressed, for reference:
 <td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="7381.html">7382</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">WinnersTableNameEntry_8</td>
+<td class="asm-label">WinnersTableNameEntry_3</td>
 <td class="address-2"><span id="7349"></span>7349</td>
 <td class="instruction">LD H,(IX+$00)</td>
 <td class="comment-1" rowspan="1"><span class="register">H</span>=*<span class="register">IX</span>+00.</td>
@@ -717,8 +756,8 @@ Handle if no keys are being pressed, for reference:
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="7363"></span>7363</td>
-<td class="instruction">JR NZ,<a href="729A.html#7349">WinnersTableNameEntry_8</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="729A.html#7349">WinnersTableNameEntry_8</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="729A.html#7349">WinnersTableNameEntry_3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="729A.html#7349">WinnersTableNameEntry_3</a> until <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

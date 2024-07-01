@@ -64,13 +64,22 @@ Used by the routine at <a href="91B2.html">InGame_Select</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="91e8"></span>91E8</td>
 <td class="instruction">LD A,($96B5)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B5.html">PlayerCash</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">C</span>=*<a href="96B5.html">PlayerCash</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="91eb"></span>91EB</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="91ec"></span>
+<div class="comments">
+<div class="paragraph">
+The player can't raise if they have no cash.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -84,21 +93,40 @@ Used by the routine at <a href="91B2.html">InGame_Select</a>.
 <td class="instruction">JP Z,<a href="9171.html">InGameControls</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="91f0"></span>
+<div class="comments">
+<div class="paragraph">
+The player can't raise if the girl has no cash.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="91f0"></span>91F0</td>
 <td class="instruction">LD A,($96B6)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B6.html">GirlCash</a>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="9171.html">InGameControls</a> if *<a href="96B6.html">GirlCash</a> is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="91f3"></span>91F3</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="9171.html">InGameControls</a> if *<a href="96B6.html">GirlCash</a> is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="91f4"></span>91F4</td>
 <td class="instruction">JP Z,<a href="9171.html">InGameControls</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="91f7"></span>
+<div class="comments">
+<div class="paragraph">
+Both the player and the girl have cash, but there are still checks to make.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -223,9 +251,30 @@ Used by the routine at <a href="91B2.html">InGame_Select</a>.
 <span id="9225"></span>
 <div class="comments">
 <div class="paragraph">
-<table class="">
+Display a random "nervous about the player raising" message. <table class="default">
 <tr>
-<td class="" colspan="1" rowspan="1"><img alt="message-16" src="../images/scr/message-16.png" /></td>
+<th colspan="1" rowspan="1">ID</th>
+<th colspan="1" rowspan="1">Message</th>
+<th colspan="1" rowspan="1">ID</th>
+<th colspan="1" rowspan="1">Message</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">01</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-16-00" src="../images/scr/message-16-00.png" /></td>
+<td class="centre" colspan="1" rowspan="1">02</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-16-01" src="../images/scr/message-16-01.png" /></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">03</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-16-02" src="../images/scr/message-16-02.png" /></td>
+<td class="centre" colspan="1" rowspan="1">04</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-16-03" src="../images/scr/message-16-03.png" /></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">05</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-16-04" src="../images/scr/message-16-04.png" /></td>
+<td class="centre" colspan="1" rowspan="1">06</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-16-05" src="../images/scr/message-16-05.png" /></td>
 </tr>
 </table>
 </div>

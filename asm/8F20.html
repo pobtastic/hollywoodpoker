@@ -75,9 +75,28 @@ Used by the routines at <a href="8D4A.html">PlayGame</a> and <a href="8EE2.html"
 <span id="8f2b"></span>
 <div class="comments">
 <div class="paragraph">
-<table class="">
+Display a random "You've won" message. <table class="default">
 <tr>
-<td class="" colspan="1" rowspan="1"><img alt="message-04" src="../images/scr/message-04.png" /></td>
+<th colspan="1" rowspan="1">ID</th>
+<th colspan="1" rowspan="1">Message</th>
+<th colspan="1" rowspan="1">ID</th>
+<th colspan="1" rowspan="1">Message</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">01</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-04-00" src="../images/scr/message-04-00.png" /></td>
+<td class="centre" colspan="1" rowspan="1">02</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-04-01" src="../images/scr/message-04-01.png" /></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">03</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-04-02" src="../images/scr/message-04-02.png" /></td>
+<td class="centre" colspan="1" rowspan="1">04</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-04-03" src="../images/scr/message-04-03.png" /></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">05</td>
+<td class="centre" colspan="1" rowspan="1"><img alt="message-04-04" src="../images/scr/message-04-04.png" /></td>
 </tr>
 </table>
 </div>
@@ -88,7 +107,7 @@ Used by the routines at <a href="8D4A.html">PlayGame</a> and <a href="8EE2.html"
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f2b"></span>8F2B</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block 04.</td>
+<td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="825B.html">04</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -130,7 +149,7 @@ Check if this is round over or game over for the girl.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8f3a"></span>8F3A</td>
 <td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return with <span class="register">A</span> being 00.</td>
+<td class="comment-1" rowspan="1">Return with <span class="register">A</span>=00.</td>
 </tr>
 </table>
 <table class="asm-navigation">

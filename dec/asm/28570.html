@@ -451,6 +451,16 @@ Convert the screen co-ordinates into a screen buffer location pointer.
 <td class="instruction">LD A,D</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="28676"></span>
+<div class="comments">
+<div class="paragraph">
+Handle printing keywords for control keys (which are still valid as choose-able keys).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="28676"></span>28676</td>
 <td class="instruction">CP 13</td>
@@ -695,7 +705,7 @@ Prints the word "ENTER".
 <td class="asm-label">SetUserDefinedKeyAttribute_Loop</td>
 <td class="address-2"><span id="28740"></span>28740</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-1" rowspan="1">Write <span class="register">C</span> to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Write the attribute byte held by <span class="register">C</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
