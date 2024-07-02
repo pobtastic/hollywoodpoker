@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="37687.html">37687</a>
+Prev: <a href="37948.html">37948</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#38003">Map</a></td>
 <td class="next">
@@ -33,38 +33,61 @@ Next: <a href="38011.html">38011</a>
 </td>
 </tr>
 </table>
-<div class="description">38003: Routine at 9473</div>
+<div class="description">38003: Calculate Card</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="37687.html">37687</a> and <a href="38609.html">38609</a>.
+Used by the routines at <a href="37687.html">37687</a>, <a href="37742.html">37742</a>, <a href="37808.html">37808</a>, <a href="37906.html">37906</a>, <a href="37948.html">37948</a> and <a href="38609.html">38609</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Pointer to a card count in <a href="38208.html">Table_CardDuplicates</a></td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">The card ID that the card count refers to</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
+<td class="asm-label">CalculateCard</td>
 <td class="address-2"><span id="38003"></span>38003</td>
 <td class="instruction">LD DE,38208</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38208.html">38208</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38208.html">Table_CardDuplicates</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38006"></span>38006</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1">Reset flags.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38007"></span>38007</td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38009"></span>38009</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">L</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38010"></span>38010</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -73,7 +96,7 @@ Used by the routines at <a href="37687.html">37687</a> and <a href="38609.html">
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="37687.html">37687</a>
+Prev: <a href="37948.html">37948</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#38003">Map</a></td>
 <td class="next">

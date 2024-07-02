@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 38087</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38081.html">38081</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38087">Map</a></td>
+<td class="next">
+Next: <a href="38106.html">38106</a>
+</td>
+</tr>
+</table>
+<div class="description">38087: Routine at 94C7</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="37808.html">37808</a> and <a href="38050.html">38050</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38087"></span>38087</td>
+<td class="instruction">LD HL,38207</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">38207</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38090"></span>38090</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38091"></span>38091</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="38087.html#38090">38090</a> if *<span class="register">HL</span> is not equal to 1.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38092"></span>38092</td>
+<td class="instruction">CP 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38094"></span>38094</td>
+<td class="instruction">JR NZ,<a href="38087.html#38090">38090</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38096"></span>38096</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38098"></span>38098</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is not equal to 1.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38099"></span>38099</td>
+<td class="instruction">CP 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38101"></span>38101</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38102"></span>38102</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38103"></span>38103</td>
+<td class="instruction">DJNZ <a href="38087.html#38098">38098</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38087.html#38098">38098</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38105"></span>38105</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38081.html">38081</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38087">Map</a></td>
+<td class="next">
+Next: <a href="38106.html">38106</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/94C7.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

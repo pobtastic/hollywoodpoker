@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 950D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="94E8.html">94E8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#950d">Map</a></td>
+<td class="next">
+Next: <a href="9516.html">9516</a>
+</td>
+</tr>
+</table>
+<div class="description">950D: Routine at 950D</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="943C.html">943C</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="950d"></span>950D</td>
+<td class="instruction">LD HL,$954C</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html#954c">954C</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9510"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="943C.html">943C</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="9510"></span>9510</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9511"></span>9511</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9512"></span>9512</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="950D.html#9510">9510</a> if <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9513"></span>9513</td>
+<td class="instruction">JR Z,<a href="950D.html#9510">$9510</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="9515"></span>9515</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="94E8.html">94E8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#950d">Map</a></td>
+<td class="next">
+Next: <a href="9516.html">9516</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/38157.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

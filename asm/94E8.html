@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 94E8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="94DA.html">94DA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#94e8">Map</a></td>
+<td class="next">
+Next: <a href="950D.html">950D</a>
+</td>
+</tr>
+</table>
+<div class="description">94E8: Routine at 94E8</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="93B0.html">93B0</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="94e8"></span>94E8</td>
+<td class="instruction">LD HL,$9540</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html">Table_CardDuplicates</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="94eb"></span>94EB</td>
+<td class="instruction">LD B,$0D</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=0D.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="94ed"></span>94ED</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="94E8.html#94f7">94F7</a> if *<span class="register">HL</span> is equal to 02.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="94ee"></span>94EE</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="94f0"></span>94F0</td>
+<td class="instruction">JR Z,<a href="94E8.html#94f7">$94F7</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="94f2"></span>94F2</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="94f3"></span>94F3</td>
+<td class="instruction">DJNZ <a href="94E8.html#94ed">$94ED</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="94E8.html#94ed">94ED</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="94f5"></span>94F5</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="94f6"></span>94F6</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="94f7"></span>94F7</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="94f8"></span>94F8</td>
+<td class="instruction">LD ($9516),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="9516.html">9516</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="94fb"></span>94FB</td>
+<td class="instruction">JR Z,<a href="94E8.html#94f5">$94F5</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="94E8.html#94f5">94F5</a> if <span class="register">B</span> is zero.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="94fd"></span>94FD</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="94fe"></span>94FE</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is equal to 02.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="94ff"></span>94FF</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9501"></span>9501</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9502"></span>9502</td>
+<td class="instruction">DJNZ <a href="94E8.html#94fd">$94FD</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="94E8.html#94fd">94FD</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9504"></span>9504</td>
+<td class="instruction">JR <a href="94E8.html#94f5">$94F5</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="94E8.html#94f5">94F5</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9506"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="9412.html">9412</a> and <a href="94B8.html">94B8</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="9506"></span>9506</td>
+<td class="instruction">LD B,$0D</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=0D.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="9508"></span>9508</td>
+<td class="instruction">LD HL,$953F</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html">953F</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="950b"></span>950B</td>
+<td class="instruction">JR <a href="94E8.html#94fd">$94FD</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="94E8.html#94fd">94FD</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="94DA.html">94DA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#94e8">Map</a></td>
+<td class="next">
+Next: <a href="950D.html">950D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/38120.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

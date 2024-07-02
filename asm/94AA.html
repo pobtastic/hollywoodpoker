@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 94AA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="94A2.html">94A2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#94aa">Map</a></td>
+<td class="next">
+Next: <a href="94B8.html">94B8</a>
+</td>
+</tr>
+</table>
+<div class="description">94AA: Handler: Four Of A Kind</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Populated by <a href="9518.html">CountDuplicates</a>.
+</div>
+<div class="paragraph">
+Used by the routine at <a href="9337.html">9337</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="94aa"></span>
+<div class="comments">
+<div class="paragraph">
+<a href="9540.html">Table_CardDuplicates</a> holds counts of duplicate values of cards, this routine specifically looks for four-of-a-kind matches.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_FourOfAKind</td>
+<td class="address-2"><span id="94aa"></span>94AA</td>
+<td class="instruction">LD HL,$9540</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html">Table_CardDuplicates</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="94ad"></span>94AD</td>
+<td class="instruction">LD B,$0D</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the number of possible values of cards there are in one suit.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_FourOfAKind_Loop</td>
+<td class="address-2"><span id="94af"></span>94AF</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is equal to 04.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="94b0"></span>94B0</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="94b2"></span>94B2</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="94b3"></span>94B3</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="94b4"></span>94B4</td>
+<td class="instruction">DJNZ <a href="94AA.html#94af">Handler_FourOfAKind_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="94AA.html#94af">Handler_FourOfAKind_Loop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="94b6"></span>94B6</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="94b7"></span>94B7</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="94A2.html">94A2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#94aa">Map</a></td>
+<td class="next">
+Next: <a href="94B8.html">94B8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/38058.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hollywood Poker: Data at 9540</title>
+<title>Hollywood Poker: Game status buffer entry at 9540</title>
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
@@ -15,11 +15,11 @@ gtag('js', new Date());
 gtag('config', 'G-75RERFCHBG');
 </script>
 </head>
-<body class="Asm-b">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -29,37 +29,98 @@ Prev: <a href="9518.html">9518</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#9540">Map</a></td>
 <td class="next">
-Next: <a href="954E.html">954E</a>
+Next: <a href="954D.html">954D</a>
 </td>
 </tr>
 </table>
-<div class="description">9540: Data block at 9540</div>
+<div class="description">9540: Table: Count Card Duplicates</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+Counts the number of cards held of each value.
+</div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Table_CardDuplicates</td>
 <td class="address-1"><span id="9540"></span>9540</td>
-<td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Two" cards this hand holds.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9541"></span>9541</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Three" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9542"></span>9542</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Four" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9543"></span>9543</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Five" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9544"></span>9544</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Six" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9545"></span>9545</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Seven" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9546"></span>9546</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Eight" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9547"></span>9547</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Nine" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9548"></span>9548</td>
-<td class="instruction">DEFB $00,$00,$00,$00</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Ten" cards this hand holds.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9549"></span>9549</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Jack" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="954a"></span>954A</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "Queen" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="954b"></span>954B</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">Count of how many "King" cards this hand holds.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="954c"></span>954C</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="954d"></span>954D</td>
-<td class="instruction">DEFB $00</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Count of how many "Ace" cards this hand holds.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -69,7 +130,7 @@ Prev: <a href="9518.html">9518</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#9540">Map</a></td>
 <td class="next">
-Next: <a href="954E.html">954E</a>
+Next: <a href="954D.html">954D</a>
 </td>
 </tr>
 </table>
