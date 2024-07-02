@@ -425,7 +425,7 @@ N $72FE #HTML(<blockquote>In all instances the #REGe register is returned with
   $731B,$01 Decrease #REGhl by one.
   $731C,$02 Write #N$20 to *#REGhl.
   $731E,$03 Backspace.
-  $7321,$03 Print "SPACE".
+  $7321,$03 Print an ASCII space " ".
   $7324,$03 Backspace.
   $7327,$01 Increment #REGb by one.
   $7328,$02 Stash #REGbc and #REGhl on the stack.
@@ -590,8 +590,10 @@ N $784B #UDGTABLE { #PUSHS #SIM(start=$784B,stop=$7906)#SCR$02(title-screen) #PO
   $784D,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1601.html">CHAN_OPEN</a>.)
 
   $7850,$05 #HTML(Set the border to #INK$04 using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/2294.html#229b">BORDER</a>.)
-  $7855,$04
-  $7859,$04
+  $7855,$04 #HTML(Set bit 3 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>
+. which sets keyboard mode "L".)
+  $7859,$04 #HTML(Set bit 3 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C6A.html">FLAGS2</a>
+. which sets CAPS LOCK "on".)
 N $785D Set the UDG graphics pointer.
   $785D,$06 #HTML(Write #R$F4C9(#N$F3C9) (#R$F4C9) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.)
 
@@ -1155,9 +1157,9 @@ N $8D95 Make the girl buy in.
   $8DAC,$03 Call #R$954E.
   $8DAF,$03 Call #R$9518.
   $8DB2,$03 #REGa=*#R$98E4.
-  $8DB5,$01 #REGb=#REGa.
+  $8DB5,$01 #REGb=*#R$98E4.
   $8DB6,$01 Increment #REGa by one.
-  $8DB7,$01 Stash #REGbc on the stack.
+  $8DB7,$01 Stash the current girl ID on the stack.
   $8DB8,$03 Call #R$96D1.
   $8DBB,$03 Call #R$954E.
   $8DBE,$03 Call #R$9518.
@@ -1205,6 +1207,7 @@ N $8E22 Messaging options:
 . { =h ID | =h Message }
 . { #N$01 | #MESSAGE$0C,$00(message-12-00) }
 . UDGTABLE#
+@ $8E22 label=PlayersTurn
   $8E22,$05 Call #R$7D97 using message block #R$891B(#N$0C).
   $8E27,$03 Call #R$8F7E.
   $8E2A,$03 Call #R$9171.
@@ -2061,6 +2064,8 @@ c $9337
   $9364,$05 Write #N$08 to *#R$949B.
   $9369,$04 Write #N$00 to *#R$949D.
   $936D,$01 Return.
+
+c $936E
   $936E,$03 Call #R$94B8.
   $9371,$02 Jump to #R$9386 if {} is not zero.
   $9373,$03 #REGhl=*#R$9516.
@@ -2069,6 +2074,8 @@ c $9337
   $937C,$05 Write #N$07 to *#R$949B.
   $9381,$04 Write #N$00 to *#R$949D.
   $9385,$01 Return.
+
+c $9386
   $9386,$03 Call #R$94C1.
   $9389,$02 Jump to #R$93B0 if {} is not zero.
   $938B,$03 #REGa=*#REGix+#N$00.
@@ -2089,6 +2096,7 @@ c $9337
   $93AC,$03 Write #REGa to *#R$949C.
   $93AF,$01 Return.
 
+c $93B0
   $93B0,$03 Call #R$94C7.
   $93B3,$02 Jump to #R$93C9 if {} is not zero.
   $93B5,$01 Decrease #REGhl by one.
@@ -2125,6 +2133,7 @@ c $9337
   $940C,$05 Write #N$03 to *#R$949B.
   $9411,$01 Return.
 
+c $9412
   $9412,$03 Call #R$9506.
   $9415,$02 Jump to #R$9447 if {} is not zero.
   $9417,$03 Call #R$9473.
@@ -2141,6 +2150,7 @@ c $9337
   $9438,$03 Write #REGa to *#R$949D.
   $943B,$01 Return.
 
+c $943C
   $943C,$02 Stash #REGhl and #REGde on the stack.
   $943E,$03 Call #R$9473.
   $9441,$02 Restore #REGde and #REGhl from the stack.
@@ -2169,7 +2179,10 @@ c $9337
   $9470,$02 Decrease counter by one and loop back to #R$9463 until counter is zero.
   $9472,$01 Return.
 
-c $9473
+c $9473 Calculate Card
+@ $9473 label=CalculateCard
+R $9473 HL Pointer to a card count in #R$9540
+R $9473 O:A The card ID that the card count refers to
   $9473,$03 #REGde=#R$9540.
   $9476,$01 Reset flags.
   $9477,$02 #REGhl-=#REGde (with carry).
@@ -2206,21 +2219,34 @@ c $94A2
   $94A2,$06 Return if *#R$954D is not equal to #N$01.
   $94A8,$02 Jump to #R$94C7.
 
+c $94AA Handler: Four Of A Kind
+@ $94AA label=Handler_FourOfAKind
+D $94AA Populated by #R$9518.
+.
+. Used by the routine at #R$9337.
+N $94AA #R$9540 holds counts of duplicate values of cards, this routine
+. specifically looks for four-of-a-kind matches.
   $94AA,$03 #REGhl=#R$9540.
-  $94AD,$02 #REGb=#N$0D.
-  $94AF,$04 Return if  *#REGhl is equal to #N$04.
+  $94AD,$02 Set a counter in #REGb of the number of possible values of cards
+. there are in one suit.
+@ $94AF label=Handler_FourOfAKind_Loop
+  $94AF,$04 Return if *#REGhl is equal to #N$04.
   $94B3,$01 Increment #REGhl by one.
   $94B4,$02 Decrease counter by one and loop back to #R$94AF until counter is zero.
   $94B6,$01 Increment #REGb by one.
   $94B7,$01 Return.
 
+c $94B8
   $94B8,$03 Call #R$94DA.
   $94BB,$03 Write #REGhl to *#R$9516.
   $94BE,$01 Return if #REGa is not zero.
   $94BF,$02 Jump to #R$9506.
+
+c $94C1
   $94C1,$05 Compare *#R$954D with #N$01.
   $94C6,$01 Return.
 
+c $94C7
   $94C7,$03 #REGhl=#R$9540(#N$953F).
   $94CA,$01 Increment #REGhl by one.
   $94CB,$05 Jump to #R$94CA if *#REGhl is not equal to #N$01.
@@ -2230,6 +2256,7 @@ c $94A2
   $94D7,$02 Decrease counter by one and loop back to #R$94D2 until counter is zero.
   $94D9,$01 Return.
 
+c $94DA
   $94DA,$03 #REGhl=#R$9540.
   $94DD,$02 #REGb=#N$0D.
   $94DF,$04 Return if *#REGhl is equal to #N$03.
@@ -2238,6 +2265,7 @@ c $94A2
   $94E6,$01 Increment #REGb by one.
   $94E7,$01 Return.
 
+c $94E8
   $94E8,$03 #REGhl=#R$9540.
   $94EB,$02 #REGb=#N$0D.
   $94ED,$05 Jump to #R$94F7 if *#REGhl is equal to #N$02.
@@ -2256,6 +2284,7 @@ c $94A2
   $9508,$03 #REGhl=#R$9540(#N$953F).
   $950B,$02 Jump to #R$94FD.
 
+c $950D
   $950D,$03 #REGhl=#R$954C.
   $9510,$01 #REGa=*#REGhl.
   $9511,$01 Decrease #REGhl by one.
@@ -2265,30 +2294,45 @@ c $94A2
 g $9516
 W $9516,$02
 
-c $9518
+c $9518 Count Duplicates
+@ $9518 label=CountDuplicates
+R $9518 IX Pointer to either the player or girls hand
+N $9518 First, clear down any old values and evaluate fresh.
   $9518,$03 #REGhl=#R$9540.
-  $951B,$02 #REGb=#N$0D.
+  $951B,$02 Set a counter in #REGb of the number of possible values of cards
+. there are in one suit.
+@ $951D label=ClearDuplicatesTable_Loop
   $951D,$02 Write #N$00 to *#REGhl.
   $951F,$01 Increment #REGhl by one.
-  $9520,$02 Decrease counter by one and loop back to #R$951D until counter is zero.
-  $9522,$02 Stash #REGix on the stack.
-  $9524,$03 #REGhl=#REGix (using the stack).
-  $9527,$02 #REGb=#N$05.
+  $9520,$02 Decrease counter by one and loop back to #R$951D until counter is
+. zero.
+  $9522,$02 Stash the hand pointer on the stack.
+  $9524,$03 Copy the hand pointer into #REGhl from #REGix (using the stack).
+N $9527 Using the duplicates table, count how many cards of each value are
+. present in the given hand.
+  $9527,$02 Set a counter in #REGb of the number of cards in a hand.
+@ $9529 label=CountDuplicates_Loop
   $9529,$04 #REGix=#R$9540.
-  $952D,$01 #REGa=*#REGhl.
-  $952E,$02,b$01 Keep only bits 0-3.
-  $9530,$01 #REGe=#REGa.
-  $9531,$02 #REGd=#N$00.
-  $9533,$02 #REGix+=#REGde.
-  $9535,$03 Increment *#REGix+#N$00 by one.
-  $9538,$01 Increment #REGhl by one.
-  $9539,$02 Decrease counter by one and loop back to #R$9529 until counter is zero.
-  $953B,$02 Restore #REGix from the stack.
+  $952D,$01 Fetch the current card from the hand.
+  $952E,$02,b$01 Convert it into a suit-less value (by keeping only bits 0-3).
+  $9530,$03 Create an offset using #REGde, this will help us to point to the
+. relevant card value in the duplicates table.
+  $9533,$02 Add the card offset in #REGde to #REGix.
+  $9535,$03 Increment the card duplicate count in the duplicates table by one.
+  $9538,$01 Move onto the next card in the hand.
+  $9539,$02 Decrease the card counter by one and loop back to #R$9529 until all
+. the cards in the hand have been evaluated.
+  $953B,$02 Restore the hand pointer from the stack.
   $953D,$03 Jump to #R$95EF.
 
-b $9540
-  $954C
-  $954D
+g $9540 Table: Count Card Duplicates
+@ $9540 label=Table_CardDuplicates
+D $9540 Counts the number of cards held of each value.
+B $9540,$01 Count of how many "#CARD(#PC-$9540)" cards this hand holds.
+L $9540,$01,$0D
+
+g $954D
+B $954D
 
 c $954E Draw Cards
 @ $954E label=DrawCards
