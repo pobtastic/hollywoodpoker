@@ -3,6 +3,11 @@
 [Page:Changelog]
 SectionType=BulletPoints
 
+[Changelog:20240703]
+-
+
+- Added a bunch of hand checking routines
+
 [Changelog:20240629]
 -
 

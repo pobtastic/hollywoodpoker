@@ -1,6 +1,6 @@
 ; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
 
-[Poke:Dunno]
+[Poke:cashDisappears:Girl Cash Disappears]
 <code>
   <div>POKE #R$96A5,#N$AF</div>
 </code>
@@ -10,7 +10,7 @@ Alters the following code:
 <table>
   <tbody>
     <tr>
-      <td class="address-1">#R$96A1</td>
+      <td class="address-1">#R$96A1(#N$96A1)</td>
       <td class="instruction">LD #REGb,#REGa</td>
     </tr>
     <tr>
@@ -54,7 +54,9 @@ To:
   </tbody>
 </table>
 
-[Poke:Lives]
+This sets the girls cash balance to zero at the start of every hand.
+
+[Poke:lives:Lives]
 <code>
   <div>POKE #R$8CF0(#N$8CF1),<em>nn</em></div>
 </code>
@@ -73,7 +75,7 @@ Sets the "lives" value when a new game is started:
   </tbody>
 </table>
 
-[Poke:£245 Cash]
+[Poke:playerCash:£245 Cash]
 <code>
   <div>POKE #R$8D03(#N$8D04),#N$FF</div>
   <div>POKE #R$8F45(#N$8F46),#N$FF</div>
@@ -84,7 +86,7 @@ Sets the "cash" value when a new game is started:
 <table>
   <tbody>
     <tr>
-      <td class="address-1">#R$8D03</td>
+      <td class="address-1">#R$8D03(#N$8D03)</td>
       <td class="instruction">LD #REGhl,#N$6464</td>
     </tr>
     <tr>
@@ -94,10 +96,11 @@ Sets the "cash" value when a new game is started:
   </tbody>
 </table>
 
+Sets the "cash" value when a (lost) round is over:
 <table>
   <tbody>
     <tr>
-      <td class="address-1">#R$8F45</td>
+      <td class="address-1">#R$8F45(#N$8F45)</td>
       <td class="instruction">LD #REGhl,#N$6464</td>
     </tr>
     <tr>
@@ -107,10 +110,11 @@ Sets the "cash" value when a new game is started:
   </tbody>
 </table>
 
+Sets the "cash" value when a (won) round is over:
 <table>
   <tbody>
     <tr>
-      <td class="address-1">#R$8F5A</td>
+      <td class="address-1">#R$8F5A(#N$8F5A)</td>
       <td class="instruction">LD #REGhl,$6464</td>
     <tr>
       <td class="address-1">#R$8F5D</td>
@@ -119,7 +123,7 @@ Sets the "cash" value when a new game is started:
   </tbody>
 </table>
 
-[Poke:Girl Has No Cash]
+[Poke:girlCash:Girl Has No Cash]
 <code>
   <div>POKE #R$8D03(#N$8D05),#N$0A</div>
   <div>POKE #R$8F45(#N$8F47),#N$0A</div>
@@ -140,6 +144,7 @@ Sets the "cash" value when a new game is started:
   </tbody>
 </table>
 
+Sets the "cash" value when a (lost) round is over:
 <table>
   <tbody>
     <tr>
@@ -153,10 +158,11 @@ Sets the "cash" value when a new game is started:
   </tbody>
 </table>
 
+Sets the "cash" value when a (won) round is over:
 <table>
   <tbody>
     <tr>
-      <td class="address-1">#R$8F5A</td>
+      <td class="address-1">#R$8F5A(#N$8F5A)</td>
       <td class="instruction">LD #REGhl,$6464</td>
     <tr>
       <td class="address-1">#R$8F5D</td>

@@ -3446,6 +3446,10 @@ g$8CEF DEFB $00
 ; Initialise New Game
 ;
 ; Used by the routine at #R$6F94.
+;
+; .
+;
+; See #POKE#lives(Lives).
 @label=InitialiseNewGame
 c$8CF0 LD HL,$0606   ; {Write #N$06 to *#R$8F7C and #N$06 to *#R$8F7D.
  $8CF3 LD ($8F7C),HL ; }
@@ -3454,6 +3458,7 @@ c$8CF0 LD HL,$0606   ; {Write #N$06 to *#R$8F7C and #N$06 to *#R$8F7D.
  $8CFC LD ($96B4),HL ;
  $8CFF LD ($96B7),HL ; }
  $8D02 LD A,H        ; #REGa=#N$00.
+; See #POKE#playerCash(£245 Cash) and #POKE#girlCash(Girl Has No Cash).
  $8D03 LD HL,$6464   ; {Write #N$6464 to *#R$96B5 / *#R$96B6.
  $8D06 LD ($96B5),HL ; }
  $8D09 INC A         ; {Write #N$01 to; #LIST { *#R$8D49 } { *#R$8E42 } LIST#
@@ -5636,6 +5641,8 @@ c$968C LD A,($96B7)  ; {Jump to #R$96B1 if *#R$96B7 is zero.
 ;
 ;   A Value to add to Pot
 ; O:B Value being added to Pot
+;
+; See #POKE#cashDisappears(Girl Cash Disappears).
 @label=GirlAddToPot
 c$96A1 LD B,A        ; Store the value to add in #REGb.
  $96A2 LD A,($96B6)  ; {Subtract the value to add from *#R$96B6.
@@ -5753,7 +5760,7 @@ c$96D1 LD A,($949B)  ; #REGa=*#R$949B.
  $970B JR NZ,$9708   ; Jump to #R$9708 until #REGa is zero.
  $970D CALL $9473    ; Call #R$9473.
  $9710 LD D,A        ; #REGd=#REGa.
- $9711 LD HL,$96CB   ; #REGhl=#R$96CC(#N$96CB).
+ $9711 LD HL,$96CB   ; #REGhl=#R$96CC(#N$96CB) (e.g. #R$96CC-#N$01).
 *$9714 INC HL        ; Increment #REGhl by one.
  $9715 LD A,(HL)     ; #REGa=*#REGhl.
  $9716 AND %00001111 ; Keep only bits 0-3.
@@ -5763,6 +5770,11 @@ c$96D1 LD A,($949B)  ; #REGa=*#R$949B.
  $971D RET           ; Return.
 
 ; Outcome Types
+;
+; Missing #FOREACH($08,$04,$03,$02)||n|"#OUTCOMEn"|, | and ||, as these
+; are handled by the duplicate count table check.
+; .
+; Used by the routine at #R$96D1.
 @label=OutcomeTypes
 g$971E DEFB $09      ; "#OUTCOME(#PEEK(#PC))".
  $971F DEFB $07      ; "#OUTCOME(#PEEK(#PC))".

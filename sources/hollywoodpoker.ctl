@@ -1061,9 +1061,11 @@ B $8CEF,$01
 
 c $8CF0 Initialise New Game
 @ $8CF0 label=InitialiseNewGame
+N $8CF0 See #POKE#lives(Lives).
   $8CF0,$06 Write #N$06 to *#R$8F7C and #N$06 to *#R$8F7D.
   $8CF6,$0C Write #N($0000,$04,$04) to; #LIST { *#R$98E3 / *#R$98E4 } { *#R$96B4 / *#R$96B5 } { *#R$96B7 / *#R$96B8 } LIST#
   $8D02,$01 #REGa=#N$00.
+N $8D03 See #POKE#playerCash(£245 Cash) and #POKE#girlCash(Girl Has No Cash).
   $8D03,$06 Write #N$6464 to *#R$96B5 / *#R$96B6.
   $8D09,$07 Write #N$01 to; #LIST { *#R$8D49 } { *#R$8E42 } LIST#
 @ $8D10 label=Game_Loop
@@ -2671,6 +2673,7 @@ c $96A1 Girl Add To Pot
 @ $96A1 label=GirlAddToPot
 R $96A1 A Value to add to Pot
 R $96A1 O:B Value being added to Pot
+N $96A1 See #POKE#cashDisappears(Girl Cash Disappears).
   $96A1,$01 Store the value to add in #REGb.
   $96A2,$07 Subtract the value to add from *#R$96B6.
   $96A9,$07 And add the value onto *#R$96B4.
@@ -2754,7 +2757,7 @@ N $96DE The girls hand has no cards which form a good poker hand.
   $970B,$02 Jump to #R$9708 until #REGa is zero.
   $970D,$03 Call #R$9473.
   $9710,$01 #REGd=#REGa.
-  $9711,$03 #REGhl=#R$96CC(#N$96CB).
+  $9711,$03 #REGhl=#R$96CC(#N$96CB) (e.g. #R$96CC-#N$01).
   $9714,$01 Increment #REGhl by one.
   $9715,$01 #REGa=*#REGhl.
   $9716,$02,b$01 Keep only bits 0-3.
@@ -2764,6 +2767,10 @@ N $96DE The girls hand has no cards which form a good poker hand.
 
 g $971E Outcome Types
 @ $971E label=OutcomeTypes
+D $971E Missing #FOREACH($08,$04,$03,$02)||n|"#OUTCOMEn"|, | and ||, as these
+. are handled by the duplicate count table check.
+.
+. Used by the routine at #R$96D1.
 B $971E,$01 "#OUTCOME(#PEEK(#PC))".
 L $971E,$01,$04
 
