@@ -29,7 +29,7 @@ Prev: <a href="8D49.html">8D49</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#8d4a">Map</a></td>
 <td class="next">
-Next: <a href="8E44.html">8E44</a>
+Next: <a href="8E42.html">8E42</a>
 </td>
 </tr>
 </table>
@@ -144,7 +144,7 @@ GREEN
 <td class="asm-label"></td>
 <td class="address-1"><span id="8d65"></span>8D65</td>
 <td class="instruction">INC A</td>
-<td class="comment-1" rowspan="2">Write 01 to *<a href="96B8.html">CurrentRound</a>.</td>
+<td class="comment-1" rowspan="2">Write 01 to *<a href="96B8.html">TurnCounter</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -155,7 +155,7 @@ GREEN
 <td class="asm-label"></td>
 <td class="address-1"><span id="8d69"></span>8D69</td>
 <td class="instruction">INC A</td>
-<td class="comment-1" rowspan="2">Write 02 to *<a href="8E44.html#8e59">8E59</a>.</td>
+<td class="comment-1" rowspan="2">Write 02 to *<a href="8E59.html">InteractionCounter</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -199,13 +199,13 @@ Print "DROP", "HOLD" and "RAISE".
 <td class="asm-label"></td>
 <td class="address-1"><span id="8d78"></span>8D78</td>
 <td class="instruction">LD BC,$0720</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0720.</td>
+<td class="comment-1" rowspan="1">Set screen co-ordinates to 0720.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8d7b"></span>8D7B</td>
 <td class="instruction">CALL $0DE2</td>
-<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">0DE2</a> (CL_SET).</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">0DE2</a> (CL_SET) to turn the co-ordinates into a screen buffer location.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -218,7 +218,7 @@ Print "DROP", "HOLD" and "RAISE".
 <span id="8d81"></span>
 <div class="comments">
 <div class="paragraph">
-Print "CURSOR" five times in a row to where it would display under each card in the players hand.
+Print "CURSOR" five times in a row to where it would display under each card in the players hand. The cursor movement just changes the colour-cycling attribute location, the text is always present.
 </div>
 </div>
 </td>
@@ -315,10 +315,20 @@ Make the girl buy in.
 <td class="comment-1" rowspan="1">Call <a href="96A1.html">GirlAddToPot</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="8d9a"></span>
+<div class="comments">
+<div class="paragraph">
+Make the player buy in.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8d9a"></span>8D9A</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="2">Write <span class="register">B</span> to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
+<td class="comment-1" rowspan="2">Write <span class="register">B</span> (also 0A) to *<a href="96B7.html">CurrentRaiseValue</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -330,6 +340,16 @@ Make the girl buy in.
 <td class="address-1"><span id="8d9e"></span>8D9E</td>
 <td class="instruction">CALL <a href="9245.html">PlayerAddToPot</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9245.html">PlayerAddToPot</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8da1"></span>
+<div class="comments">
+<div class="paragraph">
+Reset *<a href="96B7.html">CurrentRaiseValue</a> for the display.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -347,6 +367,16 @@ Make the girl buy in.
 <td class="address-1"><span id="8da5"></span>8DA5</td>
 <td class="instruction">CALL <a href="959B.html">ResetDeck</a></td>
 <td class="comment-1" rowspan="1">Call <a href="959B.html">ResetDeck</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8da8"></span>
+<div class="comments">
+<div class="paragraph">
+Initiate girls hand.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -370,31 +400,39 @@ Make the girl buy in.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8db2"></span>8DB2</td>
 <td class="instruction">LD A,($98E4)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="98E4.html">CurrentGirl</a>.</td>
+<td class="comment-1" rowspan="3">Set <span class="register">A</span> to *<a href="98E4.html">CurrentGirl</a>+01 and set a counter in <span class="register">B</span> to *<a href="98E4.html">CurrentGirl</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8db5"></span>8DB5</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=*<a href="98E4.html">CurrentGirl</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8db6"></span>8DB6</td>
 <td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
 </tr>
 <tr>
-<td class="asm-label">PlayGame_0</td>
+<td class="routine-comment" colspan="5">
+<span id="8db7"></span>
+<div class="comments">
+<div class="paragraph">
+The following loop is how the game makes each girl more difficult. Each girl is sequentially numbered, and here the game loops on that girls "number" in order to redraw that number of times. So difficulty is nothing to do with increasing the skill level, and the redraw is still down to chance - just the girl has more opportunity than the player to get a good hand.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Difficulty_Loop</td>
 <td class="address-2"><span id="8db7"></span>8DB7</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-1" rowspan="1">Stash the current girl ID on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the girl count on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8db8"></span>8DB8</td>
-<td class="instruction">CALL <a href="96D1.html">$96D1</a></td>
-<td class="comment-1" rowspan="1">Call <a href="96D1.html">96D1</a>.</td>
+<td class="instruction">CALL <a href="96D1.html">GirlMarkCards</a></td>
+<td class="comment-1" rowspan="1">Call <a href="96D1.html">GirlMarkCards</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -412,43 +450,60 @@ Make the girl buy in.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dc1"></span>8DC1</td>
 <td class="instruction">POP BC</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the girl count from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dc2"></span>8DC2</td>
-<td class="instruction">DJNZ <a href="8D4A.html#8db7">PlayGame_0</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="8D4A.html#8db7">PlayGame_0</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="8D4A.html#8db7">Difficulty_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the girl counter by one and loop back to <a href="8D4A.html#8db7">Difficulty_Loop</a> until the counter is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8dc4"></span>
+<div class="comments">
+<div class="paragraph">
+Stash the evaluation table at <a href="96C0.html">Table_GirlEvaluation</a>.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dc4"></span>8DC4</td>
 <td class="instruction">LD BC,$0007</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0007.</td>
+<td class="comment-1" rowspan="4">Copy <span class="register">BC</span>=0007 bytes of data from <a href="949B.html">TableHandEvaluation_Type</a> to <a href="96C0.html">Table_GirlEvaluation</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dc7"></span>8DC7</td>
 <td class="instruction">LD HL,$949B</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="949B.html">949B</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dca"></span>8DCA</td>
 <td class="instruction">LD DE,$96C0</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="96B9.html#96c0">96C0</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dcd"></span>8DCD</td>
 <td class="instruction">LDIR</td>
-<td class="comment-1" rowspan="1">LDIR.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dcf"></span>8DCF</td>
 <td class="instruction">CALL <a href="8F7E.html">PrintStats</a></td>
 <td class="comment-1" rowspan="1">Call <a href="8F7E.html">PrintStats</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="8dd2"></span>
+<div class="comments">
+<div class="paragraph">
+Initiate players hand.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -493,28 +548,35 @@ Make the girl buy in.
 <td class="comment-1" rowspan="1">Call <a href="9518.html">CountDuplicates</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="8de8"></span>
+<div class="comments">
+<div class="paragraph">
+Stash the evaluation table at <a href="96B9.html">Table_PlayerEvaluation</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8de8"></span>8DE8</td>
 <td class="instruction">LD BC,$0007</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0007.</td>
+<td class="comment-1" rowspan="4">Copy <span class="register">BC</span>=0007 bytes of data from <a href="949B.html">TableHandEvaluation_Type</a> to <a href="96B9.html">Table_PlayerEvaluation</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8deb"></span>8DEB</td>
 <td class="instruction">LD HL,$949B</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="949B.html">949B</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dee"></span>8DEE</td>
 <td class="instruction">LD DE,$96B9</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="96B9.html">96B9</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8df1"></span>8DF1</td>
 <td class="instruction">LDIR</td>
-<td class="comment-1" rowspan="1">LDIR.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -526,7 +588,7 @@ Make the girl buy in.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8df6"></span>8DF6</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="2">Write 01 to *<a href="8D4A.html#8e43">8E43</a>.</td>
+<td class="comment-1" rowspan="2">Write 01 to *<a href="8E43.html">8E43</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -537,25 +599,23 @@ Make the girl buy in.
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dfb"></span>8DFB</td>
 <td class="instruction">LD A,($8E42)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="8D4A.html#8e42">8E42</a>.</td>
+<td class="comment-1" rowspan="3">Flip bit 0 of *<a href="8E42.html">TurnFlag</a> and write it back to *<a href="8E42.html">TurnFlag</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8dfe"></span>8DFE</td>
 <td class="instruction">XOR %00000001</td>
-<td class="comment-1" rowspan="1">Flip bit 0.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e00"></span>8E00</td>
 <td class="instruction">LD ($8E42),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="8D4A.html#8e42">8E42</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e03"></span>8E03</td>
 <td class="instruction">JR Z,<a href="8D4A.html#8e22">PlayersTurn</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="8D4A.html#8e22">PlayersTurn</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="8D4A.html#8e22">PlayersTurn</a> if *<a href="8E42.html">TurnFlag</a> is 00 (players turn).</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -637,7 +697,7 @@ Messaging options: <table class="default">
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e1b"></span>8E1B</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2">Write 00 to *<a href="8D4A.html#8e43">8E43</a>.</td>
+<td class="comment-1" rowspan="2">Write 00 to *<a href="8E43.html">8E43</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -647,8 +707,8 @@ Messaging options: <table class="default">
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e1f"></span>8E1F</td>
-<td class="instruction">CALL <a href="8E44.html">$8E44</a></td>
-<td class="comment-1" rowspan="1">Call <a href="8E44.html">8E44</a>.</td>
+<td class="instruction">CALL <a href="8E44.html">CheckShowdown</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8E44.html">CheckShowdown</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -696,7 +756,7 @@ Messaging options: <table class="default">
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e2d"></span>8E2D</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="8F06.html">GirlWonRound</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="8F06.html">GirlWonRound</a> if the player has dropped.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -707,7 +767,7 @@ Messaging options: <table class="default">
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e31"></span>8E31</td>
 <td class="instruction">CP $03</td>
-<td class="comment-1" rowspan="2">Call <a href="8EE2.html">Handler_Showdown</a> if <span class="register">A</span> is equal to 03.</td>
+<td class="comment-1" rowspan="2">Call <a href="8EE2.html">Handler_Showdown</a> if the game is in "showdown" mode.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -718,7 +778,7 @@ Messaging options: <table class="default">
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e36"></span>8E36</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2">Write 00 to *<a href="8D4A.html#8e43">8E43</a>.</td>
+<td class="comment-1" rowspan="2">Write 00 to *<a href="8E43.html">8E43</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -728,8 +788,8 @@ Messaging options: <table class="default">
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8e3a"></span>8E3A</td>
-<td class="instruction">CALL <a href="8E44.html">$8E44</a></td>
-<td class="comment-1" rowspan="1">Call <a href="8E44.html">8E44</a>.</td>
+<td class="instruction">CALL <a href="8E44.html">CheckShowdown</a></td>
+<td class="comment-1" rowspan="1">Call <a href="8E44.html">CheckShowdown</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -743,18 +803,6 @@ Messaging options: <table class="default">
 <td class="instruction">JR <a href="8D4A.html#8e05">GirlsTurn</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="8D4A.html#8e05">GirlsTurn</a>.</td>
 </tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="8e42"></span>8E42</td>
-<td class="instruction">DEFB $01</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="8e43"></span>8E43</td>
-<td class="instruction">DEFB $00</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
 </table>
 <table class="asm-navigation">
 <tr>
@@ -763,7 +811,7 @@ Prev: <a href="8D49.html">8D49</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#8d4a">Map</a></td>
 <td class="next">
-Next: <a href="8E44.html">8E44</a>
+Next: <a href="8E42.html">8E42</a>
 </td>
 </tr>
 </table>

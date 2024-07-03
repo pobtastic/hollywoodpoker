@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="94E8.html">94E8</a>
+Prev: <a href="9506.html">9506</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#950d">Map</a></td>
 <td class="next">
@@ -33,52 +33,68 @@ Next: <a href="9516.html">9516</a>
 </td>
 </tr>
 </table>
-<div class="description">950D: Routine at 950D</div>
+<div class="description">950D: Handler: High Card</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="943C.html">943C</a>.
+Used by the routine at <a href="9447.html">9447</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="950d"></span>
+<div class="comments">
+<div class="paragraph">
+Starting with the ace, work backwards until we find the highest value card in the current hand.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_HighCard</td>
 <td class="address-2"><span id="950d"></span>950D</td>
 <td class="instruction">LD HL,$954C</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html#954c">954C</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html#954c">954C</a> (e.g. the end of <a href="9540.html">Table_CardDuplicates</a>).</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="9510"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="943C.html">943C</a>.
+This entry point is used by the routine at <a href="9447.html">9447</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Handler_HighCard_Loop</td>
 <td class="address-2"><span id="9510"></span>9510</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Fetch the duplicate count for the current card.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9511"></span>9511</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Decrease the duplicates table pointer by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9512"></span>9512</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="950D.html#9510">9510</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Keep jumping back to <a href="950D.html#9510">Handler_HighCard_Loop</a> until the duplicate count shows this card is present in the hand.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9513"></span>9513</td>
-<td class="instruction">JR Z,<a href="950D.html#9510">$9510</a></td>
+<td class="instruction">JR Z,<a href="950D.html#9510">Handler_HighCard_Loop</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9515"></span>9515</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -87,7 +103,7 @@ This entry point is used by the routine at <a href="943C.html">943C</a>.
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="94E8.html">94E8</a>
+Prev: <a href="9506.html">9506</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#950d">Map</a></td>
 <td class="next">

@@ -29,7 +29,7 @@ Prev: <a href="37906.html">37906</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#37948">Map</a></td>
 <td class="next">
-Next: <a href="38003.html">38003</a>
+Next: <a href="37959.html">37959</a>
 </td>
 </tr>
 </table>
@@ -39,7 +39,7 @@ Next: <a href="38003.html">38003</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="37906.html">37906</a>.
+Used by the routine at <a href="37906.html">CheckPair</a>.
 </div>
 </div>
 </td>
@@ -79,131 +79,8 @@ Used by the routine at <a href="37906.html">37906</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="37957"></span>37957</td>
-<td class="instruction">JR <a href="37906.html#37935">37935</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37906.html#37935">37935</a>.</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="37959"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="37906.html">37906</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address-2"><span id="37959"></span>37959</td>
-<td class="instruction">CALL <a href="38157.html">38157</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38157.html">38157</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37962"></span>37962</td>
-<td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37963"></span>37963</td>
-<td class="instruction">CALL <a href="38003.html">CalculateCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38003.html">CalculateCard</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37966"></span>37966</td>
-<td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37967"></span>37967</td>
-<td class="instruction">LD (38044),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">38044</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37970"></span>37970</td>
-<td class="instruction">CALL <a href="38011.html">38011</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38011.html">38011</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37973"></span>37973</td>
-<td class="instruction">LD (38045),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">38045</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37976"></span>37976</td>
-<td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37977"></span>37977</td>
-<td class="instruction">LD A,1</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=1.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37979"></span>37979</td>
-<td class="instruction">LD (38043),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html">38043</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37982"></span>37982</td>
-<td class="instruction">LD B,4</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=4.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37984"></span>37984</td>
-<td class="instruction">LD DE,38046</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38043.html#38046">38046</a>.</td>
-</tr>
-<tr>
-<td class="address-2"><span id="37987"></span>37987</td>
-<td class="instruction">CALL <a href="38157.html#38160">38160</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38157.html#38160">38160</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37990"></span>37990</td>
-<td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">DE</span> on the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37991"></span>37991</td>
-<td class="instruction">PUSH DE</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37992"></span>37992</td>
-<td class="instruction">CALL <a href="38003.html">CalculateCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38003.html">CalculateCard</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37995"></span>37995</td>
-<td class="instruction">POP DE</td>
-<td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">HL</span> from the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37996"></span>37996</td>
-<td class="instruction">POP HL</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37997"></span>37997</td>
-<td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37998"></span>37998</td>
-<td class="instruction">LD (DE),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">DE</span>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37999"></span>37999</td>
-<td class="instruction">INC DE</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="38000"></span>38000</td>
-<td class="instruction">DJNZ <a href="37948.html#37987">37987</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37948.html#37987">37987</a> until counter is zero.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="38002"></span>38002</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
+<td class="instruction">JR <a href="37906.html#37935">CheckPair_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37906.html#37935">CheckPair_1</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -213,7 +90,7 @@ Prev: <a href="37906.html">37906</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#37948">Map</a></td>
 <td class="next">
-Next: <a href="38003.html">38003</a>
+Next: <a href="37959.html">37959</a>
 </td>
 </tr>
 </table>

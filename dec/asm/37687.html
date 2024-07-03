@@ -29,137 +29,69 @@ Prev: <a href="37574.html">37574</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#37687">Map</a></td>
 <td class="next">
-Next: <a href="37742.html">37742</a>
+Next: <a href="37697.html">37697</a>
 </td>
 </tr>
 </table>
-<div class="description">37687: Routine at 9337</div>
+<div class="description">37687: Calculate Hand</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="38383.html">38383</a>.
+Used by the routine at <a href="38383.html">CountSuits</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="37687"></span>37687</td>
-<td class="instruction">LD HL,38043</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38043.html">38043</a>.</td>
+<td class="routine-comment" colspan="5">
+<span id="37687"></span>
+<div class="comments">
+<div class="paragraph">
+Clear down the evaluation table.
+</div>
+</div>
+</td>
 </tr>
 <tr>
+<td class="asm-label">CalculateHand</td>
+<td class="address-2"><span id="37687"></span>37687</td>
+<td class="instruction">LD HL,38043</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38043.html">TableHandEvaluation_Type</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37690"></span>37690</td>
 <td class="instruction">LD B,7</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=7.</td>
 </tr>
 <tr>
+<td class="asm-label">ResetEvaluationTable_Loop</td>
 <td class="address-2"><span id="37692"></span>37692</td>
 <td class="instruction">LD (HL),0</td>
 <td class="comment-1" rowspan="1">Write 0 to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37694"></span>37694</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37695"></span>37695</td>
-<td class="instruction">DJNZ <a href="37687.html#37692">37692</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37687.html#37692">37692</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="37687.html#37692">ResetEvaluationTable_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37687.html#37692">ResetEvaluationTable_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="37697"></span>37697</td>
-<td class="instruction">CALL <a href="38050.html">38050</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38050.html">38050</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37700"></span>37700</td>
-<td class="instruction">JR NZ,<a href="37687.html#37721">37721</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37687.html#37721">37721</a> if {} is not zero.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37702"></span>37702</td>
-<td class="instruction">DEC HL</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37703"></span>37703</td>
-<td class="instruction">CALL <a href="38003.html">CalculateCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38003.html">CalculateCard</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37706"></span>37706</td>
-<td class="instruction">LD (38044),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">38044</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37709"></span>37709</td>
-<td class="instruction">CALL <a href="38011.html">38011</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38011.html">38011</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37712"></span>37712</td>
-<td class="instruction">LD (38045),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">38045</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37715"></span>37715</td>
-<td class="instruction">LD A,9</td>
-<td class="comment-1" rowspan="2">Write 9 to *<a href="38043.html">38043</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37717"></span>37717</td>
-<td class="instruction">LD (38043),A</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37720"></span>37720</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
-</tr>
-<tr>
-<td class="address-2"><span id="37721"></span>37721</td>
-<td class="instruction">CALL <a href="38058.html">Handler_FourOfAKind</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38058.html">Handler_FourOfAKind</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37724"></span>37724</td>
-<td class="instruction">JR NZ,<a href="37742.html">37742</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37742.html">37742</a> if {} is not zero.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37726"></span>37726</td>
-<td class="instruction">CALL <a href="38003.html">CalculateCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38003.html">CalculateCard</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37729"></span>37729</td>
-<td class="instruction">LD (38044),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">38044</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37732"></span>37732</td>
-<td class="instruction">LD A,8</td>
-<td class="comment-1" rowspan="2">Write 8 to *<a href="38043.html">38043</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37734"></span>37734</td>
-<td class="instruction">LD (38043),A</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37737"></span>37737</td>
-<td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2">Write 0 to *<a href="38043.html#38045">38045</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37738"></span>37738</td>
-<td class="instruction">LD (38045),A</td>
-</tr>
-<tr>
-<td class="address-1"><span id="37741"></span>37741</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+Continue on to <a href="37697.html">CheckStraightFlush</a>.
+</div>
+</div>
+</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -169,7 +101,7 @@ Prev: <a href="37574.html">37574</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#37687">Map</a></td>
 <td class="next">
-Next: <a href="37742.html">37742</a>
+Next: <a href="37697.html">37697</a>
 </td>
 </tr>
 </table>

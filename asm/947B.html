@@ -33,118 +33,159 @@ Next: <a href="949B.html">949B</a>
 </td>
 </tr>
 </table>
-<div class="description">947B: Routine at 947B</div>
+<div class="description">947B: Find Highest Card</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="9337.html">9337</a>, <a href="93B0.html">93B0</a>, <a href="9412.html">9412</a> and <a href="943C.html">943C</a>.
+Used by the routines at <a href="9341.html">CheckStraightFlush</a>, <a href="93B0.html">CheckStraight</a>, <a href="93DE.html">CheckTwoPairs</a>, <a href="9412.html">CheckPair</a> and <a href="9447.html">9447</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Card value</td>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Pointer to either the player or girls hand</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
+<td class="asm-label">FindHighestCard</td>
 <td class="address-2"><span id="947b"></span>947B</td>
 <td class="instruction">LD D,A</td>
-<td class="comment-1" rowspan="1"><span class="register">D</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Copy the card value into <span class="register">D</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="947c"></span>947C</td>
 <td class="instruction">LD E,$00</td>
-<td class="comment-1" rowspan="1"><span class="register">E</span>=00.</td>
+<td class="comment-1" rowspan="1">Initialise <span class="register">E</span> to 00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="947e"></span>947E</td>
 <td class="instruction">PUSH IX</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
+<td class="comment-1" rowspan="2">Copy the hand pointer into <span class="register">HL</span> from <span class="register">IX</span> (using the stack).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9480"></span>9480</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9481"></span>9481</td>
 <td class="instruction">LD B,$05</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=05.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> to check all 05 cards in this hand.</td>
 </tr>
 <tr>
+<td class="asm-label">FindHighestCard_Loop</td>
 <td class="address-2"><span id="9483"></span>9483</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Fetch the card value and store it in <span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9484"></span>9484</td>
 <td class="instruction">AND %00001111</td>
-<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+<td class="comment-1" rowspan="1">Convert it into a suit-less value (by keeping only bits 0-3).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9486"></span>9486</td>
 <td class="instruction">CP D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="947B.html#9494">9494</a> if <span class="register">A</span> is equal to <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="947B.html#9494">HighestCard_FoundMatch</a> if <span class="register">A</span> is equal to <span class="register">D</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9487"></span>9487</td>
-<td class="instruction">JR Z,<a href="947B.html#9494">$9494</a></td>
+<td class="instruction">JR Z,<a href="947B.html#9494">HighestCard_FoundMatch</a></td>
 </tr>
 <tr>
+<td class="asm-label">FindHighestCard_Continue</td>
 <td class="address-2"><span id="9489"></span>9489</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Move the hand pointer to the next card.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="948a"></span>948A</td>
-<td class="instruction">DJNZ <a href="947B.html#9483">$9483</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="947B.html#9483">9483</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="947B.html#9483">FindHighestCard_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card counter by one and loop back to <a href="947B.html#9483">FindHighestCard_Loop</a> until all cards in the hand have been evaluated.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="948c"></span>948C</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">E</span>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="948d"></span>
+<div class="comments">
+<div class="paragraph">
+Work out the suit.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="948d"></span>948D</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
+<td class="comment-1" rowspan="3">Shift <span class="register">A</span> right four positions.</td>
 </tr>
 <tr>
+<td class="asm-label">HighestCardSuitShift_Loop</td>
 <td class="address-2"><span id="948f"></span>948F</td>
 <td class="instruction">SRA A</td>
-<td class="comment-1" rowspan="1">Shift <span class="register">A</span> right (with carry).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9491"></span>9491</td>
-<td class="instruction">DJNZ <a href="947B.html#948f">$948F</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="947B.html#948f">948F</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="947B.html#948f">HighestCardSuitShift_Loop</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9493"></span>9493</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="asm-label">HighestCard_FoundMatch</td>
 <td class="address-2"><span id="9494"></span>9494</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="947B.html#9489">9489</a> if *<span class="register">HL</span> is lower than <span class="register">E</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="947B.html#9489">FindHighestCard_Continue</a> if *<span class="register">HL</span> is lower than <span class="register">E</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9495"></span>9495</td>
 <td class="instruction">CP E</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9496"></span>9496</td>
-<td class="instruction">JR C,<a href="947B.html#9489">$9489</a></td>
+<td class="instruction">JR C,<a href="947B.html#9489">FindHighestCard_Continue</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9498"></span>9498</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9499"></span>9499</td>
-<td class="instruction">JR <a href="947B.html#9489">$9489</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="947B.html#9489">9489</a>.</td>
+<td class="instruction">JR <a href="947B.html#9489">FindHighestCard_Continue</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="947B.html#9489">FindHighestCard_Continue</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

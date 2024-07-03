@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 37854</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37833.html">37833</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37854">Map</a></td>
+<td class="next">
+Next: <a href="37906.html">37906</a>
+</td>
+</tr>
+</table>
+<div class="description">37854: Check For Two Pairs</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="37833.html">CheckThreeOfAKind</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37854"></span>
+<div class="comments">
+<div class="paragraph">
+Check if there is are two pairs.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">CheckTwoPairs</td>
+<td class="address-2"><span id="37854"></span>37854</td>
+<td class="instruction">CALL <a href="38120.html">Handler_TwoPairs</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38120.html">Handler_TwoPairs</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37857"></span>37857</td>
+<td class="instruction">JR NZ,<a href="37906.html">CheckPair</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37906.html">CheckPair</a> if there are no two pairs matches.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37859"></span>
+<div class="comments">
+<div class="paragraph">
+There are two pairs! Process it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37859"></span>37859</td>
+<td class="instruction">CALL <a href="38003.html">CalculateCard</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38003.html">CalculateCard</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37862"></span>37862</td>
+<td class="instruction">LD (38044),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37865"></span>37865</td>
+<td class="instruction">LD HL,(38166)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="38166.html">PointerDuplicateCount</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37868"></span>37868</td>
+<td class="instruction">CALL <a href="38003.html">CalculateCard</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38003.html">CalculateCard</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37871"></span>37871</td>
+<td class="instruction">LD (38046),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38046">TableHandEvaluation_?</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37874"></span>37874</td>
+<td class="instruction">LD HL,38208</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">Table_CardDuplicates</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">CheckTwoPairs_0</td>
+<td class="address-2"><span id="37877"></span>37877</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="37854.html#37885">CheckTwoPairs_1</a> if *<span class="register">HL</span> is equal to 1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37878"></span>37878</td>
+<td class="instruction">CP 1</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37880"></span>37880</td>
+<td class="instruction">JR Z,<a href="37854.html#37885">CheckTwoPairs_1</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37882"></span>37882</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37883"></span>37883</td>
+<td class="instruction">JR <a href="37854.html#37877">CheckTwoPairs_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37854.html#37877">CheckTwoPairs_0</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">CheckTwoPairs_1</td>
+<td class="address-2"><span id="37885"></span>37885</td>
+<td class="instruction">CALL <a href="38003.html">CalculateCard</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38003.html">CalculateCard</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37888"></span>37888</td>
+<td class="instruction">LD (38047),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38047">TableHandEvaluation_??</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37891"></span>37891</td>
+<td class="instruction">LD A,(38044)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37894"></span>37894</td>
+<td class="instruction">CALL <a href="38011.html">FindHighestCard</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38011.html">FindHighestCard</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37897"></span>37897</td>
+<td class="instruction">LD (38045),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">TableHandEvaluation_HighCard</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37900"></span>37900</td>
+<td class="instruction">LD A,3</td>
+<td class="comment-1" rowspan="2">Write "Two Pairs" to *<a href="38043.html">TableHandEvaluation_Type</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37902"></span>37902</td>
+<td class="instruction">LD (38043),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="37905"></span>37905</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37833.html">37833</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37854">Map</a></td>
+<td class="next">
+Next: <a href="37906.html">37906</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/93DE.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

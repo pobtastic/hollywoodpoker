@@ -33,7 +33,7 @@ Next: <a href="38686.html">38686</a>
 </td>
 </tr>
 </table>
-<div class="description">38609: Routine at 96D1</div>
+<div class="description">38609: Girl Mark Cards</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,209 +45,272 @@ Used by the routine at <a href="36170.html">PlayGame</a>.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38609"></span>
+<div class="comments">
+<div class="paragraph">
+The hand has been "evaluated" at this point, so don't do anything if there is already a chance of winning.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GirlMarkCards</td>
 <td class="address-2"><span id="38609"></span>38609</td>
 <td class="instruction">LD A,(38043)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="38043.html">38043</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="38043.html">TableHandEvaluation_Type</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38612"></span>38612</td>
 <td class="instruction">LD HL,38686</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38686.html">38686</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38686.html">OutcomeTypes</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38615"></span>38615</td>
 <td class="instruction">LD B,4</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=4.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the number of game "outcome" types we want to check against: 4.</td>
 </tr>
 <tr>
+<td class="asm-label">CheckOutcomes_Loop</td>
 <td class="address-2"><span id="38617"></span>38617</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-1" rowspan="2">Return if *<span class="register">HL</span> is equal to <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="2">Return if the current hand has a positive outcome type.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38618"></span>38618</td>
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38619"></span>38619</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the outcomes pointer by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38620"></span>38620</td>
-<td class="instruction">DJNZ <a href="38609.html#38617">38617</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38609.html#38617">38617</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="38609.html#38617">CheckOutcomes_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38609.html#38617">CheckOutcomes_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38622"></span>
+<div class="comments">
+<div class="paragraph">
+The girls hand has no cards which form a good poker hand.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38622"></span>38622</td>
 <td class="instruction">CALL <a href="38265.html">GetRandomNumber</a></td>
 <td class="comment-1" rowspan="1">Call <a href="38265.html">GetRandomNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38625"></span>38625</td>
 <td class="instruction">CP 10</td>
-<td class="comment-1" rowspan="2">Jump to <a href="38609.html#38636">38636</a> if <span class="register">A</span> is lower than 10.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="38609.html#38636">GirlMarkCards_0</a> if the random number is lower than 10.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38627"></span>38627</td>
-<td class="instruction">JR C,<a href="38609.html#38636">38636</a></td>
+<td class="instruction">JR C,<a href="38609.html#38636">GirlMarkCards_0</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38629"></span>38629</td>
 <td class="instruction">LD A,(38043)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="38609.html#38661">38661</a> if *<a href="38043.html">38043</a> is equal to 3.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="38609.html#38661">GirlMarkCards_3</a> if *<a href="38043.html">TableHandEvaluation_Type</a> is equal to 3.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38632"></span>38632</td>
 <td class="instruction">CP 3</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38634"></span>38634</td>
-<td class="instruction">JR Z,<a href="38609.html#38661">38661</a></td>
+<td class="instruction">JR Z,<a href="38609.html#38661">GirlMarkCards_3</a></td>
 </tr>
 <tr>
+<td class="asm-label">GirlMarkCards_0</td>
 <td class="address-2"><span id="38636"></span>38636</td>
 <td class="instruction">LD A,(38044)</td>
-<td class="comment-1" rowspan="2"><span class="register">D</span>=*<a href="38043.html#38044">38044</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">D</span>=*<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38639"></span>38639</td>
 <td class="instruction">LD D,A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38640"></span>38640</td>
 <td class="instruction">LD HL,38604</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38604.html">GirlsHand</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38643"></span>38643</td>
 <td class="instruction">LD B,5</td>
 <td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of 5 for the total number of cards in a hand.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38645"></span>38645</td>
 <td class="instruction">LD C,3</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=3.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlMarkCards_1</td>
 <td class="address-2"><span id="38647"></span>38647</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38648"></span>38648</td>
 <td class="instruction">AND %00001111</td>
 <td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38650"></span>38650</td>
 <td class="instruction">CP D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="38609.html#38657">38657</a> <span class="register">A</span> is equal to <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="38609.html#38657">GirlMarkCards_2</a> <span class="register">A</span> is equal to <span class="register">D</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38651"></span>38651</td>
-<td class="instruction">JR Z,<a href="38609.html#38657">38657</a></td>
+<td class="instruction">JR Z,<a href="38609.html#38657">GirlMarkCards_2</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38653"></span>38653</td>
 <td class="instruction">LD (HL),255</td>
 <td class="comment-1" rowspan="1">Write 255 to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38655"></span>38655</td>
 <td class="instruction">DEC C</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">C</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38656"></span>38656</td>
 <td class="instruction">RET Z</td>
 <td class="comment-1" rowspan="1">Return if <span class="register">C</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlMarkCards_2</td>
 <td class="address-2"><span id="38657"></span>38657</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38658"></span>38658</td>
-<td class="instruction">DJNZ <a href="38609.html#38647">38647</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38609.html#38647">38647</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="38609.html#38647">GirlMarkCards_1</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38609.html#38647">GirlMarkCards_1</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38660"></span>38660</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlMarkCards_3</td>
 <td class="address-2"><span id="38661"></span>38661</td>
 <td class="instruction">LD HL,38207</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">38207</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">38207</a> (e.g. <a href="38208.html">Table_CardDuplicates</a>-1).</td>
 </tr>
 <tr>
+<td class="asm-label">GirlMarkCards_4</td>
 <td class="address-2"><span id="38664"></span>38664</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38665"></span>38665</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38666"></span>38666</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38667"></span>38667</td>
-<td class="instruction">JR NZ,<a href="38609.html#38664">38664</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="38609.html#38664">38664</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="38609.html#38664">GirlMarkCards_4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38609.html#38664">GirlMarkCards_4</a> until <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38669"></span>38669</td>
 <td class="instruction">CALL <a href="38003.html">CalculateCard</a></td>
 <td class="comment-1" rowspan="1">Call <a href="38003.html">CalculateCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38672"></span>38672</td>
 <td class="instruction">LD D,A</td>
 <td class="comment-1" rowspan="1"><span class="register">D</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38673"></span>38673</td>
 <td class="instruction">LD HL,38603</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38604.html">38603</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">GirlMarkCards_5</td>
 <td class="address-2"><span id="38676"></span>38676</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38677"></span>38677</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38678"></span>38678</td>
 <td class="instruction">AND %00001111</td>
 <td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38680"></span>38680</td>
 <td class="instruction">CP D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="38609.html#38676">38676</a> if <span class="register">A</span> is not equal to <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="38609.html#38676">GirlMarkCards_5</a> if <span class="register">A</span> is not equal to <span class="register">D</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38681"></span>38681</td>
-<td class="instruction">JR NZ,<a href="38609.html#38676">38676</a></td>
+<td class="instruction">JR NZ,<a href="38609.html#38676">GirlMarkCards_5</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38683"></span>38683</td>
 <td class="instruction">LD (HL),255</td>
 <td class="comment-1" rowspan="1">Write 255 to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38685"></span>38685</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

@@ -29,7 +29,7 @@ Prev: <a href="9412.html">9412</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#943c">Map</a></td>
 <td class="next">
-Next: <a href="9473.html">9473</a>
+Next: <a href="9447.html">9447</a>
 </td>
 </tr>
 </table>
@@ -39,7 +39,7 @@ Next: <a href="9473.html">9473</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9412.html">9412</a>.
+Used by the routine at <a href="9412.html">CheckPair</a>.
 </div>
 </div>
 </td>
@@ -79,131 +79,8 @@ Used by the routine at <a href="9412.html">9412</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="9445"></span>9445</td>
-<td class="instruction">JR <a href="9412.html#942f">$942F</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9412.html#942f">942F</a>.</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="9447"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="9412.html">9412</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address-2"><span id="9447"></span>9447</td>
-<td class="instruction">CALL <a href="950D.html">$950D</a></td>
-<td class="comment-1" rowspan="1">Call <a href="950D.html">950D</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="944a"></span>944A</td>
-<td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="944b"></span>944B</td>
-<td class="instruction">CALL <a href="9473.html">CalculateCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="9473.html">CalculateCard</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="944e"></span>944E</td>
-<td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="944f"></span>944F</td>
-<td class="instruction">LD ($949C),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html#949c">949C</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9452"></span>9452</td>
-<td class="instruction">CALL <a href="947B.html">$947B</a></td>
-<td class="comment-1" rowspan="1">Call <a href="947B.html">947B</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9455"></span>9455</td>
-<td class="instruction">LD ($949D),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html#949d">949D</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9458"></span>9458</td>
-<td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9459"></span>9459</td>
-<td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=01.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="945b"></span>945B</td>
-<td class="instruction">LD ($949B),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html">949B</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="945e"></span>945E</td>
-<td class="instruction">LD B,$04</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9460"></span>9460</td>
-<td class="instruction">LD DE,$949E</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="949B.html#949e">949E</a>.</td>
-</tr>
-<tr>
-<td class="address-2"><span id="9463"></span>9463</td>
-<td class="instruction">CALL <a href="950D.html#9510">$9510</a></td>
-<td class="comment-1" rowspan="1">Call <a href="950D.html#9510">9510</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9466"></span>9466</td>
-<td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">DE</span> on the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9467"></span>9467</td>
-<td class="instruction">PUSH DE</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9468"></span>9468</td>
-<td class="instruction">CALL <a href="9473.html">CalculateCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="9473.html">CalculateCard</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="946b"></span>946B</td>
-<td class="instruction">POP DE</td>
-<td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">HL</span> from the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="946c"></span>946C</td>
-<td class="instruction">POP HL</td>
-</tr>
-<tr>
-<td class="address-1"><span id="946d"></span>946D</td>
-<td class="instruction">INC A</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">A</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="946e"></span>946E</td>
-<td class="instruction">LD (DE),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">DE</span>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="946f"></span>946F</td>
-<td class="instruction">INC DE</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9470"></span>9470</td>
-<td class="instruction">DJNZ <a href="943C.html#9463">$9463</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="943C.html#9463">9463</a> until counter is zero.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="9472"></span>9472</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
+<td class="instruction">JR <a href="9412.html#942f">CheckPair_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9412.html#942f">CheckPair_1</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -213,7 +90,7 @@ Prev: <a href="9412.html">9412</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#943c">Map</a></td>
 <td class="next">
-Next: <a href="9473.html">9473</a>
+Next: <a href="9447.html">9447</a>
 </td>
 </tr>
 </table>

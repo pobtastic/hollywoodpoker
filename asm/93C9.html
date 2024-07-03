@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 93C9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="93B0.html">93B0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#93c9">Map</a></td>
+<td class="next">
+Next: <a href="93DE.html">93DE</a>
+</td>
+</tr>
+</table>
+<div class="description">93C9: Check For Three-Of-A-Kind</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="93B0.html">CheckStraight</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="93c9"></span>
+<div class="comments">
+<div class="paragraph">
+Check if there is a three-of-a-kind.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">CheckThreeOfAKind</td>
+<td class="address-2"><span id="93c9"></span>93C9</td>
+<td class="instruction">CALL <a href="94DA.html">Handler_ThreeOfAKind</a></td>
+<td class="comment-1" rowspan="1">Call <a href="94DA.html">Handler_ThreeOfAKind</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="93cc"></span>93CC</td>
+<td class="instruction">JR NZ,<a href="93DE.html">CheckTwoPairs</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="93DE.html">CheckTwoPairs</a> if there are no three-of-a-kind matches.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="93ce"></span>
+<div class="comments">
+<div class="paragraph">
+There is a three-of-a-kind! Process it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="93ce"></span>93CE</td>
+<td class="instruction">CALL <a href="9473.html">CalculateCard</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9473.html">CalculateCard</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="93d1"></span>93D1</td>
+<td class="instruction">LD ($949C),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html#949c">TableHandEvaluation_Card</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="93d4"></span>93D4</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-1" rowspan="2">Write "Three-Of-A-Kind" to *<a href="949B.html">TableHandEvaluation_Type</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="93d6"></span>93D6</td>
+<td class="instruction">LD ($949B),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="93d9"></span>93D9</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 00 to *<a href="949B.html#949d">TableHandEvaluation_HighCard</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="93da"></span>93DA</td>
+<td class="instruction">LD ($949D),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="93dd"></span>93DD</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="93B0.html">93B0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#93c9">Map</a></td>
+<td class="next">
+Next: <a href="93DE.html">93DE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../dec/asm/37833.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

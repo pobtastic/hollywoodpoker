@@ -33,7 +33,7 @@ Next: <a href="38412.html">38412</a>
 </td>
 </tr>
 </table>
-<div class="description">38383: Routine at 95EF</div>
+<div class="description">38383: Count Suits</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,90 +42,164 @@ Next: <a href="38412.html">38412</a>
 Used by the routine at <a href="38168.html">CountDuplicates</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Pointer to either the player or girls hand</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">0 for "no flush", 1 for "flush"</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
+<td class="asm-label">CountSuits</td>
 <td class="address-2"><span id="38383"></span>38383</td>
 <td class="instruction">PUSH IX</td>
-<td class="comment-1" rowspan="2"><span class="register">DE</span>=<span class="register">IX</span> (using the stack).</td>
+<td class="comment-1" rowspan="2">Load the hand pointer into <span class="register">DE</span> (using the stack).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38385"></span>38385</td>
 <td class="instruction">POP DE</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38386"></span>
+<div class="comments">
+<div class="paragraph">
+Only having all four suits present is meaningful.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38386"></span>38386</td>
 <td class="instruction">LD B,4</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=4.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> for the number of cards left to check.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38388"></span>38388</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="1">Fetch the primary card for comparison.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38389"></span>38389</td>
 <td class="instruction">AND %11110000</td>
-<td class="comment-1" rowspan="1">Keep only bits 4-7.</td>
+<td class="comment-1" rowspan="2">Store the suit value in <span class="register">H</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38391"></span>38391</td>
 <td class="instruction">LD H,A</td>
-<td class="comment-1" rowspan="1"><span class="register">H</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38392"></span>
+<div class="comments">
+<div class="paragraph">
+Loop through the remaining 4 cards.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">CountSuits_Loop</td>
 <td class="address-2"><span id="38392"></span>38392</td>
 <td class="instruction">INC DE</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
+<td class="comment-1" rowspan="1">Move the pointer to the next card.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38393"></span>38393</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="1">Fetch the card.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38394"></span>38394</td>
 <td class="instruction">AND %11110000</td>
-<td class="comment-1" rowspan="1">Keep only bits 4-7.</td>
+<td class="comment-1" rowspan="1">Store the suit value in <span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38396"></span>38396</td>
 <td class="instruction">CP H</td>
-<td class="comment-1" rowspan="2">Jump to <a href="38383.html#38409">38409</a> if <span class="register">A</span> is not equal to <span class="register">H</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="38383.html#38409">NotAFlush</a> if the suits of the two cards differ.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38397"></span>38397</td>
-<td class="instruction">JR NZ,<a href="38383.html#38409">38409</a></td>
+<td class="instruction">JR NZ,<a href="38383.html#38409">NotAFlush</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38399"></span>38399</td>
-<td class="instruction">DJNZ <a href="38383.html#38392">38392</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38383.html#38392">38392</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="38383.html#38392">CountSuits_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the suit counter by one and loop back to <a href="38383.html#38392">CountSuits_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38401"></span>
+<div class="comments">
+<div class="paragraph">
+All four suits are present in the hand! We have a flush.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38401"></span>38401</td>
 <td class="instruction">LD A,1</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=1.</td>
 </tr>
 <tr>
+<td class="asm-label">WriteFlushFlag</td>
 <td class="address-2"><span id="38403"></span>38403</td>
 <td class="instruction">LD (38221),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38221.html">38221</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38221.html">FlushFlag</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38406"></span>38406</td>
-<td class="instruction">JP <a href="37687.html">37687</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37687.html">37687</a>.</td>
+<td class="instruction">JP <a href="37687.html">CalculateHand</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37687.html">CalculateHand</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38409"></span>
+<div class="comments">
+<div class="paragraph">
+This hand doesn't contain a flush.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">NotAFlush</td>
 <td class="address-2"><span id="38409"></span>38409</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38410"></span>38410</td>
-<td class="instruction">JR <a href="38383.html#38403">38403</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="38383.html#38403">38403</a>.</td>
+<td class="instruction">JR <a href="38383.html#38403">WriteFlushFlag</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38383.html#38403">WriteFlushFlag</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -184,6 +184,52 @@ Used by the routine at <a href="../asm/28479.html">TitleScreen_KeyboardSelected<
 </td>
 </tr>
 <tr>
+<td class="map-g"><span id="36418"></span><a href="../asm/36418.html">36418</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/36418.html">Turn Flag</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">0</td>
+<td class="centre" colspan="1" rowspan="1">Players turn</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">Girls turn</td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="36419"></span><a href="../asm/36419.html">36419</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/36419.html">Game status buffer entry at 8E43</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="36441"></span><a href="../asm/36441.html">36441</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/36441.html">Interaction Counter</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Counts each individual action taken (increments by 1 for each player action).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="map-g"><span id="36732"></span><a href="../asm/36732.html">36732</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
@@ -259,11 +305,26 @@ Used by the routine at <a href="../asm/28496.html">SetDefinedKeys</a>.
 </td>
 </tr>
 <tr>
+<td class="map-g"><span id="38043"></span><a href="../asm/38043.html">38043</a></td>
+<td class="map-length">7</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38043.html">Hand Evaluation Table</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
 <td class="map-g"><span id="38166"></span><a href="../asm/38166.html">38166</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38166.html">Game status buffer entry at 9516</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38166.html">Duplicate Count Pointer</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Points to one of the values in <a href="../asm/38208.html">Table_CardDuplicates</a>.
+</div>
+<div class="paragraph">
+Used by the routines at <a href="../asm/37742.html">CheckFullHouse</a>, <a href="../asm/37808.html">CheckStraight</a>, <a href="../asm/38072.html">Handler_FullHouse</a> and <a href="../asm/38120.html">Handler_TwoPairs</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -283,8 +344,24 @@ Counts the number of cards held of each value.
 <td class="map-g"><span id="38221"></span><a href="../asm/38221.html">38221</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38221.html">Game status buffer entry at 954D</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38221.html">Flush Flag</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">0</td>
+<td class="centre" colspan="1" rowspan="1">No flush</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">Flush</td>
+</tr>
+</table>
+</div>
 </div>
 </td>
 </tr>
@@ -337,16 +414,28 @@ Counts the number of cards held of each value.
 <td class="map-g"><span id="38584"></span><a href="../asm/38584.html">38584</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38584.html">Current Round</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38584.html">Turn Counter</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Incremented when a full turn (both players have taken an action) is complete.
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="map-g"><span id="38585"></span><a href="../asm/38585.html">38585</a></td>
-<td class="map-length">14</td>
+<td class="map-length">7</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38585.html">Game status buffer entry at 96B9</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38585.html">Copy Players Evaluation Table</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="38592"></span><a href="../asm/38592.html">38592</a></td>
+<td class="map-length">7</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38592.html">Copy Girls Evaluation Table</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -373,7 +462,7 @@ Counts the number of cards held of each value.
 <td class="map-g"><span id="38686"></span><a href="../asm/38686.html">38686</a></td>
 <td class="map-length">4</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38686.html">Game status buffer entry at 971E</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/38686.html">Outcome Types</a></div>
 <div class="map-entry-desc">
 </div>
 </td>

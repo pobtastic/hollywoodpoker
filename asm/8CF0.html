@@ -62,7 +62,7 @@ Used by the routine at <a href="6F94.html">StartGame</a>.
 <td class="comment-1" rowspan="4">Write 0000 to; <ul class="">
 <li>*<a href="98E3.html">CurrentStage</a> / *<a href="98E4.html">CurrentGirl</a></li>
 <li>*<a href="96B4.html">PotValue</a> / *<a href="96B5.html">PlayerCash</a></li>
-<li>*<a href="96B7.html">CurrentRaiseValue</a> / *<a href="96B8.html">CurrentRound</a></li>
+<li>*<a href="96B7.html">CurrentRaiseValue</a> / *<a href="96B8.html">TurnCounter</a></li>
 </ul></td>
 </tr>
 <tr>
@@ -102,8 +102,8 @@ Used by the routine at <a href="6F94.html">StartGame</a>.
 <td class="address-1"><span id="8d09"></span>8D09</td>
 <td class="instruction">INC A</td>
 <td class="comment-1" rowspan="3">Write 01 to; <ul class="">
-<li>*<a href="8D49.html">8D49</a></li>
-<li>*<a href="8D4A.html#8e42">8E42</a></li>
+<li>*<a href="8D49.html">TurnFlag?</a></li>
+<li>*<a href="8E42.html">TurnFlag</a></li>
 </ul></td>
 </tr>
 <tr>
@@ -231,7 +231,7 @@ Messaging options: <table class="default">
 <td class="asm-label"></td>
 <td class="address-1"><span id="8d31"></span>8D31</td>
 <td class="instruction">LD A,($8D49)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="8D49.html">8D49</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="8D49.html">TurnFlag?</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -244,8 +244,8 @@ Messaging options: <table class="default">
 <td class="address-1"><span id="8d36"></span>8D36</td>
 <td class="instruction">LD ($8D49),A</td>
 <td class="comment-1" rowspan="2">Write <span class="register">A</span> to; <ul class="">
-<li>*<a href="8D49.html">8D49</a></li>
-<li>*<a href="8D4A.html#8e42">8E42</a></li>
+<li>*<a href="8D49.html">TurnFlag?</a></li>
+<li>*<a href="8E42.html">TurnFlag</a></li>
 </ul></td>
 </tr>
 <tr>

@@ -33,15 +33,22 @@ Next: <a href="9518.html">9518</a>
 </td>
 </tr>
 </table>
-<div class="description">9516: Game status buffer entry at 9516</div>
+<div class="description">9516: Duplicate Count Pointer</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+Points to one of the values in <a href="9540.html">Table_CardDuplicates</a>.
+</div>
+<div class="paragraph">
+Used by the routines at <a href="936E.html">CheckFullHouse</a>, <a href="93B0.html">CheckStraight</a>, <a href="94B8.html">Handler_FullHouse</a> and <a href="94E8.html">Handler_TwoPairs</a>.
+</div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">PointerDuplicateCount</td>
 <td class="address-1"><span id="9516"></span>9516</td>
 <td class="instruction">DEFW $0000</td>
 <td class="comment-0" rowspan="1"></td>

@@ -33,34 +33,38 @@ Next: <a href="94AA.html">94AA</a>
 </td>
 </tr>
 </table>
-<div class="description">94A2: Routine at 94A2</div>
+<div class="description">94A2: Handler: Straight Flush</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9337.html">9337</a>.
+Used by the routine at <a href="9341.html">CheckStraightFlush</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Handler_StraightFlush</td>
 <td class="address-2"><span id="94a2"></span>94A2</td>
 <td class="instruction">LD A,($954D)</td>
-<td class="comment-1" rowspan="3">Return if *<a href="954D.html">954D</a> is not equal to 01.</td>
+<td class="comment-1" rowspan="3">Return if *<a href="954D.html">FlushFlag</a> is not equal to 01.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94a5"></span>94A5</td>
 <td class="instruction">CP $01</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94a7"></span>94A7</td>
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94a8"></span>94A8</td>
-<td class="instruction">JR <a href="94C7.html">$94C7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="94C7.html">94C7</a>.</td>
+<td class="instruction">JR <a href="94C7.html">Handler_Straight</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="94C7.html">Handler_Straight</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

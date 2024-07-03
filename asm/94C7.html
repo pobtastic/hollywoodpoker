@@ -33,69 +33,111 @@ Next: <a href="94DA.html">94DA</a>
 </td>
 </tr>
 </table>
-<div class="description">94C7: Routine at 94C7</div>
+<div class="description">94C7: Handler: Straight</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="93B0.html">93B0</a> and <a href="94A2.html">94A2</a>.
+Used by the routines at <a href="93B0.html">CheckStraight</a> and <a href="94A2.html">Handler_StraightFlush</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Handler_Straight</td>
 <td class="address-2"><span id="94c7"></span>94C7</td>
 <td class="instruction">LD HL,$953F</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html">953F</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html">953F</a> (e.g. <a href="9540.html">Table_CardDuplicates</a>-01).</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="94ca"></span>
+<div class="comments">
+<div class="paragraph">
+Keep looping through the duplicate values until we find a card which the player has only one of.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">FindFirstCard_Loop</td>
 <td class="address-2"><span id="94ca"></span>94CA</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94cb"></span>94CB</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="94C7.html#94ca">94CA</a> if *<span class="register">HL</span> is not equal to 01.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="94C7.html#94ca">FindFirstCard_Loop</a> if *<span class="register">HL</span> is not equal to 01.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94cc"></span>94CC</td>
 <td class="instruction">CP $01</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94ce"></span>94CE</td>
-<td class="instruction">JR NZ,<a href="94C7.html#94ca">$94CA</a></td>
+<td class="instruction">JR NZ,<a href="94C7.html#94ca">FindFirstCard_Loop</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="94d0"></span>
+<div class="comments">
+<div class="paragraph">
+We've found the first card, so check if there's a sequence from here.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94d0"></span>94D0</td>
 <td class="instruction">LD B,$05</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=05.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> we want to check all 05 cards.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="94d2"></span>
+<div class="comments">
+<div class="paragraph">
+If it's a genuine straight, then the count for all five cards will be 01.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Straight_Loop</td>
 <td class="address-2"><span id="94d2"></span>94D2</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is not equal to 01.</td>
+<td class="comment-1" rowspan="3">Return if the duplicate count is anything other than 01.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94d3"></span>94D3</td>
 <td class="instruction">CP $01</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94d5"></span>94D5</td>
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94d6"></span>94D6</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94d7"></span>94D7</td>
-<td class="instruction">DJNZ <a href="94C7.html#94d2">$94D2</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="94C7.html#94d2">94D2</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="94C7.html#94d2">Handler_Straight_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card counter by one and loop back to <a href="94C7.html#94d2">Handler_Straight_Loop</a> until all 05 cards have been checked.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94d9"></span>94D9</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

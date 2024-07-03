@@ -25,15 +25,15 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="8D4A.html">8D4A</a>
+Prev: <a href="8E43.html">8E43</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#8e44">Map</a></td>
 <td class="next">
-Next: <a href="8E5A.html">8E5A</a>
+Next: <a href="8E59.html">8E59</a>
 </td>
 </tr>
 </table>
-<div class="description">8E44: Routine at 8E44</div>
+<div class="description">8E44: Check Showdown</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,72 +45,88 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">CheckShowdown</td>
 <td class="address-2"><span id="8e44"></span>8E44</td>
 <td class="instruction">LD A,($8E59)</td>
-<td class="comment-1" rowspan="3">Increment *<a href="8E44.html#8e59">8E59</a> by one.</td>
+<td class="comment-1" rowspan="3">Increment *<a href="8E59.html">InteractionCounter</a> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e47"></span>8E47</td>
 <td class="instruction">INC A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e48"></span>8E48</td>
 <td class="instruction">LD ($8E59),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e4b"></span>8E4B</td>
 <td class="instruction">SRL A</td>
-<td class="comment-1" rowspan="1">Shift <span class="register">A</span> right.</td>
+<td class="comment-1" rowspan="1">Divide <a href="8E59.html">InteractionCounter</a> by two.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e4d"></span>8E4D</td>
 <td class="instruction">RET C</td>
-<td class="comment-1" rowspan="1">Return if {} is lower.</td>
+<td class="comment-1" rowspan="1">Return if *<a href="8E59.html">InteractionCounter</a> doesn't divide exactly by two (e.g. return if the number is odd).</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="8e4e"></span>
+<div class="comments">
+<div class="paragraph">
+Both the girl and the player had a "turn" so update the counter.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e4e"></span>8E4E</td>
 <td class="instruction">LD ($96B8),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="96B8.html">CurrentRound</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="96B8.html">TurnCounter</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e51"></span>8E51</td>
 <td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 04...</td>
+<td class="comment-1" rowspan="1">Have there been 04 turns yet?</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e53"></span>8E53</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e54"></span>8E54</td>
 <td class="instruction">CALL Z,<a href="8EE2.html">Handler_Showdown</a></td>
-<td class="comment-1" rowspan="1">Call <a href="8EE2.html">Handler_Showdown</a> if <span class="register">A</span> as equal to 04 on line <a href="8E44.html#8e51">8E51</a>.</td>
+<td class="comment-1" rowspan="1">Call <a href="8EE2.html">Handler_Showdown</a> if there have been 04 turns.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e57"></span>8E57</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="8e58"></span>8E58</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="8e59"></span>8E59</td>
-<td class="instruction">DEFB $00</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="8D4A.html">8D4A</a>
+Prev: <a href="8E43.html">8E43</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#8e44">Map</a></td>
 <td class="next">
-Next: <a href="8E5A.html">8E5A</a>
+Next: <a href="8E59.html">8E59</a>
 </td>
 </tr>
 </table>

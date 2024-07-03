@@ -33,116 +33,156 @@ Next: <a href="37808.html">37808</a>
 </td>
 </tr>
 </table>
-<div class="description">37766: Routine at 9386</div>
+<div class="description">37766: Check For Flush</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="37742.html">37742</a>.
+Used by the routine at <a href="37742.html">CheckFullHouse</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="37766"></span>
+<div class="comments">
+<div class="paragraph">
+Check if there is a flush.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">CheckFlush</td>
 <td class="address-2"><span id="37766"></span>37766</td>
-<td class="instruction">CALL <a href="38081.html">38081</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38081.html">38081</a>.</td>
+<td class="instruction">CALL <a href="38081.html">Handler_Flush</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38081.html">Handler_Flush</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37769"></span>37769</td>
-<td class="instruction">JR NZ,<a href="37808.html">37808</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37808.html">37808</a> if {} is not zero.</td>
+<td class="instruction">JR NZ,<a href="37808.html">CheckStraight</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37808.html">CheckStraight</a> if there are no flush matches.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="37771"></span>
+<div class="comments">
+<div class="paragraph">
+There is a flush! Process it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37771"></span>37771</td>
 <td class="instruction">LD A,(IX+0)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">IX</span>+0.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37774"></span>37774</td>
 <td class="instruction">LD B,4</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=4.</td>
 </tr>
 <tr>
+<td class="asm-label">CheckFlush_0</td>
 <td class="address-2"><span id="37776"></span>37776</td>
 <td class="instruction">SRA A</td>
 <td class="comment-1" rowspan="1">Shift <span class="register">A</span> right (with carry).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37778"></span>37778</td>
-<td class="instruction">DJNZ <a href="37766.html#37776">37776</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37766.html#37776">37776</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="37766.html#37776">CheckFlush_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37766.html#37776">CheckFlush_0</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37780"></span>37780</td>
 <td class="instruction">LD (38045),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">38045</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">TableHandEvaluation_HighCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37783"></span>37783</td>
 <td class="instruction">LD A,6</td>
-<td class="comment-1" rowspan="2">Write 6 to *<a href="38043.html">38043</a>.</td>
+<td class="comment-1" rowspan="2">Write "Flush" to *<a href="38043.html">TableHandEvaluation_Type</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37785"></span>37785</td>
 <td class="instruction">LD (38043),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37788"></span>37788</td>
 <td class="instruction">LD D,0</td>
 <td class="comment-1" rowspan="1"><span class="register">D</span>=0.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37790"></span>37790</td>
 <td class="instruction">PUSH IX</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">IX</span> on the stack.</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=<span class="register">IX</span> (using the stack).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37792"></span>37792</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37793"></span>37793</td>
 <td class="instruction">LD B,5</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
 </tr>
 <tr>
+<td class="asm-label">CheckFlush_1</td>
 <td class="address-2"><span id="37795"></span>37795</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37796"></span>37796</td>
 <td class="instruction">AND %00001111</td>
 <td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37798"></span>37798</td>
 <td class="instruction">CP D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="37766.html#37802">37802</a> if <span class="register">A</span> is higher than <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="37766.html#37802">CheckFlush_2</a> if <span class="register">A</span> is higher than <span class="register">D</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37799"></span>37799</td>
-<td class="instruction">JR NC,<a href="37766.html#37802">37802</a></td>
+<td class="instruction">JR NC,<a href="37766.html#37802">CheckFlush_2</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37801"></span>37801</td>
 <td class="instruction">LD D,A</td>
 <td class="comment-1" rowspan="1"><span class="register">D</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label">CheckFlush_2</td>
 <td class="address-2"><span id="37802"></span>37802</td>
-<td class="instruction">DJNZ <a href="37766.html#37795">37795</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37766.html#37795">37795</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="37766.html#37795">CheckFlush_1</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37766.html#37795">CheckFlush_1</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37804"></span>37804</td>
 <td class="instruction">LD (38044),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">38044</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37807"></span>37807</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

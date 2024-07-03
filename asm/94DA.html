@@ -33,56 +33,85 @@ Next: <a href="94E8.html">94E8</a>
 </td>
 </tr>
 </table>
-<div class="description">94DA: Routine at 94DA</div>
+<div class="description">94DA: Handler: Three Of A Kind</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="93B0.html">93B0</a> and <a href="94B8.html">94B8</a>.
+Used by the routines at <a href="93C9.html">CheckThreeOfAKind</a> and <a href="94B8.html">Handler_FullHouse</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="94da"></span>
+<div class="comments">
+<div class="paragraph">
+<a href="9540.html">Table_CardDuplicates</a> holds counts of duplicate values of cards, this routine specifically looks for three-of-a-kind matches.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_ThreeOfAKind</td>
 <td class="address-2"><span id="94da"></span>94DA</td>
 <td class="instruction">LD HL,$9540</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html">Table_CardDuplicates</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94dd"></span>94DD</td>
 <td class="instruction">LD B,$0D</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=0D.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the number of possible values of cards there are in one suit.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="94df"></span>
+<div class="comments">
+<div class="paragraph">
+There's no need to check any further if there's a match, as if there are 03 of any card value, there are only 05 cards in one hand - so there can't be a second match.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_ThreeOfAKind_Loop</td>
 <td class="address-2"><span id="94df"></span>94DF</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is equal to 03.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94e0"></span>94E0</td>
 <td class="instruction">CP $03</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94e2"></span>94E2</td>
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94e3"></span>94E3</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94e4"></span>94E4</td>
-<td class="instruction">DJNZ <a href="94DA.html#94df">$94DF</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="94DA.html#94df">94DF</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="94DA.html#94df">Handler_ThreeOfAKind_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="94DA.html#94df">Handler_ThreeOfAKind_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94e6"></span>94E6</td>
 <td class="instruction">INC B</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94e7"></span>94E7</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

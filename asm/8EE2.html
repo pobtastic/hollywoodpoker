@@ -39,7 +39,7 @@ Next: <a href="8F06.html">8F06</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="8D4A.html">PlayGame</a> and <a href="8E44.html">8E44</a>.
+Used by the routines at <a href="8D4A.html">PlayGame</a> and <a href="8E44.html">CheckShowdown</a>.
 </div>
 </div>
 </td>
@@ -48,7 +48,7 @@ Used by the routines at <a href="8D4A.html">PlayGame</a> and <a href="8E44.html"
 <td class="asm-label">Handler_Showdown</td>
 <td class="address-2"><span id="8ee2"></span>8EE2</td>
 <td class="instruction">LD A,($8E43)</td>
-<td class="comment-1" rowspan="3">Return if *<a href="8D4A.html#8e43">8E43</a> is not zero.</td>
+<td class="comment-1" rowspan="3">Return if *<a href="8E43.html">8E43</a> is not zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -105,6 +105,16 @@ Messaging options: <table class="default">
 <td class="instruction">CALL <a href="7D97.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="8eed"></span>
+<div class="comments">
+<div class="paragraph">
+Show the girls hand in place of the players hand.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8eed"></span>8EED</td>
 <td class="instruction">LD IX,$96CC</td>
@@ -117,16 +127,26 @@ Messaging options: <table class="default">
 <td class="comment-1" rowspan="1">Call <a href="E313.html">PrintHand</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="8ef4"></span>
+<div class="comments">
+<div class="paragraph">
+Compare the hand evaluation tables to see who won.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8ef4"></span>8EF4</td>
 <td class="instruction">LD HL,$96B9</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="96B9.html">96B9</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="96B9.html">Table_PlayerEvaluation</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="8ef7"></span>8EF7</td>
 <td class="instruction">LD DE,$96C0</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="96B9.html#96c0">96C0</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="96C0.html">Table_GirlEvaluation</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

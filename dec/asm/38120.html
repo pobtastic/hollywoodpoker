@@ -29,131 +29,164 @@ Prev: <a href="38106.html">38106</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#38120">Map</a></td>
 <td class="next">
-Next: <a href="38157.html">38157</a>
+Next: <a href="38150.html">38150</a>
 </td>
 </tr>
 </table>
-<div class="description">38120: Routine at 94E8</div>
+<div class="description">38120: Handler: Two Pairs</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="37808.html">37808</a>.
+Used by the routine at <a href="37854.html">CheckTwoPairs</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38120"></span>
+<div class="comments">
+<div class="paragraph">
+<a href="38208.html">Table_CardDuplicates</a> holds counts of duplicate values of cards, this routine specifically looks for two pair matches.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_TwoPairs</td>
 <td class="address-2"><span id="38120"></span>38120</td>
 <td class="instruction">LD HL,38208</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">Table_CardDuplicates</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38123"></span>38123</td>
 <td class="instruction">LD B,13</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=13.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the number of possible values of cards there are in one suit.</td>
 </tr>
 <tr>
+<td class="asm-label">CheckTwoPairs_Loop</td>
 <td class="address-2"><span id="38125"></span>38125</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="38120.html#38135">38135</a> if *<span class="register">HL</span> is equal to 2.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="38120.html#38135">FoundOnePair</a> if *<span class="register">HL</span> is equal to 2.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38126"></span>38126</td>
 <td class="instruction">CP 2</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38128"></span>38128</td>
-<td class="instruction">JR Z,<a href="38120.html#38135">38135</a></td>
+<td class="instruction">JR Z,<a href="38120.html#38135">FoundOnePair</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38130"></span>38130</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38131"></span>38131</td>
-<td class="instruction">DJNZ <a href="38120.html#38125">38125</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38120.html#38125">38125</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="38120.html#38125">CheckTwoPairs_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38120.html#38125">CheckTwoPairs_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label">TwoPairs_Return</td>
 <td class="address-2"><span id="38133"></span>38133</td>
 <td class="instruction">INC B</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="38134"></span>38134</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
-<td class="address-2"><span id="38135"></span>38135</td>
-<td class="instruction">DEC B</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">B</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="38136"></span>38136</td>
-<td class="instruction">LD (38166),HL</td>
-<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="38166.html">38166</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="38139"></span>38139</td>
-<td class="instruction">JR Z,<a href="38120.html#38133">38133</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="38120.html#38133">38133</a> if <span class="register">B</span> is zero.</td>
-</tr>
-<tr>
-<td class="address-2"><span id="38141"></span>38141</td>
-<td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="38142"></span>38142</td>
-<td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is equal to 2.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="38143"></span>38143</td>
-<td class="instruction">CP 2</td>
-</tr>
-<tr>
-<td class="address-1"><span id="38145"></span>38145</td>
-<td class="instruction">RET Z</td>
-</tr>
-<tr>
-<td class="address-1"><span id="38146"></span>38146</td>
-<td class="instruction">DJNZ <a href="38120.html#38141">38141</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38120.html#38141">38141</a> until counter is zero.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="38148"></span>38148</td>
-<td class="instruction">JR <a href="38120.html#38133">38133</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="38120.html#38133">38133</a>.</td>
-</tr>
-<tr>
 <td class="routine-comment" colspan="5">
-<span id="38150"></span>
+<span id="38135"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="37906.html">37906</a> and <a href="38072.html">38072</a>.
+One pair exists, let's look for a second pair.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="38150"></span>38150</td>
-<td class="instruction">LD B,13</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=13.</td>
+<td class="asm-label">FoundOnePair</td>
+<td class="address-2"><span id="38135"></span>38135</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">B</span> by one, as we don't need to count the value we're already on.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="38152"></span>38152</td>
-<td class="instruction">LD HL,38207</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html">38207</a>.</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38136"></span>38136</td>
+<td class="instruction">LD (38166),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="38166.html">PointerDuplicateCount</a>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="38155"></span>38155</td>
-<td class="instruction">JR <a href="38120.html#38141">38141</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="38120.html#38141">38141</a>.</td>
+<td class="routine-comment" colspan="5">
+<span id="38139"></span>
+<div class="comments">
+<div class="paragraph">
+Don't bother with the second loop if this match was the last card value.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38139"></span>38139</td>
+<td class="instruction">JR Z,<a href="38120.html#38133">TwoPairs_Return</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38120.html#38133">TwoPairs_Return</a> if there are no further duplicate counts to check.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38141"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="38150.html">Handler_Pair</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">CheckSecondPair_Loop</td>
+<td class="address-2"><span id="38141"></span>38141</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38142"></span>38142</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Return if *<span class="register">HL</span> is equal to 2.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38143"></span>38143</td>
+<td class="instruction">CP 2</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38145"></span>38145</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38146"></span>38146</td>
+<td class="instruction">DJNZ <a href="38120.html#38141">CheckSecondPair_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="38120.html#38141">CheckSecondPair_Loop</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38148"></span>38148</td>
+<td class="instruction">JR <a href="38120.html#38133">TwoPairs_Return</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="38120.html#38133">TwoPairs_Return</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -163,7 +196,7 @@ Prev: <a href="38106.html">38106</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#38120">Map</a></td>
 <td class="next">
-Next: <a href="38157.html">38157</a>
+Next: <a href="38150.html">38150</a>
 </td>
 </tr>
 </table>

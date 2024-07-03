@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hollywood Poker: Data at 949B</title>
+<title>Hollywood Poker: Game status buffer entry at 949B</title>
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
@@ -15,11 +15,11 @@ gtag('js', new Date());
 gtag('config', 'G-75RERFCHBG');
 </script>
 </head>
-<body class="Asm-b">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -33,7 +33,7 @@ Next: <a href="94A2.html">94A2</a>
 </td>
 </tr>
 </table>
-<div class="description">949B: Data block at 949B</div>
+<div class="description">949B: Hand Evaluation Table</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,28 +42,45 @@ Next: <a href="94A2.html">94A2</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">TableHandEvaluation_Type</td>
 <td class="address-1"><span id="949b"></span>949B</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">TableHandEvaluation_Card</td>
 <td class="address-1"><span id="949c"></span>949C</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">TableHandEvaluation_HighCard</td>
 <td class="address-1"><span id="949d"></span>949D</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">TableHandEvaluation_?</td>
 <td class="address-1"><span id="949e"></span>949E</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">TableHandEvaluation_??</td>
 <td class="address-1"><span id="949f"></span>949F</td>
-<td class="instruction">DEFB $00,$00,$00</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="94a0"></span>94A0</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="94a1"></span>94A1</td>
+<td class="instruction">DEFB $00</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 </table>

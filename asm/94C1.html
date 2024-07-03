@@ -33,27 +33,30 @@ Next: <a href="94C7.html">94C7</a>
 </td>
 </tr>
 </table>
-<div class="description">94C1: Routine at 94C1</div>
+<div class="description">94C1: Handler: Flush</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9386.html">9386</a>.
+Used by the routine at <a href="9386.html">CheckFlush</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Handler_Flush</td>
 <td class="address-2"><span id="94c1"></span>94C1</td>
 <td class="instruction">LD A,($954D)</td>
-<td class="comment-1" rowspan="2">Compare *<a href="954D.html">954D</a> with 01.</td>
+<td class="comment-1" rowspan="2">Compare *<a href="954D.html">FlushFlag</a> with 01.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94c4"></span>94C4</td>
 <td class="instruction">CP $01</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94c6"></span>94C6</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

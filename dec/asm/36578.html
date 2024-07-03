@@ -39,7 +39,7 @@ Next: <a href="36614.html">36614</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="36170.html">PlayGame</a> and <a href="36420.html">36420</a>.
+Used by the routines at <a href="36170.html">PlayGame</a> and <a href="36420.html">CheckShowdown</a>.
 </div>
 </div>
 </td>
@@ -48,7 +48,7 @@ Used by the routines at <a href="36170.html">PlayGame</a> and <a href="36420.htm
 <td class="asm-label">Handler_Showdown</td>
 <td class="address-2"><span id="36578"></span>36578</td>
 <td class="instruction">LD A,(36419)</td>
-<td class="comment-1" rowspan="3">Return if *<a href="36170.html#36419">36419</a> is not zero.</td>
+<td class="comment-1" rowspan="3">Return if *<a href="36419.html">36419</a> is not zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -105,6 +105,16 @@ Messaging options: <table class="default">
 <td class="instruction">CALL <a href="32151.html">Messaging_Girl</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="36589"></span>
+<div class="comments">
+<div class="paragraph">
+Show the girls hand in place of the players hand.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="36589"></span>36589</td>
 <td class="instruction">LD IX,38604</td>
@@ -117,16 +127,26 @@ Messaging options: <table class="default">
 <td class="comment-1" rowspan="1">Call <a href="58131.html">PrintHand</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="36596"></span>
+<div class="comments">
+<div class="paragraph">
+Compare the hand evaluation tables to see who won.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="36596"></span>36596</td>
 <td class="instruction">LD HL,38585</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38585.html">38585</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38585.html">Table_PlayerEvaluation</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="36599"></span>36599</td>
 <td class="instruction">LD DE,38592</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38585.html#38592">38592</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38592.html">Table_GirlEvaluation</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

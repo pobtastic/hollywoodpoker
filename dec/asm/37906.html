@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="37808.html">37808</a>
+Prev: <a href="37854.html">37854</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#37906">Map</a></td>
 <td class="next">
@@ -33,71 +33,103 @@ Next: <a href="37948.html">37948</a>
 </td>
 </tr>
 </table>
-<div class="description">37906: Routine at 9412</div>
+<div class="description">37906: Check For Pair</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="37808.html">37808</a>.
+Used by the routine at <a href="37854.html">CheckTwoPairs</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="37906"></span>
+<div class="comments">
+<div class="paragraph">
+Check if there is a pair.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">CheckPair</td>
 <td class="address-2"><span id="37906"></span>37906</td>
-<td class="instruction">CALL <a href="38120.html#38150">38150</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38120.html#38150">38150</a>.</td>
+<td class="instruction">CALL <a href="38150.html">Handler_Pair</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38150.html">Handler_Pair</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37909"></span>37909</td>
-<td class="instruction">JR NZ,<a href="37948.html#37959">37959</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="37948.html#37959">37959</a> if {} is not zero.</td>
+<td class="instruction">JR NZ,<a href="37959.html">37959</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="37959.html">37959</a> if there are no pair matches.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="37911"></span>
+<div class="comments">
+<div class="paragraph">
+There is a pair! Process it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37911"></span>37911</td>
 <td class="instruction">CALL <a href="38003.html">CalculateCard</a></td>
 <td class="comment-1" rowspan="1">Call <a href="38003.html">CalculateCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37914"></span>37914</td>
 <td class="instruction">LD (38044),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">38044</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37917"></span>37917</td>
 <td class="instruction">LD A,2</td>
-<td class="comment-1" rowspan="2">Write 2 to *<a href="38043.html">38043</a>.</td>
+<td class="comment-1" rowspan="2">Write "Pair" to *<a href="38043.html">TableHandEvaluation_Type</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37919"></span>37919</td>
 <td class="instruction">LD (38043),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37922"></span>37922</td>
 <td class="instruction">LD B,13</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=13.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the number of possible values of cards there are in one suit.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37924"></span>37924</td>
 <td class="instruction">LD DE,38046</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38043.html#38046">38046</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38043.html#38046">TableHandEvaluation_?</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37927"></span>37927</td>
 <td class="instruction">LD HL,38220</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="38208.html#38220">38220</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">CheckPair_0</td>
 <td class="address-2"><span id="37930"></span>37930</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="3">Jump to <a href="37948.html">37948</a> if *<span class="register">HL</span> is equal to 1.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37931"></span>37931</td>
 <td class="instruction">CP 1</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37933"></span>37933</td>
 <td class="instruction">JR Z,<a href="37948.html">37948</a></td>
 </tr>
@@ -112,31 +144,37 @@ This entry point is used by the routine at <a href="37948.html">37948</a>.
 </td>
 </tr>
 <tr>
+<td class="asm-label">CheckPair_1</td>
 <td class="address-2"><span id="37935"></span>37935</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37936"></span>37936</td>
-<td class="instruction">DJNZ <a href="37906.html#37930">37930</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37906.html#37930">37930</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="37906.html#37930">CheckPair_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="37906.html#37930">CheckPair_0</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37938"></span>37938</td>
 <td class="instruction">LD A,(38044)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="38043.html#38044">38044</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37941"></span>37941</td>
-<td class="instruction">CALL <a href="38011.html">38011</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38011.html">38011</a>.</td>
+<td class="instruction">CALL <a href="38011.html">FindHighestCard</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38011.html">FindHighestCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37944"></span>37944</td>
 <td class="instruction">LD (38045),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">38045</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">TableHandEvaluation_HighCard</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="37947"></span>37947</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -145,7 +183,7 @@ This entry point is used by the routine at <a href="37948.html">37948</a>.
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="37808.html">37808</a>
+Prev: <a href="37854.html">37854</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#37906">Map</a></td>
 <td class="next">

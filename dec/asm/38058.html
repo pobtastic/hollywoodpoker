@@ -42,7 +42,7 @@ Next: <a href="38072.html">38072</a>
 Populated by <a href="38168.html">CountDuplicates</a>.
 </div>
 <div class="paragraph">
-Used by the routine at <a href="37687.html">37687</a>.
+Used by the routine at <a href="37687.html">CalculateHand</a>.
 </div>
 </div>
 </td>
@@ -68,6 +68,16 @@ Used by the routine at <a href="37687.html">37687</a>.
 <td class="address-1"><span id="38061"></span>38061</td>
 <td class="instruction">LD B,13</td>
 <td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the number of possible values of cards there are in one suit.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38063"></span>
+<div class="comments">
+<div class="paragraph">
+There's no need to check any further if there's a match, as if there are 4 of any card value, there are only 5 cards in one hand - so there can't be a second match.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_FourOfAKind_Loop</td>

@@ -33,36 +33,50 @@ Next: <a href="94C1.html">94C1</a>
 </td>
 </tr>
 </table>
-<div class="description">94B8: Routine at 94B8</div>
+<div class="description">94B8: Handler: Full House</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="936E.html">936E</a>.
+Used by the routine at <a href="936E.html">CheckFullHouse</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Handler_FullHouse</td>
 <td class="address-2"><span id="94b8"></span>94B8</td>
-<td class="instruction">CALL <a href="94DA.html">$94DA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="94DA.html">94DA</a>.</td>
+<td class="instruction">CALL <a href="94DA.html">Handler_ThreeOfAKind</a></td>
+<td class="comment-1" rowspan="1">Call <a href="94DA.html">Handler_ThreeOfAKind</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94bb"></span>94BB</td>
 <td class="instruction">LD ($9516),HL</td>
-<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="9516.html">9516</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="9516.html">PointerDuplicateCount</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="94be"></span>
+<div class="comments">
+<div class="paragraph">
+If there's no three-of-a-kind then there's no full house, return here.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94be"></span>94BE</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1">Return if <span class="register">A</span> is not zero.</td>
+<td class="comment-1" rowspan="1">Return there was no three-of-a-kind match found.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="94bf"></span>94BF</td>
-<td class="instruction">JR <a href="94E8.html#9506">$9506</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="94E8.html#9506">9506</a>.</td>
+<td class="instruction">JR <a href="9506.html">Handler_Pair</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9506.html">Handler_Pair</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
