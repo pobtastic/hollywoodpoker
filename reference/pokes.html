@@ -23,14 +23,14 @@ gtag('config', 'G-75RERFCHBG');
 </tr>
 </table>
 <ul class="contents">
-<li><a href="#dunno">Dunno</a></li>
+<li><a href="#cashDisappears">Girl Cash Disappears</a></li>
 <li><a href="#lives">Lives</a></li>
-<li><a href="#£245_cash">£245 Cash</a></li>
-<li><a href="#girl_has_no_cash">Girl Has No Cash</a></li>
+<li><a href="#playerCash">£245 Cash</a></li>
+<li><a href="#girlCash">Girl Has No Cash</a></li>
 </ul>
-<div><span id="dunno"></span></div>
+<div><span id="cashDisappears"></span></div>
 <div class="box box-1">
-<div class="box-title">Dunno</div>
+<div class="box-title">Girl Cash Disappears</div>
 <div class="paragraph">
 <code>
 <div>POKE <a href="../asm/96A1.html#96a5">96A5</a>,AF</div>
@@ -43,7 +43,7 @@ Alters the following code:
 <table>
 <tbody>
 <tr>
-<td class="address-1"><a href="../asm/96A1.html">GirlAddToPot</a></td>
+<td class="address-1"><a href="../asm/96A1.html">96A1</a></td>
 <td class="instruction">LD <span class="register">B</span>,<span class="register">A</span></td>
 </tr>
 <tr>
@@ -88,6 +88,9 @@ To:
 </tbody>
 </table>
 </div>
+<div class="paragraph">
+This sets the girls cash balance to zero at the start of every hand.
+</div>
 </div>
 <div><span id="lives"></span></div>
 <div class="box box-2">
@@ -113,7 +116,7 @@ Sets the "lives" value when a new game is started:
 </table>
 </div>
 </div>
-<div><span id="£245_cash"></span></div>
+<div><span id="playerCash"></span></div>
 <div class="box box-1">
 <div class="box-title">£245 Cash</div>
 <div class="paragraph">
@@ -139,6 +142,7 @@ Sets the "cash" value when a new game is started:
 </table>
 </div>
 <div class="paragraph">
+Sets the "cash" value when a (lost) round is over:
 <table>
 <tbody>
 <tr>
@@ -153,10 +157,11 @@ Sets the "cash" value when a new game is started:
 </table>
 </div>
 <div class="paragraph">
+Sets the "cash" value when a (won) round is over:
 <table>
 <tbody>
 <tr>
-<td class="address-1"><a href="../asm/8F5A.html">GirlLostRound</a></td>
+<td class="address-1"><a href="../asm/8F5A.html">8F5A</a></td>
 <td class="instruction">LD <span class="register">HL</span>,$6464</td>
 <tr>
 <td class="address-1"><a href="../asm/8F5A.html#8f5d">8F5D</a></td>
@@ -166,7 +171,7 @@ Sets the "cash" value when a new game is started:
 </table>
 </div>
 </div>
-<div><span id="girl_has_no_cash"></span></div>
+<div><span id="girlCash"></span></div>
 <div class="box box-2">
 <div class="box-title">Girl Has No Cash</div>
 <div class="paragraph">
@@ -192,6 +197,7 @@ Sets the "cash" value when a new game is started:
 </table>
 </div>
 <div class="paragraph">
+Sets the "cash" value when a (lost) round is over:
 <table>
 <tbody>
 <tr>
@@ -206,10 +212,11 @@ Sets the "cash" value when a new game is started:
 </table>
 </div>
 <div class="paragraph">
+Sets the "cash" value when a (won) round is over:
 <table>
 <tbody>
 <tr>
-<td class="address-1"><a href="../asm/8F5A.html">GirlLostRound</a></td>
+<td class="address-1"><a href="../asm/8F5A.html">8F5A</a></td>
 <td class="instruction">LD <span class="register">HL</span>,$6464</td>
 <tr>
 <td class="address-1"><a href="../asm/8F5A.html#8f5d">8F5D</a></td>
