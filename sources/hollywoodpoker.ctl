@@ -1107,6 +1107,7 @@ N $8D42 Messaging options:
   $8D47,$02 Return with #REGa=#N$00.
 
 g $8D49
+@ $8D49 label=TurnFlag?
 B $8D49,$01
 
 c $8D4A Play Game
@@ -1129,11 +1130,13 @@ N $8D6D Print "DROP", "HOLD" and "RAISE".
   $8D6D,$03 #REGhl=#R$9314.
   $8D70,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.)
   $8D73,$05 #HTML(Write #N$02 to *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C6B.html">DF_SZ</a>.)
-  $8D78,$03 #REGbc=#N($0720,$04,$04).
-  $8D7B,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">#N$0DE2</a> (CL_SET).)
+  $8D78,$03 Set screen co-ordinates to #N($0720,$04,$04).
+  $8D7B,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">#N$0DE2</a>
+. (CL_SET) to turn the co-ordinates into a screen buffer location.)
   $8D7E,$03 Call #R$8E5A.
 N $8D81 Print "CURSOR" five times in a row to where it would display under each
-. card in the players hand.
+. card in the players hand. The cursor movement just changes the colour-cycling
+. attribute location, the text is always present.
   $8D81,$02 #REGb=#N$05.
 @ $8D83 label=PrintCursorLoop
   $8D83,$03 #REGhl=#R$930D.
@@ -1149,27 +1152,34 @@ N $8D8B Blank out #N$07 lines of the display.
 N $8D95 Make the girl buy in.
   $8D95,$02 #REGa=#N$0A.
   $8D97,$03 Call #R$96A1.
-  $8D9A,$04 Write #REGb to *#R$96B7.
+N $8D9A Make the player buy in.
+  $8D9A,$04 Write #REGb (also #N$0A) to *#R$96B7.
   $8D9E,$03 Call #R$9245.
+N $8DA1 Reset *#R$96B7 for the display.
   $8DA1,$04 Write #N$00 to *#R$96B7.
   $8DA5,$03 Call #R$959B.
+N $8DA8 Initiate girls hand.
   $8DA8,$04 #REGix=#R$96CC.
   $8DAC,$03 Call #R$954E.
   $8DAF,$03 Call #R$9518.
-  $8DB2,$03 #REGa=*#R$98E4.
-  $8DB5,$01 #REGb=*#R$98E4.
-  $8DB6,$01 Increment #REGa by one.
-  $8DB7,$01 Stash the current girl ID on the stack.
+  $8DB2,$05 Set #REGa to *#R$98E4+#N$01 and set a counter in #REGb to *#R$98E4.
+N $8DB7 The following loop is how the game makes each girl more difficult. Each
+. girl is sequentially numbered, and here the game loops on that girls "number"
+. in order to redraw that number of times. So difficulty is nothing to do with
+. increasing the skill level, and the redraw is still down to chance - just
+. the girl has more opportunity than the player to get a good hand.
+@ $8DB7 label=Difficulty_Loop
+  $8DB7,$01 Stash the girl count on the stack.
   $8DB8,$03 Call #R$96D1.
   $8DBB,$03 Call #R$954E.
   $8DBE,$03 Call #R$9518.
-  $8DC1,$01 Restore #REGbc from the stack.
-  $8DC2,$02 Decrease counter by one and loop back to #R$8DB7 until counter is zero.
-  $8DC4,$03 #REGbc=#N($0007,$04,$04).
-  $8DC7,$03 #REGhl=#R$949B.
-  $8DCA,$03 #REGde=#R$96C0.
-  $8DCD,$02 LDIR.
+  $8DC1,$01 Restore the girl count from the stack.
+  $8DC2,$02 Decrease the girl counter by one and loop back to #R$8DB7 until the
+. counter is zero.
+N $8DC4 Stash the evaluation table at #R$96C0.
+  $8DC4,$0B Copy #REGbc=#N($0007,$04,$04) bytes of data from #R$949B to #R$96C0.
   $8DCF,$03 Call #R$8F7E.
+N $8DD2 Initiate players hand.
   $8DD2,$04 #REGix=#R$96C7.
   $8DD6,$03 Call #R$954E.
   $8DD9,$03 Call #R$E313.
@@ -1177,16 +1187,15 @@ N $8D95 Make the girl buy in.
   $8DDF,$03 Call #R$954E.
   $8DE2,$03 Call #R$E313.
   $8DE5,$03 Call #R$9518.
-  $8DE8,$03 #REGbc=#N($0007,$04,$04).
-  $8DEB,$03 #REGhl=#R$949B.
-  $8DEE,$03 #REGde=#R$96B9.
-  $8DF1,$02 LDIR.
+N $8DE8 Stash the evaluation table at #R$96B9.
+  $8DE8,$0B Copy #REGbc=#N($0007,$04,$04) bytes of data from #R$949B to #R$96B9.
   $8DF3,$03 Call #R$8F7E.
   $8DF6,$05 Write #N$01 to *#R$8E43.
   $8DFB,$03 #REGa=*#R$8E42.
   $8DFE,$02,b$01 Flip bit 0.
   $8E00,$03 Write #REGa to *#R$8E42.
-  $8E03,$02 Jump to #R$8E22 if #REGa is zero.
+M $8DFB,$08 Flip bit 0 of *#R$8E42 and write it back to *#R$8E42.
+  $8E03,$02 Jump to #R$8E22 if *#R$8E42 is #N$00 (players turn).
 N $8E05 Messaging options:
 . #UDGTABLE(default,centre,centre)
 . { =h ID | =h Message }
@@ -1211,26 +1220,43 @@ N $8E22 Messaging options:
   $8E22,$05 Call #R$7D97 using message block #R$891B(#N$0C).
   $8E27,$03 Call #R$8F7E.
   $8E2A,$03 Call #R$9171.
-  $8E2D,$04 Jump to #R$8F06 if #REGa is zero.
-  $8E31,$05 Call #R$8EE2 if #REGa is equal to #N$03.
+  $8E2D,$04 Jump to #R$8F06 if the player has dropped.
+  $8E31,$05 Call #R$8EE2 if the game is in "showdown" mode.
   $8E36,$04 Write #N$00 to *#R$8E43.
   $8E3A,$03 Call #R$8E44.
   $8E3D,$03 Call #R$8F7E.
   $8E40,$02 Jump to #R$8E05.
-B $8E42
-B $8E43
 
-c $8E44
+g $8E42 Turn Flag
+@ $8E42 label=TurnFlag
+D $8E42 #TABLE(default,centre,centre)
+. { =h Byte | =h Meaning }
+. { #N$00 | Players turn }
+. { #N$01 | Girls turn }
+. TABLE#
+B $8E42,$01
+
+g $8E43
+B $8E43,$01
+
+c $8E44 Check Showdown
+@ $8E44 label=CheckShowdown
   $8E44,$07 Increment *#R$8E59 by one.
-  $8E4B,$02 Shift #REGa right.
-  $8E4D,$01 Return if {} is lower.
+  $8E4B,$02 Divide #R$8E59 by two.
+  $8E4D,$01 Return if *#R$8E59 doesn't divide exactly by two (e.g. return if the number is odd).
+N $8E4E Both the girl and the player had a "turn" so update the counter.
   $8E4E,$03 Write #REGa to *#R$96B8.
-  $8E51,$02 Compare #REGa with #N$04...
+  $8E51,$02 Have there been #N$04 turns yet?
   $8E53,$01 Restore #REGhl from the stack.
-  $8E54,$03 Call #R$8EE2 if #REGa as equal to #N$04 on line #R$8E51.
+  $8E54,$03 Call #R$8EE2 if there have been #N$04 turns.
   $8E57,$01 Stash #REGhl on the stack.
   $8E58,$01 Return.
-B $8E59
+
+g $8E59 Interaction Counter
+@ $8E59 label=InteractionCounter
+D $8E59 Counts each individual action taken (increments by #N$01 for each
+. player action).
+B $8E59,$01
 
 c $8E5A Draw User Interface
 @ $8E5A label=DrawUserInterface
@@ -1322,8 +1348,10 @@ N $8EE8 Messaging options:
 . { #N$03 | #MESSAGE$09,$02(message-09-02) }
 . UDGTABLE#
   $8EE8,$05 Call #R$7D97 using message block #R$8693(#N$09).
+N $8EED Show the girls hand in place of the players hand.
   $8EED,$04 #REGix=#R$96CC.
   $8EF1,$03 Call #R$E313.
+N $8EF4 Compare the hand evaluation tables to see who won.
   $8EF4,$03 #REGhl=#R$96B9.
   $8EF7,$03 #REGde=#R$96C0.
   $8EFA,$02 #REGb=#N$07.
@@ -2042,51 +2070,70 @@ B $932D,$03 PRINT AT: #N(#PEEK(#PC+$01)), #N(#PEEK(#PC+$02)).
   $9330,$06 "#STR(#PC,$04,$06)".
 B $9336,$01
 
-c $9337
+c $9337 Calculate Hand
+@ $9337 label=CalculateHand
+E $9337 Continue on to #R$9341.
+N $9337 Clear down the evaluation table.
   $9337,$03 #REGhl=#R$949B.
   $933A,$02 #REGb=#N$07.
+@ $933C label=ResetEvaluationTable_Loop
   $933C,$02 Write #N$00 to *#REGhl.
   $933E,$01 Increment #REGhl by one.
   $933F,$02 Decrease counter by one and loop back to #R$933C until counter is zero.
+
+c $9341 Check For Straight Flush
+@ $9341 label=CheckStraightFlush
+N $9341 Check if there is a straight flush.
   $9341,$03 Call #R$94A2.
-  $9344,$02 Jump to #R$9359 if {} is not zero.
+  $9344,$02 Jump to #R$9359 if there are no straight flushes.
+N $9346 There is a straight flush! Process it.
   $9346,$01 Decrease #REGhl by one.
   $9347,$03 Call #R$9473.
   $934A,$03 Write #REGa to *#R$949C.
   $934D,$03 Call #R$947B.
   $9350,$03 Write #REGa to *#R$949D.
-  $9353,$05 Write #N$09 to *#R$949B.
+  $9353,$05 Write "#OUTCOME$09" to *#R$949B.
   $9358,$01 Return.
+
+c $9359 Check For Four-Of-A-Kind
+@ $9359 label=CheckFourOfAKind
+N $9359 Check if there is a four-of-a-kind.
   $9359,$03 Call #R$94AA.
-  $935C,$02 Jump to #R$936E if {} is not zero.
+  $935C,$02 Jump to #R$936E if there are no four-of-a-kind matches.
+N $935E There is a four-of-a-kind! Process it.
   $935E,$03 Call #R$9473.
   $9361,$03 Write #REGa to *#R$949C.
-  $9364,$05 Write #N$08 to *#R$949B.
+  $9364,$05 Write "#OUTCOME$08" to *#R$949B.
   $9369,$04 Write #N$00 to *#R$949D.
   $936D,$01 Return.
 
-c $936E
+c $936E Check For Full-House
+@ $936E label=CheckFullHouse
+N $936E Check if there is a full house.
   $936E,$03 Call #R$94B8.
-  $9371,$02 Jump to #R$9386 if {} is not zero.
+  $9371,$02 Jump to #R$9386 if there are no full house matches.
+N $9373 There is a full house! Process it.
   $9373,$03 #REGhl=*#R$9516.
   $9376,$03 Call #R$9473.
   $9379,$03 Write #REGa to *#R$949C.
-  $937C,$05 Write #N$07 to *#R$949B.
+  $937C,$05 Write "#OUTCOME$07" to *#R$949B.
   $9381,$04 Write #N$00 to *#R$949D.
   $9385,$01 Return.
 
-c $9386
+c $9386 Check For Flush
+@ $9386 label=CheckFlush
+N $9386 Check if there is a flush.
   $9386,$03 Call #R$94C1.
-  $9389,$02 Jump to #R$93B0 if {} is not zero.
+  $9389,$02 Jump to #R$93B0 if there are no flush matches.
+N $938B There is a flush! Process it.
   $938B,$03 #REGa=*#REGix+#N$00.
   $938E,$02 #REGb=#N$04.
   $9390,$02 Shift #REGa right (with carry).
   $9392,$02 Decrease counter by one and loop back to #R$9390 until counter is zero.
   $9394,$03 Write #REGa to *#R$949D.
-  $9397,$05 Write #N$06 to *#R$949B.
+  $9397,$05 Write "#OUTCOME$06" to *#R$949B.
   $939C,$02 #REGd=#N$00.
-  $939E,$02 Stash #REGix on the stack.
-  $93A0,$01 Restore #REGhl from the stack.
+  $939E,$03 #REGhl=#REGix (using the stack).
   $93A1,$02 #REGb=#N$05.
   $93A3,$01 #REGa=*#REGhl.
   $93A4,$02,b$01 Keep only bits 0-3.
@@ -2096,26 +2143,39 @@ c $9386
   $93AC,$03 Write #REGa to *#R$949C.
   $93AF,$01 Return.
 
-c $93B0
+c $93B0 Check For Straight
+@ $93B0 label=CheckStraight
+N $93B0 Check if there is a straight.
   $93B0,$03 Call #R$94C7.
-  $93B3,$02 Jump to #R$93C9 if {} is not zero.
+  $93B3,$02 Jump to #R$93C9 if there are no straights.
+N $93B5 There is a straight! Process it.
   $93B5,$01 Decrease #REGhl by one.
   $93B6,$01 #REGa=*#REGhl.
   $93B7,$03 Call #R$9473.
   $93BA,$03 Write #REGa to *#R$949C.
   $93BD,$03 Call #R$947B.
   $93C0,$03 Write #REGa to *#R$949D.
-  $93C3,$05 Write #N$05 to *#R$949B.
+  $93C3,$05 Write "#OUTCOME$05" to *#R$949B.
   $93C8,$01 Return.
+
+c $93C9 Check For Three-Of-A-Kind
+@ $93C9 label=CheckThreeOfAKind
+N $93C9 Check if there is a three-of-a-kind.
   $93C9,$03 Call #R$94DA.
-  $93CC,$02 Jump to #R$93DE if {} is not zero.
+  $93CC,$02 Jump to #R$93DE if there are no three-of-a-kind matches.
+N $93CE There is a three-of-a-kind! Process it.
   $93CE,$03 Call #R$9473.
   $93D1,$03 Write #REGa to *#R$949C.
-  $93D4,$05 Write =#N$04 to *#R$949B.
+  $93D4,$05 Write "#OUTCOME$04" to *#R$949B.
   $93D9,$04 Write #N$00 to *#R$949D.
   $93DD,$01 Return.
+
+c $93DE Check For Two Pairs
+@ $93DE label=CheckTwoPairs
+N $93DE Check if there is are two pairs.
   $93DE,$03 Call #R$94E8.
-  $93E1,$02 Jump to #R$9412 if {} is not zero.
+  $93E1,$02 Jump to #R$9412 if there are no two pairs matches.
+N $93E3 There are two pairs! Process it.
   $93E3,$03 Call #R$9473.
   $93E6,$03 Write #REGa to *#R$949C.
   $93E9,$03 #REGhl=*#R$9516.
@@ -2130,16 +2190,20 @@ c $93B0
   $9403,$03 #REGa=*#R$949C.
   $9406,$03 Call #R$947B.
   $9409,$03 Write #REGa to *#R$949D.
-  $940C,$05 Write #N$03 to *#R$949B.
+  $940C,$05 Write "#OUTCOME$03" to *#R$949B.
   $9411,$01 Return.
 
-c $9412
+c $9412 Check For Pair
+@ $9412 label=CheckPair
+N $9412 Check if there is a pair.
   $9412,$03 Call #R$9506.
-  $9415,$02 Jump to #R$9447 if {} is not zero.
+  $9415,$02 Jump to #R$9447 if there are no pair matches.
+N $9417 There is a pair! Process it.
   $9417,$03 Call #R$9473.
   $941A,$03 Write #REGa to *#R$949C.
-  $941D,$05 Write #N$02 to *#R$949B.
-  $9422,$02 #REGb=#N$0D.
+  $941D,$05 Write "#OUTCOME$02" to *#R$949B.
+  $9422,$02 Set a counter in #REGb of the number of possible values of cards
+. there are in one suit.
   $9424,$03 #REGde=#R$949E.
   $9427,$03 #REGhl=#R$954C.
   $942A,$05 Jump to #R$943C if *#REGhl is equal to #N$01.
@@ -2157,6 +2221,8 @@ c $943C
   $9443,$01 Write #REGa to *#REGde.
   $9444,$01 Increment #REGde by one.
   $9445,$02 Jump to #R$942F.
+
+c $9447
   $9447,$03 Call #R$950D.
   $944A,$01 Stash #REGhl on the stack.
   $944B,$03 Call #R$9473.
@@ -2165,8 +2231,7 @@ c $943C
   $9452,$03 Call #R$947B.
   $9455,$03 Write #REGa to *#R$949D.
   $9458,$01 Restore #REGhl from the stack.
-  $9459,$02 #REGa=#N$01.
-  $945B,$03 Write #REGa to *#R$949B.
+  $9459,$05 Write "#OUTCOME$01" to *#R$949B.
   $945E,$02 #REGb=#N$04.
   $9460,$03 #REGde=#R$949E.
   $9463,$03 Call #R$9510.
@@ -2189,33 +2254,48 @@ R $9473 O:A The card ID that the card count refers to
   $9479,$01 #REGa=#REGl.
   $947A,$01 Return.
 
-c $947B
-  $947B,$01 #REGd=#REGa.
-  $947C,$02 #REGe=#N$00.
-  $947E,$02 Stash #REGix on the stack.
-  $9480,$01 Restore #REGhl from the stack.
-  $9481,$02 #REGb=#N$05.
-  $9483,$01 #REGa=*#REGhl.
-  $9484,$02,b$01 Keep only bits 0-3.
+c $947B Find Highest Card
+@ $947B label=FindHighestCard
+R $947B A Card value
+R $947B IX Pointer to either the player or girls hand
+  $947B,$01 Copy the card value into #REGd.
+  $947C,$02 Initialise #REGe to #N$00.
+  $947E,$03 Copy the hand pointer into #REGhl from #REGix (using the stack).
+  $9481,$02 Set a counter in #REGb to check all #N$05 cards in this hand.
+@ $9483 label=FindHighestCard_Loop
+  $9483,$01 Fetch the card value and store it in #REGa.
+  $9484,$02,b$01 Convert it into a suit-less value (by keeping only bits 0-3).
   $9486,$03 Jump to #R$9494 if #REGa is equal to #REGd.
-  $9489,$01 Increment #REGhl by one.
-  $948A,$02 Decrease counter by one and loop back to #R$9483 until counter is zero.
+@ $9489 label=FindHighestCard_Continue
+  $9489,$01 Move the hand pointer to the next card.
+  $948A,$02 Decrease the card counter by one and loop back to #R$9483 until all
+. cards in the hand have been evaluated.
   $948C,$01 #REGa=#REGe.
-  $948D,$02 #REGb=#N$04.
-  $948F,$02 Shift #REGa right (with carry).
-  $9491,$02 Decrease counter by one and loop back to #R$948F until counter is zero.
+N $948D Work out the suit.
+@ $948F label=HighestCardSuitShift_Loop
+  $948D,$06 Shift #REGa right four positions.
   $9493,$01 Return.
-
+@ $9494 label=HighestCard_FoundMatch
   $9494,$04 Jump to #R$9489 if *#REGhl is lower than #REGe.
   $9498,$01 #REGe=#REGa.
   $9499,$02 Jump to #R$9489.
 
-b $949B
-  $949B,$01
-  $949C,$01
-  $949E,$01
+g $949B Hand Evaluation Table
+@ $949B label=TableHandEvaluation_Type
+B $949B,$01
+@ $949C label=TableHandEvaluation_Card
+B $949C,$01
+@ $949D label=TableHandEvaluation_HighCard
+B $949D,$01
+@ $949E label=TableHandEvaluation_?
+B $949E,$01
+@ $949F label=TableHandEvaluation_??
+B $949F,$01
+B $94A0,$01
+B $94A1,$01
 
-c $94A2
+c $94A2 Handler: Straight Flush
+@ $94A2 label=Handler_StraightFlush
   $94A2,$06 Return if *#R$954D is not equal to #N$01.
   $94A8,$02 Jump to #R$94C7.
 
@@ -2229,6 +2309,9 @@ N $94AA #R$9540 holds counts of duplicate values of cards, this routine
   $94AA,$03 #REGhl=#R$9540.
   $94AD,$02 Set a counter in #REGb of the number of possible values of cards
 . there are in one suit.
+N $94AF There's no need to check any further if there's a match, as if there
+. are #N$04 of any card value, there are only #N$05 cards in one hand - so
+. there can't be a second match.
 @ $94AF label=Handler_FourOfAKind_Loop
   $94AF,$04 Return if *#REGhl is equal to #N$04.
   $94B3,$01 Increment #REGhl by one.
@@ -2236,62 +2319,107 @@ N $94AA #R$9540 holds counts of duplicate values of cards, this routine
   $94B6,$01 Increment #REGb by one.
   $94B7,$01 Return.
 
-c $94B8
+c $94B8 Handler: Full House
+@ $94B8 label=Handler_FullHouse
   $94B8,$03 Call #R$94DA.
   $94BB,$03 Write #REGhl to *#R$9516.
-  $94BE,$01 Return if #REGa is not zero.
+N $94BE If there's no three-of-a-kind then there's no full house, return here.
+  $94BE,$01 Return there was no three-of-a-kind match found.
   $94BF,$02 Jump to #R$9506.
 
-c $94C1
+c $94C1 Handler: Flush
+@ $94C1 label=Handler_Flush
   $94C1,$05 Compare *#R$954D with #N$01.
   $94C6,$01 Return.
 
-c $94C7
-  $94C7,$03 #REGhl=#R$9540(#N$953F).
+c $94C7 Handler: Straight
+@ $94C7 label=Handler_Straight
+  $94C7,$03 #REGhl=#R$9540(#N$953F) (e.g. #R$9540-#N$01).
+N $94CA Keep looping through the duplicate values until we find a card which
+. the player has only one of.
+@ $94CA label=FindFirstCard_Loop
   $94CA,$01 Increment #REGhl by one.
   $94CB,$05 Jump to #R$94CA if *#REGhl is not equal to #N$01.
-  $94D0,$02 #REGb=#N$05.
-  $94D2,$04 Return if *#REGhl is not equal to #N$01.
+N $94D0 We've found the first card, so check if there's a sequence from here.
+  $94D0,$02 Set a counter in #REGb we want to check all #N$05 cards.
+N $94D2 If it's a genuine straight, then the count for all five cards will be
+. #N$01.
+@ $94D2 label=Handler_Straight_Loop
+  $94D2,$04 Return if the duplicate count is anything other than #N$01.
   $94D6,$01 Increment #REGhl by one.
-  $94D7,$02 Decrease counter by one and loop back to #R$94D2 until counter is zero.
+  $94D7,$02 Decrease the card counter by one and loop back to #R$94D2 until all
+. #N$05 cards have been checked.
   $94D9,$01 Return.
 
-c $94DA
+c $94DA Handler: Three Of A Kind
+@ $94DA label=Handler_ThreeOfAKind
+N $94DA #R$9540 holds counts of duplicate values of cards, this routine
+. specifically looks for three-of-a-kind matches.
   $94DA,$03 #REGhl=#R$9540.
-  $94DD,$02 #REGb=#N$0D.
+  $94DD,$02 Set a counter in #REGb of the number of possible values of cards
+. there are in one suit.
+N $94DF There's no need to check any further if there's a match, as if there
+. are #N$03 of any card value, there are only #N$05 cards in one hand - so
+. there can't be a second match.
+@ $94DF label=Handler_ThreeOfAKind_Loop
   $94DF,$04 Return if *#REGhl is equal to #N$03.
   $94E3,$01 Increment #REGhl by one.
   $94E4,$02 Decrease counter by one and loop back to #R$94DF until counter is zero.
   $94E6,$01 Increment #REGb by one.
   $94E7,$01 Return.
 
-c $94E8
+c $94E8 Handler: Two Pairs
+@ $94E8 label=Handler_TwoPairs
+N $94E8 #R$9540 holds counts of duplicate values of cards, this routine
+. specifically looks for two pair matches.
   $94E8,$03 #REGhl=#R$9540.
-  $94EB,$02 #REGb=#N$0D.
+  $94EB,$02 Set a counter in #REGb of the number of possible values of cards
+. there are in one suit.
+@ $94ED label=CheckTwoPairs_Loop
   $94ED,$05 Jump to #R$94F7 if *#REGhl is equal to #N$02.
   $94F2,$01 Increment #REGhl by one.
   $94F3,$02 Decrease counter by one and loop back to #R$94ED until counter is zero.
+@ $94F5 label=TwoPairs_Return
   $94F5,$01 Increment #REGb by one.
   $94F6,$01 Return.
-  $94F7,$01 Decrease #REGb by one.
+N $94F7 One pair exists, let's look for a second pair.
+@ $94F7 label=FoundOnePair
+  $94F7,$01 Decrease #REGb by one, as we don't need to count the value we're
+. already on.
   $94F8,$03 Write #REGhl to *#R$9516.
-  $94FB,$02 Jump to #R$94F5 if #REGb is zero.
+N $94FB Don't bother with the second loop if this match was the last card value.
+  $94FB,$02 Jump to #R$94F5 if there are no further duplicate counts to check.
+@ $94FD label=CheckSecondPair_Loop
   $94FD,$01 Increment #REGhl by one.
   $94FE,$04 Return if *#REGhl is equal to #N$02.
   $9502,$02 Decrease counter by one and loop back to #R$94FD until counter is zero.
   $9504,$02 Jump to #R$94F5.
-  $9506,$02 #REGb=#N$0D.
-  $9508,$03 #REGhl=#R$9540(#N$953F).
+
+c $9506 Handler: Pair
+@ $9506 label=Handler_Pair
+  $9506,$02 Set a counter in #REGb of the number of possible values of cards
+. there are in one suit.
+  $9508,$03 #REGhl=#R$9540(#N$953F) (e.g. #R$9540-#N$01).
+N $950B Utilise the "second pair loop" check to check for a single pair.
   $950B,$02 Jump to #R$94FD.
 
-c $950D
-  $950D,$03 #REGhl=#R$954C.
-  $9510,$01 #REGa=*#REGhl.
-  $9511,$01 Decrease #REGhl by one.
-  $9512,$03 Jump to #R$9510 if #REGa is zero.
+c $950D Handler: High Card
+@ $950D label=Handler_HighCard
+N $950D Starting with the ace, work backwards until we find the highest value
+. card in the current hand.
+  $950D,$03 #REGhl=#R$954C (e.g. the end of #R$9540).
+@ $9510 label=Handler_HighCard_Loop
+  $9510,$01 Fetch the duplicate count for the current card.
+  $9511,$01 Decrease the duplicates table pointer by one.
+  $9512,$03 Keep jumping back to #R$9510 until the duplicate count shows this
+. card is present in the hand.
   $9515,$01 Return.
 
-g $9516
+g $9516 Duplicate Count Pointer
+D $9516 Points to one of the values in #R$9540.
+.
+. Used by the routines at #R$936E, #R$93B0, #R$94B8 and #R$94E8.
+@ $9516 label=PointerDuplicateCount
 W $9516,$02
 
 c $9518 Count Duplicates
@@ -2331,8 +2459,14 @@ D $9540 Counts the number of cards held of each value.
 B $9540,$01 Count of how many "#CARD(#PC-$9540)" cards this hand holds.
 L $9540,$01,$0D
 
-g $954D
-B $954D
+g $954D Flush Flag
+@ $954D label=FlushFlag
+D $954D #TABLE(default,centre,centre)
+. { =h Byte | =h Meaning }
+. { #N$00 | No flush }
+. { #N$01 | Flush }
+. TABLE#
+B $954D,$01
 
 c $954E Draw Cards
 @ $954E label=DrawCards
@@ -2416,20 +2550,31 @@ g $95BB Card Deck
 @ $95BB label=CardDeck
 B $95BB,$34,$0D
 
-c $95EF
-  $95EF,$03 #REGde=#REGix (using the stack).
-  $95F2,$02 #REGb=#N$04.
-  $95F4,$01 #REGa=*#REGde.
+c $95EF Count Suits
+@ $95EF label=CountSuits
+R $95EF IX Pointer to either the player or girls hand
+R $95EF O:A #N$00 for "no flush", #N$01 for "flush"
+  $95EF,$03 Load the hand pointer into #REGde (using the stack).
+N $95F2 Only having all four suits present is meaningful.
+  $95F2,$02 Set a counter in #REGb for the number of cards left to check.
+  $95F4,$01 Fetch the primary card for comparison.
   $95F5,$02,b$01 Keep only bits 4-7.
   $95F7,$01 #REGh=#REGa.
-  $95F8,$01 Increment #REGde by one.
-  $95F9,$01 #REGa=*#REGde.
-  $95FA,$02,b$01 Keep only bits 4-7.
-  $95FC,$03 Jump to #R$9609 if #REGa is not equal to #REGh.
-  $95FF,$02 Decrease counter by one and loop back to #R$95F8 until counter is zero.
+M $95F5,$03 Store the suit value in #REGh.
+N $95F8 Loop through the remaining #N$04 cards.
+@ $95F8 label=CountSuits_Loop
+  $95F8,$01 Move the pointer to the next card.
+  $95F9,$01 Fetch the card.
+  $95FA,$02,b$01 Store the suit value in #REGa.
+  $95FC,$03 Jump to #R$9609 if the suits of the two cards differ.
+  $95FF,$02 Decrease the suit counter by one and loop back to #R$95F8 until counter is zero.
+N $9601 All four suits are present in the hand! We have a flush.
   $9601,$02 #REGa=#N$01.
+@ $9603 label=WriteFlushFlag
   $9603,$03 Write #REGa to *#R$954D.
   $9606,$03 Jump to #R$9337.
+N $9609 This hand doesn't contain a flush.
+@ $9609 label=NotAFlush
   $9609,$01 #REGa=#N$00.
   $960A,$02 Jump to #R$9603.
 
@@ -2551,13 +2696,18 @@ g $96B7 Current "Raise" Value
 @ $96B7 label=CurrentRaiseValue
 B $96B7,$01
 
-g $96B8 Current Round
-@ $96B8 label=CurrentRound
+g $96B8 Turn Counter
+@ $96B8 label=TurnCounter
+D $96B8 Incremented when a full turn (both players have taken an action) is complete.
 B $96B8,$01
 
-g $96B9
+g $96B9 Copy Players Evaluation Table
+@ $96B9 label=Table_PlayerEvaluation
+B $96B9,$07,$01
 
-  $96C0
+g $96C0 Copy Girls Evaluation Table
+@ $96C0 label=Table_GirlEvaluation
+B $96C0,$07,$01
 
 g $96C7 Players Hand
 @ $96C7 label=PlayersHand
@@ -2567,15 +2717,21 @@ g $96CC Girls Hand
 @ $96CC label=GirlsHand
 B $96CC,$05
 
-c $96D1
+c $96D1 Girl Mark Cards
+@ $96D1 label=GirlMarkCards
+N $96D1 The hand has been "evaluated" at this point, so don't do anything if
+. there is already a chance of winning.
   $96D1,$03 #REGa=*#R$949B.
   $96D4,$03 #REGhl=#R$971E.
-  $96D7,$02 #REGb=#N$04.
-  $96D9,$02 Return if *#REGhl is equal to #REGa.
-  $96DB,$01 Increment #REGhl by one.
+  $96D7,$02 Set a counter in #REGb of the number of game "outcome" types we
+. want to check against: #N$04.
+@ $96D9 label=CheckOutcomes_Loop
+  $96D9,$02 Return if the current hand has a positive outcome type.
+  $96DB,$01 Increment the outcomes pointer by one.
   $96DC,$02 Decrease counter by one and loop back to #R$96D9 until counter is zero.
+N $96DE The girls hand has no cards which form a good poker hand.
   $96DE,$03 Call #R$9579.
-  $96E1,$04 Jump to #R$96EC if #REGa is lower than #N$0A.
+  $96E1,$04 Jump to #R$96EC if the random number is lower than #N$0A.
   $96E5,$07 Jump to #R$9705 if *#R$949B is equal to #N$03.
   $96EC,$04 #REGd=*#R$949C.
   $96F0,$03 #REGhl=#R$96CC.
@@ -2591,7 +2747,7 @@ c $96D1
   $9702,$02 Decrease counter by one and loop back to #R$96F7 until counter is zero.
   $9704,$01 Return.
 
-  $9705,$03 #REGhl=#R$9540(#N$953F).
+  $9705,$03 #REGhl=#R$9540(#N$953F) (e.g. #R$9540-#N$01).
   $9708,$01 Increment #REGhl by one.
   $9709,$01 #REGa=*#REGhl.
   $970A,$01 Decrease #REGa by one.
@@ -2606,11 +2762,10 @@ c $96D1
   $971B,$02 Write #N$FF to *#REGhl.
   $971D,$01 Return.
 
-g $971E
-B $971E,$01
-B $971F,$01
-B $9720,$01
-B $9721,$01
+g $971E Outcome Types
+@ $971E label=OutcomeTypes
+B $971E,$01 "#OUTCOME(#PEEK(#PC))".
+L $971E,$01,$04
 
 c $9722 Quit Game
 @ $9722 label=QuitGame

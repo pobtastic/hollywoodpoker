@@ -112,6 +112,19 @@ SectionPrefix=Audio
     2:Spades,
     3:Clubs))
 
+#DEF(#OUTCOME(val)
+  #MAP($val)(
+  ?,
+  9:Straight Flush,
+  8:Four-Of-A-Kind,
+  7:Full House,
+  6:Flush,
+  5:Straight,
+  4:Three-Of-A-Kind,
+  3:Two Pairs,
+  2:Pair,
+  1:High Card))
+
 #DEF(#MESSAGE(block,n=$00)(filename)
   #PUSHS
   #SIM(start=$7D97,stop=$7DB7,a=$block)

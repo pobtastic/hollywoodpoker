@@ -3516,6 +3516,7 @@ c$8D3E LD A,$07      ; {Jump to #R$8D44 using message block #R$8585(#N$07).
  $8D48 RET           ; }
 
 ; Game status buffer entry at 8D49
+@label=TurnFlag?
 g$8D49 DEFB $00
 
 ; Play Game
@@ -3558,13 +3559,13 @@ c$8D4A LD HL,$96C7   ; #REGhl=#R$96C7.
  $8D73 LD A,$02      ; {#HTML(Write #N$02 to *<a
  $8D75 LD ($5C6B),A  ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C6B.html">DF_SZ</a>.)
                      ; }
- $8D78 LD BC,$0720   ; #REGbc=#N($0720,$04,$04).
- $8D7B CALL $0DE2    ; #HTML(Call <a rel="noopener nofollow"
-                     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">#N$0DE2</a>
-                     ; (CL_SET).)
+ $8D78 LD BC,$0720   ; Set screen co-ordinates to #N($0720,$04,$04).
+ $8D7B CALL $0DE2    ; #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DD9.html#0DE2">#N$0DE2</a>
+                     ; (CL_SET) to turn the co-ordinates into a screen buffer location.)
  $8D7E CALL $8E5A    ; Call #R$8E5A.
 ; Print "CURSOR" five times in a row to where it would display under each
-; card in the players hand.
+; card in the players hand. The cursor movement just changes the colour-cycling
+; attribute location, the text is always present.
  $8D81 LD B,$05      ; #REGb=#N$05.
 @label=PrintCursorLoop
 *$8D83 LD HL,$930D   ; #REGhl=#R$930D.
@@ -3583,30 +3584,41 @@ c$8D4A LD HL,$96C7   ; #REGhl=#R$96C7.
 ; Make the girl buy in.
  $8D95 LD A,$0A      ; #REGa=#N$0A.
  $8D97 CALL $96A1    ; Call #R$96A1.
- $8D9A LD A,B        ; {Write #REGb to *#R$96B7.
+; Make the player buy in.
+ $8D9A LD A,B        ; {Write #REGb (also #N$0A) to *#R$96B7.
  $8D9B LD ($96B7),A  ; }
  $8D9E CALL $9245    ; Call #R$9245.
+; Reset *#R$96B7 for the display.
  $8DA1 XOR A         ; {Write #N$00 to *#R$96B7.
  $8DA2 LD ($96B7),A  ; }
  $8DA5 CALL $959B    ; Call #R$959B.
+; Initiate girls hand.
  $8DA8 LD IX,$96CC   ; #REGix=#R$96CC.
  $8DAC CALL $954E    ; Call #R$954E.
  $8DAF CALL $9518    ; Call #R$9518.
- $8DB2 LD A,($98E4)  ; #REGa=*#R$98E4.
- $8DB5 LD B,A        ; #REGb=*#R$98E4.
- $8DB6 INC A         ; Increment #REGa by one.
-*$8DB7 PUSH BC       ; Stash the current girl ID on the stack.
+ $8DB2 LD A,($98E4)  ; {Set #REGa to *#R$98E4+#N$01 and set a counter in #REGb
+ $8DB5 LD B,A        ; to *#R$98E4.
+ $8DB6 INC A         ; }
+; The following loop is how the game makes each girl more difficult. Each
+; girl is sequentially numbered, and here the game loops on that girls "number"
+; in order to redraw that number of times. So difficulty is nothing to do with
+; increasing the skill level, and the redraw is still down to chance - just
+; the girl has more opportunity than the player to get a good hand.
+@label=Difficulty_Loop
+*$8DB7 PUSH BC       ; Stash the girl count on the stack.
  $8DB8 CALL $96D1    ; Call #R$96D1.
  $8DBB CALL $954E    ; Call #R$954E.
  $8DBE CALL $9518    ; Call #R$9518.
- $8DC1 POP BC        ; Restore #REGbc from the stack.
- $8DC2 DJNZ $8DB7    ; Decrease counter by one and loop back to #R$8DB7 until
+ $8DC1 POP BC        ; Restore the girl count from the stack.
+ $8DC2 DJNZ $8DB7    ; Decrease the girl counter by one and loop back to #R$8DB7 until the
                      ; counter is zero.
- $8DC4 LD BC,$0007   ; #REGbc=#N($0007,$04,$04).
- $8DC7 LD HL,$949B   ; #REGhl=#R$949B.
- $8DCA LD DE,$96C0   ; #REGde=#R$96C0.
- $8DCD LDIR          ; LDIR.
+; Stash the evaluation table at #R$96C0.
+ $8DC4 LD BC,$0007   ; {Copy #REGbc=#N($0007,$04,$04) bytes of data from
+ $8DC7 LD HL,$949B   ; #R$949B to #R$96C0.
+ $8DCA LD DE,$96C0   ;
+ $8DCD LDIR          ; }
  $8DCF CALL $8F7E    ; Call #R$8F7E.
+; Initiate players hand.
  $8DD2 LD IX,$96C7   ; #REGix=#R$96C7.
  $8DD6 CALL $954E    ; Call #R$954E.
  $8DD9 CALL $E313    ; Call #R$E313.
@@ -3614,17 +3626,18 @@ c$8D4A LD HL,$96C7   ; #REGhl=#R$96C7.
  $8DDF CALL $954E    ; Call #R$954E.
  $8DE2 CALL $E313    ; Call #R$E313.
  $8DE5 CALL $9518    ; Call #R$9518.
- $8DE8 LD BC,$0007   ; #REGbc=#N($0007,$04,$04).
- $8DEB LD HL,$949B   ; #REGhl=#R$949B.
- $8DEE LD DE,$96B9   ; #REGde=#R$96B9.
- $8DF1 LDIR          ; LDIR.
+; Stash the evaluation table at #R$96B9.
+ $8DE8 LD BC,$0007   ; {Copy #REGbc=#N($0007,$04,$04) bytes of data from
+ $8DEB LD HL,$949B   ; #R$949B to #R$96B9.
+ $8DEE LD DE,$96B9   ;
+ $8DF1 LDIR          ; }
  $8DF3 CALL $8F7E    ; Call #R$8F7E.
  $8DF6 LD A,$01      ; {Write #N$01 to *#R$8E43.
  $8DF8 LD ($8E43),A  ; }
- $8DFB LD A,($8E42)  ; #REGa=*#R$8E42.
- $8DFE XOR %00000001 ; Flip bit 0.
- $8E00 LD ($8E42),A  ; Write #REGa to *#R$8E42.
- $8E03 JR Z,$8E22    ; Jump to #R$8E22 if #REGa is zero.
+ $8DFB LD A,($8E42)  ; {Flip bit 0 of *#R$8E42 and write it back to *#R$8E42.
+ $8DFE XOR %00000001 ;
+ $8E00 LD ($8E42),A  ; }
+ $8E03 JR Z,$8E22    ; Jump to #R$8E22 if *#R$8E42 is #N$00 (players turn).
 ; Messaging options:
 ; #UDGTABLE(default,centre,centre)
 ; { =h ID | =h Message }
@@ -3654,33 +3667,53 @@ c$8D4A LD HL,$96C7   ; #REGhl=#R$96C7.
  $8E24 CALL $7D97    ; }
  $8E27 CALL $8F7E    ; Call #R$8F7E.
  $8E2A CALL $9171    ; Call #R$9171.
- $8E2D OR A          ; {Jump to #R$8F06 if #REGa is zero.
+ $8E2D OR A          ; {Jump to #R$8F06 if the player has dropped.
  $8E2E JP Z,$8F06    ; }
- $8E31 CP $03        ; {Call #R$8EE2 if #REGa is equal to #N$03.
+ $8E31 CP $03        ; {Call #R$8EE2 if the game is in "showdown" mode.
  $8E33 CALL Z,$8EE2  ; }
  $8E36 XOR A         ; {Write #N$00 to *#R$8E43.
  $8E37 LD ($8E43),A  ; }
  $8E3A CALL $8E44    ; Call #R$8E44.
  $8E3D CALL $8F7E    ; Call #R$8F7E.
  $8E40 JR $8E05      ; Jump to #R$8E05.
- $8E42 DEFB $01      ;
- $8E43 DEFB $00      ;
 
-; Routine at 8E44
+; Turn Flag
+;
+; #TABLE(default,centre,centre)
+; { =h Byte | =h Meaning }
+; { #N$00 | Players turn }
+; { #N$01 | Girls turn }
+; TABLE#
+@label=TurnFlag
+g$8E42 DEFB $01
+
+; Game status buffer entry at 8E43
+g$8E43 DEFB $00
+
+; Check Showdown
 ;
 ; Used by the routine at #R$8D4A.
+@label=CheckShowdown
 c$8E44 LD A,($8E59)  ; {Increment *#R$8E59 by one.
  $8E47 INC A         ;
  $8E48 LD ($8E59),A  ; }
- $8E4B SRL A         ; Shift #REGa right.
- $8E4D RET C         ; Return if {} is lower.
+ $8E4B SRL A         ; Divide #R$8E59 by two.
+ $8E4D RET C         ; Return if *#R$8E59 doesn't divide exactly by two (e.g.
+                     ; return if the number is odd).
+; Both the girl and the player had a "turn" so update the counter.
  $8E4E LD ($96B8),A  ; Write #REGa to *#R$96B8.
- $8E51 CP $04        ; Compare #REGa with #N$04...
+ $8E51 CP $04        ; Have there been #N$04 turns yet?
  $8E53 POP HL        ; Restore #REGhl from the stack.
- $8E54 CALL Z,$8EE2  ; Call #R$8EE2 if #REGa as equal to #N$04 on line #R$8E51.
+ $8E54 CALL Z,$8EE2  ; Call #R$8EE2 if there have been #N$04 turns.
  $8E57 PUSH HL       ; Stash #REGhl on the stack.
  $8E58 RET           ; Return.
- $8E59 DEFB $00      ;
+
+; Interaction Counter
+;
+; Counts each individual action taken (increments by #N$01 for each
+; player action).
+@label=InteractionCounter
+g$8E59 DEFB $00
 
 ; Draw User Interface
 ;
@@ -3789,8 +3822,10 @@ c$8EE2 LD A,($8E43)  ; {Return if *#R$8E43 is not zero.
 ; UDGTABLE#
  $8EE8 LD A,$09      ; {Call #R$7D97 using message block #R$8693(#N$09).
  $8EEA CALL $7D97    ; }
+; Show the girls hand in place of the players hand.
  $8EED LD IX,$96CC   ; #REGix=#R$96CC.
  $8EF1 CALL $E313    ; Call #R$E313.
+; Compare the hand evaluation tables to see who won.
  $8EF4 LD HL,$96B9   ; #REGhl=#R$96B9.
  $8EF7 LD DE,$96C0   ; #REGde=#R$96C0.
  $8EFA LD B,$07      ; #REGb=#N$07.
@@ -4721,65 +4756,104 @@ t$92C6 DEFB $16,$14,$01 ; PRINT AT: #N(#PEEK(#PC+$01)), #N(#PEEK(#PC+$02)).
  $9330 DEFM "ROUND:"    ; "#STR(#PC,$04,$06)".
  $9336 DEFB $0D
 
-; Routine at 9337
+; Calculate Hand
 ;
 ; Used by the routine at #R$95EF.
+;
+; .
+;
+; Clear down the evaluation table.
+@label=CalculateHand
 c$9337 LD HL,$949B   ; #REGhl=#R$949B.
  $933A LD B,$07      ; #REGb=#N$07.
+@label=ResetEvaluationTable_Loop
 *$933C LD (HL),$00   ; Write #N$00 to *#REGhl.
  $933E INC HL        ; Increment #REGhl by one.
  $933F DJNZ $933C    ; Decrease counter by one and loop back to #R$933C until
                      ; counter is zero.
- $9341 CALL $94A2    ; Call #R$94A2.
- $9344 JR NZ,$9359   ; Jump to #R$9359 if {} is not zero.
+; Continue on to #R$9341.
+
+; Check For Straight Flush
+;
+; .
+;
+; .
+;
+; Check if there is a straight flush.
+@label=CheckStraightFlush
+c$9341 CALL $94A2    ; Call #R$94A2.
+ $9344 JR NZ,$9359   ; Jump to #R$9359 if there are no straight flushes.
+; There is a straight flush! Process it.
  $9346 DEC HL        ; Decrease #REGhl by one.
  $9347 CALL $9473    ; Call #R$9473.
  $934A LD ($949C),A  ; Write #REGa to *#R$949C.
  $934D CALL $947B    ; Call #R$947B.
  $9350 LD ($949D),A  ; Write #REGa to *#R$949D.
- $9353 LD A,$09      ; {Write #N$09 to *#R$949B.
+ $9353 LD A,$09      ; {Write "#OUTCOME$09" to *#R$949B.
  $9355 LD ($949B),A  ; }
  $9358 RET           ; Return.
-*$9359 CALL $94AA    ; Call #R$94AA.
- $935C JR NZ,$936E   ; Jump to #R$936E if {} is not zero.
+
+; Check For Four-Of-A-Kind
+;
+; Used by the routine at #R$9341.
+;
+; .
+;
+; Check if there is a four-of-a-kind.
+@label=CheckFourOfAKind
+c$9359 CALL $94AA    ; Call #R$94AA.
+ $935C JR NZ,$936E   ; Jump to #R$936E if there are no four-of-a-kind matches.
+; There is a four-of-a-kind! Process it.
  $935E CALL $9473    ; Call #R$9473.
  $9361 LD ($949C),A  ; Write #REGa to *#R$949C.
- $9364 LD A,$08      ; {Write #N$08 to *#R$949B.
+ $9364 LD A,$08      ; {Write "#OUTCOME$08" to *#R$949B.
  $9366 LD ($949B),A  ; }
  $9369 XOR A         ; {Write #N$00 to *#R$949D.
  $936A LD ($949D),A  ; }
  $936D RET           ; Return.
 
-; Routine at 936E
+; Check For Full-House
 ;
-; Used by the routine at #R$9337.
+; Used by the routine at #R$9359.
+;
+; .
+;
+; Check if there is a full house.
+@label=CheckFullHouse
 c$936E CALL $94B8    ; Call #R$94B8.
- $9371 JR NZ,$9386   ; Jump to #R$9386 if {} is not zero.
+ $9371 JR NZ,$9386   ; Jump to #R$9386 if there are no full house matches.
+; There is a full house! Process it.
  $9373 LD HL,($9516) ; #REGhl=*#R$9516.
  $9376 CALL $9473    ; Call #R$9473.
  $9379 LD ($949C),A  ; Write #REGa to *#R$949C.
- $937C LD A,$07      ; {Write #N$07 to *#R$949B.
+ $937C LD A,$07      ; {Write "#OUTCOME$07" to *#R$949B.
  $937E LD ($949B),A  ; }
  $9381 XOR A         ; {Write #N$00 to *#R$949D.
  $9382 LD ($949D),A  ; }
  $9385 RET           ; Return.
 
-; Routine at 9386
+; Check For Flush
 ;
 ; Used by the routine at #R$936E.
+;
+; .
+;
+; Check if there is a flush.
+@label=CheckFlush
 c$9386 CALL $94C1    ; Call #R$94C1.
- $9389 JR NZ,$93B0   ; Jump to #R$93B0 if {} is not zero.
+ $9389 JR NZ,$93B0   ; Jump to #R$93B0 if there are no flush matches.
+; There is a flush! Process it.
  $938B LD A,(IX+$00) ; #REGa=*#REGix+#N$00.
  $938E LD B,$04      ; #REGb=#N$04.
 *$9390 SRA A         ; Shift #REGa right (with carry).
  $9392 DJNZ $9390    ; Decrease counter by one and loop back to #R$9390 until
                      ; counter is zero.
  $9394 LD ($949D),A  ; Write #REGa to *#R$949D.
- $9397 LD A,$06      ; {Write #N$06 to *#R$949B.
+ $9397 LD A,$06      ; {Write "#OUTCOME$06" to *#R$949B.
  $9399 LD ($949B),A  ; }
  $939C LD D,$00      ; #REGd=#N$00.
- $939E PUSH IX       ; Stash #REGix on the stack.
- $93A0 POP HL        ; Restore #REGhl from the stack.
+ $939E PUSH IX       ; {#REGhl=#REGix (using the stack).
+ $93A0 POP HL        ; }
  $93A1 LD B,$05      ; #REGb=#N$05.
 *$93A3 LD A,(HL)     ; #REGa=*#REGhl.
  $93A4 AND %00001111 ; Keep only bits 0-3.
@@ -4791,31 +4865,57 @@ c$9386 CALL $94C1    ; Call #R$94C1.
  $93AC LD ($949C),A  ; Write #REGa to *#R$949C.
  $93AF RET           ; Return.
 
-; Routine at 93B0
+; Check For Straight
 ;
 ; Used by the routine at #R$9386.
+;
+; .
+;
+; Check if there is a straight.
+@label=CheckStraight
 c$93B0 CALL $94C7    ; Call #R$94C7.
- $93B3 JR NZ,$93C9   ; Jump to #R$93C9 if {} is not zero.
+ $93B3 JR NZ,$93C9   ; Jump to #R$93C9 if there are no straights.
+; There is a straight! Process it.
  $93B5 DEC HL        ; Decrease #REGhl by one.
  $93B6 LD A,(HL)     ; #REGa=*#REGhl.
  $93B7 CALL $9473    ; Call #R$9473.
  $93BA LD ($949C),A  ; Write #REGa to *#R$949C.
  $93BD CALL $947B    ; Call #R$947B.
  $93C0 LD ($949D),A  ; Write #REGa to *#R$949D.
- $93C3 LD A,$05      ; {Write #N$05 to *#R$949B.
+ $93C3 LD A,$05      ; {Write "#OUTCOME$05" to *#R$949B.
  $93C5 LD ($949B),A  ; }
  $93C8 RET           ; Return.
-*$93C9 CALL $94DA    ; Call #R$94DA.
- $93CC JR NZ,$93DE   ; Jump to #R$93DE if {} is not zero.
+
+; Check For Three-Of-A-Kind
+;
+; Used by the routine at #R$93B0.
+;
+; .
+;
+; Check if there is a three-of-a-kind.
+@label=CheckThreeOfAKind
+c$93C9 CALL $94DA    ; Call #R$94DA.
+ $93CC JR NZ,$93DE   ; Jump to #R$93DE if there are no three-of-a-kind matches.
+; There is a three-of-a-kind! Process it.
  $93CE CALL $9473    ; Call #R$9473.
  $93D1 LD ($949C),A  ; Write #REGa to *#R$949C.
- $93D4 LD A,$04      ; {Write =#N$04 to *#R$949B.
+ $93D4 LD A,$04      ; {Write "#OUTCOME$04" to *#R$949B.
  $93D6 LD ($949B),A  ; }
  $93D9 XOR A         ; {Write #N$00 to *#R$949D.
  $93DA LD ($949D),A  ; }
  $93DD RET           ; Return.
-*$93DE CALL $94E8    ; Call #R$94E8.
- $93E1 JR NZ,$9412   ; Jump to #R$9412 if {} is not zero.
+
+; Check For Two Pairs
+;
+; Used by the routine at #R$93C9.
+;
+; .
+;
+; Check if there is are two pairs.
+@label=CheckTwoPairs
+c$93DE CALL $94E8    ; Call #R$94E8.
+ $93E1 JR NZ,$9412   ; Jump to #R$9412 if there are no two pairs matches.
+; There are two pairs! Process it.
  $93E3 CALL $9473    ; Call #R$9473.
  $93E6 LD ($949C),A  ; Write #REGa to *#R$949C.
  $93E9 LD HL,($9516) ; #REGhl=*#R$9516.
@@ -4832,20 +4932,27 @@ c$93B0 CALL $94C7    ; Call #R$94C7.
  $9403 LD A,($949C)  ; #REGa=*#R$949C.
  $9406 CALL $947B    ; Call #R$947B.
  $9409 LD ($949D),A  ; Write #REGa to *#R$949D.
- $940C LD A,$03      ; {Write #N$03 to *#R$949B.
+ $940C LD A,$03      ; {Write "#OUTCOME$03" to *#R$949B.
  $940E LD ($949B),A  ; }
  $9411 RET           ; Return.
 
-; Routine at 9412
+; Check For Pair
 ;
-; Used by the routine at #R$93B0.
+; Used by the routine at #R$93DE.
+;
+; .
+;
+; Check if there is a pair.
+@label=CheckPair
 c$9412 CALL $9506    ; Call #R$9506.
- $9415 JR NZ,$9447   ; Jump to #R$9447 if {} is not zero.
+ $9415 JR NZ,$9447   ; Jump to #R$9447 if there are no pair matches.
+; There is a pair! Process it.
  $9417 CALL $9473    ; Call #R$9473.
  $941A LD ($949C),A  ; Write #REGa to *#R$949C.
- $941D LD A,$02      ; {Write #N$02 to *#R$949B.
+ $941D LD A,$02      ; {Write "#OUTCOME$02" to *#R$949B.
  $941F LD ($949B),A  ; }
- $9422 LD B,$0D      ; #REGb=#N$0D.
+ $9422 LD B,$0D      ; Set a counter in #REGb of the number of possible values of cards
+                     ; there are in one suit.
  $9424 LD DE,$949E   ; #REGde=#R$949E.
  $9427 LD HL,$954C   ; #REGhl=#R$954C.
 *$942A LD A,(HL)     ; {Jump to #R$943C if *#REGhl is equal to #N$01.
@@ -4871,8 +4978,11 @@ c$943C PUSH HL       ; {Stash #REGhl and #REGde on the stack.
  $9443 LD (DE),A     ; Write #REGa to *#REGde.
  $9444 INC DE        ; Increment #REGde by one.
  $9445 JR $942F      ; Jump to #R$942F.
-; This entry point is used by the routine at #R$9412.
-*$9447 CALL $950D    ; Call #R$950D.
+
+; Routine at 9447
+;
+; Used by the routine at #R$9412.
+c$9447 CALL $950D    ; Call #R$950D.
  $944A PUSH HL       ; Stash #REGhl on the stack.
  $944B CALL $9473    ; Call #R$9473.
  $944E INC A         ; Increment #REGa by one.
@@ -4880,8 +4990,8 @@ c$943C PUSH HL       ; {Stash #REGhl and #REGde on the stack.
  $9452 CALL $947B    ; Call #R$947B.
  $9455 LD ($949D),A  ; Write #REGa to *#R$949D.
  $9458 POP HL        ; Restore #REGhl from the stack.
- $9459 LD A,$01      ; #REGa=#N$01.
- $945B LD ($949B),A  ; Write #REGa to *#R$949B.
+ $9459 LD A,$01      ; {Write "#OUTCOME$01" to *#R$949B.
+ $945B LD ($949B),A  ; }
  $945E LD B,$04      ; #REGb=#N$04.
  $9460 LD DE,$949E   ; #REGde=#R$949E.
 *$9463 CALL $9510    ; Call #R$9510.
@@ -4899,8 +5009,8 @@ c$943C PUSH HL       ; {Stash #REGhl and #REGde on the stack.
 
 ; Calculate Card
 ;
-; Used by the routines at #R$9337, #R$936E, #R$93B0, #R$9412, #R$943C and
-; #R$96D1.
+; Used by the routines at #R$9341, #R$9359, #R$936E, #R$93B0, #R$93C9, #R$93DE,
+; #R$9412, #R$943C, #R$9447 and #R$96D1.
 ;
 ;   HL Pointer to a card count in #R$9540
 ; O:A The card ID that the card count refers to
@@ -4911,43 +5021,61 @@ c$9473 LD DE,$9540   ; #REGde=#R$9540.
  $9479 LD A,L        ; #REGa=#REGl.
  $947A RET           ; Return.
 
-; Routine at 947B
+; Find Highest Card
 ;
-; Used by the routines at #R$9337, #R$93B0, #R$9412 and #R$943C.
-c$947B LD D,A        ; #REGd=#REGa.
- $947C LD E,$00      ; #REGe=#N$00.
- $947E PUSH IX       ; Stash #REGix on the stack.
- $9480 POP HL        ; Restore #REGhl from the stack.
- $9481 LD B,$05      ; #REGb=#N$05.
-*$9483 LD A,(HL)     ; #REGa=*#REGhl.
- $9484 AND %00001111 ; Keep only bits 0-3.
+; Used by the routines at #R$9341, #R$93B0, #R$93DE, #R$9412 and #R$9447.
+;
+; A Card value
+; IX Pointer to either the player or girls hand
+@label=FindHighestCard
+c$947B LD D,A        ; Copy the card value into #REGd.
+ $947C LD E,$00      ; Initialise #REGe to #N$00.
+ $947E PUSH IX       ; {Copy the hand pointer into #REGhl from #REGix (using
+ $9480 POP HL        ; the stack).}
+ $9481 LD B,$05      ; Set a counter in #REGb to check all #N$05 cards in this
+                     ; hand.
+@label=FindHighestCard_Loop
+*$9483 LD A,(HL)     ; Fetch the card value and store it in #REGa.
+ $9484 AND %00001111 ; Convert it into a suit-less value (by keeping only bits
+                     ; 0-3).
  $9486 CP D          ; {Jump to #R$9494 if #REGa is equal to #REGd.
  $9487 JR Z,$9494    ; }
-*$9489 INC HL        ; Increment #REGhl by one.
- $948A DJNZ $9483    ; Decrease counter by one and loop back to #R$9483 until
-                     ; counter is zero.
+@label=FindHighestCard_Continue
+*$9489 INC HL        ; Move the hand pointer to the next card.
+ $948A DJNZ $9483    ; Decrease the card counter by one and loop back to #R$9483 until all
+                     ; cards in the hand have been evaluated.
  $948C LD A,E        ; #REGa=#REGe.
- $948D LD B,$04      ; #REGb=#N$04.
-*$948F SRA A         ; Shift #REGa right (with carry).
- $9491 DJNZ $948F    ; Decrease counter by one and loop back to #R$948F until
-                     ; counter is zero.
+; Work out the suit.
+ $948D LD B,$04      ; {Shift #REGa right four positions.
+@label=HighestCardSuitShift_Loop
+*$948F SRA A         ;
+ $9491 DJNZ $948F    ; }
  $9493 RET           ; Return.
+@label=HighestCard_FoundMatch
 *$9494 LD A,(HL)     ; {Jump to #R$9489 if *#REGhl is lower than #REGe.
  $9495 CP E          ;
  $9496 JR C,$9489    ; }
  $9498 LD E,A        ; #REGe=#REGa.
  $9499 JR $9489      ; Jump to #R$9489.
 
-; Data block at 949B
-b$949B DEFB $00
+; Hand Evaluation Table
+@label=TableHandEvaluation_Type
+g$949B DEFB $00
+@label=TableHandEvaluation_Card
  $949C DEFB $00
+@label=TableHandEvaluation_HighCard
  $949D DEFB $00
+@label=TableHandEvaluation_?
  $949E DEFB $00
- $949F DEFB $00,$00,$00
+@label=TableHandEvaluation_??
+ $949F DEFB $00
+ $94A0 DEFB $00
+ $94A1 DEFB $00
 
-; Routine at 94A2
+; Handler: Straight Flush
 ;
-; Used by the routine at #R$9337.
+; Used by the routine at #R$9341.
+@label=Handler_StraightFlush
 c$94A2 LD A,($954D)  ; {Return if *#R$954D is not equal to #N$01.
  $94A5 CP $01        ;
  $94A7 RET NZ        ; }
@@ -4967,6 +5095,9 @@ c$94A2 LD A,($954D)  ; {Return if *#R$954D is not equal to #N$01.
 c$94AA LD HL,$9540   ; #REGhl=#R$9540.
  $94AD LD B,$0D      ; Set a counter in #REGb of the number of possible values of cards
                      ; there are in one suit.
+; There's no need to check any further if there's a match, as if there
+; are #N$04 of any card value, there are only #N$05 cards in one hand - so
+; there can't be a second match.
 @label=Handler_FourOfAKind_Loop
 *$94AF LD A,(HL)     ; {Return if *#REGhl is equal to #N$04.
  $94B0 CP $04        ;
@@ -4977,43 +5108,65 @@ c$94AA LD HL,$9540   ; #REGhl=#R$9540.
  $94B6 INC B         ; Increment #REGb by one.
  $94B7 RET           ; Return.
 
-; Routine at 94B8
+; Handler: Full House
 ;
 ; Used by the routine at #R$936E.
+@label=Handler_FullHouse
 c$94B8 CALL $94DA    ; Call #R$94DA.
  $94BB LD ($9516),HL ; Write #REGhl to *#R$9516.
- $94BE RET NZ        ; Return if #REGa is not zero.
+; If there's no three-of-a-kind then there's no full house, return here.
+ $94BE RET NZ        ; Return there was no three-of-a-kind match found.
  $94BF JR $9506      ; Jump to #R$9506.
 
-; Routine at 94C1
+; Handler: Flush
 ;
 ; Used by the routine at #R$9386.
+@label=Handler_Flush
 c$94C1 LD A,($954D)  ; {Compare *#R$954D with #N$01.
  $94C4 CP $01        ; }
  $94C6 RET           ; Return.
 
-; Routine at 94C7
+; Handler: Straight
 ;
 ; Used by the routines at #R$93B0 and #R$94A2.
-c$94C7 LD HL,$953F   ; #REGhl=#R$9540(#N$953F).
+@label=Handler_Straight
+c$94C7 LD HL,$953F   ; #REGhl=#R$9540(#N$953F) (e.g. #R$9540-#N$01).
+; Keep looping through the duplicate values until we find a card which
+; the player has only one of.
+@label=FindFirstCard_Loop
 *$94CA INC HL        ; Increment #REGhl by one.
  $94CB LD A,(HL)     ; {Jump to #R$94CA if *#REGhl is not equal to #N$01.
  $94CC CP $01        ;
  $94CE JR NZ,$94CA   ; }
- $94D0 LD B,$05      ; #REGb=#N$05.
-*$94D2 LD A,(HL)     ; {Return if *#REGhl is not equal to #N$01.
- $94D3 CP $01        ;
+; We've found the first card, so check if there's a sequence from here.
+ $94D0 LD B,$05      ; Set a counter in #REGb we want to check all #N$05 cards.
+; If it's a genuine straight, then the count for all five cards will be
+; #N$01.
+@label=Handler_Straight_Loop
+*$94D2 LD A,(HL)     ; {Return if the duplicate count is anything other than
+ $94D3 CP $01        ; #N$01.
  $94D5 RET NZ        ; }
  $94D6 INC HL        ; Increment #REGhl by one.
- $94D7 DJNZ $94D2    ; Decrease counter by one and loop back to #R$94D2 until
-                     ; counter is zero.
+ $94D7 DJNZ $94D2    ; Decrease the card counter by one and loop back to #R$94D2 until all
+                     ; #N$05 cards have been checked.
  $94D9 RET           ; Return.
 
-; Routine at 94DA
+; Handler: Three Of A Kind
 ;
-; Used by the routines at #R$93B0 and #R$94B8.
+; Used by the routines at #R$93C9 and #R$94B8.
+;
+; .
+;
+; #R$9540 holds counts of duplicate values of cards, this routine
+; specifically looks for three-of-a-kind matches.
+@label=Handler_ThreeOfAKind
 c$94DA LD HL,$9540   ; #REGhl=#R$9540.
- $94DD LD B,$0D      ; #REGb=#N$0D.
+ $94DD LD B,$0D      ; Set a counter in #REGb of the number of possible values of cards
+                     ; there are in one suit.
+; There's no need to check any further if there's a match, as if there
+; are #N$03 of any card value, there are only #N$05 cards in one hand - so
+; there can't be a second match.
+@label=Handler_ThreeOfAKind_Loop
 *$94DF LD A,(HL)     ; {Return if *#REGhl is equal to #N$03.
  $94E0 CP $03        ;
  $94E2 RET Z         ; }
@@ -5023,22 +5176,38 @@ c$94DA LD HL,$9540   ; #REGhl=#R$9540.
  $94E6 INC B         ; Increment #REGb by one.
  $94E7 RET           ; Return.
 
-; Routine at 94E8
+; Handler: Two Pairs
 ;
-; Used by the routine at #R$93B0.
+; Used by the routine at #R$93DE.
+;
+; .
+;
+; #R$9540 holds counts of duplicate values of cards, this routine
+; specifically looks for two pair matches.
+@label=Handler_TwoPairs
 c$94E8 LD HL,$9540   ; #REGhl=#R$9540.
- $94EB LD B,$0D      ; #REGb=#N$0D.
+ $94EB LD B,$0D      ; Set a counter in #REGb of the number of possible values of cards
+                     ; there are in one suit.
+@label=CheckTwoPairs_Loop
 *$94ED LD A,(HL)     ; {Jump to #R$94F7 if *#REGhl is equal to #N$02.
  $94EE CP $02        ;
  $94F0 JR Z,$94F7    ; }
  $94F2 INC HL        ; Increment #REGhl by one.
  $94F3 DJNZ $94ED    ; Decrease counter by one and loop back to #R$94ED until
                      ; counter is zero.
+@label=TwoPairs_Return
 *$94F5 INC B         ; Increment #REGb by one.
  $94F6 RET           ; Return.
-*$94F7 DEC B         ; Decrease #REGb by one.
+; One pair exists, let's look for a second pair.
+@label=FoundOnePair
+*$94F7 DEC B         ; Decrease #REGb by one, as we don't need to count the value we're
+                     ; already on.
  $94F8 LD ($9516),HL ; Write #REGhl to *#R$9516.
- $94FB JR Z,$94F5    ; Jump to #R$94F5 if #REGb is zero.
+; Don't bother with the second loop if this match was the last card value.
+ $94FB JR Z,$94F5    ; Jump to #R$94F5 if there are no further duplicate counts
+                     ; to check.
+; This entry point is used by the routine at #R$9506.
+@label=CheckSecondPair_Loop
 *$94FD INC HL        ; Increment #REGhl by one.
  $94FE LD A,(HL)     ; {Return if *#REGhl is equal to #N$02.
  $94FF CP $02        ;
@@ -5046,23 +5215,41 @@ c$94E8 LD HL,$9540   ; #REGhl=#R$9540.
  $9502 DJNZ $94FD    ; Decrease counter by one and loop back to #R$94FD until
                      ; counter is zero.
  $9504 JR $94F5      ; Jump to #R$94F5.
-; This entry point is used by the routines at #R$9412 and #R$94B8.
-*$9506 LD B,$0D      ; #REGb=#N$0D.
- $9508 LD HL,$953F   ; #REGhl=#R$9540(#N$953F).
+
+; Handler: Pair
+;
+; Used by the routines at #R$9412 and #R$94B8.
+@label=Handler_Pair
+c$9506 LD B,$0D      ; Set a counter in #REGb of the number of possible values of cards
+                     ; there are in one suit.
+ $9508 LD HL,$953F   ; #REGhl=#R$9540(#N$953F) (e.g. #R$9540-#N$01).
+; Utilise the "second pair loop" check to check for a single pair.
  $950B JR $94FD      ; Jump to #R$94FD.
 
-; Routine at 950D
+; Handler: High Card
 ;
-; Used by the routine at #R$943C.
-c$950D LD HL,$954C   ; #REGhl=#R$954C.
-; This entry point is used by the routine at #R$943C.
-*$9510 LD A,(HL)     ; #REGa=*#REGhl.
- $9511 DEC HL        ; Decrease #REGhl by one.
- $9512 OR A          ; {Jump to #R$9510 if #REGa is zero.
- $9513 JR Z,$9510    ; }
+; Used by the routine at #R$9447.
+;
+; .
+;
+; Starting with the ace, work backwards until we find the highest value
+; card in the current hand.
+@label=Handler_HighCard
+c$950D LD HL,$954C   ; #REGhl=#R$954C (e.g. the end of #R$9540).
+; This entry point is used by the routine at #R$9447.
+@label=Handler_HighCard_Loop
+*$9510 LD A,(HL)     ; Fetch the duplicate count for the current card.
+ $9511 DEC HL        ; Decrease the duplicates table pointer by one.
+ $9512 OR A          ; {Keep jumping back to #R$9510 until the duplicate count shows this
+ $9513 JR Z,$9510    ; card is present in the hand.}
  $9515 RET           ; Return.
 
-; Game status buffer entry at 9516
+; Duplicate Count Pointer
+;
+; Points to one of the values in #R$9540.
+; .
+; Used by the routines at #R$936E, #R$93B0, #R$94B8 and #R$94E8.
+@label=PointerDuplicateCount
 g$9516 DEFW $0000
 
 ; Count Duplicates
@@ -5134,7 +5321,14 @@ g$9540 DEFB $00      ; Count of how many "#CARD(#PC-$9540)" cards this hand
  $954C DEFB $00      ; Count of how many "#CARD(#PC-$9540)" cards this hand
                      ; holds.
 
-; Game status buffer entry at 954D
+; Flush Flag
+;
+; #TABLE(default,centre,centre)
+; { =h Byte | =h Meaning }
+; { #N$00 | No flush }
+; { #N$01 | Flush }
+; TABLE#
+@label=FlushFlag
 g$954D DEFB $00
 
 ; Draw Cards
@@ -5275,25 +5469,37 @@ g$95BB DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
  $95D5 DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
  $95E2 DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 
-; Routine at 95EF
+; Count Suits
 ;
 ; Used by the routine at #R$9518.
-c$95EF PUSH IX       ; {#REGde=#REGix (using the stack).
+;
+;   IX Pointer to either the player or girls hand
+; O:A #N$00 for "no flush", #N$01 for "flush"
+@label=CountSuits
+c$95EF PUSH IX       ; {Load the hand pointer into #REGde (using the stack).
  $95F1 POP DE        ; }
- $95F2 LD B,$04      ; #REGb=#N$04.
- $95F4 LD A,(DE)     ; #REGa=*#REGde.
- $95F5 AND %11110000 ; Keep only bits 4-7.
- $95F7 LD H,A        ; #REGh=#REGa.
-*$95F8 INC DE        ; Increment #REGde by one.
- $95F9 LD A,(DE)     ; #REGa=*#REGde.
- $95FA AND %11110000 ; Keep only bits 4-7.
- $95FC CP H          ; {Jump to #R$9609 if #REGa is not equal to #REGh.
+; Only having all four suits present is meaningful.
+ $95F2 LD B,$04      ; Set a counter in #REGb for the number of cards left to
+                     ; check.
+ $95F4 LD A,(DE)     ; Fetch the primary card for comparison.
+ $95F5 AND %11110000 ; {Store the suit value in #REGh.
+ $95F7 LD H,A        ; }
+; Loop through the remaining #N$04 cards.
+@label=CountSuits_Loop
+*$95F8 INC DE        ; Move the pointer to the next card.
+ $95F9 LD A,(DE)     ; Fetch the card.
+ $95FA AND %11110000 ; Store the suit value in #REGa.
+ $95FC CP H          ; {Jump to #R$9609 if the suits of the two cards differ.
  $95FD JR NZ,$9609   ; }
- $95FF DJNZ $95F8    ; Decrease counter by one and loop back to #R$95F8 until
-                     ; counter is zero.
+ $95FF DJNZ $95F8    ; Decrease the suit counter by one and loop back to
+                     ; #R$95F8 until counter is zero.
+; All four suits are present in the hand! We have a flush.
  $9601 LD A,$01      ; #REGa=#N$01.
+@label=WriteFlushFlag
 *$9603 LD ($954D),A  ; Write #REGa to *#R$954D.
  $9606 JP $9337      ; Jump to #R$9337.
+; This hand doesn't contain a flush.
+@label=NotAFlush
 *$9609 XOR A         ; #REGa=#N$00.
  $960A JR $9603      ; Jump to #R$9603.
 
@@ -5463,13 +5669,31 @@ g$96B6 DEFB $64
 @label=CurrentRaiseValue
 g$96B7 DEFB $00
 
-; Current Round
-@label=CurrentRound
+; Turn Counter
+;
+; Incremented when a full turn (both players have taken an action) is complete.
+@label=TurnCounter
 g$96B8 DEFB $00
 
-; Game status buffer entry at 96B9
-g$96B9 DEFB $00,$00,$00,$00,$00,$00,$00
- $96C0 DEFB $00,$00,$00,$00,$00,$00,$00
+; Copy Players Evaluation Table
+@label=Table_PlayerEvaluation
+g$96B9 DEFB $00
+ $96BA DEFB $00
+ $96BB DEFB $00
+ $96BC DEFB $00
+ $96BD DEFB $00
+ $96BE DEFB $00
+ $96BF DEFB $00
+
+; Copy Girls Evaluation Table
+@label=Table_GirlEvaluation
+g$96C0 DEFB $00
+ $96C1 DEFB $00
+ $96C2 DEFB $00
+ $96C3 DEFB $00
+ $96C4 DEFB $00
+ $96C5 DEFB $00
+ $96C6 DEFB $00
 
 ; Players Hand
 @label=PlayersHand
@@ -5479,20 +5703,29 @@ g$96C7 DEFB $00,$00,$00,$00,$00
 @label=GirlsHand
 g$96CC DEFB $00,$00,$00,$00,$00
 
-; Routine at 96D1
+; Girl Mark Cards
 ;
 ; Used by the routine at #R$8D4A.
+;
+; .
+;
+; The hand has been "evaluated" at this point, so don't do anything if
+; there is already a chance of winning.
+@label=GirlMarkCards
 c$96D1 LD A,($949B)  ; #REGa=*#R$949B.
  $96D4 LD HL,$971E   ; #REGhl=#R$971E.
- $96D7 LD B,$04      ; #REGb=#N$04.
-*$96D9 CP (HL)       ; {Return if *#REGhl is equal to #REGa.
+ $96D7 LD B,$04      ; Set a counter in #REGb of the number of game "outcome" types we
+                     ; want to check against: #N$04.
+@label=CheckOutcomes_Loop
+*$96D9 CP (HL)       ; {Return if the current hand has a positive outcome type.
  $96DA RET Z         ; }
- $96DB INC HL        ; Increment #REGhl by one.
+ $96DB INC HL        ; Increment the outcomes pointer by one.
  $96DC DJNZ $96D9    ; Decrease counter by one and loop back to #R$96D9 until
                      ; counter is zero.
+; The girls hand has no cards which form a good poker hand.
  $96DE CALL $9579    ; Call #R$9579.
- $96E1 CP $0A        ; {Jump to #R$96EC if #REGa is lower than #N$0A.
- $96E3 JR C,$96EC    ; }
+ $96E1 CP $0A        ; {Jump to #R$96EC if the random number is lower than
+ $96E3 JR C,$96EC    ; #N$0A.}
  $96E5 LD A,($949B)  ; {Jump to #R$9705 if *#R$949B is equal to #N$03.
  $96E8 CP $03        ;
  $96EA JR Z,$9705    ; }
@@ -5513,7 +5746,7 @@ c$96D1 LD A,($949B)  ; #REGa=*#R$949B.
  $9702 DJNZ $96F7    ; Decrease counter by one and loop back to #R$96F7 until
                      ; counter is zero.
  $9704 RET           ; Return.
-*$9705 LD HL,$953F   ; #REGhl=#R$9540(#N$953F).
+*$9705 LD HL,$953F   ; #REGhl=#R$9540(#N$953F) (e.g. #R$9540-#N$01).
 *$9708 INC HL        ; Increment #REGhl by one.
  $9709 LD A,(HL)     ; #REGa=*#REGhl.
  $970A DEC A         ; Decrease #REGa by one.
@@ -5529,11 +5762,12 @@ c$96D1 LD A,($949B)  ; #REGa=*#R$949B.
  $971B LD (HL),$FF   ; Write #N$FF to *#REGhl.
  $971D RET           ; Return.
 
-; Game status buffer entry at 971E
-g$971E DEFB $09
- $971F DEFB $07
- $9720 DEFB $06
- $9721 DEFB $05
+; Outcome Types
+@label=OutcomeTypes
+g$971E DEFB $09      ; "#OUTCOME(#PEEK(#PC))".
+ $971F DEFB $07      ; "#OUTCOME(#PEEK(#PC))".
+ $9720 DEFB $06      ; "#OUTCOME(#PEEK(#PC))".
+ $9721 DEFB $05      ; "#OUTCOME(#PEEK(#PC))".
 
 ; Quit Game
 ;
