@@ -1270,23 +1270,26 @@ g$7049 DEFB $00
 ; UDGTABLE# #POPS
 ; Used by the routines at #R$6ECC and #R$729A.
 @label=DisplayWinnersListPage
-c$704A LD A,$07       ; {#HTML(Write #INK$07 to *<a rel="noopener nofollow"
- $704C LD ($5C8D),A   ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.)
+c$704A LD A,$07       ; {#HTML(Write #INK$07 to
+ $704C LD ($5C8D),A   ; *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.)
                       ; }
- $704F CALL $0DAF     ; #HTML(Call <a rel="noopener nofollow"
-                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.)
- $7052 LD HL,$0000    ; {Copy #N$1B00 bytes of data from the Spectrum ROM
- $7055 LD DE,$4000    ; (literally from #N($0000,$04,$04) to the screen.
+ $704F CALL $0DAF     ; #HTML(Call
+                      ; <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.)
+ $7052 LD HL,$0000    ; {Copy #N$1B00 bytes of data from the Spectrum ROM (literally from
+ $7055 LD DE,$4000    ; address #N($0000,$04,$04) to the screen buffer!)
  $7058 LD BC,$1B00    ;
  $705B LDIR           ; }
  $705D LD DE,$7073    ; #REGde=#R$7073.
- $7060 LD BC,$0227    ;
- $7063 CALL $203C     ; #HTML(Call <a rel="noopener nofollow"
-                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.)
- $7066 RES 5,(IY+$01) ;
+ $7060 LD BC,$0227    ; Set the screen co-ordinates to #N$0227.
+ $7063 CALL $203C     ; #HTML(Call
+                      ; <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.)
+ $7066 RES 5,(IY+$01) ; #HTML(Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>
+                      ; which resets "when a new key has been pressed".)
+; #HTML(Big pause <code>HALT</code> loop #N$10000 times, can be interrupted
+; with a keypress.)
  $706A LD BC,$0000    ; #REGbc=#N($0000,$04,$04).
- $706D CALL $1F3D     ; #HTML(Call <a rel="noopener nofollow"
-                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.)
+ $706D CALL $1F3D     ; #HTML(Call
+                      ; <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.)
  $7070 JP $6E9D       ; Jump to #R$6E9D.
 
 ; Messaging: Winners List
@@ -1580,20 +1583,26 @@ c$73BE LD A,$07       ; {#HTML(Write #INK$07 to *<a rel="noopener nofollow"
  $73CB CALL $0DAF     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.)
  $73CE LD DE,$73FA    ; #REGde=#R$73FA.
- $73D1 LD BC,$0283    ; #REGbc=#N$0283.
+ $73D1 LD BC,$0283    ; Set the screen co-ordinates to #N$0283.
  $73D4 CALL $203C     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.)
- $73D7 RES 5,(IY+$01) ;
+ $73D7 RES 5,(IY+$01) ; #HTML(Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>
+                      ; which resets "when a new key has been pressed".)
+; #HTML(Big pause <code>HALT</code> loop #N$10000 times, can be interrupted
+; with a keypress.)
  $73DB LD BC,$0000    ; #REGbc=#N($0000,$04,$04).
  $73DE CALL $1F3D     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.)
  $73E1 CALL $0DAF     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DAF.html">CL_ALL</a>.)
  $73E4 LD DE,$767D    ; #REGde=#R$767D.
- $73E7 LD BC,$0122    ; #REGbc=#N$0122.
+ $73E7 LD BC,$0122    ; Set the screen co-ordinates to #N$0122.
  $73EA CALL $203C     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1FFC.html#203C">PR_STRING</a>.)
- $73ED RES 5,(IY+$01) ;
+ $73ED RES 5,(IY+$01) ; #HTML(Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>
+                      ; which resets "when a new key has been pressed".)
+; #HTML(Big pause <code>HALT</code> loop #N$10000 times, can be interrupted
+; with a keypress.)
  $73F1 LD BC,$0000    ; #REGbc=#N($0000,$04,$04).
  $73F4 CALL $1F3D     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.)
@@ -2135,16 +2144,21 @@ t$767D DEFM "                                "
 c$779F DI            ; Disable interrupts.
  $77A0 XOR A         ; {#REGi=#N$00.
  $77A1 LD I,A        ; }
- $77A3 LD C,$03      ; #REGc=#N$03.
-*$77A5 LD B,$00      ; #REGb=#N$00.
-*$77A7 XOR A         ; #REGa=#N$00.
-*$77A8 OUT ($FE),A   ;
+ $77A3 LD C,$03      ; Set a counter in #REGc for the total number of loops:
+                     ; #N$03.
+@label=BorderFlash
+*$77A5 LD B,$00      ; Set the inner counter in #REGb to #N$00 (which is #N$0100 as it's
+                     ; decreased by one on the first loop).
+@label=BorderFlash_Loop
+*$77A7 XOR A         ; Initialise the border to #N$00 using #REGa.
+@label=BorderFlashInner_Loop
+*$77A8 OUT ($FE),A   ; Set the border to the colour in #REGa.
  $77AA DEC A         ; {Decrease #REGa by one and jump back to #R$77A8 until
  $77AB JR NZ,$77A8   ; #REGa is zero.}
  $77AD DJNZ $77A7    ; Decrease counter by one and loop back to #R$77A7 until
                      ; counter is zero.
- $77AF DEC C         ; {Decrease #REGc by one and jump back to #R$77A5 until
- $77B0 JR NZ,$77A5   ; #REGc is zero.}
+ $77AF DEC C         ; {Decrease the loops counter by one and jump back to
+ $77B0 JR NZ,$77A5   ; #R$77A5 until the counter is zero.}
  $77B2 LD HL,($5CA8) ; {#HTML(Jump to #R$77C0 if *<a rel="noopener nofollow"
  $77B5 LD A,H        ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C92.html#5CA6">MEMBOT</a>
  $77B6 OR L          ; (mem-4+#N$02) is not zero.)
@@ -2159,7 +2173,11 @@ c$779F DI            ; Disable interrupts.
  $77BB CALL $7D97    ; }
  $77BE EI            ; Enable interrupts.
  $77BF RET           ; Return.
-*$77C0 LD HL,$E820   ; #REGhl=#R$E820.
+
+; Routine at 77C0
+;
+; Used by the routine at #R$779F.
+c$77C0 LD HL,$E820   ; #REGhl=#R$E820.
  $77C3 LD DE,$F4C8   ; #REGde=#R$F4C8.
 *$77C6 LD (HL),$80   ; Write #N$80 to *#REGhl.
  $77C8 INC HL        ; Increment #REGhl by one.
@@ -2171,7 +2189,7 @@ c$779F DI            ; Disable interrupts.
 
 ; Turn Off Theme Tune
 ;
-; Used by the routine at #R$779F.
+; Used by the routine at #R$77C0.
 ;
 ; .
 ;
@@ -4513,21 +4531,29 @@ c$91B2 LD B,$78      ; #REGb=#COLOUR$78.
 ; In-Game: Update Cursor Position
 ;
 ; Used by the routines at #R$9171, #R$918B and #R$91B2.
+;
+; B Attribute value
 @label=InGame_UpdateCursorPosition
 c$91C2 LD A,($91D8)  ; #REGa=*#R$91D8.
- $91C5 LD HL,$5AB7   ; #REGhl=#N$5AB7 (attribute buffer location).
- $91C8 LD DE,$000A   ; #REGde=#N($000A,$04,$04).
- $91CB INC A         ; Increment #REGa by one.
-*$91CC ADD HL,DE     ; #REGhl+=#REGde.
+ $91C5 LD HL,$5AB7   ; Set the start attribute buffer location in #REGhl.
+ $91C8 LD DE,$000A   ; Set the width of each section in #REGde.
+ $91CB INC A         ; Increment #REGa by one for the loop below.
+; Add #N($000A,$04,$04) to the attribute buffer pointer for each digit of
+; the position.
+@label=UpdateCursorPosition_Loop
+*$91CC ADD HL,DE     ; #REGhl+=#N($000A,$04,$04).
  $91CD DEC A         ; Decrease #REGa by one.
  $91CE JR NZ,$91CC   ; Jump to #R$91CC until #REGa is zero.
- $91D0 LD A,B        ; #REGa=#REGb.
+; Now colour the cursor attribute. The position is now held in #REGhl.
+ $91D0 LD A,B        ; #REGa=attribute value.
 ; This entry point is used by the routine at #R$9258.
-*$91D1 LD B,$0A      ; #REGb=#N$0A.
-*$91D3 LD (HL),A     ; Write #REGa to *#REGhl.
+@label=UpdateCursorAttribute
+*$91D1 LD B,$0A      ; Set the width count in #REGb.
+@label=UpdateCursorAttribute_Loop
+*$91D3 LD (HL),A     ; Write the attribute value to *#REGhl.
  $91D4 INC HL        ; Increment #REGhl by one.
- $91D5 DJNZ $91D3    ; Decrease counter by one and loop back to #R$91D3 until
-                     ; counter is zero.
+ $91D5 DJNZ $91D3    ; Decrease the width counter by one and loop back to #R$91D3 until
+                     ; the whole cursor position has been painted.
  $91D7 RET           ; Return.
 
 ; In-Game: Highlighted Option
@@ -4556,40 +4582,53 @@ c$91D9 LD A,$0A      ; {Call #R$7D97 using message block #R$8735(#N$0A).
 ; Player Action: Raise
 ;
 ; Used by the routine at #R$91B2.
+;
+; .
+;
+; The player isn't allowed to raise on the last of their turns.
 @label=PlayerAction_Raise
 c$91E0 LD A,($8E59)  ; {Jump to #R$9171 if *#R$8E59 is equal to #N$07.
  $91E3 CP $07        ;
  $91E5 JP Z,$9171    ; }
+; The player can't raise if they have no cash.
  $91E8 LD A,($96B5)  ; {#REGc=*#R$96B5.
  $91EB LD C,A        ; }
-; The player can't raise if they have no cash.
  $91EC OR A          ; {Jump to #R$9171 if *#R$96B5 is zero.
  $91ED JP Z,$9171    ; }
 ; The player can't raise if the girl has no cash.
  $91F0 LD A,($96B6)  ; {Jump to #R$9171 if *#R$96B6 is zero.
  $91F3 OR A          ;
  $91F4 JP Z,$9171    ; }
-; Both the player and the girl have cash, but there are still checks to make.
- $91F7 LD A,($96B7)  ; #REGa=*#R$96B7.
- $91FA SUB C         ; #REGa-=#REGc.
- $91FB JP Z,$9171    ; Jump to #R$9171 if {} is zero.
- $91FE ADD A,C       ; #REGa+=#REGc.
- $91FF PUSH AF       ; Stash #REGaf on the stack.
+; Both the player and the girl have cash, but the current raise amount
+; can't take the cash the player has down to zero (they'll have nothing left to
+; raise with).
+ $91F7 LD A,($96B7)  ; {Jump to #R$9171 if *#R$96B7 minus *#R$96B5 is zero.
+ $91FA SUB C         ;
+ $91FB JP Z,$9171    ; }
+; Finally, we're good to go ahead to let the player make a raise, but ...
+; process the girls raise first.
+ $91FE ADD A,C       ; Restore *#R$96B7 back to #REGa.
+ $91FF PUSH AF       ; Stash the current raise amount on the stack.
+; Update the display.
  $9200 LD A,$01      ; {Write #N$01 to *#R$96B7.
  $9202 LD ($96B7),A  ; }
  $9205 CALL $8F7E    ; Call #R$8F7E.
- $9208 POP AF        ; Restore #REGaf from the stack.
+; Action the girls raise.
+ $9208 POP AF        ; Restore the current raise amount from the stack.
  $9209 LD ($96B7),A  ; Write #REGa to *#R$96B7.
  $920C CALL $9245    ; Call #R$9245.
+; Initialise the raise amount for the player.
  $920F LD A,$01      ; {Write #N$01 to *#R$96B7.
  $9211 LD ($96B7),A  ; }
+; Get the new raise amount.
  $9214 CALL $9258    ; Call #R$9258.
- $9217 LD A,($96B5)  ; #REGa=*#R$96B5.
- $921A SUB B         ; #REGa-=#REGb.
- $921B LD ($96B5),A  ; Write #REGa to *#R$96B5.
- $921E LD A,($96B4)  ; #REGa=*#R$96B4.
- $9221 ADD A,B       ; #REGa+=#REGb.
- $9222 LD ($96B4),A  ; Write #REGa to *#R$96B4.
+; Now, action it.
+ $9217 LD A,($96B5)  ; {Take the raise amount away from *#R$96B5 (and write it back to
+ $921A SUB B         ; *#R$96B5).
+ $921B LD ($96B5),A  ; }
+ $921E LD A,($96B4)  ; {Add the raise amount to *#R$96B4 (and write it back to
+ $9221 ADD A,B       ; *#R$96B4).
+ $9222 LD ($96B4),A  ; }
 ; Display a random "nervous about the player raising" message.
 ; #UDGTABLE(default,centre,centre,centre,centre)
 ; { =h ID | =h Message | =h ID | =h Message }
@@ -4609,7 +4648,9 @@ c$91E0 LD A,($8E59)  ; {Jump to #R$9171 if *#R$8E59 is equal to #N$07.
 c$922D LD A,($96B7)  ; {Jump to #R$9242 if *#R$96B7 is zero.
  $9230 OR A          ;
  $9231 JR Z,$9242    ; }
+; The player is staying in the game, so process any raise.
  $9233 CALL $9245    ; Call #R$9245.
+; Reset the raise amount as the player is holding.
  $9236 XOR A         ; {Write #N$00 to *#R$96B7.
  $9237 LD ($96B7),A  ; }
 ; Messaging options:
@@ -4622,6 +4663,8 @@ c$922D LD A,($96B7)  ; {Jump to #R$9242 if *#R$96B7 is zero.
  $923C CALL $7D97    ; }
  $923F LD A,$02      ; {Return with #REGa=#N$02 ("hold").
  $9241 RET           ; }
+; This is more "test" for a showdown but we flag for it anyway just in
+; case.
 @label=PlayerAction_Showdown
 *$9242 LD A,$03      ; {Return with #REGa=#N$03 ("showdown").
  $9244 RET           ; }
@@ -4770,12 +4813,14 @@ t$92C6 DEFB $16,$14,$01 ; PRINT AT: #N(#PEEK(#PC+$01)), #N(#PEEK(#PC+$02)).
 ; Clear down the evaluation table.
 @label=CalculateHand
 c$9337 LD HL,$949B   ; #REGhl=#R$949B.
- $933A LD B,$07      ; #REGb=#N$07.
+ $933A LD B,$07      ; Set a counter in #REGb for the #N$07 evaluation metrics the game
+                     ; utilises.
+; Reset all the evaluation metrics.
 @label=ResetEvaluationTable_Loop
-*$933C LD (HL),$00   ; Write #N$00 to *#REGhl.
- $933E INC HL        ; Increment #REGhl by one.
- $933F DJNZ $933C    ; Decrease counter by one and loop back to #R$933C until
-                     ; counter is zero.
+*$933C LD (HL),$00   ; Write #N$00 to the evaluation metric.
+ $933E INC HL        ; Increment the evaluation metric pointer by one.
+ $933F DJNZ $933C    ; Decrease the metrics counter by one and loop back to #R$933C all
+                     ; the evaluation metrics have been reset.
 ; Continue on to #R$9341.
 
 ; Check For Straight Flush
@@ -4789,11 +4834,15 @@ c$9337 LD HL,$949B   ; #REGhl=#R$949B.
 c$9341 CALL $94A2    ; Call #R$94A2.
  $9344 JR NZ,$9359   ; Jump to #R$9359 if there are no straight flushes.
 ; There is a straight flush! Process it.
+; .
+; Find the "seed" card value from its position in the duplicates table.
  $9346 DEC HL        ; Decrease #REGhl by one.
  $9347 CALL $9473    ; Call #R$9473.
- $934A LD ($949C),A  ; Write #REGa to *#R$949C.
+ $934A LD ($949C),A  ; Write this card to *#R$949C.
+; Also find the high card in case it's a draw.
  $934D CALL $947B    ; Call #R$947B.
  $9350 LD ($949D),A  ; Write #REGa to *#R$949D.
+; Record this hand "type".
  $9353 LD A,$09      ; {Write "#OUTCOME$09" to *#R$949B.
  $9355 LD ($949B),A  ; }
  $9358 RET           ; Return.
@@ -4811,6 +4860,7 @@ c$9359 CALL $94AA    ; Call #R$94AA.
 ; There is a four-of-a-kind! Process it.
  $935E CALL $9473    ; Call #R$9473.
  $9361 LD ($949C),A  ; Write #REGa to *#R$949C.
+; Record this hand "type".
  $9364 LD A,$08      ; {Write "#OUTCOME$08" to *#R$949B.
  $9366 LD ($949B),A  ; }
  $9369 XOR A         ; {Write #N$00 to *#R$949D.
@@ -4831,6 +4881,7 @@ c$936E CALL $94B8    ; Call #R$94B8.
  $9373 LD HL,($9516) ; #REGhl=*#R$9516.
  $9376 CALL $9473    ; Call #R$9473.
  $9379 LD ($949C),A  ; Write #REGa to *#R$949C.
+; Record this hand "type".
  $937C LD A,$07      ; {Write "#OUTCOME$07" to *#R$949B.
  $937E LD ($949B),A  ; }
  $9381 XOR A         ; {Write #N$00 to *#R$949D.
@@ -4854,6 +4905,7 @@ c$9386 CALL $94C1    ; Call #R$94C1.
  $9392 DJNZ $9390    ; Decrease counter by one and loop back to #R$9390 until
                      ; counter is zero.
  $9394 LD ($949D),A  ; Write #REGa to *#R$949D.
+; Record this hand "type".
  $9397 LD A,$06      ; {Write "#OUTCOME$06" to *#R$949B.
  $9399 LD ($949B),A  ; }
  $939C LD D,$00      ; #REGd=#N$00.
@@ -4887,6 +4939,7 @@ c$93B0 CALL $94C7    ; Call #R$94C7.
  $93BA LD ($949C),A  ; Write #REGa to *#R$949C.
  $93BD CALL $947B    ; Call #R$947B.
  $93C0 LD ($949D),A  ; Write #REGa to *#R$949D.
+; Record this hand "type".
  $93C3 LD A,$05      ; {Write "#OUTCOME$05" to *#R$949B.
  $93C5 LD ($949B),A  ; }
  $93C8 RET           ; Return.
@@ -4904,6 +4957,7 @@ c$93C9 CALL $94DA    ; Call #R$94DA.
 ; There is a three-of-a-kind! Process it.
  $93CE CALL $9473    ; Call #R$9473.
  $93D1 LD ($949C),A  ; Write #REGa to *#R$949C.
+; Record this hand "type".
  $93D4 LD A,$04      ; {Write "#OUTCOME$04" to *#R$949B.
  $93D6 LD ($949B),A  ; }
  $93D9 XOR A         ; {Write #N$00 to *#R$949D.
@@ -4937,6 +4991,7 @@ c$93DE CALL $94E8    ; Call #R$94E8.
  $9403 LD A,($949C)  ; #REGa=*#R$949C.
  $9406 CALL $947B    ; Call #R$947B.
  $9409 LD ($949D),A  ; Write #REGa to *#R$949D.
+; Record this hand "type".
  $940C LD A,$03      ; {Write "#OUTCOME$03" to *#R$949B.
  $940E LD ($949B),A  ; }
  $9411 RET           ; Return.
@@ -4954,6 +5009,7 @@ c$9412 CALL $9506    ; Call #R$9506.
 ; There is a pair! Process it.
  $9417 CALL $9473    ; Call #R$9473.
  $941A LD ($949C),A  ; Write #REGa to *#R$949C.
+; Record this hand "type".
  $941D LD A,$02      ; {Write "#OUTCOME$02" to *#R$949B.
  $941F LD ($949B),A  ; }
  $9422 LD B,$0D      ; Set a counter in #REGb of the number of possible values of cards
@@ -4995,6 +5051,7 @@ c$9447 CALL $950D    ; Call #R$950D.
  $9452 CALL $947B    ; Call #R$947B.
  $9455 LD ($949D),A  ; Write #REGa to *#R$949D.
  $9458 POP HL        ; Restore #REGhl from the stack.
+; Record this hand "type".
  $9459 LD A,$01      ; {Write "#OUTCOME$01" to *#R$949B.
  $945B LD ($949B),A  ; }
  $945E LD B,$04      ; #REGb=#N$04.
@@ -5388,30 +5445,36 @@ c$954E PUSH IX       ; Stash #REGix on the stack.
 ; Get Random Number
 ;
 ; Used by the routines at #R$7D97, #R$954E, #R$960C and #R$96D1.
+;
+; .
+;
+; The #REGr register is incremented every instruction, providing a
+; pseudo-random value.
 @label=GetRandomNumber
-c$9579 LD A,R        ; {#REGh=#REGr.
- $957B LD H,A        ; }
-*$957C DEC A         ;
- $957D JR NZ,$957C   ;
- $957F LD A,R        ; {#REGl=#REGr.
- $9581 LD L,A        ; }
- $9582 LD DE,($5C79) ; {#HTML(#REGhl+=*<a rel="noopener nofollow"
- $9586 ADD HL,DE     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C78.html">FRAMES+#N$01</a>.)
-                     ; }
- $9587 LD A,$3F      ;
- $9589 AND H         ;
- $958A LD H,A        ;
- $958B LD A,(HL)     ;
- $958C LD H,A        ;
-*$958D DEC A         ;
- $958E JR NZ,$958D   ;
- $9590 LD A,H        ;
- $9591 LD H,$34      ;
-*$9593 SUB H         ;
- $9594 JR Z,$9593    ;
- $9596 CP $35        ;
- $9598 JR NC,$9593   ;
- $959A RET           ; Return.
+c$9579 LD A,R         ; {#REGh=#REGr.
+ $957B LD H,A         ; }
+@label=WasteTime_Loop
+*$957C DEC A          ; {Count down to zero from the refresh value.
+ $957D JR NZ,$957C    ; }
+ $957F LD A,R         ; {#REGl=#REGr.
+ $9581 LD L,A         ; }
+ $9582 LD DE,($5C79)  ; {#HTML(#REGhl+=*<a rel="noopener nofollow"
+ $9586 ADD HL,DE      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C78.html">FRAMES+#N$01</a>.)
+                      ; }
+ $9587 LD A,%00111111 ; {Mask off the lower 6 bits of #REGh.
+ $9589 AND H          ;
+ $958A LD H,A         ; }
+ $958B LD A,(HL)      ;
+ $958C LD H,A         ;
+*$958D DEC A          ;
+ $958E JR NZ,$958D    ;
+ $9590 LD A,H         ;
+ $9591 LD H,$34       ;
+*$9593 SUB H          ;
+ $9594 JR Z,$9593     ;
+ $9596 CP $35         ;
+ $9598 JR NC,$9593    ;
+ $959A RET            ; Return.
 
 ; Reset Deck
 ;
@@ -5722,50 +5785,71 @@ g$96CC DEFB $00,$00,$00,$00,$00
 c$96D1 LD A,($949B)  ; #REGa=*#R$949B.
  $96D4 LD HL,$971E   ; #REGhl=#R$971E.
  $96D7 LD B,$04      ; Set a counter in #REGb of the number of game "outcome" types we
-                     ; want to check against: #N$04.
+                     ; want to check against.
+; Loop through each outcome type and see if the current hand contains
+; this outcome.
 @label=CheckOutcomes_Loop
 *$96D9 CP (HL)       ; {Return if the current hand has a positive outcome type.
  $96DA RET Z         ; }
  $96DB INC HL        ; Increment the outcomes pointer by one.
  $96DC DJNZ $96D9    ; Decrease counter by one and loop back to #R$96D9 until
                      ; counter is zero.
-; The girls hand has no cards which form a good poker hand.
+; The girls hand has no cards which form one of the "special" outcomes
+; (special, as in, which aren't able to be found by counting duplicate card
+; face values).
  $96DE CALL $9579    ; Call #R$9579.
  $96E1 CP $0A        ; {Jump to #R$96EC if the random number is lower than
  $96E3 JR C,$96EC    ; #N$0A.}
- $96E5 LD A,($949B)  ; {Jump to #R$9705 if *#R$949B is equal to #N$03.
+; Two pairs is also somewhat of a "special" outcome, so handle it
+; separately.
+ $96E5 LD A,($949B)  ; {Jump to #R$9705 if *#R$949B is equal to "#OUTCOME$03".
  $96E8 CP $03        ;
  $96EA JR Z,$9705    ; }
-*$96EC LD A,($949C)  ; {#REGd=*#R$949C.
- $96EF LD D,A        ; }
+; Handle all other cases.
+@label=FindCardsToMark
+*$96EC LD A,($949C)  ; {Fetch the "special" card from *#R$949C and store it in
+ $96EF LD D,A        ; #REGd.}
  $96F0 LD HL,$96CC   ; #REGhl=#R$96CC.
- $96F3 LD B,$05      ; Set a counter in #REGb of #N$05 for the total number of
-                     ; cards in a hand.
- $96F5 LD C,$03      ; #REGc=#N$03.
-*$96F7 LD A,(HL)     ; #REGa=*#REGhl.
- $96F8 AND %00001111 ; Keep only bits 0-3.
- $96FA CP D          ; {Jump to #R$9701 #REGa is equal to #REGd.
- $96FB JR Z,$9701    ; }
+ $96F3 LD B,$05      ; Set a counter in #REGb for the total number of cards in
+                     ; a hand.
+ $96F5 LD C,$03      ; Set a counter in #REGc of #N$03, this is how many cards we want to
+                     ; select to be redrawn.
+@label=FindCardsToMark_Loop
+*$96F7 LD A,(HL)     ; Fetch the card.
+ $96F8 AND %00001111 ; Convert it into a suit-less value (by keeping only bits
+                     ; 0-3).
+ $96FA CP D          ; {If this card is the "special card" stored in #REGd,
+ $96FB JR Z,$9701    ; jump to #R$9701.}
+; Set the card in the hand to be redrawn.
  $96FD LD (HL),$FF   ; Write #N$FF to *#REGhl.
- $96FF DEC C         ; Decrease #REGc by one.
- $9700 RET Z         ; Return if #REGc is zero.
-*$9701 INC HL        ; Increment #REGhl by one.
- $9702 DJNZ $96F7    ; Decrease counter by one and loop back to #R$96F7 until
-                     ; counter is zero.
+ $96FF DEC C         ; Decrease the selection counter by one.
+ $9700 RET Z         ; Return if the selection counter is zero.
+@label=FindCardsToMark_Next
+*$9701 INC HL        ; Increment the girls hand pointer by one.
+ $9702 DJNZ $96F7    ; Decrease the card counter by one and loop back to #R$96F7 until the
+                     ; counter is zero and all cards in the hand have been checked.
  $9704 RET           ; Return.
+; Find the lowest card value which doesn't have any duplicates.
+@label=FindLowestSingleCard
 *$9705 LD HL,$953F   ; #REGhl=#R$9540(#N$953F) (e.g. #R$9540-#N$01).
-*$9708 INC HL        ; Increment #REGhl by one.
- $9709 LD A,(HL)     ; #REGa=*#REGhl.
- $970A DEC A         ; Decrease #REGa by one.
- $970B JR NZ,$9708   ; Jump to #R$9708 until #REGa is zero.
- $970D CALL $9473    ; Call #R$9473.
- $9710 LD D,A        ; #REGd=#REGa.
+@label=FindLowestSingleCard_Loop
+*$9708 INC HL        ; Increment duplicate table pointer by one.
+ $9709 LD A,(HL)     ; Fetch the duplicate count value.
+ $970A DEC A         ; {Keep jumping back to #R$9708 if there's more than one of this value
+ $970B JR NZ,$9708   ; in the hand.}
+; The card is a single and has no other duplicate face values in the hand.
+ $970D CALL $9473    ; Call #R$9473 to convert the position in the duplicate count table
+                     ; to a card value.
+ $9710 LD D,A        ; Store the card value in #REGd.
  $9711 LD HL,$96CB   ; #REGhl=#R$96CC(#N$96CB) (e.g. #R$96CC-#N$01).
-*$9714 INC HL        ; Increment #REGhl by one.
- $9715 LD A,(HL)     ; #REGa=*#REGhl.
- $9716 AND %00001111 ; Keep only bits 0-3.
- $9718 CP D          ; {Jump to #R$9714 if #REGa is not equal to #REGd.
- $9719 JR NZ,$9714   ; }
+@label=FindCard_Loop
+*$9714 INC HL        ; Increment the girls hand pointer by one.
+ $9715 LD A,(HL)     ; Fetch the card.
+ $9716 AND %00001111 ; Convert it into a suit-less value (by keeping only bits
+                     ; 0-3).
+ $9718 CP D          ; {Keep jumping back to #R$9714 until this card matches the stored
+ $9719 JR NZ,$9714   ; card value in #REGd.}
+; Set the card in the hand to be redrawn.
  $971B LD (HL),$FF   ; Write #N$FF to *#REGhl.
  $971D RET           ; Return.
 
@@ -9166,8 +9250,13 @@ c$FB3A LD HL,$FD09   ; {Write #R$FD09 to *#R$FB55.
 *$FB47 CALL $FB81    ; Call #R$FB81.
  $FB4A CALL $028E    ; #HTML(Call <a rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
- $FB4D INC E         ; Increment #REGe by one.
- $FB4E JR Z,$FB47    ; Jump back to #R$FB47 until #REGe is zero.
+; Handle if no keys are being pressed, for reference:
+; .
+; #HTML(<blockquote>In all instances the #REGe register is returned with
+; a value in the range of +#N$00 to +#N$27, the value being different for each
+; of the forty keys of the keyboard, or the value +#N$FF, for no-key.</blockquote>)
+ $FB4D INC E         ; Set the zero flag if no keys have been pressed.
+ $FB4E JR Z,$FB47    ; Jump back to #R$FB47 unless any key has been pressed.
  $FB50 EI            ; Enable interrupts.
  $FB51 RET           ; Return.
 

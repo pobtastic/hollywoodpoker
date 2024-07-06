@@ -520,3 +520,64 @@ printed on top of each other.
     </tr>
   </tbody>
 </table>
+
+[Fact:twoPairs:Two Pairs]
+Of interest, the game will (intentionally) randomly gamble redrawing when the
+girl has two pairs. It's not a particularly strong hand, only higher than a
+single pair but obviously it's still a pretty good hand!
+
+<table class="disassembly">
+  <tbody>
+    <tr>
+      <td class="routine-comment" colspan="5">
+        <div class="comments">
+          <div class="paragraph">
+            The girls hand has no cards which form one of the "special" outcomes (special, as in, which aren't able to be found by counting duplicate card face values).
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="asm-label">#SPACE$08</td>
+      <td class="address-1">#R$96DE(#N$96DE)</td>
+      <td class="instruction">CALL #R$9579</td>
+      <td class="comment-1" rowspan="1">Call #R$9579.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$96E1(#N$96E1)</td>
+      <td class="instruction">CP #N$0A</td>
+      <td class="comment-1" rowspan="2">Jump to #R$96EC if the random number is lower than #N$0A.</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$96E3(#N$96E3)</td>
+      <td class="instruction">JR C,#R$96EC</td>
+    </tr>
+    <tr>
+      <td class="routine-comment" colspan="5">
+        <div class="comments">
+          <div class="paragraph">
+            Two pairs is also somewhat of a "special" outcome, so handle it separately.
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$96E5(#N$96E5)</td>
+      <td class="instruction">LD A,(#R$949B(#N$949B))</td>
+      <td class="comment-1" rowspan="3">Jump to #R$9705 if *#R$949B is equal to "Two Pairs".</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$96E8(#N$96E8)</td>
+      <td class="instruction">CP #N$03</td>
+    </tr>
+    <tr>
+      <td class="asm-label"></td>
+      <td class="address-1">#R$96EA(#N$96EA)</td>
+      <td class="instruction">JR Z,#R$9705</td>
+    </tr>
+  </tbody>
+</table>
