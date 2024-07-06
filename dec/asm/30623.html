@@ -29,7 +29,7 @@ Prev: <a href="30333.html">30333</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#30623">Map</a></td>
 <td class="next">
-Next: <a href="30673.html">30673</a>
+Next: <a href="30656.html">30656</a>
 </td>
 </tr>
 </table>
@@ -65,59 +65,59 @@ Used by the routine at <a href="36667.html">PlayerLostRound</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="30627"></span>30627</td>
 <td class="instruction">LD C,3</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=3.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">C</span> for the total number of loops: 3.</td>
 </tr>
 <tr>
-<td class="asm-label">LifeLost_0</td>
+<td class="asm-label">BorderFlash</td>
 <td class="address-2"><span id="30629"></span>30629</td>
 <td class="instruction">LD B,0</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=0.</td>
+<td class="comment-1" rowspan="1">Set the inner counter in <span class="register">B</span> to 0 (which is 256 as it's decreased by one on the first loop).</td>
 </tr>
 <tr>
-<td class="asm-label">LifeLost_1</td>
+<td class="asm-label">BorderFlash_Loop</td>
 <td class="address-2"><span id="30631"></span>30631</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+<td class="comment-1" rowspan="1">Initialise the border to 0 using <span class="register">A</span>.</td>
 </tr>
 <tr>
-<td class="asm-label">LifeLost_2</td>
+<td class="asm-label">BorderFlashInner_Loop</td>
 <td class="address-2"><span id="30632"></span>30632</td>
 <td class="instruction">OUT (254),A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set the border to the colour in <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="30634"></span>30634</td>
 <td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="2">Decrease <span class="register">A</span> by one and jump back to <a href="30623.html#30632">LifeLost_2</a> until <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Decrease <span class="register">A</span> by one and jump back to <a href="30623.html#30632">BorderFlashInner_Loop</a> until <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="30635"></span>30635</td>
-<td class="instruction">JR NZ,<a href="30623.html#30632">LifeLost_2</a></td>
+<td class="instruction">JR NZ,<a href="30623.html#30632">BorderFlashInner_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="30637"></span>30637</td>
-<td class="instruction">DJNZ <a href="30623.html#30631">LifeLost_1</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="30623.html#30631">LifeLost_1</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="30623.html#30631">BorderFlash_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="30623.html#30631">BorderFlash_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="30639"></span>30639</td>
 <td class="instruction">DEC C</td>
-<td class="comment-1" rowspan="2">Decrease <span class="register">C</span> by one and jump back to <a href="30623.html#30629">LifeLost_0</a> until <span class="register">C</span> is zero.</td>
+<td class="comment-1" rowspan="2">Decrease the loops counter by one and jump back to <a href="30623.html#30629">BorderFlash</a> until the counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="30640"></span>30640</td>
-<td class="instruction">JR NZ,<a href="30623.html#30629">LifeLost_0</a></td>
+<td class="instruction">JR NZ,<a href="30623.html#30629">BorderFlash</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="30642"></span>30642</td>
 <td class="instruction">LD HL,(23720)</td>
-<td class="comment-1" rowspan="4">Jump to <a href="30623.html#30656">LifeLost_3</a> if *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C92.html#5CA6">MEMBOT</a> (mem-4+2) is not zero.</td>
+<td class="comment-1" rowspan="4">Jump to <a href="30656.html">30656</a> if *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C92.html#5CA6">MEMBOT</a> (mem-4+2) is not zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -132,7 +132,7 @@ Used by the routine at <a href="36667.html">PlayerLostRound</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="30647"></span>30647</td>
-<td class="instruction">JR NZ,<a href="30623.html#30656">LifeLost_3</a></td>
+<td class="instruction">JR NZ,<a href="30656.html">30656</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -186,60 +186,6 @@ Messaging options: <table class="default">
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
-<tr>
-<td class="asm-label">LifeLost_3</td>
-<td class="address-2"><span id="30656"></span>30656</td>
-<td class="instruction">LD HL,59424</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59424.html">Graphics_CardJackDiamondsData</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="30659"></span>30659</td>
-<td class="instruction">LD DE,62664</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="62664.html">62664</a>.</td>
-</tr>
-<tr>
-<td class="asm-label">LifeLost_4</td>
-<td class="address-2"><span id="30662"></span>30662</td>
-<td class="instruction">LD (HL),128</td>
-<td class="comment-1" rowspan="1">Write 128 to *<span class="register">HL</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="30664"></span>30664</td>
-<td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="30665"></span>30665</td>
-<td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="30666"></span>30666</td>
-<td class="instruction">SBC HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="30668"></span>30668</td>
-<td class="instruction">JR Z,<a href="30673.html">TurnOffThemeTune</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="30673.html">TurnOffThemeTune</a> if {} is zero.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="30670"></span>30670</td>
-<td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="30671"></span>30671</td>
-<td class="instruction">JR <a href="30623.html#30662">LifeLost_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="30623.html#30662">LifeLost_4</a>.</td>
-</tr>
 </table>
 <table class="asm-navigation">
 <tr>
@@ -248,7 +194,7 @@ Prev: <a href="30333.html">30333</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#30623">Map</a></td>
 <td class="next">
-Next: <a href="30673.html">30673</a>
+Next: <a href="30656.html">30656</a>
 </td>
 </tr>
 </table>

@@ -70,7 +70,17 @@ The hand has been "evaluated" at this point, so don't do anything if there is al
 <td class="asm-label"></td>
 <td class="address-1"><span id="96d7"></span>96D7</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the number of game "outcome" types we want to check against: 04.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of the number of game "outcome" types we want to check against.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="96d9"></span>
+<div class="comments">
+<div class="paragraph">
+Loop through each outcome type and see if the current hand contains this outcome.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">CheckOutcomes_Loop</td>
@@ -100,7 +110,7 @@ The hand has been "evaluated" at this point, so don't do anything if there is al
 <span id="96de"></span>
 <div class="comments">
 <div class="paragraph">
-The girls hand has no cards which form a good poker hand.
+The girls hand has no cards which form one of the "special" outcomes (special, as in, which aren't able to be found by counting duplicate card face values).
 </div>
 </div>
 </td>
@@ -115,18 +125,28 @@ The girls hand has no cards which form a good poker hand.
 <td class="asm-label"></td>
 <td class="address-1"><span id="96e1"></span>96E1</td>
 <td class="instruction">CP $0A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="96D1.html#96ec">GirlMarkCards_0</a> if the random number is lower than 0A.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="96D1.html#96ec">FindCardsToMark</a> if the random number is lower than 0A.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="96e3"></span>96E3</td>
-<td class="instruction">JR C,<a href="96D1.html#96ec">GirlMarkCards_0</a></td>
+<td class="instruction">JR C,<a href="96D1.html#96ec">FindCardsToMark</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="96e5"></span>
+<div class="comments">
+<div class="paragraph">
+Two pairs is also somewhat of a "special" outcome, so handle it separately.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="96e5"></span>96E5</td>
 <td class="instruction">LD A,($949B)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="96D1.html#9705">GirlMarkCards_3</a> if *<a href="949B.html">TableHandEvaluation_Type</a> is equal to 03.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="96D1.html#9705">FindLowestSingleCard</a> if *<a href="949B.html">TableHandEvaluation_Type</a> is equal to "Two Pairs".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -136,13 +156,23 @@ The girls hand has no cards which form a good poker hand.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="96ea"></span>96EA</td>
-<td class="instruction">JR Z,<a href="96D1.html#9705">GirlMarkCards_3</a></td>
+<td class="instruction">JR Z,<a href="96D1.html#9705">FindLowestSingleCard</a></td>
 </tr>
 <tr>
-<td class="asm-label">GirlMarkCards_0</td>
+<td class="routine-comment" colspan="5">
+<span id="96ec"></span>
+<div class="comments">
+<div class="paragraph">
+Handle all other cases.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">FindCardsToMark</td>
 <td class="address-2"><span id="96ec"></span>96EC</td>
 <td class="instruction">LD A,($949C)</td>
-<td class="comment-1" rowspan="2"><span class="register">D</span>=*<a href="949B.html#949c">TableHandEvaluation_Card</a>.</td>
+<td class="comment-1" rowspan="2">Fetch the "special" card from *<a href="949B.html#949c">TableHandEvaluation_Card</a> and store it in <span class="register">D</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -159,36 +189,46 @@ The girls hand has no cards which form a good poker hand.
 <td class="asm-label"></td>
 <td class="address-1"><span id="96f3"></span>96F3</td>
 <td class="instruction">LD B,$05</td>
-<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> of 05 for the total number of cards in a hand.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> for the total number of cards in a hand.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="96f5"></span>96F5</td>
 <td class="instruction">LD C,$03</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=03.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">C</span> of 03 this is how many cards we want to select to be redrawn.</td>
 </tr>
 <tr>
-<td class="asm-label">GirlMarkCards_1</td>
+<td class="asm-label">FindCardsToMark_Loop</td>
 <td class="address-2"><span id="96f7"></span>96F7</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Fetch the card.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="96f8"></span>96F8</td>
 <td class="instruction">AND %00001111</td>
-<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+<td class="comment-1" rowspan="1">Convert it into a suit-less value (by keeping only bits 0-3).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="96fa"></span>96FA</td>
 <td class="instruction">CP D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="96D1.html#9701">GirlMarkCards_2</a> <span class="register">A</span> is equal to <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="2">If this card is the "special card" stored in <span class="register">D</span>, jump to <a href="96D1.html#9701">FindCardsToMark_Next</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="96fb"></span>96FB</td>
-<td class="instruction">JR Z,<a href="96D1.html#9701">GirlMarkCards_2</a></td>
+<td class="instruction">JR Z,<a href="96D1.html#9701">FindCardsToMark_Next</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="96fd"></span>
+<div class="comments">
+<div class="paragraph">
+Set the card in the hand to be redrawn.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -200,25 +240,25 @@ The girls hand has no cards which form a good poker hand.
 <td class="asm-label"></td>
 <td class="address-1"><span id="96ff"></span>96FF</td>
 <td class="instruction">DEC C</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">C</span> by one.</td>
+<td class="comment-1" rowspan="1">Decrease the selection counter by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9700"></span>9700</td>
 <td class="instruction">RET Z</td>
-<td class="comment-1" rowspan="1">Return if <span class="register">C</span> is zero.</td>
+<td class="comment-1" rowspan="1">Return if the selection counter is zero.</td>
 </tr>
 <tr>
-<td class="asm-label">GirlMarkCards_2</td>
+<td class="asm-label">FindCardsToMark_Next</td>
 <td class="address-2"><span id="9701"></span>9701</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the girls hand pointer by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9702"></span>9702</td>
-<td class="instruction">DJNZ <a href="96D1.html#96f7">GirlMarkCards_1</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="96D1.html#96f7">GirlMarkCards_1</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="96D1.html#96f7">FindCardsToMark_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card counter by one and loop back to <a href="96D1.html#96f7">FindCardsToMark_Loop</a> until the counter is zero and all cards in the hand have been checked.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -227,46 +267,65 @@ The girls hand has no cards which form a good poker hand.
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
-<td class="asm-label">GirlMarkCards_3</td>
+<td class="routine-comment" colspan="5">
+<span id="9705"></span>
+<div class="comments">
+<div class="paragraph">
+Find the lowest card value which doesn't have any duplicates.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">FindLowestSingleCard</td>
 <td class="address-2"><span id="9705"></span>9705</td>
 <td class="instruction">LD HL,$953F</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html">953F</a> (e.g. <a href="9540.html">Table_CardDuplicates</a>-01).</td>
 </tr>
 <tr>
-<td class="asm-label">GirlMarkCards_4</td>
+<td class="asm-label">FindLowestSingleCard_Loop</td>
 <td class="address-2"><span id="9708"></span>9708</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment duplicate table pointer by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9709"></span>9709</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Fetch the duplicate count value.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="970a"></span>970A</td>
 <td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+<td class="comment-1" rowspan="2">Keep jumping back to <a href="96D1.html#9708">FindLowestSingleCard_Loop</a> if there's more than one of this value in the hand.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="970b"></span>970B</td>
-<td class="instruction">JR NZ,<a href="96D1.html#9708">GirlMarkCards_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="96D1.html#9708">GirlMarkCards_4</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="96D1.html#9708">FindLowestSingleCard_Loop</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="970d"></span>
+<div class="comments">
+<div class="paragraph">
+The card is a single and has no other duplicate face values in the hand.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="970d"></span>970D</td>
 <td class="instruction">CALL <a href="9473.html">CalculateCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="9473.html">CalculateCard</a>.</td>
+<td class="comment-1" rowspan="1">Call <a href="9473.html">CalculateCard</a> to convert the position in the duplicate count table to a card value.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9710"></span>9710</td>
 <td class="instruction">LD D,A</td>
-<td class="comment-1" rowspan="1"><span class="register">D</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Store the card value in <span class="register">D</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -275,33 +334,43 @@ The girls hand has no cards which form a good poker hand.
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="96CC.html">96CB</a> (e.g. <a href="96CC.html">GirlsHand</a>-01).</td>
 </tr>
 <tr>
-<td class="asm-label">GirlMarkCards_5</td>
+<td class="asm-label">FindCard_Loop</td>
 <td class="address-2"><span id="9714"></span>9714</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the girls hand pointer by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9715"></span>9715</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Fetch the card.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9716"></span>9716</td>
 <td class="instruction">AND %00001111</td>
-<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+<td class="comment-1" rowspan="1">Convert it into a suit-less value (by keeping only bits 0-3).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9718"></span>9718</td>
 <td class="instruction">CP D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="96D1.html#9714">GirlMarkCards_5</a> if <span class="register">A</span> is not equal to <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="2">Keep jumping back to <a href="96D1.html#9714">FindCard_Loop</a> until this card matches the stored card value in <span class="register">D</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9719"></span>9719</td>
-<td class="instruction">JR NZ,<a href="96D1.html#9714">GirlMarkCards_5</a></td>
+<td class="instruction">JR NZ,<a href="96D1.html#9714">FindCard_Loop</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="971b"></span>
+<div class="comments">
+<div class="paragraph">
+Set the card in the hand to be redrawn.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

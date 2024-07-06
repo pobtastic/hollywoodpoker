@@ -95,16 +95,29 @@ This entry point is used by the routine at <a href="6E9D.html">TitleScreen</a>.
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="fb4d"></span>
+<div class="comments">
+<div class="paragraph">
+Handle if no keys are being pressed, for reference:
+</div>
+<div class="paragraph">
+<blockquote>In all instances the <span class="register">E</span> register is returned with a value in the range of +00 to +27 the value being different for each of the forty keys of the keyboard, or the value +FF for no-key.</blockquote>
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb4d"></span>FB4D</td>
 <td class="instruction">INC E</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">E</span> by one.</td>
+<td class="comment-1" rowspan="1">Set the zero flag if no keys have been pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb4e"></span>FB4E</td>
 <td class="instruction">JR Z,<a href="FB3A.html#fb47">HandlerThemeTune_Loop</a></td>
-<td class="comment-1" rowspan="1">Jump back to <a href="FB3A.html#fb47">HandlerThemeTune_Loop</a> until <span class="register">E</span> is zero.</td>
+<td class="comment-1" rowspan="1">Jump back to <a href="FB3A.html#fb47">HandlerThemeTune_Loop</a> unless any key has been pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

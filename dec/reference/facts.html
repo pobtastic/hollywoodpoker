@@ -26,6 +26,7 @@ gtag('config', 'G-75RERFCHBG');
 <li><a href="#cards">Cards</a></li>
 <li><a href="#card_graphics">Card Graphics</a></li>
 <li><a href="#girls">Girls</a></li>
+<li><a href="#twoPairs">Two Pairs</a></li>
 </ul>
 <div><span id="cards"></span></div>
 <div class="box box-1">
@@ -1003,6 +1004,72 @@ printed on top of each other.
 </tr>
 <tr>
 <td><img alt="girl-3-frame-5" src="../images/udgs/girl-3-frame-5.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div><span id="twoPairs"></span></div>
+<div class="box box-2">
+<div class="box-title">Two Pairs</div>
+<div class="paragraph">
+Of interest, the game will (intentionally) randomly gamble redrawing when the
+girl has two pairs. It's not a particularly strong hand, only higher than a
+single pair but obviously it's still a pretty good hand!
+</div>
+<div class="paragraph">
+<table class="disassembly">
+<tbody>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+The girls hand has no cards which form one of the "special" outcomes (special, as in, which aren't able to be found by counting duplicate card face values).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+<td class="address-1"><a href="../asm/38609.html#38622">38622</a></td>
+<td class="instruction">CALL <a href="../asm/38265.html">GetRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="../asm/38265.html">GetRandomNumber</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/38609.html#38625">38625</a></td>
+<td class="instruction">CP 10</td>
+<td class="comment-1" rowspan="2">Jump to <a href="../asm/38609.html#38636">FindCardsToMark</a> if the random number is lower than 10.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/38609.html#38627">38627</a></td>
+<td class="instruction">JR C,<a href="../asm/38609.html#38636">FindCardsToMark</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+Two pairs is also somewhat of a "special" outcome, so handle it separately.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/38609.html#38629">38629</a></td>
+<td class="instruction">LD A,(<a href="../asm/38043.html">38043</a>)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="../asm/38609.html#38661">FindLowestSingleCard</a> if *<a href="../asm/38043.html">TableHandEvaluation_Type</a> is equal to "Two Pairs".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/38609.html#38632">38632</a></td>
+<td class="instruction">CP 3</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><a href="../asm/38609.html#38634">38634</a></td>
+<td class="instruction">JR Z,<a href="../asm/38609.html#38661">FindLowestSingleCard</a></td>
 </tr>
 </tbody>
 </table>

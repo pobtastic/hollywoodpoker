@@ -61,10 +61,30 @@ Used by the routine at <a href="91B2.html">InGame_Select</a>.
 <td class="instruction">JR Z,<a href="922D.html#9242">PlayerAction_Showdown</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="9233"></span>
+<div class="comments">
+<div class="paragraph">
+The player is staying in the game, so process any raise.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9233"></span>9233</td>
 <td class="instruction">CALL <a href="9245.html">PlayerAddToPot</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9245.html">PlayerAddToPot</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9236"></span>
+<div class="comments">
+<div class="paragraph">
+Reset the raise amount as the player is holding.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -125,6 +145,16 @@ Messaging options: <table class="default">
 <td class="asm-label"></td>
 <td class="address-1"><span id="9241"></span>9241</td>
 <td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9242"></span>
+<div class="comments">
+<div class="paragraph">
+This is more "test" for a showdown but we flag for it anyway just in case.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">PlayerAction_Showdown</td>

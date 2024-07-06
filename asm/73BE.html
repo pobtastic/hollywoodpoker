@@ -98,7 +98,7 @@ BLACK using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/r
 <td class="asm-label"></td>
 <td class="address-1"><span id="73d1"></span>73D1</td>
 <td class="instruction">LD BC,$0283</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0283.</td>
+<td class="comment-1" rowspan="1">Set the screen co-ordinates to 0283.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -110,7 +110,17 @@ BLACK using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/r
 <td class="asm-label"></td>
 <td class="address-1"><span id="73d7"></span>73D7</td>
 <td class="instruction">RES 5,(IY+$01)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a> which resets "when a new key has been pressed".</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="73db"></span>
+<div class="comments">
+<div class="paragraph">
+Big pause <code>HALT</code> loop 10000 times, can be interrupted with a keypress.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -140,7 +150,7 @@ BLACK using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/r
 <td class="asm-label"></td>
 <td class="address-1"><span id="73e7"></span>73E7</td>
 <td class="instruction">LD BC,$0122</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0122.</td>
+<td class="comment-1" rowspan="1">Set the screen co-ordinates to 0122.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -152,7 +162,17 @@ BLACK using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/r
 <td class="asm-label"></td>
 <td class="address-1"><span id="73ed"></span>73ED</td>
 <td class="instruction">RES 5,(IY+$01)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a> which resets "when a new key has been pressed".</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="73f1"></span>
+<div class="comments">
+<div class="paragraph">
+Big pause <code>HALT</code> loop 10000 times, can be interrupted with a keypress.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

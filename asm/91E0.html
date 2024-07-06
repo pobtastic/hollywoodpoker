@@ -45,6 +45,16 @@ Used by the routine at <a href="91B2.html">InGame_Select</a>.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="91e0"></span>
+<div class="comments">
+<div class="paragraph">
+The player isn't allowed to raise on the last of their turns.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">PlayerAction_Raise</td>
 <td class="address-2"><span id="91e0"></span>91E0</td>
 <td class="instruction">LD A,($8E59)</td>
@@ -61,6 +71,16 @@ Used by the routine at <a href="91B2.html">InGame_Select</a>.
 <td class="instruction">JP Z,<a href="9171.html">InGameControls</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="91e8"></span>
+<div class="comments">
+<div class="paragraph">
+The player can't raise if they have no cash.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="91e8"></span>91E8</td>
 <td class="instruction">LD A,($96B5)</td>
@@ -70,16 +90,6 @@ Used by the routine at <a href="91B2.html">InGame_Select</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="91eb"></span>91EB</td>
 <td class="instruction">LD C,A</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="91ec"></span>
-<div class="comments">
-<div class="paragraph">
-The player can't raise if they have no cash.
-</div>
-</div>
-</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -123,7 +133,7 @@ The player can't raise if the girl has no cash.
 <span id="91f7"></span>
 <div class="comments">
 <div class="paragraph">
-Both the player and the girl have cash, but there are still checks to make.
+Both the player and the girl have cash, but the current raise amount can't take the cash the player has down to zero (they'll have nothing left to raise with).
 </div>
 </div>
 </td>
@@ -132,31 +142,49 @@ Both the player and the girl have cash, but there are still checks to make.
 <td class="asm-label"></td>
 <td class="address-1"><span id="91f7"></span>91F7</td>
 <td class="instruction">LD A,($96B7)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B7.html">CurrentRaiseValue</a>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="9171.html">InGameControls</a> if *<a href="96B7.html">CurrentRaiseValue</a> minus *<a href="96B5.html">PlayerCash</a> is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="91fa"></span>91FA</td>
 <td class="instruction">SUB C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="91fb"></span>91FB</td>
 <td class="instruction">JP Z,<a href="9171.html">InGameControls</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="9171.html">InGameControls</a> if {} is zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="91fe"></span>
+<div class="comments">
+<div class="paragraph">
+Finally, we're good to go ahead to let the player make a raise, but ... process the girls raise first.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="91fe"></span>91FE</td>
 <td class="instruction">ADD A,C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>+=<span class="register">C</span>.</td>
+<td class="comment-1" rowspan="1">Restore *<a href="96B7.html">CurrentRaiseValue</a> back to <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="91ff"></span>91FF</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the current raise amount on the stack.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9200"></span>
+<div class="comments">
+<div class="paragraph">
+Update the display.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -176,10 +204,20 @@ Both the player and the girl have cash, but there are still checks to make.
 <td class="comment-1" rowspan="1">Call <a href="8F7E.html">PrintStats</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="9208"></span>
+<div class="comments">
+<div class="paragraph">
+Action the girls raise.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9208"></span>9208</td>
 <td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the current raise amount from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -194,6 +232,16 @@ Both the player and the girl have cash, but there are still checks to make.
 <td class="comment-1" rowspan="1">Call <a href="9245.html">PlayerAddToPot</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="920f"></span>
+<div class="comments">
+<div class="paragraph">
+Initialise the raise amount for the player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="920f"></span>920F</td>
 <td class="instruction">LD A,$01</td>
@@ -205,46 +253,62 @@ Both the player and the girl have cash, but there are still checks to make.
 <td class="instruction">LD ($96B7),A</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="9214"></span>
+<div class="comments">
+<div class="paragraph">
+Get the new raise amount.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9214"></span>9214</td>
 <td class="instruction">CALL <a href="9258.html">HandlerRaising</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9258.html">HandlerRaising</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="9217"></span>
+<div class="comments">
+<div class="paragraph">
+Now, action it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9217"></span>9217</td>
 <td class="instruction">LD A,($96B5)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B5.html">PlayerCash</a>.</td>
+<td class="comment-1" rowspan="3">Take the raise amount away from *<a href="96B5.html">PlayerCash</a> (and write it back to *<a href="96B5.html">PlayerCash</a>).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="921a"></span>921A</td>
 <td class="instruction">SUB B</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="921b"></span>921B</td>
 <td class="instruction">LD ($96B5),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="96B5.html">PlayerCash</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="921e"></span>921E</td>
 <td class="instruction">LD A,($96B4)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96B4.html">PotValue</a>.</td>
+<td class="comment-1" rowspan="3">Add the raise amount to *<a href="96B4.html">PotValue</a> (and write it back to *<a href="96B4.html">PotValue</a>).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9221"></span>9221</td>
 <td class="instruction">ADD A,B</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>+=<span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9222"></span>9222</td>
 <td class="instruction">LD ($96B4),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="96B4.html">PotValue</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

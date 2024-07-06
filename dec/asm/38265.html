@@ -45,6 +45,16 @@ Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="38222.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38265"></span>
+<div class="comments">
+<div class="paragraph">
+The <span class="register">R</span> register is incremented every instruction, providing a pseudo-random value.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">GetRandomNumber</td>
 <td class="address-2"><span id="38265"></span>38265</td>
 <td class="instruction">LD A,R</td>
@@ -56,16 +66,15 @@ Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="38222.
 <td class="instruction">LD H,A</td>
 </tr>
 <tr>
-<td class="asm-label">GetRandomNumber_0</td>
+<td class="asm-label">WasteTime_Loop</td>
 <td class="address-2"><span id="38268"></span>38268</td>
 <td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Count down to zero from the refresh value.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38269"></span>38269</td>
-<td class="instruction">JR NZ,<a href="38265.html#38268">GetRandomNumber_0</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="38265.html#38268">WasteTime_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -92,20 +101,18 @@ Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="38222.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38279"></span>38279</td>
-<td class="instruction">LD A,63</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">LD A,%00111111</td>
+<td class="comment-1" rowspan="3">Mask off the lower 6 bits of <span class="register">H</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38281"></span>38281</td>
 <td class="instruction">AND H</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38282"></span>38282</td>
 <td class="instruction">LD H,A</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -120,7 +127,7 @@ Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="38222.
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">GetRandomNumber_1</td>
+<td class="asm-label">GetRandomNumber_0</td>
 <td class="address-2"><span id="38285"></span>38285</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1"></td>
@@ -128,7 +135,7 @@ Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="38222.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38286"></span>38286</td>
-<td class="instruction">JR NZ,<a href="38265.html#38285">GetRandomNumber_1</a></td>
+<td class="instruction">JR NZ,<a href="38265.html#38285">GetRandomNumber_0</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -144,7 +151,7 @@ Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="38222.
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">GetRandomNumber_2</td>
+<td class="asm-label">GetRandomNumber_1</td>
 <td class="address-2"><span id="38291"></span>38291</td>
 <td class="instruction">SUB H</td>
 <td class="comment-1" rowspan="1"></td>
@@ -152,7 +159,7 @@ Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="38222.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38292"></span>38292</td>
-<td class="instruction">JR Z,<a href="38265.html#38291">GetRandomNumber_2</a></td>
+<td class="instruction">JR Z,<a href="38265.html#38291">GetRandomNumber_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -164,7 +171,7 @@ Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="38222.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38296"></span>38296</td>
-<td class="instruction">JR NC,<a href="38265.html#38291">GetRandomNumber_2</a></td>
+<td class="instruction">JR NC,<a href="38265.html#38291">GetRandomNumber_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>

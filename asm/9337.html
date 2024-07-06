@@ -64,25 +64,35 @@ Clear down the evaluation table.
 <td class="asm-label"></td>
 <td class="address-1"><span id="933a"></span>933A</td>
 <td class="instruction">LD B,$07</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=07.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> for the 07 evaluation metrics the game utilises.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="933c"></span>
+<div class="comments">
+<div class="paragraph">
+Reset all the evaluation metrics.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">ResetEvaluationTable_Loop</td>
 <td class="address-2"><span id="933c"></span>933C</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-1" rowspan="1">Write 00 to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Write 00 to the evaluation metric.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="933e"></span>933E</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the evaluation metric pointer by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="933f"></span>933F</td>
 <td class="instruction">DJNZ <a href="9337.html#933c">ResetEvaluationTable_Loop</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9337.html#933c">ResetEvaluationTable_Loop</a> until counter is zero.</td>
+<td class="comment-1" rowspan="1">Decrease the metrics counter by one and loop back to <a href="9337.html#933c">ResetEvaluationTable_Loop</a> all the evaluation metrics have been reset.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

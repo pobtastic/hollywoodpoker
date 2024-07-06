@@ -70,6 +70,9 @@ Check if there is a straight flush.
 <div class="paragraph">
 There is a straight flush! Process it.
 </div>
+<div class="paragraph">
+Find the "seed" card value from its position in the duplicates table.
+</div>
 </div>
 </td>
 </tr>
@@ -89,7 +92,17 @@ There is a straight flush! Process it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="934a"></span>934A</td>
 <td class="instruction">LD ($949C),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html#949c">TableHandEvaluation_Card</a>.</td>
+<td class="comment-1" rowspan="1">Write this card to *<a href="949B.html#949c">TableHandEvaluation_Card</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="934d"></span>
+<div class="comments">
+<div class="paragraph">
+Also find the high card in case it's a draw.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -102,6 +115,16 @@ There is a straight flush! Process it.
 <td class="address-1"><span id="9350"></span>9350</td>
 <td class="instruction">LD ($949D),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html#949d">TableHandEvaluation_HighCard</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9353"></span>
+<div class="comments">
+<div class="paragraph">
+Record this hand "type".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

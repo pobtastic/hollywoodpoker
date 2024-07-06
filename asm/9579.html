@@ -45,6 +45,16 @@ Used by the routines at <a href="7D97.html">Messaging_Girl</a>, <a href="954E.ht
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="9579"></span>
+<div class="comments">
+<div class="paragraph">
+The <span class="register">R</span> register is incremented every instruction, providing a pseudo-random value.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">GetRandomNumber</td>
 <td class="address-2"><span id="9579"></span>9579</td>
 <td class="instruction">LD A,R</td>
@@ -56,16 +66,15 @@ Used by the routines at <a href="7D97.html">Messaging_Girl</a>, <a href="954E.ht
 <td class="instruction">LD H,A</td>
 </tr>
 <tr>
-<td class="asm-label">GetRandomNumber_0</td>
+<td class="asm-label">WasteTime_Loop</td>
 <td class="address-2"><span id="957c"></span>957C</td>
 <td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Count down to zero from the refresh value.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="957d"></span>957D</td>
-<td class="instruction">JR NZ,<a href="9579.html#957c">GetRandomNumber_0</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="9579.html#957c">WasteTime_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -92,20 +101,18 @@ Used by the routines at <a href="7D97.html">Messaging_Girl</a>, <a href="954E.ht
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9587"></span>9587</td>
-<td class="instruction">LD A,$3F</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">LD A,%00111111</td>
+<td class="comment-1" rowspan="3">Mask off the lower 6 bits of <span class="register">H</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9589"></span>9589</td>
 <td class="instruction">AND H</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="958a"></span>958A</td>
 <td class="instruction">LD H,A</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -120,7 +127,7 @@ Used by the routines at <a href="7D97.html">Messaging_Girl</a>, <a href="954E.ht
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">GetRandomNumber_1</td>
+<td class="asm-label">GetRandomNumber_0</td>
 <td class="address-2"><span id="958d"></span>958D</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="1"></td>
@@ -128,7 +135,7 @@ Used by the routines at <a href="7D97.html">Messaging_Girl</a>, <a href="954E.ht
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="958e"></span>958E</td>
-<td class="instruction">JR NZ,<a href="9579.html#958d">GetRandomNumber_1</a></td>
+<td class="instruction">JR NZ,<a href="9579.html#958d">GetRandomNumber_0</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -144,7 +151,7 @@ Used by the routines at <a href="7D97.html">Messaging_Girl</a>, <a href="954E.ht
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">GetRandomNumber_2</td>
+<td class="asm-label">GetRandomNumber_1</td>
 <td class="address-2"><span id="9593"></span>9593</td>
 <td class="instruction">SUB H</td>
 <td class="comment-1" rowspan="1"></td>
@@ -152,7 +159,7 @@ Used by the routines at <a href="7D97.html">Messaging_Girl</a>, <a href="954E.ht
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9594"></span>9594</td>
-<td class="instruction">JR Z,<a href="9579.html#9593">GetRandomNumber_2</a></td>
+<td class="instruction">JR Z,<a href="9579.html#9593">GetRandomNumber_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
@@ -164,7 +171,7 @@ Used by the routines at <a href="7D97.html">Messaging_Girl</a>, <a href="954E.ht
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9598"></span>9598</td>
-<td class="instruction">JR NC,<a href="9579.html#9593">GetRandomNumber_2</a></td>
+<td class="instruction">JR NC,<a href="9579.html#9593">GetRandomNumber_1</a></td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
