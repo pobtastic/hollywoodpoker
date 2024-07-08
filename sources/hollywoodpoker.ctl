@@ -2562,6 +2562,7 @@ N $9579 The #REGr register is incremented every instruction, providing a pseudo-
 M $9587,$04 Mask off the lower 6 bits of #REGh.
   $958B,$02
   $958D,$03
+N $9591 Ensure the value in #REGa is in the range #N$00-#N$34.
   $959A,$01 Return.
 
 c $959B Reset Deck

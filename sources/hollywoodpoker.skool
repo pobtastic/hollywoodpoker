@@ -5469,6 +5469,7 @@ c$9579 LD A,R         ; {#REGh=#REGr.
 *$958D DEC A          ;
  $958E JR NZ,$958D    ;
  $9590 LD A,H         ;
+; Ensure the value in #REGa is in the range #N$00-#N$34.
  $9591 LD H,$34       ;
 *$9593 SUB H          ;
  $9594 JR Z,$9593     ;
