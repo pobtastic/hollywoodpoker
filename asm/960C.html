@@ -45,59 +45,142 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="960c"></span>
+<div class="comments">
+<div class="paragraph">
+A reminder of the hand types and values: <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Byte</th>
+<th colspan="1" rowspan="1">Outcome</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">01</td>
+<td class="" colspan="1" rowspan="1">High Card</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">02</td>
+<td class="" colspan="1" rowspan="1">Pair</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">03</td>
+<td class="" colspan="1" rowspan="1">Two Pairs</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">04</td>
+<td class="" colspan="1" rowspan="1">Three-Of-A-Kind</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">05</td>
+<td class="" colspan="1" rowspan="1">Straight</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">06</td>
+<td class="" colspan="1" rowspan="1">Flush</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">07</td>
+<td class="" colspan="1" rowspan="1">Full House</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">08</td>
+<td class="" colspan="1" rowspan="1">Four-Of-A-Kind</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">09</td>
+<td class="" colspan="1" rowspan="1">Straight Flush</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+Prepare how many times to call the random number generator.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">GirlArtificialIntelligence</td>
 <td class="address-2"><span id="960c"></span>960C</td>
 <td class="instruction">LD A,($96C0)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="96C0.html">Table_GirlEvaluation</a>.</td>
+<td class="comment-1" rowspan="2">Fetch the girls hand type from *<a href="96C0.html">Table_GirlEvaluation</a> and store it in <span class="register">C</span> as the "try" counter.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="960f"></span>960F</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9610"></span>9610</td>
 <td class="instruction">CP $02</td>
-<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9626">GirlArtificialIntelligence_2</a> if <span class="register">A</span> is lower than 02.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9626">GirlAI_SetHoldTries</a> if the hand "type" is lower than, or equal to 02 ("Pair" or "High Card").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9612"></span>9612</td>
-<td class="instruction">JR C,<a href="960C.html#9626">GirlArtificialIntelligence_2</a></td>
+<td class="instruction">JR C,<a href="960C.html#9626">GirlAI_SetHoldTries</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="9614"></span>
+<div class="comments">
+<div class="paragraph">
+Double the value in the "try" counter for outcomes: &quot;Two Pairs&quot;, &quot;Three-Of-A-Kind&quot;, &quot;Straight&quot;, &quot;Flush&quot;, &quot;Full House&quot;, &quot;Four-Of-A-Kind&quot; and &quot;Straight Flush&quot;.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9614"></span>9614</td>
 <td class="instruction">RL C</td>
-<td class="comment-1" rowspan="1">Rotate <span class="register">C</span> left.</td>
+<td class="comment-1" rowspan="1">Multiply <span class="register">C</span> by two.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9616"></span>9616</td>
 <td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="2">Jump to <a href="960C.html#961c">GirlArtificialIntelligence_0</a> if <span class="register">A</span> is lower than 04.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="960C.html#961c">GirlAI_SetRaiseTries</a> if the hand "type" is lower than, or equal to 04 ("Two Pairs" or "Three-Of-A-Kind").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9618"></span>9618</td>
-<td class="instruction">JR C,<a href="960C.html#961c">GirlArtificialIntelligence_0</a></td>
+<td class="instruction">JR C,<a href="960C.html#961c">GirlAI_SetRaiseTries</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="961a"></span>
+<div class="comments">
+<div class="paragraph">
+Double the value again in the "try" counter for outcomes: &quot;Straight&quot;, &quot;Flush&quot;, &quot;Full House&quot;, &quot;Four-Of-A-Kind&quot; and &quot;Straight Flush&quot;.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="961a"></span>961A</td>
 <td class="instruction">RL C</td>
-<td class="comment-1" rowspan="1">Rotate <span class="register">C</span> left.</td>
+<td class="comment-1" rowspan="1">Multiply <span class="register">C</span> by two.</td>
 </tr>
 <tr>
-<td class="asm-label">GirlArtificialIntelligence_0</td>
+<td class="routine-comment" colspan="5">
+<span id="961c"></span>
+<div class="comments">
+<div class="paragraph">
+Set a number of "tries" to pick a random number under 0E.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GirlAI_SetRaiseTries</td>
 <td class="address-2"><span id="961c"></span>961C</td>
 <td class="instruction">LD B,C</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">C</span>.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> which is just the value copied from <span class="register">C</span>.</td>
 </tr>
 <tr>
-<td class="asm-label">GirlArtificialIntelligence_1</td>
+<td class="asm-label">GirlAI_SetRaiseTries_Loop</td>
 <td class="address-2"><span id="961d"></span>961D</td>
 <td class="instruction">CALL <a href="9579.html">GetRandomNumber</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9579.html">GetRandomNumber</a>.</td>
@@ -106,27 +189,37 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="9620"></span>9620</td>
 <td class="instruction">CP $0E</td>
-<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9637">GirlArtificialIntelligence_4</a> if <span class="register">A</span> is lower than 0E.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="960C.html#9637">GirlAI_Raise</a> if <span class="register">A</span> is lower than 0E.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9622"></span>9622</td>
-<td class="instruction">JR C,<a href="960C.html#9637">GirlArtificialIntelligence_4</a></td>
+<td class="instruction">JR C,<a href="960C.html#9637">GirlAI_Raise</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9624"></span>9624</td>
-<td class="instruction">DJNZ <a href="960C.html#961d">GirlArtificialIntelligence_1</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="960C.html#961d">GirlArtificialIntelligence_1</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="960C.html#961d">GirlAI_SetRaiseTries_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="960C.html#961d">GirlAI_SetRaiseTries_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
-<td class="asm-label">GirlArtificialIntelligence_2</td>
+<td class="routine-comment" colspan="5">
+<span id="9626"></span>
+<div class="comments">
+<div class="paragraph">
+Set a number of "tries" to pick a random number under 1E.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GirlAI_SetHoldTries</td>
 <td class="address-2"><span id="9626"></span>9626</td>
 <td class="instruction">LD B,C</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">C</span>.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> which is just the value copied from <span class="register">C</span>.</td>
 </tr>
 <tr>
-<td class="asm-label">GirlArtificialIntelligence_3</td>
+<td class="asm-label">GirlAI_SetHoldTries_Loop</td>
 <td class="address-2"><span id="9627"></span>9627</td>
 <td class="instruction">CALL <a href="9579.html">GetRandomNumber</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9579.html">GetRandomNumber</a>.</td>
@@ -145,13 +238,16 @@ Used by the routine at <a href="8D4A.html">PlayGame</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="962e"></span>962E</td>
-<td class="instruction">DJNZ <a href="960C.html#9627">GirlArtificialIntelligence_3</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="960C.html#9627">GirlArtificialIntelligence_3</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="960C.html#9627">GirlAI_SetHoldTries_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="960C.html#9627">GirlAI_SetHoldTries_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="9630"></span>
 <div class="comments">
+<div class="paragraph">
+If we made it this far then the girl will just drop, if you're playing along here then YES, albeit fairly unlikely - there is still a slim chance that the girl will DROP even if she has a Royal Straight Flush!
+</div>
 <div class="paragraph">
 Messaging options: <table class="default">
 <tr>
@@ -204,7 +300,17 @@ Messaging options: <table class="default">
 <td class="instruction">RET</td>
 </tr>
 <tr>
-<td class="asm-label">GirlArtificialIntelligence_4</td>
+<td class="routine-comment" colspan="5">
+<span id="9637"></span>
+<div class="comments">
+<div class="paragraph">
+Handle the girl choosing to raise.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GirlAI_Raise</td>
 <td class="address-2"><span id="9637"></span>9637</td>
 <td class="instruction">LD A,($8E59)</td>
 <td class="comment-1" rowspan="3">Jump to <a href="968C.html">GirlAction_Hold</a> if *<a href="8E59.html">InteractionCounter</a> is equal to 07.</td>
@@ -232,7 +338,7 @@ Messaging options: <table class="default">
 <td class="comment-1" rowspan="1">Call <a href="96A1.html">GirlAddToPot</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">GirlArtificialIntelligence_5</td>
+<td class="asm-label">GirlAI_Raise_Loop</td>
 <td class="address-2"><span id="9644"></span>9644</td>
 <td class="instruction">CALL <a href="9579.html">GetRandomNumber</a></td>
 <td class="comment-1" rowspan="1">Call <a href="9579.html">GetRandomNumber</a>.</td>
@@ -241,25 +347,34 @@ Messaging options: <table class="default">
 <td class="asm-label"></td>
 <td class="address-1"><span id="9647"></span>9647</td>
 <td class="instruction">SRA A</td>
-<td class="comment-1" rowspan="1">Shift <span class="register">A</span> right (with carry).</td>
+<td class="comment-1" rowspan="2">Divide the random number by 02 and subtract 06.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9649"></span>9649</td>
 <td class="instruction">SUB $06</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>-=06.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="964b"></span>964B</td>
-<td class="instruction">JR C,<a href="960C.html#9644">GirlArtificialIntelligence_5</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="960C.html#9644">GirlArtificialIntelligence_5</a> if {} is lower.</td>
+<td class="instruction">JR C,<a href="960C.html#9644">GirlAI_Raise_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="960C.html#9644">GirlAI_Raise_Loop</a> and try again if the result is negative.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="964d"></span>
+<div class="comments">
+<div class="paragraph">
+The raise value is 00 or higher.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="964d"></span>964D</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Store the raise value in <span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -278,27 +393,40 @@ Messaging options: <table class="default">
 <td class="instruction">JR NC,<a href="966C.html">GirlAction_Raise</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="9654"></span>
+<div class="comments">
+<div class="paragraph">
+Handle if the raise value is higher than the girls current cash balance.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9654"></span>9654</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Does the girl have any cash left?</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9655"></span>9655</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Store the girls current cash balance in <span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9656"></span>9656</td>
 <td class="instruction">JR NZ,<a href="966C.html">GirlAction_Raise</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="966C.html">GirlAction_Raise</a> if {} is not zero.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="966C.html">GirlAction_Raise</a> if the raise value is not zero.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="9658"></span>
 <div class="comments">
+<div class="paragraph">
+Handle the girl choosing to hold.
+</div>
 <div class="paragraph">
 Messaging options: <table class="default">
 <tr>
@@ -323,7 +451,7 @@ Messaging options: <table class="default">
 </td>
 </tr>
 <tr>
-<td class="asm-label">GirlArtificialIntelligence_6</td>
+<td class="asm-label">GirlAI_Hold</td>
 <td class="address-2"><span id="9658"></span>9658</td>
 <td class="instruction">LD A,$03</td>
 <td class="comment-1" rowspan="2">Call <a href="7D97.html">Messaging_Girl</a> using message block <a href="81B9.html">03</a>.</td>

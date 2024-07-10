@@ -42,6 +42,15 @@ Next: <a href="38299.html">38299</a>
 Used by the routines at <a href="32151.html">Messaging_Girl</a>, <a href="38222.html">DrawCards</a>, <a href="38412.html">GirlArtificialIntelligence</a> and <a href="38609.html">GirlMarkCards</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">A random number between 0-52</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -66,7 +75,7 @@ The <span class="register">R</span> register is incremented every instruction, p
 <td class="instruction">LD H,A</td>
 </tr>
 <tr>
-<td class="asm-label">WasteTime_Loop</td>
+<td class="asm-label">WasteTime_Loop_1</td>
 <td class="address-2"><span id="38268"></span>38268</td>
 <td class="instruction">DEC A</td>
 <td class="comment-1" rowspan="2">Count down to zero from the refresh value.</td>
@@ -74,7 +83,7 @@ The <span class="register">R</span> register is incremented every instruction, p
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38269"></span>38269</td>
-<td class="instruction">JR NZ,<a href="38265.html#38268">WasteTime_Loop</a></td>
+<td class="instruction">JR NZ,<a href="38265.html#38268">WasteTime_Loop_1</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -102,7 +111,7 @@ The <span class="register">R</span> register is incremented every instruction, p
 <td class="asm-label"></td>
 <td class="address-1"><span id="38279"></span>38279</td>
 <td class="instruction">LD A,%00111111</td>
-<td class="comment-1" rowspan="3">Mask off the lower 6 bits of <span class="register">H</span>.</td>
+<td class="comment-1" rowspan="3">Keep only the lower 6 bits of <span class="register">H</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -118,35 +127,27 @@ The <span class="register">R</span> register is incremented every instruction, p
 <td class="asm-label"></td>
 <td class="address-1"><span id="38283"></span>38283</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Load the byte from the ZX Spectrum ROM pointed to by <span class="register">HL</span>, store it in <span class="register">H</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38284"></span>38284</td>
 <td class="instruction">LD H,A</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">GetRandomNumber_0</td>
+<td class="asm-label">WasteTime_Loop_2</td>
 <td class="address-2"><span id="38285"></span>38285</td>
 <td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Count down to zero from the ZX Spectrum ROM byte value.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38286"></span>38286</td>
-<td class="instruction">JR NZ,<a href="38265.html#38285">GetRandomNumber_0</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="38288"></span>38288</td>
-<td class="instruction">LD A,H</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="38265.html#38285">WasteTime_Loop_2</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="38289"></span>
+<span id="38288"></span>
 <div class="comments">
 <div class="paragraph">
 Ensure the value in <span class="register">A</span> is in the range 0-52.
@@ -156,33 +157,38 @@ Ensure the value in <span class="register">A</span> is in the range 0-52.
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="38289"></span>38289</td>
-<td class="instruction">LD H,52</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="address-1"><span id="38288"></span>38288</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">H</span>.</td>
 </tr>
 <tr>
-<td class="asm-label">GetRandomNumber_1</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="38289"></span>38289</td>
+<td class="instruction">LD H,52</td>
+<td class="comment-1" rowspan="1"><span class="register">H</span>=52.</td>
+</tr>
+<tr>
+<td class="asm-label">GetRandomNumber_Loop</td>
 <td class="address-2"><span id="38291"></span>38291</td>
 <td class="instruction">SUB H</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Subtract 52 from <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38292"></span>38292</td>
-<td class="instruction">JR Z,<a href="38265.html#38291">GetRandomNumber_1</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="38265.html#38291">GetRandomNumber_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="38265.html#38291">GetRandomNumber_Loop</a> if the result is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38294"></span>38294</td>
 <td class="instruction">CP 53</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump back to <a href="38265.html#38291">GetRandomNumber_Loop</a> if the result is higher than, or equal to 53.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="38296"></span>38296</td>
-<td class="instruction">JR NC,<a href="38265.html#38291">GetRandomNumber_1</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">JR NC,<a href="38265.html#38291">GetRandomNumber_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

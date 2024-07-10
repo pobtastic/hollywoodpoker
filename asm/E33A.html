@@ -57,13 +57,13 @@ Used by the routine at <a href="E313.html">PrintHand</a>.
 <td class="asm-label">CheckCardType</td>
 <td class="address-2"><span id="e33a"></span>E33A</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=the original card value.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e33b"></span>E33B</td>
 <td class="instruction">AND %00001111</td>
-<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+<td class="comment-1" rowspan="1">Convert the card value into a suit-less value (by keeping only bits 0-3).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -101,7 +101,7 @@ Anything else is a picture card, so work out what we're printing.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e345"></span>E345</td>
 <td class="instruction">LD HL,$E618</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E567.html#e618">E618</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E567.html#e617">E618</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -140,13 +140,23 @@ Anything else is a picture card, so work out what we're printing.
 <td class="comment-1" rowspan="1">Jump to <a href="E33A.html#e34f">CheckCardType_0</a> until <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="e353"></span>
+<div class="comments">
+<div class="paragraph">
+Work out the suit.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e353"></span>E353</td>
 <td class="instruction">LD A,$04</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=04.</td>
 </tr>
 <tr>
-<td class="asm-label">CheckCardType_1</td>
+<td class="asm-label">CardTypeSuitShift_Loop</td>
 <td class="address-2"><span id="e355"></span>E355</td>
 <td class="instruction">SRL B</td>
 <td class="comment-1" rowspan="1">Shift <span class="register">B</span> right.</td>
@@ -160,8 +170,8 @@ Anything else is a picture card, so work out what we're printing.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e358"></span>E358</td>
-<td class="instruction">JR NZ,<a href="E33A.html#e355">CheckCardType_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="E33A.html#e355">CheckCardType_1</a> until <span class="register">A</span> is zero.</td>
+<td class="instruction">JR NZ,<a href="E33A.html#e355">CardTypeSuitShift_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump back to <a href="E33A.html#e355">CardTypeSuitShift_Loop</a> until <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -173,7 +183,7 @@ Anything else is a picture card, so work out what we're printing.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e35d"></span>E35D</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
+<td class="comment-1" rowspan="1">Reset flags.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -188,7 +198,7 @@ Anything else is a picture card, so work out what we're printing.
 <td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
 </tr>
 <tr>
-<td class="asm-label">CheckCardType_2</td>
+<td class="asm-label">CheckCardType_1</td>
 <td class="address-2"><span id="e361"></span>E361</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
@@ -196,8 +206,8 @@ Anything else is a picture card, so work out what we're printing.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e362"></span>E362</td>
-<td class="instruction">DJNZ <a href="E33A.html#e361">CheckCardType_2</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E33A.html#e361">CheckCardType_2</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="E33A.html#e361">CheckCardType_1</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="E33A.html#e361">CheckCardType_1</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

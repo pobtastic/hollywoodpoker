@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 29495</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29494.html">29494</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29495">Map</a></td>
+<td class="next">
+Next: <a href="29544.html">29544</a>
+</td>
+</tr>
+</table>
+<div class="description">29495: Shift High Scores</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="29365.html">CollectName</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">ShiftHighScores</td>
+<td class="address-2"><span id="29495"></span>29495</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="4">Restore <span class="register">HL</span>, <span class="register">BC</span>, <span class="register">HL</span> and <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29496"></span>29496</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29497"></span>29497</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29498"></span>29498</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29499"></span>29499</td>
+<td class="instruction">LD E,B</td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label">ShiftHighScores_0</td>
+<td class="address-2"><span id="29500"></span>29500</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29501"></span>29501</td>
+<td class="instruction">LD (HL),D</td>
+<td class="comment-1" rowspan="1">Write <span class="register">D</span> to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29502"></span>29502</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Increment <span class="register">HL</span> by three.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29503"></span>29503</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29504"></span>29504</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29505"></span>29505</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29506"></span>29506</td>
+<td class="instruction">DJNZ <a href="29495.html#29500">ShiftHighScores_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="29495.html#29500">ShiftHighScores_0</a> until counter is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29508"></span>29508</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">E</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29509"></span>29509</td>
+<td class="instruction">LD IX,29570</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="29569.html">29570</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">ShiftHighScores_Loop</td>
+<td class="address-2"><span id="29513"></span>29513</td>
+<td class="instruction">LD H,(IX+0)</td>
+<td class="comment-1" rowspan="1"><span class="register">H</span>=*<span class="register">IX</span>+0.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29516"></span>29516</td>
+<td class="instruction">LD L,(IX-1)</td>
+<td class="comment-1" rowspan="1"><span class="register">L</span>=*<span class="register">IX</span>-1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29519"></span>29519</td>
+<td class="instruction">LD D,(IX-3)</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=*<span class="register">IX</span>-3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29522"></span>29522</td>
+<td class="instruction">LD E,(IX-4)</td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=*<span class="register">IX</span>-4.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29525"></span>29525</td>
+<td class="instruction">LD B,22</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=22.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29527"></span>29527</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29528"></span>29528</td>
+<td class="instruction">CALL 13374</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/343C.html#343E">SWAP_BYTE</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29531"></span>29531</td>
+<td class="instruction">DEC IX</td>
+<td class="comment-1" rowspan="3">Decrease <span class="register">IX</span> by three.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29533"></span>29533</td>
+<td class="instruction">DEC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29535"></span>29535</td>
+<td class="instruction">DEC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29537"></span>29537</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29538"></span>29538</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29539"></span>29539</td>
+<td class="instruction">JR NZ,<a href="29495.html#29513">ShiftHighScores_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29495.html#29513">ShiftHighScores_Loop</a> until <span class="register">A</span> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29541"></span>29541</td>
+<td class="instruction">JP <a href="28746.html">DisplayWinnersListPage</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="28746.html">DisplayWinnersListPage</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29494.html">29494</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29495">Map</a></td>
+<td class="next">
+Next: <a href="29544.html">29544</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/7337.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

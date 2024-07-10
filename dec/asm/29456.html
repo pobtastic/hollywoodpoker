@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hollywood Poker: Routine at 29456</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29365.html">29365</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29456">Map</a></td>
+<td class="next">
+Next: <a href="29494.html">29494</a>
+</td>
+</tr>
+</table>
+<div class="description">29456: Name Entry Delete</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="29365.html">CollectName</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">NameEntryDelete</td>
+<td class="address-2"><span id="29456"></span>29456</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">HL</span> and <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29457"></span>29457</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29458"></span>29458</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="29494.html">FlagKeyEntry</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29459"></span>29459</td>
+<td class="instruction">LD (29494),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29462"></span>29462</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="29365.html#29392">NameEntryCollectInput</a> if <span class="register">B</span> is equal to 13.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29463"></span>29463</td>
+<td class="instruction">CP 13</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29465"></span>29465</td>
+<td class="instruction">JR Z,<a href="29365.html#29392">NameEntryCollectInput</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29467"></span>
+<div class="comments">
+<div class="paragraph">
+Move the buffer pointer back one place, and "erase" the character by writing a space to this location.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29467"></span>29467</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29468"></span>29468</td>
+<td class="instruction">LD (HL),32</td>
+<td class="comment-1" rowspan="1">Write an ASCII space (32) to *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29470"></span>
+<div class="comments">
+<div class="paragraph">
+Now do the same to the screen, action a backspace, print an actual space, and finally, action another backspace to move the cursor to the correct position.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29470"></span>29470</td>
+<td class="instruction">LD A,8</td>
+<td class="comment-1" rowspan="2">Backspace.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29472"></span>29472</td>
+<td class="instruction">RST 16</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29473"></span>29473</td>
+<td class="instruction">LD A,32</td>
+<td class="comment-1" rowspan="2">Print an ASCII space " ".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29475"></span>29475</td>
+<td class="instruction">RST 16</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29476"></span>29476</td>
+<td class="instruction">LD A,8</td>
+<td class="comment-1" rowspan="2">Backspace.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29478"></span>29478</td>
+<td class="instruction">RST 16</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29479"></span>29479</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">B</span> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29480"></span>29480</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">BC</span> and <span class="register">HL</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29481"></span>29481</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29482"></span>29482</td>
+<td class="instruction">RES 5,(IY+1)</td>
+<td class="comment-1" rowspan="1">Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a> which resets "when a new key has been pressed".</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29486"></span>
+<div class="comments">
+<div class="paragraph">
+Big pause <code>HALT</code> loop 65536 times, can be interrupted with a keypress.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29486"></span>29486</td>
+<td class="instruction">LD BC,0</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0000.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29489"></span>29489</td>
+<td class="instruction">CALL 7997</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="29492"></span>29492</td>
+<td class="instruction">JR <a href="29365.html#29394">NameEntryCollectInput_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="29365.html#29394">NameEntryCollectInput_Loop</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29365.html">29365</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29456">Map</a></td>
+<td class="next">
+Next: <a href="29494.html">29494</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Golden Games &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.2.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/hollywoodpoker/">Source code</a>.</div>
+<div><a href="../../asm/7310.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>
