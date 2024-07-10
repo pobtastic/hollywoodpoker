@@ -1362,35 +1362,45 @@ t$7073 DEFB $16,$01,$01                  ; PRINT AT: #N(#PEEK(#PC+$01)),
 ;
 ; Debounce the key press.
 @label=WinnersTableNameEntry
-c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
-                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
+c$729A CALL $028E    ; #HTML(Call <a rel="noopener nofollow"
+                     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.)
 ; Handle if no keys are being pressed, for reference:
 ; .
 ; #HTML(<blockquote>In all instances the #REGe register is returned with
 ; a value in the range of +#N$00 to +#N$27, the value being different for each
 ; of the forty keys of the keyboard, or the value +#N$FF, for no-key.</blockquote>)
- $729D INC E          ; Set the zero flag if no keys have been pressed.
- $729E JR NZ,$729A    ; Jump to #R$729A unless no keys are being pressed.
- $72A0 LD A,($98E3)   ; #REGa=*#R$98E3.
- $72A3 LD B,$08       ; Set a counter of #N$08 which is the total number of
-                      ; scores held by the game.
- $72A5 LD HL,$7368    ; #REGhl=#R$7368.
- $72A8 LD D,A         ; Copy *#R$98E3 into #REGd.
-@label=CheckPosition_Loop
-*$72A9 LD A,(HL)      ; {Jump to #R$72B5 if *#REGhl is lower than #REGd.
- $72AA CP D           ;
- $72AB JR C,$72B5     ; }
+ $729D INC E         ; Set the zero flag if no keys have been pressed.
+ $729E JR NZ,$729A   ; Jump to #R$729A unless no keys are being pressed.
+ $72A0 LD A,($98E3)  ; #REGa=*#R$98E3.
+ $72A3 LD B,$08      ; Set a counter of #N$08 which is the total number of
+                     ; scores held by the game.
+ $72A5 LD HL,$7368   ; #REGhl=#R$7368.
+ $72A8 LD D,A        ; Copy *#R$98E3 into #REGd.
+; Loop through each winners data in the table to find a good match for
+; the players stage.
+@label=FindStage_Loop
+*$72A9 LD A,(HL)     ; {Jump to #R$72B5 if *#REGhl is lower than or equal to
+ $72AA CP D          ; #REGd.
+ $72AB JR C,$72B5    ; }
 ; Move onto the next entry.
- $72AD INC HL         ; {Increment #REGhl by three.
- $72AE INC HL         ;
- $72AF INC HL         ; }
- $72B0 DJNZ $72A9     ; Decrease counter by one and loop back to #R$72A9 until
-                      ; counter is zero.
+ $72AD INC HL        ; {Increment #REGhl by three.
+ $72AE INC HL        ;
+ $72AF INC HL        ; }
+ $72B0 DJNZ $72A9    ; Decrease counter by one and loop back to #R$72A9 until
+                     ; counter is zero.
 ; The players stage wasn't higher than any of the stored stages.
- $72B2 JP $6E9D       ; Jump to #R$6E9D.
+ $72B2 JP $6E9D      ; Jump to #R$6E9D.
+
+; Collect Players Name
+;
+; Used by the routine at #R$729A.
+;
+; B The entry ID
+; HL The appropriate entry from #R$7368
+;
 ; This is a highscore so collect the users name.
 @label=CollectName
-*$72B5 PUSH BC        ; {Stash #REGbc and #REGhl on the stack.
+c$72B5 PUSH BC        ; {Stash #REGbc and #REGhl on the stack.
  $72B6 PUSH HL        ; }
  $72B7 LD HL,$7399    ; #REGhl=#R$7399.
  $72BA CALL $187D     ; #HTML(Call <a rel="noopener nofollow"
@@ -1408,9 +1418,11 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
  $72C8 LD ($7336),A   ; }
  $72CB LD HL,$7383    ; #REGhl=#R$7383.
  $72CE LD B,$0D       ; #REGb=#N$0D.
+; This entry point is used by the routine at #R$7310.
 @label=NameEntryCollectInput
 *$72D0 PUSH BC        ; {Stash #REGbc and the buffer pointer on the stack.
  $72D1 PUSH HL        ; }
+; This entry point is used by the routine at #R$7310.
 @label=NameEntryCollectInput_Loop
 *$72D2 RES 5,(IY+$01) ; #HTML(Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>
                       ; which resets "when a new key has been pressed".)
@@ -1420,10 +1432,10 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
  $72DD JR Z,$72D2     ; }
  $72DF LD A,($5C08)   ; {#HTML(Jump to #R$7337 if *<a
  $72E2 CP $0D         ; href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a>
- $72E4 JR Z,$7337     ; (last key pressed) is equal to #N$0D.)}
+ $72E4 JR Z,$7337     ; (last key pressed) is "enter".)}
  $72E6 CP $0C         ; {#HTML(Jump to #R$7310 if *<a
  $72E8 JR Z,$7310     ; href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a>
-                      ; (last key pressed) is equal to #N$0C.)}
+                      ; (last key pressed) is "delete".)}
  $72EA LD B,A         ; Copy the keypress into #REGb.
  $72EB LD A,($7336)   ; {Jump to #R$72D2 if *#R$7336 is not zero.
  $72EE OR A           ;
@@ -1456,15 +1468,25 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
  $7309 LD A,$01       ; {Write #N$01 to *#R$7336.
  $730B LD ($7336),A   ; }
  $730E JR $72D0       ; Jump to #R$72D0.
-*$7310 POP HL         ; {Restore #REGhl and #REGbc from the stack.
+
+; Name Entry Delete
+;
+; Used by the routine at #R$72B5.
+@label=NameEntryDelete
+c$7310 POP HL         ; {Restore #REGhl and #REGbc from the stack.
  $7311 POP BC         ; }
  $7312 XOR A          ; {Write #N$00 to *#R$7336.
  $7313 LD ($7336),A   ; }
  $7316 LD A,B         ; {Jump to #R$72D0 if #REGb is equal to #N$0D.
  $7317 CP $0D         ;
  $7319 JR Z,$72D0     ; }
+; Move the buffer pointer back one place, and "erase" the character by
+; writing a space to this location.
  $731B DEC HL         ; Decrease #REGhl by one.
- $731C LD (HL),$20    ; Write #N$20 to *#REGhl.
+ $731C LD (HL),$20    ; Write an ASCII space (#N$20) to *#REGhl.
+; Now do the same to the screen, action a backspace, print an actual
+; space, and finally, action another backspace to move the cursor to the
+; correct position.
  $731E LD A,$08       ; {Backspace.
  $7320 RST $10        ; }
  $7321 LD A,$20       ; {Print an ASCII space " ".
@@ -1476,41 +1498,52 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
  $7329 PUSH HL        ; }
  $732A RES 5,(IY+$01) ; #HTML(Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>
                       ; which resets "when a new key has been pressed".)
+; #HTML(Big pause <code>HALT</code> loop #N$10000 times, can be interrupted
+; with a keypress.)
  $732E LD BC,$0000    ; #REGbc=#N($0000,$04,$04).
  $7331 CALL $1F3D     ; #HTML(Call <a rel="noopener nofollow"
                       ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.)
  $7334 JR $72D2       ; Jump to #R$72D2.
- $7336 DEFB $00       ;
-*$7337 POP HL         ; {Restore #REGhl, #REGbc, #REGhl and #REGbc from the
- $7338 POP BC         ; stack.
- $7339 POP HL         ;
- $733A POP BC         ; }
- $733B LD E,B         ; #REGe=#REGb.
-*$733C LD A,(HL)      ; #REGa=*#REGhl.
- $733D LD (HL),D      ; Write #REGd to *#REGhl.
- $733E INC HL         ; {Increment #REGhl by three.
- $733F INC HL         ;
- $7340 INC HL         ; }
- $7341 LD D,A         ; #REGd=#REGa.
- $7342 DJNZ $733C     ; Decrease counter by one and loop back to #R$733C until
-                      ; counter is zero.
- $7344 LD A,E         ; #REGa=#REGe.
- $7345 LD IX,$7382    ; #REGix=#R$7381(#N$7382).
-*$7349 LD H,(IX+$00)  ; #REGh=*#REGix+#N$00.
- $734C LD L,(IX-$01)  ; #REGl=*#REGix-#N$01.
- $734F LD D,(IX-$03)  ; #REGd=*#REGix-#N$03.
- $7352 LD E,(IX-$04)  ; #REGe=*#REGix-#N$04.
- $7355 LD B,$16       ; #REGb=#N$16.
- $7357 PUSH AF        ; Stash #REGaf on the stack.
- $7358 CALL $343E     ; #HTML(Call <a rel="noopener nofollow"
-                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/343C.html#343E">SWAP_BYTE</a>.)
- $735B DEC IX         ; {Decrease #REGix by three.
- $735D DEC IX         ;
- $735F DEC IX         ; }
- $7361 POP AF         ; Restore #REGaf from the stack.
- $7362 DEC A          ; Decrease #REGa by one.
- $7363 JR NZ,$7349    ; Jump to #R$7349 until #REGa is zero.
- $7365 JP $704A       ; Jump to #R$704A.
+
+; Key Entry Flag
+@label=FlagKeyEntry
+g$7336 DEFB $00
+
+; Shift High Scores
+;
+; Used by the routine at #R$72B5.
+@label=ShiftHighScores
+c$7337 POP HL        ; {Restore #REGhl, #REGbc, #REGhl and #REGbc from the
+ $7338 POP BC        ; stack.
+ $7339 POP HL        ;
+ $733A POP BC        ; }
+ $733B LD E,B        ; #REGe=#REGb.
+*$733C LD A,(HL)     ; #REGa=*#REGhl.
+ $733D LD (HL),D     ; Write #REGd to *#REGhl.
+ $733E INC HL        ; {Increment #REGhl by three.
+ $733F INC HL        ;
+ $7340 INC HL        ; }
+ $7341 LD D,A        ; #REGd=#REGa.
+ $7342 DJNZ $733C    ; Decrease counter by one and loop back to #R$733C until
+                     ; counter is zero.
+ $7344 LD A,E        ; #REGa=#REGe.
+ $7345 LD IX,$7382   ; #REGix=#R$7381(#N$7382).
+@label=ShiftHighScores_Loop
+*$7349 LD H,(IX+$00) ; #REGh=*#REGix+#N$00.
+ $734C LD L,(IX-$01) ; #REGl=*#REGix-#N$01.
+ $734F LD D,(IX-$03) ; #REGd=*#REGix-#N$03.
+ $7352 LD E,(IX-$04) ; #REGe=*#REGix-#N$04.
+ $7355 LD B,$16      ; #REGb=#N$16.
+ $7357 PUSH AF       ; Stash #REGaf on the stack.
+ $7358 CALL $343E    ; #HTML(Call <a rel="noopener nofollow"
+                     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/343C.html#343E">SWAP_BYTE</a>.)
+ $735B DEC IX        ; {Decrease #REGix by three.
+ $735D DEC IX        ;
+ $735F DEC IX        ; }
+ $7361 POP AF        ; Restore #REGaf from the stack.
+ $7362 DEC A         ; Decrease #REGa by one.
+ $7363 JR NZ,$7349   ; Jump to #R$7349 until #REGa is zero.
+ $7365 JP $704A      ; Jump to #R$704A.
 
 ; Table: Winners Pointers
 ;
@@ -1520,28 +1553,28 @@ c$729A CALL $028E     ; #HTML(Call <a rel="noopener nofollow"
 ;
 ; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
 @label=TablePointersWinnersData
-g$7368 DEFB $09      ; Position.
+g$7368 DEFB $09      ; Stage.
  $7369 DEFW $70B4    ; Address.
 ; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
- $736B DEFB $08      ; Position.
+ $736B DEFB $08      ; Stage.
  $736C DEFW $70D1    ; Address.
 ; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
- $736E DEFB $07      ; Position.
+ $736E DEFB $07      ; Stage.
  $736F DEFW $70EE    ; Address.
 ; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
- $7371 DEFB $06      ; Position.
+ $7371 DEFB $06      ; Stage.
  $7372 DEFW $710B    ; Address.
 ; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
- $7374 DEFB $05      ; Position.
+ $7374 DEFB $05      ; Stage.
  $7375 DEFW $7162    ; Address.
 ; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
- $7377 DEFB $04      ; Position.
+ $7377 DEFB $04      ; Stage.
  $7378 DEFW $717F    ; Address.
 ; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
- $737A DEFB $03      ; Position.
+ $737A DEFB $03      ; Stage.
  $737B DEFW $719C    ; Address.
 ; Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
- $737D DEFB $02      ; Position.
+ $737D DEFB $02      ; Stage.
  $737E DEFW $71B9    ; Address.
  $7380 DEFB $00      ; Terminator?
 
@@ -5446,14 +5479,14 @@ c$954E PUSH IX       ; Stash #REGix on the stack.
 ;
 ; Used by the routines at #R$7D97, #R$954E, #R$960C and #R$96D1.
 ;
-; .
+; A A random number between #N$00-#N$34
 ;
 ; The #REGr register is incremented every instruction, providing a
 ; pseudo-random value.
 @label=GetRandomNumber
 c$9579 LD A,R         ; {#REGh=#REGr.
  $957B LD H,A         ; }
-@label=WasteTime_Loop
+@label=WasteTime_Loop_1
 *$957C DEC A          ; {Count down to zero from the refresh value.
  $957D JR NZ,$957C    ; }
  $957F LD A,R         ; {#REGl=#REGr.
@@ -5461,20 +5494,22 @@ c$9579 LD A,R         ; {#REGh=#REGr.
  $9582 LD DE,($5C79)  ; {#HTML(#REGhl+=*<a rel="noopener nofollow"
  $9586 ADD HL,DE      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C78.html">FRAMES+#N$01</a>.)
                       ; }
- $9587 LD A,%00111111 ; {Mask off the lower 6 bits of #REGh.
+ $9587 LD A,%00111111 ; {Keep only the lower 6 bits of #REGh.
  $9589 AND H          ;
  $958A LD H,A         ; }
- $958B LD A,(HL)      ;
- $958C LD H,A         ;
-*$958D DEC A          ;
- $958E JR NZ,$958D    ;
- $9590 LD A,H         ;
+ $958B LD A,(HL)      ; {Load the byte from the ZX Spectrum ROM pointed to by
+ $958C LD H,A         ; #REGhl, store it in #REGh.}
+@label=WasteTime_Loop_2
+*$958D DEC A          ; {Count down to zero from the ZX Spectrum ROM byte
+ $958E JR NZ,$958D    ; value.}
 ; Ensure the value in #REGa is in the range #N$00-#N$34.
- $9591 LD H,$34       ;
-*$9593 SUB H          ;
- $9594 JR Z,$9593     ;
- $9596 CP $35         ;
- $9598 JR NC,$9593    ;
+ $9590 LD A,H         ; #REGa=#REGh.
+ $9591 LD H,$34       ; #REGh=#N$34.
+@label=GetRandomNumber_Loop
+*$9593 SUB H          ; Subtract #N$34 from #REGa.
+ $9594 JR Z,$9593     ; Jump back to #R$9593 if the result is zero.
+ $9596 CP $35         ; {Jump back to #R$9593 if the result is higher than, or
+ $9598 JR NC,$9593    ; equal to #N$35.}
  $959A RET            ; Return.
 
 ; Reset Deck
@@ -5575,27 +5610,50 @@ c$95EF PUSH IX       ; {Load the hand pointer into #REGde (using the stack).
 ; Girl Artificial Intelligence
 ;
 ; Used by the routine at #R$8D4A.
+;
+; .
+;
+; A reminder of the hand types and values:
+; #TABLE(default,centre) { =h Byte | =h Outcome } #FOR$01,$09(n,{ #Nn | #OUTCOMEn }) TABLE#
+; .
+; Prepare how many times to call the random number generator.
 @label=GirlArtificialIntelligence
-c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
- $960F LD C,A        ; #REGc=#REGa.
- $9610 CP $02        ; {Jump to #R$9626 if #REGa is lower than #N$02.
- $9612 JR C,$9626    ; }
- $9614 RL C          ; Rotate #REGc left.
- $9616 CP $04        ; {Jump to #R$961C if #REGa is lower than #N$04.
- $9618 JR C,$961C    ; }
- $961A RL C          ; Rotate #REGc left.
-*$961C LD B,C        ; #REGb=#REGc.
+c$960C LD A,($96C0)  ; {Fetch the girls hand type from *#R$96C0 and store it in
+ $960F LD C,A        ; #REGc as the "try" counter.}
+ $9610 CP $02        ; {Jump to #R$9626 if the hand "type" is lower than, or equal to #N$02
+ $9612 JR C,$9626    ; ("#OUTCOME$02" or "#OUTCOME$01").}
+; Double the value in the "try" counter for outcomes:
+; #FOR$03,$09,,$01(n,"#OUTCOMEn", , and ).
+ $9614 RL C          ; Multiply #REGc by two.
+ $9616 CP $04        ; {Jump to #R$961C if the hand "type" is lower than, or equal to #N$04
+ $9618 JR C,$961C    ; ("#OUTCOME$03" or "#OUTCOME$04").}
+; Double the value again in the "try" counter for outcomes:
+; #FOR$05,$09,,$01(n,"#OUTCOMEn", , and ).
+ $961A RL C          ; Multiply #REGc by two.
+; Set a number of "tries" to pick a random number under #N$0E.
+@label=GirlAI_SetRaiseTries
+*$961C LD B,C        ; Set a counter in #REGb which is just the value copied
+                     ; from #REGc.
+@label=GirlAI_SetRaiseTries_Loop
 *$961D CALL $9579    ; Call #R$9579.
  $9620 CP $0E        ; {Jump to #R$9637 if #REGa is lower than #N$0E.
  $9622 JR C,$9637    ; }
  $9624 DJNZ $961D    ; Decrease counter by one and loop back to #R$961D until
                      ; counter is zero.
-*$9626 LD B,C        ; #REGb=#REGc.
+; Set a number of "tries" to pick a random number under #N$1E.
+@label=GirlAI_SetHoldTries
+*$9626 LD B,C        ; Set a counter in #REGb which is just the value copied
+                     ; from #REGc.
+@label=GirlAI_SetHoldTries_Loop
 *$9627 CALL $9579    ; Call #R$9579.
  $962A CP $1E        ; {Jump to #R$968C if #REGa is lower than #N$1E.
  $962C JR C,$968C    ; }
  $962E DJNZ $9627    ; Decrease counter by one and loop back to #R$9627 until
                      ; counter is zero.
+; If we made it this far then the girl will just drop, if you're playing
+; along here then YES, albeit fairly unlikely - there is still a slim chance
+; that the girl will DROP even if she has a Royal Straight Flush!
+; .
 ; Messaging options:
 ; #UDGTABLE(default,centre,centre,centre,centre)
 ; { =h ID | =h Message | =h ID | =h Message }
@@ -5607,28 +5665,36 @@ c$960C LD A,($96C0)  ; #REGa=*#R$96C0.
  $9632 CALL $7D97    ; }
  $9635 XOR A         ; {Return with #REGa=#N$00 ("drop").
  $9636 RET           ; }
+; Handle the girl choosing to raise.
+@label=GirlAI_Raise
 *$9637 LD A,($8E59)  ; {Jump to #R$968C if *#R$8E59 is equal to #N$07.
  $963A CP $07        ;
  $963C JR Z,$968C    ; }
  $963E LD A,($96B7)  ; #REGa=*#R$96B7.
  $9641 CALL $96A1    ; Call #R$96A1.
+@label=GirlAI_Raise_Loop
 *$9644 CALL $9579    ; Call #R$9579.
- $9647 SRA A         ; Shift #REGa right (with carry).
- $9649 SUB $06       ; #REGa-=#N$06.
- $964B JR C,$9644    ; Jump to #R$9644 if {} is lower.
- $964D LD B,A        ; #REGb=#REGa.
+ $9647 SRA A         ; {Divide the random number by #N$02 and subtract #N$06.
+ $9649 SUB $06       ; }
+ $964B JR C,$9644    ; Jump to #R$9644 and try again if the result is negative.
+; The raise value is #N$00 or higher.
+ $964D LD B,A        ; Store the raise value in #REGb.
  $964E LD A,($96B6)  ; {Jump to #R$966C if *#R$96B6 is higher than #REGb.
  $9651 CP B          ;
  $9652 JR NC,$966C   ; }
- $9654 OR A          ;
- $9655 LD B,A        ; #REGb=#REGa.
- $9656 JR NZ,$966C   ; Jump to #R$966C if {} is not zero.
+; Handle if the raise value is higher than the girls current cash balance.
+ $9654 OR A          ; Does the girl have any cash left?
+ $9655 LD B,A        ; Store the girls current cash balance in #REGb.
+ $9656 JR NZ,$966C   ; Jump to #R$966C if the raise value is not zero.
+; Handle the girl choosing to hold.
+; .
 ; Messaging options:
 ; #UDGTABLE(default,centre,centre,centre,centre)
 ; { =h ID | =h Message | =h ID | =h Message }
 ; { #N$01 | #MESSAGE$03,$00(message-03-00) | #N$02 | #MESSAGE$03,$01(message-03-01) }
 ; { #N$03 | #MESSAGE$03,$02(message-03-02) }
 ; UDGTABLE#
+@label=GirlAI_Hold
 *$9658 LD A,$03      ; {Call #R$7D97 using message block #R$81B9(#N$03).
  $965A CALL $7D97    ; }
  $965D LD A,($96B7)  ; {#REGd=*#R$96B7.
@@ -5747,6 +5813,8 @@ g$96B7 DEFB $00
 g$96B8 DEFB $00
 
 ; Copy Players Evaluation Table
+;
+; See #R$949B.
 @label=Table_PlayerEvaluation
 g$96B9 DEFB $00
  $96BA DEFB $00
@@ -5757,6 +5825,8 @@ g$96B9 DEFB $00
  $96BF DEFB $00
 
 ; Copy Girls Evaluation Table
+;
+; See #R$949B.
 @label=Table_GirlEvaluation
 g$96C0 DEFB $00
  $96C1 DEFB $00
@@ -7566,26 +7636,29 @@ c$E313 PUSH IX       ; Stash #REGix on the stack.
 ;
 ; A Card value
 @label=CheckCardType
-c$E33A LD B,A        ; #REGb=#REGa.
- $E33B AND %00001111 ; Keep only bits 0-3.
+c$E33A LD B,A        ; #REGb=the original card value.
+ $E33B AND %00001111 ; Convert the card value into a suit-less value (by
+                     ; keeping only bits 0-3).
  $E33D CP $09        ; {Jump to #R$E3BD if #REGa is lower than #N$09.
  $E33F JR C,$E3BD    ; }
  $E341 CP $0C        ; {Jump to #R$E3B8 if #REGa is equal to #N$0C.
  $E343 JR Z,$E3B8    ; }
 ; Anything else is a picture card, so work out what we're printing.
- $E345 LD HL,$E618   ; #REGhl=#R$E618.
+ $E345 LD HL,$E618   ; #REGhl=#R$E617(#N$E618).
  $E348 LD DE,$0438   ; #REGde=#N($0438,$04,$04).
  $E34B SUB $08       ; #REGa-=#N$08.
  $E34D SBC HL,DE     ; #REGhl-=#REGde (with carry).
 *$E34F ADD HL,DE     ; #REGhl+=#REGde.
  $E350 DEC A         ; Decrease #REGa by one.
  $E351 JR NZ,$E34F   ; Jump to #R$E34F until #REGa is zero.
+; Work out the suit.
  $E353 LD A,$04      ; #REGa=#N$04.
+@label=CardTypeSuitShift_Loop
 *$E355 SRL B         ; Shift #REGb right.
  $E357 DEC A         ; Decrease #REGa by one.
- $E358 JR NZ,$E355   ; Jump to #R$E355 until #REGa is zero.
+ $E358 JR NZ,$E355   ; Jump back to #R$E355 until #REGa is zero.
  $E35A LD DE,$010E   ; #REGde=#N($010E,$04,$04).
- $E35D XOR A         ; #REGa=#N$00.
+ $E35D XOR A         ; Reset flags.
  $E35E SBC HL,DE     ; #REGhl-=#REGde (with carry).
  $E360 INC B         ; Increment #REGb by one.
 *$E361 ADD HL,DE     ; #REGhl+=#REGde.
@@ -7994,9 +8067,8 @@ b$E567 DEFB $A0,$A0,$A0,$A0,$A0,$A0,$A0,$A0 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
                                             ; #UDG(#PC,attr=$78) } UDGTABLE#
  $E60F DEFB $A0,$AA,$BD,$AD,$AD,$AD,$AD,$AA ; #UDGTABLE { #N((#PC-$E35F)/$08) |
                                             ; #UDG(#PC,attr=$78) } UDGTABLE#
- $E617 DEFB $05                             ; #UDGTABLE { #N((#PC-$E35F)/$08) |
+ $E617 DEFB $05,$55,$ED,$6D,$6D,$6D,$6D,$55 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
                                             ; #UDG(#PC,attr=$78) } UDGTABLE#
- $E618 DEFB $55,$ED,$6D,$6D,$6D,$6D,$55
  $E61F DEFB $A0,$A6,$A9,$A9,$AF,$A9,$A9,$A9 ; #UDGTABLE { #N((#PC-$E35F)/$08) |
                                             ; #UDG(#PC,attr=$78) } UDGTABLE#
  $E627 DEFB $05,$65,$95,$95,$F5,$95,$95,$95 ; #UDGTABLE { #N((#PC-$E35F)/$08) |

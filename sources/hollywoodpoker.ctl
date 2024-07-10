@@ -375,15 +375,21 @@ N $729D #HTML(<blockquote>In all instances the #REGe register is returned with
   $72A3,$02 Set a counter of #N$08 which is the total number of scores held by the game.
   $72A5,$03 #REGhl=#R$7368.
   $72A8,$01 Copy *#R$98E3 into #REGd.
-@ $72A9 label=CheckPosition_Loop
-  $72A9,$04 Jump to #R$72B5 if *#REGhl is lower than #REGd.
+N $72A9 Loop through each winners data in the table to find a good match for
+. the players stage.
+@ $72A9 label=FindStage_Loop
+  $72A9,$04 Jump to #R$72B5 if *#REGhl is lower than or equal to #REGd.
 N $72AD Move onto the next entry.
   $72AD,$03 Increment #REGhl by three.
   $72B0,$02 Decrease counter by one and loop back to #R$72A9 until counter is zero.
 N $72B2 The players stage wasn't higher than any of the stored stages.
   $72B2,$03 Jump to #R$6E9D.
-N $72B5 This is a highscore so collect the users name.
+
+c $72B5 Collect Players Name
 @ $72B5 label=CollectName
+R $72B5 B The entry ID
+R $72B5 HL The appropriate entry from #R$7368
+N $72B5 This is a highscore so collect the users name.
   $72B5,$02 Stash #REGbc and #REGhl on the stack.
   $72B7,$03 #REGhl=#R$7399.
   $72BA,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1855.html#187D">OUT_LINE2</a>.)
@@ -404,8 +410,8 @@ N $72BD Clear out the buffer from any previous name entries.
 . which resets "when a new key has been pressed".)
   $72D6,$03 #HTML(Call <a href="https://skoolkit.ca/disassemblies/rom/hex/asm/02BF.html">KEYBOARD</a>.)
   $72D9,$06 Jump to #R$72D2 if no key was pressed.
-  $72DF,$07 #HTML(Jump to #R$7337 if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to #N$0D.)
-  $72E6,$04 #HTML(Jump to #R$7310 if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is equal to #N$0C.)
+  $72DF,$07 #HTML(Jump to #R$7337 if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is "enter".)
+  $72E6,$04 #HTML(Jump to #R$7310 if *<a href="https://skoolkid.github.io/rom/asm/5C08.html">LAST-K</a> (last key pressed) is "delete".)
   $72EA,$01 Copy the keypress into #REGb.
   $72EB,$06 Jump to #R$72D2 if *#R$7336 is not zero.
   $72F1,$05 Jump to #R$72D2 if #REGb is lower than #N$20.
@@ -427,11 +433,19 @@ N $72FE #HTML(<blockquote>In all instances the #REGe register is returned with
   $7307,$02 Decrease counter by one and loop back to #R$72D0 until counter is zero.
   $7309,$05 Write #N$01 to *#R$7336.
   $730E,$02 Jump to #R$72D0.
+
+c $7310 Name Entry Delete
+@ $7310 label=NameEntryDelete
   $7310,$02 Restore #REGhl and #REGbc from the stack.
   $7312,$04 Write #N$00 to *#R$7336.
   $7316,$05 Jump to #R$72D0 if #REGb is equal to #N$0D.
+N $731B Move the buffer pointer back one place, and "erase" the character by
+. writing a space to this location.
   $731B,$01 Decrease #REGhl by one.
-  $731C,$02 Write #N$20 to *#REGhl.
+  $731C,$02 Write an ASCII space (#N$20) to *#REGhl.
+N $731E Now do the same to the screen, action a backspace, print an actual
+. space, and finally, action another backspace to move the cursor to the
+. correct position.
   $731E,$03 Backspace.
   $7321,$03 Print an ASCII space " ".
   $7324,$03 Backspace.
@@ -439,10 +453,17 @@ N $72FE #HTML(<blockquote>In all instances the #REGe register is returned with
   $7328,$02 Stash #REGbc and #REGhl on the stack.
   $732A,$04 #HTML(Reset bit 5 of *<a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>
 . which resets "when a new key has been pressed".)
+N $732E #HTML(Big pause <code>HALT</code> loop #N$10000 times, can be interrupted with a keypress.)
   $732E,$03 #REGbc=#N($0000,$04,$04).
   $7331,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1F3A.html#1F3D">PAUSE_1</a>.)
   $7334,$02 Jump to #R$72D2.
+
+g $7336 Key Entry Flag
+@ $7336 label=FlagKeyEntry
 B $7336,$01
+
+c $7337 Shift High Scores
+@ $7337 label=ShiftHighScores
   $7337,$04 Restore #REGhl, #REGbc, #REGhl and #REGbc from the stack.
   $733B,$01 #REGe=#REGb.
   $733C,$01 #REGa=*#REGhl.
@@ -452,6 +473,7 @@ B $7336,$01
   $7342,$02 Decrease counter by one and loop back to #R$733C until counter is zero.
   $7344,$01 #REGa=#REGe.
   $7345,$04 #REGix=#R$7381(#N$7382).
+@ $7349 label=ShiftHighScores_Loop
   $7349,$03 #REGh=*#REGix+#N$00.
   $734C,$03 #REGl=*#REGix-#N$01.
   $734F,$03 #REGd=*#REGix-#N$03.
@@ -468,7 +490,7 @@ B $7336,$01
 g $7368 Table: Winners Pointers
 @ $7368 label=TablePointersWinnersData
 N $7368 Table data position: #R(#PEEK(#PC+$01)-$04+#PEEK(#PC+$02)*$100).
-B $7368,$01 Position.
+B $7368,$01 Stage.
 W $7369,$02 Address.
 L $7368,$03,$08
 
@@ -2552,17 +2574,25 @@ N $956F The picked card is valid and able to be drawn into the hand.
 
 c $9579 Get Random Number
 @ $9579 label=GetRandomNumber
+R $9579 A A random number between #N$00-#N$34
 N $9579 The #REGr register is incremented every instruction, providing a pseudo-random value.
   $9579,$03 #REGh=#REGr.
-@ $957C label=WasteTime_Loop
+@ $957C label=WasteTime_Loop_1
   $957C,$03 Count down to zero from the refresh value.
   $957F,$03 #REGl=#REGr.
   $9582,$05 #HTML(#REGhl+=*<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C78.html">FRAMES+#N$01</a>.)
   $9587,$02,b$01
-M $9587,$04 Mask off the lower 6 bits of #REGh.
-  $958B,$02
-  $958D,$03
-N $9591 Ensure the value in #REGa is in the range #N$00-#N$34.
+M $9587,$04 Keep only the lower 6 bits of #REGh.
+  $958B,$02 Load the byte from the ZX Spectrum ROM pointed to by #REGhl, store it in #REGh.
+@ $958D label=WasteTime_Loop_2
+  $958D,$03 Count down to zero from the ZX Spectrum ROM byte value.
+N $9590 Ensure the value in #REGa is in the range #N$00-#N$34.
+  $9590,$01 #REGa=#REGh.
+  $9591,$02 #REGh=#N$34.
+@ $9593 label=GetRandomNumber_Loop
+  $9593,$01 Subtract #N$34 from #REGa.
+  $9594,$02 Jump back to #R$9593 if the result is zero.
+  $9596,$04 Jump back to #R$9593 if the result is higher than, or equal to #N$35.
   $959A,$01 Return.
 
 c $959B Reset Deck
@@ -2639,20 +2669,35 @@ N $9609 This hand doesn't contain a flush.
 
 c $960C Girl Artificial Intelligence
 @ $960C label=GirlArtificialIntelligence
-  $960C,$03 #REGa=*#R$96C0.
-  $960F,$01 #REGc=#REGa.
-  $9610,$04 Jump to #R$9626 if #REGa is lower than #N$02.
-  $9614,$02 Rotate #REGc left.
-  $9616,$04 Jump to #R$961C if #REGa is lower than #N$04.
-  $961A,$02 Rotate #REGc left.
-  $961C,$01 #REGb=#REGc.
+N $960C A reminder of the hand types and values:
+. #TABLE(default,centre) { =h Byte | =h Outcome } #FOR$01,$09(n,{ #Nn | #OUTCOMEn }) TABLE#
+N $960C Prepare how many times to call the random number generator.
+  $960C,$04 Fetch the girls hand type from *#R$96C0 and store it in #REGc as the "try" counter.
+  $9610,$04 Jump to #R$9626 if the hand "type" is lower than, or equal to #N$02
+. ("#OUTCOME$02" or "#OUTCOME$01").
+N $9614 Double the value in the "try" counter for outcomes: #FOR$03,$09,,$01(n,"#OUTCOMEn", , and ).
+  $9614,$02 Multiply #REGc by two.
+  $9616,$04 Jump to #R$961C if the hand "type" is lower than, or equal to #N$04
+. ("#OUTCOME$03" or "#OUTCOME$04").
+N $961A Double the value again in the "try" counter for outcomes: #FOR$05,$09,,$01(n,"#OUTCOMEn", , and ).
+  $961A,$02 Multiply #REGc by two.
+N $961C Set a number of "tries" to pick a random number under #N$0E.
+@ $961C label=GirlAI_SetRaiseTries
+  $961C,$01 Set a counter in #REGb which is just the value copied from #REGc.
+@ $961D label=GirlAI_SetRaiseTries_Loop
   $961D,$03 Call #R$9579.
   $9620,$04 Jump to #R$9637 if #REGa is lower than #N$0E.
   $9624,$02 Decrease counter by one and loop back to #R$961D until counter is zero.
-  $9626,$01 #REGb=#REGc.
+N $9626 Set a number of "tries" to pick a random number under #N$1E.
+@ $9626 label=GirlAI_SetHoldTries
+  $9626,$01 Set a counter in #REGb which is just the value copied from #REGc.
+@ $9627 label=GirlAI_SetHoldTries_Loop
   $9627,$03 Call #R$9579.
   $962A,$04 Jump to #R$968C if #REGa is lower than #N$1E.
   $962E,$02 Decrease counter by one and loop back to #R$9627 until counter is zero.
+N $9630 If we made it this far then the girl will just drop, if you're playing
+. along here then YES, albeit fairly unlikely - there is still a slim chance
+. that the girl will DROP even if she has a Royal Straight Flush!
 N $9630 Messaging options:
 . #UDGTABLE(default,centre,centre,centre,centre)
 . { =h ID | =h Message | =h ID | =h Message }
@@ -2662,25 +2707,30 @@ N $9630 Messaging options:
 . UDGTABLE#
   $9630,$05 Call #R$7D97 using message block #R$7F9D(#N$01).
   $9635,$02 Return with #REGa=#N$00 ("drop").
-
+N $9637 Handle the girl choosing to raise.
+@ $9637 label=GirlAI_Raise
   $9637,$07 Jump to #R$968C if *#R$8E59 is equal to #N$07.
   $963E,$03 #REGa=*#R$96B7.
   $9641,$03 Call #R$96A1.
+@ $9644 label=GirlAI_Raise_Loop
   $9644,$03 Call #R$9579.
-  $9647,$02 Shift #REGa right (with carry).
-  $9649,$02 #REGa-=#N$06.
-  $964B,$02 Jump to #R$9644 if {} is lower.
-  $964D,$01 #REGb=#REGa.
+  $9647,$04 Divide the random number by #N$02 and subtract #N$06.
+  $964B,$02 Jump to #R$9644 and try again if the result is negative.
+N $964D The raise value is #N$00 or higher.
+  $964D,$01 Store the raise value in #REGb.
   $964E,$06 Jump to #R$966C if *#R$96B6 is higher than #REGb.
-  $9654,$01
-  $9655,$01 #REGb=#REGa.
-  $9656,$02 Jump to #R$966C if {} is not zero.
+N $9654 Handle if the raise value is higher than the girls current cash balance.
+  $9654,$01 Does the girl have any cash left?
+  $9655,$01 Store the girls current cash balance in #REGb.
+  $9656,$02 Jump to #R$966C if the raise value is not zero.
+N $9658 Handle the girl choosing to hold.
 N $9658 Messaging options:
 . #UDGTABLE(default,centre,centre,centre,centre)
 . { =h ID | =h Message | =h ID | =h Message }
 . { #N$01 | #MESSAGE$03,$00(message-03-00) | #N$02 | #MESSAGE$03,$01(message-03-01) }
 . { #N$03 | #MESSAGE$03,$02(message-03-02) }
 . UDGTABLE#
+@ $9658 label=GirlAI_Hold
   $9658,$05 Call #R$7D97 using message block #R$81B9(#N$03).
   $965D,$04 #REGd=*#R$96B7.
   $9661,$04 Write #N$00 to *#R$96B7.
@@ -2763,10 +2813,12 @@ B $96B8,$01
 
 g $96B9 Copy Players Evaluation Table
 @ $96B9 label=Table_PlayerEvaluation
+D $96B9 See #R$949B.
 B $96B9,$07,$01
 
 g $96C0 Copy Girls Evaluation Table
 @ $96C0 label=Table_GirlEvaluation
+D $96C0 See #R$949B.
 B $96C0,$07,$01
 
 g $96C7 Players Hand
@@ -3175,24 +3227,26 @@ N $E331 #HTML(Housekeeping; restore the
 c $E33A Check Card Type
 @ $E33A label=CheckCardType
 R $E33A A Card value
-  $E33A,$01 #REGb=#REGa.
-  $E33B,$02,b$01 Keep only bits 0-3.
+  $E33A,$01 #REGb=the original card value.
+  $E33B,$02,b$01 Convert the card value into a suit-less value (by keeping only bits 0-3).
   $E33D,$04 Jump to #R$E3BD if #REGa is lower than #N$09.
   $E341,$04 Jump to #R$E3B8 if #REGa is equal to #N$0C.
 N $E345 Anything else is a picture card, so work out what we're printing.
-  $E345,$03 #REGhl=#R$E618.
+  $E345,$03 #REGhl=#R$E617(#N$E618).
   $E348,$03 #REGde=#N($0438,$04,$04).
   $E34B,$02 #REGa-=#N$08.
   $E34D,$02 #REGhl-=#REGde (with carry).
   $E34F,$01 #REGhl+=#REGde.
   $E350,$01 Decrease #REGa by one.
   $E351,$02 Jump to #R$E34F until #REGa is zero.
+N $E353 Work out the suit.
   $E353,$02 #REGa=#N$04.
+@ $E355 label=CardTypeSuitShift_Loop
   $E355,$02 Shift #REGb right.
   $E357,$01 Decrease #REGa by one.
-  $E358,$02 Jump to #R$E355 until #REGa is zero.
+  $E358,$02 Jump back to #R$E355 until #REGa is zero.
   $E35A,$03 #REGde=#N($010E,$04,$04).
-  $E35D,$01 #REGa=#N$00.
+  $E35D,$01 Reset flags.
   $E35E,$02 #REGhl-=#REGde (with carry).
   $E360,$01 Increment #REGb by one.
   $E361,$01 #REGhl+=#REGde.
@@ -3497,8 +3551,6 @@ b $E567 Graphics: Card Data
 D $E567 Used by the routine at #R$E3B8.
   $E567,$08 #UDGTABLE { #N((#PC-$E35F)/$08) | #UDG(#PC,attr=$78) } UDGTABLE#
 L $E567,$08,$20
-
-  $E618
 
 b $E667 Buffer: Card Data
 @ $E667 label=Buffer_CardData
