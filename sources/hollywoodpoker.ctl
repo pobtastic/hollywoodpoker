@@ -2274,24 +2274,34 @@ N $9417 There is a pair! Process it.
   $941A,$03 Write #REGa to *#R$949C.
 N $941D Record this hand "type".
   $941D,$05 Write "#OUTCOME$02" to *#R$949B.
+N $9422 Starting from "Ace High" work backwards through all the cards.
   $9422,$02 Set a counter in #REGb of the number of possible values of cards
 . there are in one suit.
   $9424,$03 #REGde=#R$949E.
   $9427,$03 #REGhl=#R$954C.
-  $942A,$05 Jump to #R$943C if *#REGhl is equal to #N$01.
-  $942F,$01 Decrease #REGhl by one.
-  $9430,$02 Decrease counter by one and loop back to #R$942A until counter is zero.
+@ $942A label=FindSinglesNearYou_Loop
+  $942A,$05 Jump to #R$943C if this entry in the duplicates table is equal to
+. #N$01.
+@ $942F label=FindSinglesNearYou_Next
+N $942F Move to the next card.
+  $942F,$01 Decrease the card duplicate table pointer by one.
+  $9430,$02 Decrease the card counter by one and loop back to #R$942A until the
+. counter is zero.
   $9432,$03 #REGa=*#R$949C.
   $9435,$03 Call #R$947B.
   $9438,$03 Write #REGa to *#R$949D.
   $943B,$01 Return.
-
-c $943C
-  $943C,$02 Stash #REGhl and #REGde on the stack.
-  $943E,$03 Call #R$9473.
-  $9441,$02 Restore #REGde and #REGhl from the stack.
-  $9443,$01 Write #REGa to *#REGde.
-  $9444,$01 Increment #REGde by one.
+N $943C Convert the current position in the duplicates table into a card value
+. and write it to the hand evaluation pointer.
+@ $943C label=WriteSingleCardValue
+  $943C,$02 Stash the duplicates table and hand evaluation pointers on the
+. stack.
+  $943E,$03 Call #R$9473 to convert the duplicates table pointer position into
+. a card value.
+  $9441,$02 Restore the hand evaluation and duplicates table pointers from the
+. stack.
+  $9443,$01 Write the card value to the hand evaluation table.
+  $9444,$01 Increment the hand evaluation table pointer by one.
   $9445,$02 Jump to #R$942F.
 
 c $9447
@@ -2528,6 +2538,7 @@ N $9527 Using the duplicates table, count how many cards of each value are
 
 g $9540 Table: Count Card Duplicates
 @ $9540 label=Table_CardDuplicates
+@ $954C label=Table_CardDuplicates_Ace
 D $9540 Counts the number of cards held of each value.
 B $9540,$01 Count of how many "#CARD(#PC-$9540)" cards this hand holds.
 L $9540,$01,$0D

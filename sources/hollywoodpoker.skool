@@ -5045,32 +5045,35 @@ c$9412 CALL $9506    ; Call #R$9506.
 ; Record this hand "type".
  $941D LD A,$02      ; {Write "#OUTCOME$02" to *#R$949B.
  $941F LD ($949B),A  ; }
+; Starting from "Ace High" work backwards through all the cards.
  $9422 LD B,$0D      ; Set a counter in #REGb of the number of possible values of cards
                      ; there are in one suit.
  $9424 LD DE,$949E   ; #REGde=#R$949E.
  $9427 LD HL,$954C   ; #REGhl=#R$954C.
-*$942A LD A,(HL)     ; {Jump to #R$943C if *#REGhl is equal to #N$01.
- $942B CP $01        ;
+@label=FindSinglesNearYou_Loop
+*$942A LD A,(HL)     ; {Jump to #R$943C if this entry in the duplicates table is equal to
+ $942B CP $01        ; #N$01.
  $942D JR Z,$943C    ; }
-; This entry point is used by the routine at #R$943C.
-*$942F DEC HL        ; Decrease #REGhl by one.
- $9430 DJNZ $942A    ; Decrease counter by one and loop back to #R$942A until
+; Move to the next card.
+@label=FindSinglesNearYou_Next
+*$942F DEC HL        ; Decrease the card duplicate table pointer by one.
+ $9430 DJNZ $942A    ; Decrease the card counter by one and loop back to #R$942A until the
                      ; counter is zero.
  $9432 LD A,($949C)  ; #REGa=*#R$949C.
  $9435 CALL $947B    ; Call #R$947B.
  $9438 LD ($949D),A  ; Write #REGa to *#R$949D.
  $943B RET           ; Return.
-
-; Routine at 943C
-;
-; Used by the routine at #R$9412.
-c$943C PUSH HL       ; {Stash #REGhl and #REGde on the stack.
- $943D PUSH DE       ; }
- $943E CALL $9473    ; Call #R$9473.
- $9441 POP DE        ; {Restore #REGde and #REGhl from the stack.
- $9442 POP HL        ; }
- $9443 LD (DE),A     ; Write #REGa to *#REGde.
- $9444 INC DE        ; Increment #REGde by one.
+; Convert the current position in the duplicates table into a card value
+; and write it to the hand evaluation pointer.
+@label=WriteSingleCardValue
+*$943C PUSH HL       ; {Stash the duplicates table and hand evaluation pointers on the
+ $943D PUSH DE       ; stack.}
+ $943E CALL $9473    ; Call #R$9473 to convert the duplicates table pointer position into
+                     ; a card value.
+ $9441 POP DE        ; {Restore the hand evaluation and duplicates table pointers from the
+ $9442 POP HL        ; stack.}
+ $9443 LD (DE),A     ; Write the card value to the hand evaluation table.
+ $9444 INC DE        ; Increment the hand evaluation table pointer by one.
  $9445 JR $942F      ; Jump to #R$942F.
 
 ; Routine at 9447
@@ -5105,7 +5108,7 @@ c$9447 CALL $950D    ; Call #R$950D.
 ; Calculate Card
 ;
 ; Used by the routines at #R$9341, #R$9359, #R$936E, #R$93B0, #R$93C9, #R$93DE,
-; #R$9412, #R$943C, #R$9447 and #R$96D1.
+; #R$9412, #R$9447 and #R$96D1.
 ;
 ;   HL Pointer to a card count in #R$9540
 ; O:A The card ID that the card count refers to
@@ -5413,6 +5416,7 @@ g$9540 DEFB $00      ; Count of how many "#CARD(#PC-$9540)" cards this hand
                      ; holds.
  $954B DEFB $00      ; Count of how many "#CARD(#PC-$9540)" cards this hand
                      ; holds.
+@label=Table_CardDuplicates_Ace
  $954C DEFB $00      ; Count of how many "#CARD(#PC-$9540)" cards this hand
                      ; holds.
 
