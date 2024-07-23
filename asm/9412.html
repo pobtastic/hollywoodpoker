@@ -29,7 +29,7 @@ Prev: <a href="93DE.html">93DE</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#9412">Map</a></td>
 <td class="next">
-Next: <a href="943C.html">943C</a>
+Next: <a href="9447.html">9447</a>
 </td>
 </tr>
 </table>
@@ -110,6 +110,16 @@ Record this hand "type".
 <td class="instruction">LD ($949B),A</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="9422"></span>
+<div class="comments">
+<div class="paragraph">
+Starting from "Ace High" work backwards through all the cards.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9422"></span>9422</td>
 <td class="instruction">LD B,$0D</td>
@@ -125,13 +135,13 @@ Record this hand "type".
 <td class="asm-label"></td>
 <td class="address-1"><span id="9427"></span>9427</td>
 <td class="instruction">LD HL,$954C</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html#954c">954C</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="9540.html#954c">Table_CardDuplicates_Ace</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">CheckPair_0</td>
+<td class="asm-label">FindSinglesNearYou_Loop</td>
 <td class="address-2"><span id="942a"></span>942A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="943C.html">943C</a> if *<span class="register">HL</span> is equal to 01.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="9412.html#943c">WriteSingleCardValue</a> if this entry in the duplicates table is equal to 01.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -141,29 +151,29 @@ Record this hand "type".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="942d"></span>942D</td>
-<td class="instruction">JR Z,<a href="943C.html">$943C</a></td>
+<td class="instruction">JR Z,<a href="9412.html#943c">WriteSingleCardValue</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="942f"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="943C.html">943C</a>.
+Move to the next card.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">CheckPair_1</td>
+<td class="asm-label">FindSinglesNearYou_Next</td>
 <td class="address-2"><span id="942f"></span>942F</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Decrease the card duplicate table pointer by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9430"></span>9430</td>
-<td class="instruction">DJNZ <a href="9412.html#942a">CheckPair_0</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="9412.html#942a">CheckPair_0</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="9412.html#942a">FindSinglesNearYou_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card counter by one and loop back to <a href="9412.html#942a">FindSinglesNearYou_Loop</a> until the counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -189,6 +199,62 @@ This entry point is used by the routine at <a href="943C.html">943C</a>.
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="943c"></span>
+<div class="comments">
+<div class="paragraph">
+Convert the current position in the duplicates table into a card value and write it to the hand evaluation pointer.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">WriteSingleCardValue</td>
+<td class="address-2"><span id="943c"></span>943C</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Stash the duplicates table and hand evaluation pointers on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="943d"></span>943D</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="943e"></span>943E</td>
+<td class="instruction">CALL <a href="9473.html">CalculateCard</a></td>
+<td class="comment-1" rowspan="1">Call <a href="9473.html">CalculateCard</a> to convert the duplicates table pointer position into a card value.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9441"></span>9441</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore the hand evaluation and duplicates table pointers from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9442"></span>9442</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9443"></span>9443</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-1" rowspan="1">Write the card value to the hand evaluation table.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9444"></span>9444</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1">Increment the hand evaluation table pointer by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="9445"></span>9445</td>
+<td class="instruction">JR <a href="9412.html#942f">FindSinglesNearYou_Next</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="9412.html#942f">FindSinglesNearYou_Next</a>.</td>
+</tr>
 </table>
 <table class="asm-navigation">
 <tr>
@@ -197,7 +263,7 @@ Prev: <a href="93DE.html">93DE</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#9412">Map</a></td>
 <td class="next">
-Next: <a href="943C.html">943C</a>
+Next: <a href="9447.html">9447</a>
 </td>
 </tr>
 </table>
