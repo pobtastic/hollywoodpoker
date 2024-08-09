@@ -67,17 +67,17 @@ Used by the routine at <a href="9412.html">CheckPair</a>.
 <tr>
 <td class="address-1"><span id="944f"></span>944F</td>
 <td class="instruction">LD ($949C),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html#949c">TableHandEvaluation_Card</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html#949c">TableHandEvaluation_BaseCard</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="9452"></span>9452</td>
-<td class="instruction">CALL <a href="947B.html">FindHighestCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="947B.html">FindHighestCard</a>.</td>
+<td class="instruction">CALL <a href="947B.html">CalculateSuit</a></td>
+<td class="comment-1" rowspan="1">Call <a href="947B.html">CalculateSuit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="9455"></span>9455</td>
 <td class="instruction">LD ($949D),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html#949d">TableHandEvaluation_HighCard</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="949B.html#949d">TableHandEvaluation_BaseCardSuit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="9458"></span>9458</td>
@@ -111,7 +111,7 @@ Record this hand "type".
 <tr>
 <td class="address-1"><span id="9460"></span>9460</td>
 <td class="instruction">LD DE,$949E</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="949B.html#949e">TableHandEvaluation_?</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="949B.html#949e">TableHandEvaluation_HighCard_1</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="9463"></span>9463</td>

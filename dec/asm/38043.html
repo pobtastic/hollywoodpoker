@@ -42,43 +42,122 @@ Next: <a href="38050.html">38050</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="38043"></span>
+<div class="comments">
+<div class="paragraph">
+Using a real-world example from in-game.
+</div>
+<div class="paragraph">
+The hand: <table class="default">
+<tr>
+<th colspan="5" rowspan="1">Card Values</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">53</td>
+<td class="centre" colspan="1" rowspan="1">9</td>
+<td class="centre" colspan="1" rowspan="1">57</td>
+<td class="centre" colspan="1" rowspan="1">10</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><img src="../images/udgs/card-three-diamonds-colour.png"></td>
+<td class="centre" colspan="1" rowspan="1"><img src="../images/udgs/card-seven-clubs-colour.png"></td>
+<td class="centre" colspan="1" rowspan="1"><img src="../images/udgs/card-jack-diamonds-colour.png"></td>
+<td class="centre" colspan="1" rowspan="1"><img src="../images/udgs/card-jack-clubs-colour.png"></td>
+<td class="centre" colspan="1" rowspan="1"><img src="../images/udgs/card-queen-diamonds-colour.png"></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">Three of Diamonds</td>
+<td class="centre" colspan="1" rowspan="1">Seven of Clubs</td>
+<td class="centre" colspan="1" rowspan="1">Jack of Diamonds</td>
+<td class="centre" colspan="1" rowspan="1">Jack of Clubs</td>
+<td class="centre" colspan="1" rowspan="1">Queen of Diamonds</td>
+</tr>
+</table> Outcome flags: <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Flag</th>
+<th colspan="1" rowspan="1">Value</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1"><a href="38043.html">TableHandEvaluation_Type</a></td>
+<td class="centre" colspan="1" rowspan="1">2</td>
+<td class="centre" colspan="1" rowspan="1">Pair</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1"><a href="38043.html#38044">TableHandEvaluation_BaseCard</a></td>
+<td class="centre" colspan="1" rowspan="1">9</td>
+<td class="centre" colspan="1" rowspan="1">Jack</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1"><a href="38043.html#38045">TableHandEvaluation_BaseCardSuit</a></td>
+<td class="centre" colspan="1" rowspan="1">3</td>
+<td class="centre" colspan="1" rowspan="1">Diamonds</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1"><a href="38043.html#38046">TableHandEvaluation_HighCard_1</a></td>
+<td class="centre" colspan="1" rowspan="1">10</td>
+<td class="centre" colspan="1" rowspan="1">Queen</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1"><a href="38043.html#38047">TableHandEvaluation_HighCard_2</a></td>
+<td class="centre" colspan="1" rowspan="1">5</td>
+<td class="centre" colspan="1" rowspan="1">Seven</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1"><a href="38043.html#38048">TableHandEvaluation_HighCard_3</a></td>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">Three</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1"><a href="38043.html#38049">TableHandEvaluation_HighCard_4</a></td>
+<td class="centre" colspan="1" rowspan="1">0</td>
+<td class="centre" colspan="1" rowspan="1">N/A</td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">TableHandEvaluation_Type</td>
 <td class="address-1"><span id="38043"></span>38043</td>
 <td class="instruction">DEFB 0</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">TableHandEvaluation_Card</td>
+<td class="asm-label">TableHandEvaluation_BaseCard</td>
 <td class="address-1"><span id="38044"></span>38044</td>
 <td class="instruction">DEFB 0</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">TableHandEvaluation_HighCard</td>
+<td class="asm-label">TableHandEvaluation_BaseCardSuit</td>
 <td class="address-1"><span id="38045"></span>38045</td>
 <td class="instruction">DEFB 0</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">TableHandEvaluation_?</td>
+<td class="asm-label">TableHandEvaluation_HighCard_1</td>
 <td class="address-1"><span id="38046"></span>38046</td>
 <td class="instruction">DEFB 0</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label">TableHandEvaluation_??</td>
+<td class="asm-label">TableHandEvaluation_HighCard_2</td>
 <td class="address-1"><span id="38047"></span>38047</td>
 <td class="instruction">DEFB 0</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="asm-label">TableHandEvaluation_HighCard_3</td>
 <td class="address-1"><span id="38048"></span>38048</td>
 <td class="instruction">DEFB 0</td>
 <td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="asm-label">TableHandEvaluation_HighCard_4</td>
 <td class="address-1"><span id="38049"></span>38049</td>
 <td class="instruction">DEFB 0</td>
 <td class="comment-0" rowspan="1"></td>

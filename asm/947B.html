@@ -33,7 +33,7 @@ Next: <a href="949B.html">949B</a>
 </td>
 </tr>
 </table>
-<div class="description">947B: Find Highest Card</div>
+<div class="description">947B: Calculate Suit</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -58,7 +58,7 @@ Used by the routines at <a href="9341.html">CheckStraightFlush</a>, <a href="93B
 </td>
 </tr>
 <tr>
-<td class="asm-label">FindHighestCard</td>
+<td class="asm-label">CalculateSuit</td>
 <td class="address-2"><span id="947b"></span>947B</td>
 <td class="instruction">LD D,A</td>
 <td class="comment-1" rowspan="1">Copy the card value into <span class="register">D</span>.</td>
@@ -87,7 +87,7 @@ Used by the routines at <a href="9341.html">CheckStraightFlush</a>, <a href="93B
 <td class="comment-1" rowspan="1">Set a counter in <span class="register">B</span> to check all 05 cards in this hand.</td>
 </tr>
 <tr>
-<td class="asm-label">FindHighestCard_Loop</td>
+<td class="asm-label">CalculateSuit_Loop</td>
 <td class="address-2"><span id="9483"></span>9483</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1">Fetch the card value and store it in <span class="register">A</span>.</td>
@@ -102,15 +102,15 @@ Used by the routines at <a href="9341.html">CheckStraightFlush</a>, <a href="93B
 <td class="asm-label"></td>
 <td class="address-1"><span id="9486"></span>9486</td>
 <td class="instruction">CP D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="947B.html#9494">HighestCard_FoundMatch</a> if <span class="register">A</span> is equal to <span class="register">D</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="947B.html#9494">CalculateSuit_FoundMatch</a> if <span class="register">A</span> is equal to <span class="register">D</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9487"></span>9487</td>
-<td class="instruction">JR Z,<a href="947B.html#9494">HighestCard_FoundMatch</a></td>
+<td class="instruction">JR Z,<a href="947B.html#9494">CalculateSuit_FoundMatch</a></td>
 </tr>
 <tr>
-<td class="asm-label">FindHighestCard_Continue</td>
+<td class="asm-label">CalculateSuit_Continue</td>
 <td class="address-2"><span id="9489"></span>9489</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Move the hand pointer to the next card.</td>
@@ -118,8 +118,8 @@ Used by the routines at <a href="9341.html">CheckStraightFlush</a>, <a href="93B
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="948a"></span>948A</td>
-<td class="instruction">DJNZ <a href="947B.html#9483">FindHighestCard_Loop</a></td>
-<td class="comment-1" rowspan="1">Decrease the card counter by one and loop back to <a href="947B.html#9483">FindHighestCard_Loop</a> until all cards in the hand have been evaluated.</td>
+<td class="instruction">DJNZ <a href="947B.html#9483">CalculateSuit_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the card counter by one and loop back to <a href="947B.html#9483">CalculateSuit_Loop</a> until all cards in the hand have been evaluated.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -144,14 +144,14 @@ Work out the suit.
 <td class="comment-1" rowspan="3">Shift <span class="register">A</span> right four positions.</td>
 </tr>
 <tr>
-<td class="asm-label">HighestCardSuitShift_Loop</td>
+<td class="asm-label">CalculateSuitShift_Loop</td>
 <td class="address-2"><span id="948f"></span>948F</td>
 <td class="instruction">SRA A</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9491"></span>9491</td>
-<td class="instruction">DJNZ <a href="947B.html#948f">HighestCardSuitShift_Loop</a></td>
+<td class="instruction">DJNZ <a href="947B.html#948f">CalculateSuitShift_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -160,10 +160,10 @@ Work out the suit.
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
-<td class="asm-label">HighestCard_FoundMatch</td>
+<td class="asm-label">CalculateSuit_FoundMatch</td>
 <td class="address-2"><span id="9494"></span>9494</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="947B.html#9489">FindHighestCard_Continue</a> if *<span class="register">HL</span> is lower than <span class="register">E</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="947B.html#9489">CalculateSuit_Continue</a> if *<span class="register">HL</span> is lower than <span class="register">E</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -173,7 +173,7 @@ Work out the suit.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9496"></span>9496</td>
-<td class="instruction">JR C,<a href="947B.html#9489">FindHighestCard_Continue</a></td>
+<td class="instruction">JR C,<a href="947B.html#9489">CalculateSuit_Continue</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -184,8 +184,8 @@ Work out the suit.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="9499"></span>9499</td>
-<td class="instruction">JR <a href="947B.html#9489">FindHighestCard_Continue</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="947B.html#9489">FindHighestCard_Continue</a>.</td>
+<td class="instruction">JR <a href="947B.html#9489">CalculateSuit_Continue</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="947B.html#9489">CalculateSuit_Continue</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

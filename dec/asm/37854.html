@@ -86,7 +86,7 @@ There are two pairs! Process it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="37862"></span>37862</td>
 <td class="instruction">LD (38044),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">TableHandEvaluation_BaseCard</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -104,7 +104,7 @@ There are two pairs! Process it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="37871"></span>37871</td>
 <td class="instruction">LD (38046),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38046">TableHandEvaluation_?</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38046">TableHandEvaluation_HighCard_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -150,25 +150,25 @@ There are two pairs! Process it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="37888"></span>37888</td>
 <td class="instruction">LD (38047),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38047">TableHandEvaluation_??</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38047">TableHandEvaluation_HighCard_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37891"></span>37891</td>
 <td class="instruction">LD A,(38044)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="38043.html#38044">TableHandEvaluation_BaseCard</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37894"></span>37894</td>
-<td class="instruction">CALL <a href="38011.html">FindHighestCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38011.html">FindHighestCard</a>.</td>
+<td class="instruction">CALL <a href="38011.html">CalculateSuit</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38011.html">CalculateSuit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37897"></span>37897</td>
 <td class="instruction">LD (38045),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">TableHandEvaluation_HighCard</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">TableHandEvaluation_BaseCardSuit</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

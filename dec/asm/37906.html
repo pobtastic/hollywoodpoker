@@ -86,7 +86,7 @@ There is a pair! Process it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="37914"></span>37914</td>
 <td class="instruction">LD (38044),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38044">TableHandEvaluation_BaseCard</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -129,7 +129,7 @@ Starting from "Ace High" work backwards through all the cards.
 <td class="asm-label"></td>
 <td class="address-1"><span id="37924"></span>37924</td>
 <td class="instruction">LD DE,38046</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38043.html#38046">TableHandEvaluation_?</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="38043.html#38046">TableHandEvaluation_HighCard_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -179,19 +179,19 @@ Move to the next card.
 <td class="asm-label"></td>
 <td class="address-1"><span id="37938"></span>37938</td>
 <td class="instruction">LD A,(38044)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="38043.html#38044">TableHandEvaluation_Card</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="38043.html#38044">TableHandEvaluation_BaseCard</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37941"></span>37941</td>
-<td class="instruction">CALL <a href="38011.html">FindHighestCard</a></td>
-<td class="comment-1" rowspan="1">Call <a href="38011.html">FindHighestCard</a>.</td>
+<td class="instruction">CALL <a href="38011.html">CalculateSuit</a></td>
+<td class="comment-1" rowspan="1">Call <a href="38011.html">CalculateSuit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="37944"></span>37944</td>
 <td class="instruction">LD (38045),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">TableHandEvaluation_HighCard</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="38043.html#38045">TableHandEvaluation_BaseCardSuit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
