@@ -5119,37 +5119,37 @@ c$9473 LD DE,$9540   ; #REGde=#R$9540.
  $9479 LD A,L        ; #REGa=#REGl.
  $947A RET           ; Return.
 
-; Find Highest Card
+; Calculate Suit
 ;
 ; Used by the routines at #R$9341, #R$93B0, #R$93DE, #R$9412 and #R$9447.
 ;
 ; A Card value
 ; IX Pointer to either the player or girls hand
-@label=FindHighestCard
+@label=CalculateSuit
 c$947B LD D,A        ; Copy the card value into #REGd.
  $947C LD E,$00      ; Initialise #REGe to #N$00.
  $947E PUSH IX       ; {Copy the hand pointer into #REGhl from #REGix (using
  $9480 POP HL        ; the stack).}
  $9481 LD B,$05      ; Set a counter in #REGb to check all #N$05 cards in this
                      ; hand.
-@label=FindHighestCard_Loop
+@label=CalculateSuit_Loop
 *$9483 LD A,(HL)     ; Fetch the card value and store it in #REGa.
  $9484 AND %00001111 ; Convert it into a suit-less value (by keeping only bits
                      ; 0-3).
  $9486 CP D          ; {Jump to #R$9494 if #REGa is equal to #REGd.
  $9487 JR Z,$9494    ; }
-@label=FindHighestCard_Continue
+@label=CalculateSuit_Continue
 *$9489 INC HL        ; Move the hand pointer to the next card.
  $948A DJNZ $9483    ; Decrease the card counter by one and loop back to #R$9483 until all
                      ; cards in the hand have been evaluated.
  $948C LD A,E        ; #REGa=#REGe.
 ; Work out the suit.
  $948D LD B,$04      ; {Shift #REGa right four positions.
-@label=HighestCardSuitShift_Loop
+@label=CalculateSuitShift_Loop
 *$948F SRA A         ;
  $9491 DJNZ $948F    ; }
  $9493 RET           ; Return.
-@label=HighestCard_FoundMatch
+@label=CalculateSuit_FoundMatch
 *$9494 LD A,(HL)     ; {Jump to #R$9489 if *#REGhl is lower than #REGe.
  $9495 CP E          ;
  $9496 JR C,$9489    ; }
@@ -5157,17 +5157,52 @@ c$947B LD D,A        ; Copy the card value into #REGd.
  $9499 JR $9489      ; Jump to #R$9489.
 
 ; Hand Evaluation Table
+;
+; .
+;
+; .
+;
+; Using a real-world example from in-game.
+; .
+; #HTML(The hand:
+; #TABLE(default,centre,centre,centre,centre,centre)
+; { =h,c5 Card Values }
+; { #N$01 | #N$35 | #N$09 | #N$39 | #N$0A }
+; { <img src="../images/udgs/card-three-diamonds-colour.png"> |
+; <img src="../images/udgs/card-seven-clubs-colour.png"> |
+; <img src="../images/udgs/card-jack-diamonds-colour.png"> |
+; <img src="../images/udgs/card-jack-clubs-colour.png"> |
+; <img src="../images/udgs/card-queen-diamonds-colour.png"> }
+; { #CARD$01 of #SUIT$01 |
+;  #CARD$35 of #SUIT$35 |
+;  #CARD$09 of #SUIT$09 |
+;  #CARD$39 of #SUIT$39 |
+;  #CARD$0A of #SUIT$0A }
+; TABLE#
+; Outcome flags:
+; #TABLE(default,,centre,centre)
+; { =h Flag | =h Value | =h Meaning }
+; { #R$949B | #N$02 | #OUTCOME$02 }
+; { #R$949C | #N$09 | #CARD$09 }
+; { #R$949D | #N$03 | #SUIT$03 }
+; { #R$949E | #N$0A | #CARD$0A }
+; { #R$949F | #N$05 | #CARD$05 }
+; { #R$94A0 | #N$01 | #CARD$01 }
+; { #R$94A1 | #N$00 | N/A }
+; TABLE#)
 @label=TableHandEvaluation_Type
 g$949B DEFB $00
-@label=TableHandEvaluation_Card
+@label=TableHandEvaluation_BaseCard
  $949C DEFB $00
-@label=TableHandEvaluation_HighCard
+@label=TableHandEvaluation_BaseCardSuit
  $949D DEFB $00
-@label=TableHandEvaluation_?
+@label=TableHandEvaluation_HighCard_1
  $949E DEFB $00
-@label=TableHandEvaluation_??
+@label=TableHandEvaluation_HighCard_2
  $949F DEFB $00
+@label=TableHandEvaluation_HighCard_3
  $94A0 DEFB $00
+@label=TableHandEvaluation_HighCard_4
  $94A1 DEFB $00
 
 ; Handler: Straight Flush

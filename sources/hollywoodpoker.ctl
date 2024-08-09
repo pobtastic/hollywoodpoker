@@ -2287,6 +2287,7 @@ N $942F Move to the next card.
   $942F,$01 Decrease the card duplicate table pointer by one.
   $9430,$02 Decrease the card counter by one and loop back to #R$942A until the
 . counter is zero.
+N $9432
   $9432,$03 #REGa=*#R$949C.
   $9435,$03 Call #R$947B.
   $9438,$03 Write #REGa to *#R$949D.
@@ -2337,44 +2338,73 @@ R $9473 O:A The card ID that the card count refers to
   $9479,$01 #REGa=#REGl.
   $947A,$01 Return.
 
-c $947B Find Highest Card
-@ $947B label=FindHighestCard
+c $947B Calculate Suit
+@ $947B label=CalculateSuit
 R $947B A Card value
 R $947B IX Pointer to either the player or girls hand
   $947B,$01 Copy the card value into #REGd.
   $947C,$02 Initialise #REGe to #N$00.
   $947E,$03 Copy the hand pointer into #REGhl from #REGix (using the stack).
   $9481,$02 Set a counter in #REGb to check all #N$05 cards in this hand.
-@ $9483 label=FindHighestCard_Loop
+@ $9483 label=CalculateSuit_Loop
   $9483,$01 Fetch the card value and store it in #REGa.
   $9484,$02,b$01 Convert it into a suit-less value (by keeping only bits 0-3).
   $9486,$03 Jump to #R$9494 if #REGa is equal to #REGd.
-@ $9489 label=FindHighestCard_Continue
+@ $9489 label=CalculateSuit_Continue
   $9489,$01 Move the hand pointer to the next card.
   $948A,$02 Decrease the card counter by one and loop back to #R$9483 until all
 . cards in the hand have been evaluated.
   $948C,$01 #REGa=#REGe.
 N $948D Work out the suit.
-@ $948F label=HighestCardSuitShift_Loop
+@ $948F label=CalculateSuitShift_Loop
   $948D,$06 Shift #REGa right four positions.
   $9493,$01 Return.
-@ $9494 label=HighestCard_FoundMatch
+@ $9494 label=CalculateSuit_FoundMatch
   $9494,$04 Jump to #R$9489 if *#REGhl is lower than #REGe.
   $9498,$01 #REGe=#REGa.
   $9499,$02 Jump to #R$9489.
 
 g $949B Hand Evaluation Table
+N $949B Using a real-world example from in-game.
+N $949B #HTML(The hand:
+. #TABLE(default,centre,centre,centre,centre,centre)
+. { =h,c5 Card Values }
+. { #N$01 | #N$35 | #N$09 | #N$39 | #N$0A }
+. { <img src="../images/udgs/card-three-diamonds-colour.png"> |
+. <img src="../images/udgs/card-seven-clubs-colour.png"> |
+. <img src="../images/udgs/card-jack-diamonds-colour.png"> |
+. <img src="../images/udgs/card-jack-clubs-colour.png"> |
+. <img src="../images/udgs/card-queen-diamonds-colour.png"> }
+. { #CARD$01 of #SUIT$01 |
+.  #CARD$35 of #SUIT$35 |
+.  #CARD$09 of #SUIT$09 |
+.  #CARD$39 of #SUIT$39 |
+.  #CARD$0A of #SUIT$0A }
+. TABLE#
+. Outcome flags:
+. #TABLE(default,,centre,centre)
+. { =h Flag | =h Value | =h Meaning }
+. { #R$949B | #N$02 | #OUTCOME$02 }
+. { #R$949C | #N$09 | #CARD$09 }
+. { #R$949D | #N$03 | #SUIT$03 }
+. { #R$949E | #N$0A | #CARD$0A }
+. { #R$949F | #N$05 | #CARD$05 }
+. { #R$94A0 | #N$01 | #CARD$01 }
+. { #R$94A1 | #N$00 | N/A }
+. TABLE#)
 @ $949B label=TableHandEvaluation_Type
 B $949B,$01
-@ $949C label=TableHandEvaluation_Card
+@ $949C label=TableHandEvaluation_BaseCard
 B $949C,$01
-@ $949D label=TableHandEvaluation_HighCard
+@ $949D label=TableHandEvaluation_BaseCardSuit
 B $949D,$01
-@ $949E label=TableHandEvaluation_?
+@ $949E label=TableHandEvaluation_HighCard_1
 B $949E,$01
-@ $949F label=TableHandEvaluation_??
+@ $949F label=TableHandEvaluation_HighCard_2
 B $949F,$01
+@ $94A0 label=TableHandEvaluation_HighCard_3
 B $94A0,$01
+@ $94A1 label=TableHandEvaluation_HighCard_4
 B $94A1,$01
 
 c $94A2 Handler: Straight Flush
