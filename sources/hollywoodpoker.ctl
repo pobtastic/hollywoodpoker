@@ -1,4 +1,4 @@
-; Copyright Golden Games 1986, 2024 ArcadeGeek LTD.
+; Copyright Golden Games 1986, 2025 ArcadeGeek LTD.
 ; NOTE: Disassembly is Work-In-Progress.
 ; Label naming is loosely based on Action_ActionName_SubAction e.g. Print_HighScore_Loop.
 

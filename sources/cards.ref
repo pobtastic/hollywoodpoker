@@ -1,4 +1,4 @@
-; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
+; Copyright 2025 Paul Maddern (paul@arcadegeek.co.uk)
 
 [Card:Two]
 #UDGTABLE(default,centre,centre,centre,centre) { =h Diamonds | =h Hearts | =h Spades | =h Clubs } {
