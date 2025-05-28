@@ -6,4 +6,4 @@
 
 [Audio:tune:Tune]
 
-#AUDIO(tune.wav)(#INCLUDE(Tune))
+#AUDIO$08(tune.wav)(#INCLUDE(Tune))
