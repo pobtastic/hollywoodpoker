@@ -1,9 +1,9 @@
-; Copyright 2025 Paul Maddern (paul@arcadegeek.co.uk)
+; Copyright 2026 Paul Maddern (paul@arcadegeek.co.uk)
 
 [Audio:select:Select]
 
-#AUDIO(select.wav)(#INCLUDE(Select))
+#AUDIO0(select.wav)(#INCLUDE(Select))
 
 [Audio:tune:Tune]
 
-#AUDIO$08(tune.wav)(#INCLUDE(Tune))
+#AUDIO0(tune.wav)(#INCLUDE(Tune))

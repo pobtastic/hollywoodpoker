@@ -1,3 +1,5 @@
+; Copyright 2026 Paul Maddern (paul@arcadegeek.co.uk)
+
 ;
 ; SkoolKit ref file for Hollywood Poker
 ;
@@ -14,7 +16,7 @@ GameDir=hollywoodpoker
 [Game]
 Game=Hollywood Poker
 Logo=#SCR$02,$0C,$00,$12,$05,$4000,$5800(/images/logo)
-Copyright=&copy; 1986 Golden Games &copy; 2025 ArcadeGeek LTD.
+Copyright=&copy; 1987 Players Software, Golden Games Software<br />&copy; 2026 ArcadeGeek LTD.
 Repository=https://github.com/pobtastic/hollywoodpoker/
 LinkInternalOperands=1
 AddressAnchor={address#IF({base}==16)(:04x)}

@@ -1,11 +1,11 @@
-; Copyright Golden Games 1986, 2025 ArcadeGeek LTD.
+; Copyright Players Software 1987, Golden Games Software, 2026 ArcadeGeek LTD.
 ; NOTE: Disassembly is Work-In-Progress.
 ; Label naming is loosely based on Action_ActionName_SubAction e.g. Print_HighScore_Loop.
 
 > $4000 @rom
 > $4000 @start
-> $4000 @expand=#DEF(#POKE #LINK:Pokes)
-> $4000 @expand=#DEF(#FACT #LINK:Facts)
+> $4000 @expand=#DEF(#POKE()(anchor,text) #LINK(Pokes#$anchor)($text))
+> $4000 @expand=#DEF(#FACT()(anchor,text) #LINK(Facts#$anchor)($text))
 > $4000 @set-handle-unsupported-macros=1
 b $4000 Loading Screen
 D $4000 #UDGTABLE { =h Hollywood Poker Loading Screen. } { #SCR$02(loading) } UDGTABLE#
@@ -810,7 +810,7 @@ b $7A4D Graphics: Keyboard Icon
 @ $7A4D label=Graphics_KeyboardIcon
 D $7A4D Used by the routine at #R$784B.
 N $7A4D #UDGTABLE
-. { #UDGARRAY$08,scale=$04,step=$08($7A4D-$7BC5-$01-$40)@$7BCD-$7BFC(keyboard) }
+. { #UDGARRAY$08,scale=$04,step=$08($7A4D-$7BC5-$01-$40)[$7BCD-$7BFC](keyboard) }
 . UDGTABLE#
   $7A4D,$0180,$08 Pixels.
   $7BCD,$30,$08 Attributes.
@@ -827,7 +827,7 @@ b $7D3D Graphics: Information Icon
 @ $7D3D label=Graphics_InformationIcon
 D $7D3D Used by the routine at #R$784B.
 N $7D3D #UDGTABLE
-. { #UDGARRAY$02,scale=$04,step=$02($7D3D-$7D8B-$01-$10)@$7D8D-$7D96(information) }
+. { #UDGARRAY$02,scale=$04,step=$02($7D3D-$7D8B-$01-$10)[$7D8D-$7D96](information) }
 . UDGTABLE#
   $7D3D,$50,$02 Pixels.
   $7D8D,$0A,$02 Attributes.
@@ -1101,11 +1101,11 @@ B $8CEF,$01
 
 c $8CF0 Initialise New Game
 @ $8CF0 label=InitialiseNewGame
-N $8CF0 See #POKE#lives(Lives).
+N $8CF0 See #POKE(lives,Lives).
   $8CF0,$06 Write #N$06 to *#R$8F7C and #N$06 to *#R$8F7D.
   $8CF6,$0C Write #N($0000,$04,$04) to; #LIST { *#R$98E3 / *#R$98E4 } { *#R$96B4 / *#R$96B5 } { *#R$96B7 / *#R$96B8 } LIST#
   $8D02,$01 #REGa=#N$00.
-N $8D03 See #POKE#playerCash(£245 Cash) and #POKE#girlCash(Girl Has No Cash).
+N $8D03 See #POKE(playerCash,£245 Cash) and #POKE(girlCash,Girl Has No Cash).
   $8D03,$06 Write #N$6464 to *#R$96B5 / *#R$96B6.
   $8D09,$07 Write #N$01 to; #LIST { *#R$8D49 } { *#R$8E42 } LIST#
 @ $8D10 label=Game_Loop
@@ -2646,7 +2646,7 @@ N $959B This routine generates the following bytes in #R$95BB:
 .   #FOR($00,$0C,,$04)(y,#N(#PEEK({addr}+y)), | )
 . })
 . TABLE# #POPS
-. See #FACT#cards(cards) for what these numbers represent.
+. See #FACT(cards,cards) for what these numbers represent.
   $959B,$03 #REGhl=#R$95BB.
   $959E,$02 Initialise #REGc to #N$00, this will hold the suit value.
 @ $95A0 label=ResetSuit_Loop
@@ -2724,18 +2724,21 @@ N $961A Double the value again in the "try" counter for outcomes: #FOR$05,$09,,$
   $961A,$02 Multiply #REGc by two.
 N $961C Set a number of "tries" to pick a random number under #N$0E.
 @ $961C label=GirlAI_SetRaiseTries
-  $961C,$01 Set a counter in #REGb which is just the value copied from #REGc.
+  $961C,$01 Set a "tries" counter in #REGb which is just the value copied from
+. #REGc.
 @ $961D label=GirlAI_SetRaiseTries_Loop
   $961D,$03 Call #R$9579.
-  $9620,$04 Jump to #R$9637 if #REGa is lower than #N$0E.
-  $9624,$02 Decrease counter by one and loop back to #R$961D until counter is zero.
+  $9620,$04 Jump to #R$9637 if the random number is lower than #N$0E.
+  $9624,$02 Decrease the tries counter by one and loop back to #R$961D until
+. the tries counter is zero.
 N $9626 Set a number of "tries" to pick a random number under #N$1E.
 @ $9626 label=GirlAI_SetHoldTries
-  $9626,$01 Set a counter in #REGb which is just the value copied from #REGc.
+  $9626,$01 Set a "tries" counter in #REGb which is just the value copied from #REGc.
 @ $9627 label=GirlAI_SetHoldTries_Loop
   $9627,$03 Call #R$9579.
-  $962A,$04 Jump to #R$968C if #REGa is lower than #N$1E.
-  $962E,$02 Decrease counter by one and loop back to #R$9627 until counter is zero.
+  $962A,$04 Jump to #R$968C if the random number is lower than #N$1E.
+  $962E,$02 Decrease the tries counter by one and loop back to #R$9627 until
+. the tries counter is zero.
 N $9630 If we made it this far then the girl will just drop, if you're playing
 . along here then YES, albeit fairly unlikely - there is still a slim chance
 . that the girl will DROP even if she has a Royal Straight Flush!
@@ -2821,7 +2824,7 @@ c $96A1 Girl Add To Pot
 @ $96A1 label=GirlAddToPot
 R $96A1 A Value to add to Pot
 R $96A1 O:B Value being added to Pot
-N $96A1 See #POKE#cashDisappears(Girl Cash Disappears).
+N $96A1 See #POKE(cashDisappears,Girl Cash Disappears).
   $96A1,$01 Store the value to add in #REGb.
   $96A2,$07 Subtract the value to add from *#R$96B6.
   $96A9,$07 And add the value onto *#R$96B4.
@@ -2952,7 +2955,7 @@ b $9726 Graphics: Couch
 @ $9726 label=Graphics_Couch
 D $9726 Used by the routine at #R$7E6B.
 N $9726 #UDGTABLE
-. { #UDGARRAY$07,scale=$04,step=$07($9726-$97FE-$01-$38)@$9806-$9822(couch) }
+. { #UDGARRAY$07,scale=$04,step=$07($9726-$97FE-$01-$38)[$9806-$9822](couch) }
 . UDGTABLE#
   $9726,$E0,$07 Pixels.
   $9806,$1C,$07 Attributes.
@@ -3139,103 +3142,103 @@ c $993A Print Graphic
 
 b $9975 Girl 1 Frame 1
 @ $9975 label=Girl1_Frame1
-D $9975 #PUSHS #UDGTABLE { #UDGARRAY$20,scale=$04,step=$20($9975-$A455-$01-$100)@$A475-$A5D5(girl-1-frame-1) } UDGTABLE# #POPS
+D $9975 #PUSHS #UDGTABLE { #UDGARRAY$20,scale=$04,step=$20($9975-$A455-$01-$100)[$A475-$A5D5](girl-1-frame-1) } UDGTABLE# #POPS
   $9975,$0B00,$20 Pixels.
   $A475,$0160,$20 Attributes.
 
 b $A5D5 Girl 1 Frame 2
 @ $A5D5 label=Girl1_Frame2
-D $A5D5 #PUSHS #UDGTABLE { #UDGARRAY$0E,scale=$04,step=$0E($A5D5-$A867-$01-$70)@$A875-$A8C9(girl-1-frame-2) } UDGTABLE# #POPS
+D $A5D5 #PUSHS #UDGTABLE { #UDGARRAY$0E,scale=$04,step=$0E($A5D5-$A867-$01-$70)[$A875-$A8C9](girl-1-frame-2) } UDGTABLE# #POPS
   $A5D5,$02A0,$0E Pixels.
   $A875,$0054,$0E Attributes.
 
 b $A8C9 Girl 1 Frame 3
 @ $A8C9 label=Girl1_Frame3
-D $A8C9 #PUSHS #UDGTABLE { #UDGARRAY$0E,scale=$04,step=$0E($A8C9-$AB5B-$01-$70)@$AB69-$ABBD(girl-1-frame-3) } UDGTABLE# #POPS
+D $A8C9 #PUSHS #UDGTABLE { #UDGARRAY$0E,scale=$04,step=$0E($A8C9-$AB5B-$01-$70)[$AB69-$ABBD](girl-1-frame-3) } UDGTABLE# #POPS
   $A8C9,$02A0,$0E Pixels.
   $AB69,$0054,$0E Attributes.
 
 b $ABBD Girl 1 Frame 4
 @ $ABBD label=Girl1_Frame4
-D $ABBD #PUSHS #UDGTABLE { #UDGARRAY$0E,scale=$04,step=$0E($ABBD-$AE4F-$01-$70)@$AE5D-$AEB1(girl-1-frame-4) } UDGTABLE# #POPS
+D $ABBD #PUSHS #UDGTABLE { #UDGARRAY$0E,scale=$04,step=$0E($ABBD-$AE4F-$01-$70)[$AE5D-$AEB1](girl-1-frame-4) } UDGTABLE# #POPS
   $ABBD,$02A0,$0E Pixels.
   $AE5D,$0054,$0E Attributes.
 
 b $AEB1 Girl 1 Frame 5
 @ $AEB1 label=Girl1_Frame5
-D $AEB1 #PUSHS #UDGTABLE { #UDGARRAY$09,scale=$04,step=$09($AEB1-$B0A0-$01-$48)@$B0A9-$B0E8(girl-1-frame-5) } UDGTABLE# #POPS
+D $AEB1 #PUSHS #UDGTABLE { #UDGARRAY$09,scale=$04,step=$09($AEB1-$B0A0-$01-$48)[$B0A9-$B0E8](girl-1-frame-5) } UDGTABLE# #POPS
   $AEB1,$01F8,$09 Pixels.
   $B0A9,$003F,$09 Attributes.
 
 b $B0E8 Girl 1 Frame 6
 @ $B0E8 label=Girl1_Frame6
-D $B0E8 #PUSHS #UDGTABLE { #UDGARRAY$0E,scale=$04,step=$0E($B0E8-$B37A-$01-$70)@$B388-$B3DC(girl-1-frame-6) } UDGTABLE# #POPS
+D $B0E8 #PUSHS #UDGTABLE { #UDGARRAY$0E,scale=$04,step=$0E($B0E8-$B37A-$01-$70)[$B388-$B3DC](girl-1-frame-6) } UDGTABLE# #POPS
   $B0E8,$02A0,$0E Pixels.
   $B388,$0054,$0E Attributes.
 
 b $B3DC Girl 1 Frame 7
 @ $B3DC label=Girl1_Frame7
-D $B3DC #PUSHS #UDGTABLE { #UDGARRAY$09,scale=$04,step=$09($B3DC-$B5CB-$01-$48)@$B5D4-$B613(girl-1-frame-7) } UDGTABLE# #POPS
+D $B3DC #PUSHS #UDGTABLE { #UDGARRAY$09,scale=$04,step=$09($B3DC-$B5CB-$01-$48)[$B5D4-$B613](girl-1-frame-7) } UDGTABLE# #POPS
   $B3DC,$01F8,$09 Pixels.
   $B5D4,$003F,$09 Attributes.
 
 b $B613 Girl 2 Frame 1
 @ $B613 label=Girl2_Frame1
-D $B613 #PUSHS #UDGTABLE { #UDGARRAY$20,scale=$04,step=$20($B613-$C0F3-$01-$100)@$C113-$C273(girl-2-frame-1) } UDGTABLE# #POPS
+D $B613 #PUSHS #UDGTABLE { #UDGARRAY$20,scale=$04,step=$20($B613-$C0F3-$01-$100)[$C113-$C273](girl-2-frame-1) } UDGTABLE# #POPS
   $B613,$0B00,$20 Pixels.
   $C113,$0160,$20 Attributes.
 
 b $C273 Girl 2 Frame 2
 @ $C273 label=Girl2_Frame2
-D $C273 #PUSHS #UDGTABLE { #UDGARRAY$0F,scale=$04,step=$0F($C273-$C5AC-$01-$78)@$C5BB-$C624(girl-2-frame-2) } UDGTABLE# #POPS
+D $C273 #PUSHS #UDGTABLE { #UDGARRAY$0F,scale=$04,step=$0F($C273-$C5AC-$01-$78)[$C5BB-$C624](girl-2-frame-2) } UDGTABLE# #POPS
   $C273,$0348,$0F Pixels.
   $C5BB,$0069,$0F Attributes.
 
 b $C624 Girl 2 Frame 3
 @ $C624 label=Girl2_Frame3
-D $C624 #PUSHS #UDGTABLE { #UDGARRAY$0F,scale=$04,step=$0F($C624-$C95D-$01-$78)@$C96C-$C9D5(girl-2-frame-3) } UDGTABLE# #POPS
+D $C624 #PUSHS #UDGTABLE { #UDGARRAY$0F,scale=$04,step=$0F($C624-$C95D-$01-$78)[$C96C-$C9D5](girl-2-frame-3) } UDGTABLE# #POPS
   $C624,$0348,$0F Pixels.
   $C96C,$0069,$0F Attributes.
 
 b $C9D5 Girl 2 Frame 4
 @ $C9D5 label=Girl2_Frame4
-D $C9D5 #PUSHS #UDGTABLE { #UDGARRAY$09,scale=$04,step=$09($C9D5-$CBC4-$01-$48)@$CBCD-$CC0C(girl-2-frame-4) } UDGTABLE# #POPS
+D $C9D5 #PUSHS #UDGTABLE { #UDGARRAY$09,scale=$04,step=$09($C9D5-$CBC4-$01-$48)[$CBCD-$CC0C](girl-2-frame-4) } UDGTABLE# #POPS
   $C9D5,$01F8,$09 Pixels.
   $CBCD,$003F,$09 Attributes.
 
 b $CC0C Girl 2 Frame 5
 @ $CC0C label=Girl2_Frame5
-D $CC0C #PUSHS #UDGTABLE { #UDGARRAY$0F,scale=$04,step=$0F($CC0C-$CF45-$01-$78)@$CF54-$CFBD(girl-2-frame-5) } UDGTABLE# #POPS
+D $CC0C #PUSHS #UDGTABLE { #UDGARRAY$0F,scale=$04,step=$0F($CC0C-$CF45-$01-$78)[$CF54-$CFBD](girl-2-frame-5) } UDGTABLE# #POPS
   $CC0C,$0348,$0F Pixels.
   $CF54,$0069,$0F Attributes.
 
 b $CFBD Girl 3 Frame 1
 @ $CFBD label=Girl3_Frame1
-D $CFBD #PUSHS #UDGTABLE { #UDGARRAY$20,scale=$04,step=$20($CFBD-$DA9D-$01-$100)@$DABD-$DC1C(girl-3-frame-1) } UDGTABLE# #POPS
+D $CFBD #PUSHS #UDGTABLE { #UDGARRAY$20,scale=$04,step=$20($CFBD-$DA9D-$01-$100)[$DABD-$DC1C](girl-3-frame-1) } UDGTABLE# #POPS
   $CFBD,$0B00,$20 Pixels.
   $DABD,$0160,$20 Attributes.
 
 b $DC1D Girl 3 Frame 2
 @ $DC1D label=Girl3_Frame2
-D $DC1D #PUSHS #UDGTABLE { #UDGARRAY$09,scale=$04,step=$09($DC1D-$DDBD-$01-$48)@$DDCD-$DE02(girl-3-frame-2) } UDGTABLE# #POPS
+D $DC1D #PUSHS #UDGTABLE { #UDGARRAY$09,scale=$04,step=$09($DC1D-$DDBD-$01-$48)[$DDCD-$DE02](girl-3-frame-2) } UDGTABLE# #POPS
   $DC1D,$01B0,$09 Pixels.
   $DDCD,$0036,$09 Attributes.
 
 b $DE03 Girl 3 Frame 3
 @ $DE03 label=Girl3_Frame3
-D $DE03 #PUSHS #UDGTABLE { #UDGARRAY$08,scale=$04,step=$08($DE03-$DFBB-$01-$40)@$DFC3-$DFFA(girl-3-frame-3) } UDGTABLE# #POPS
+D $DE03 #PUSHS #UDGTABLE { #UDGARRAY$08,scale=$04,step=$08($DE03-$DFBB-$01-$40)[$DFC3-$DFFA](girl-3-frame-3) } UDGTABLE# #POPS
   $DE03,$01C0,$08 Pixels.
   $DFC3,$0038,$08 Attributes.
 
 b $DFFB Girl 3 Frame 4
 @ $DFFB label=Girl3_Frame4
-D $DFFB #PUSHS #UDGTABLE { #UDGARRAY$0A,scale=$04,step=$0A($DFFB-$E1D1-$01-$50)@$E1DB-$E216(girl-3-frame-4) } UDGTABLE# #POPS
+D $DFFB #PUSHS #UDGTABLE { #UDGARRAY$0A,scale=$04,step=$0A($DFFB-$E1D1-$01-$50)[$E1DB-$E216](girl-3-frame-4) } UDGTABLE# #POPS
   $DFFB,$01E0,$0A Pixels.
   $E1DB,$003C,$0A Attributes.
 
 b $E217 Girl 3 Frame 5
 @ $E217 label=Girl3_Frame5
-D $E217 #PUSHS #UDGTABLE { #UDGARRAY$04,scale=$04,step=$04($E217-$E2F3-$01-$20)@$E2F7-$E312(girl-3-frame-5) } UDGTABLE# #POPS
+D $E217 #PUSHS #UDGTABLE { #UDGARRAY$04,scale=$04,step=$04($E217-$E2F3-$01-$20)[$E2F7-$E312](girl-3-frame-5) } UDGTABLE# #POPS
   $E217,$00E0,$04 Pixels.
   $E2F7,$001C,$04 Attributes.
 
