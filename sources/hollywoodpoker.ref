@@ -18,6 +18,9 @@ Game=Hollywood Poker
 Logo=#SCR$02,$0C,$00,$12,$05,$4000,$5800(/images/logo)
 Copyright=&copy; 1987 Players Software, Golden Games Software<br />&copy; 2026 ArcadeGeek LTD.
 Repository=https://github.com/pobtastic/hollywoodpoker/
+Canonical=https://skoolkit.arcadegeek.co.uk/hollywoodpoker/
+GameIndexUrl=https://skoolkit.arcadegeek.co.uk/hollywoodpoker/
+OgImage=https://skoolkit.arcadegeek.co.uk/hollywoodpoker/images/logo.png
 LinkInternalOperands=1
 AddressAnchor={address#IF({base}==16)(:04x)}
 
